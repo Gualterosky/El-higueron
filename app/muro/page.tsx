@@ -157,17 +157,19 @@ export default function MuroPage() {
           
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {routes.map((route, index) => (
-              <Card key={route.name} className="border-border transition-all hover:border-forest hover:shadow-md">
-                <CardHeader className="pb-2">
-                  <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-forest text-sm font-bold text-white">
-                    {index + 1}
-                  </div>
-                  <CardTitle className="text-base">{route.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-xs text-muted-foreground">{route.level}</p>
-                </CardContent>
-              </Card>
+              <Link key={route.name} href={`/muro/MBS${String(index + 1).padStart(2, "0")}`}>
+                <Card className="h-full border-border transition-all hover:border-forest hover:shadow-md">
+                  <CardHeader className="pb-2">
+                    <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-forest text-sm font-bold text-white">
+                      {index + 1}
+                    </div>
+                    <CardTitle className="text-base">{route.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-xs text-muted-foreground">{route.level}</p>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>

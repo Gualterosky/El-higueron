@@ -9,22 +9,21 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 3,
-  name: "Ruta 3", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "La Niebla",
+  level: "Proyecto",
+  height: "18m",
+  anchors: "12",
+  style: "Deportiva",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Comienzo simple hasta alcanzar el saliente. Luego es puro crux en agarres pequeños y un movimiento realmente largo que podría necesitar un salto dinámico para escaladores más bajos.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Inicio accesible pero el crux es desafiante",
+    "Agarres muy pequeños en el saliente",
+    "Se requiere un movimiento largo y potente",
+    "Escaladores bajos pueden necesitar un movimiento dinámico",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
+  builders: "Néstor Caro & Juan Hernández, 19 Jun 2024",
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

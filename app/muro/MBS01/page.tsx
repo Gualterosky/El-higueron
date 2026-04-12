@@ -9,22 +9,20 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 1,
-  name: "Ruta 1", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "Jugo de Sangre",
+  level: "5.10c",
+  height: "Por definir",
+  anchors: "Por definir",
+  style: "Deportiva",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Inicia justo donde está un árbol. Esta a la izquierda de Pioneros y es una buena opción para calentar.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Ubicada a la izquierda de la ruta Pioneros",
+    "Excelente opción para calentar antes de rutas más difíciles",
+    "Comienza cerca de un árbol característico",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
+  builders: "Leonardo Pineda & Dann Fonseca",
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

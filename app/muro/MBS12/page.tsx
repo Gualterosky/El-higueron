@@ -9,22 +9,19 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 12,
-  name: "Ruta 12", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "Tormenta",
+  level: "5.11c",
+  height: "20m",
+  anchors: "11",
+  style: "Mixta",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Una ruta salvaje que mezcla secciones técnicas de placa con explosivos movimientos en desplome. La transición entre estilos es lo que hace especial a esta escalada. Requiere versatilidad y adaptabilidad.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Aprende a transitar entre diferentes estilos",
+    "No gastes energía en secciones técnicas",
+    "Reserva potencia para los movimientos explosivos",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

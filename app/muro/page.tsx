@@ -5,21 +5,21 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const routes = [
-  { name: "Ruta 1", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 2", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 3", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 4", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 5", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 6", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 7", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 8", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 9", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 10", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 11", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 12", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 13", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 14", level: "Por definir", description: "Descripción pendiente." },
-  { name: "Ruta 15", level: "Por definir", description: "Descripción pendiente." },
+  { name: "Jugo de Sangre", level: "5.10c", height: "Por definir" },
+  { name: "Pioneros",       level: "5.12b", height: "18m" },
+  { name: "La Niebla",      level: "Proyecto", height: "18m" },
+  { name: "Gente Buena",    level: "5.9",   height: "Por definir" },
+  { name: "Perdidos en el Bosque", level: "5.10a", height: "14m" },
+  { name: "Permutante",     level: "Proyecto", height: "28m" },
+  { name: "Payandesuno",    level: "5.12b", height: "28m" },
+  { name: "China Town",     level: "5.12d", height: "33m" },
+  { name: "Bendito Sea",    level: "5.13a", height: "33m" },
+  { name: "Destructor",     level: "5.9",   height: "14m" },
+  { name: "Piscineitor",    level: "5.10b", height: "14m" },
+  { name: "Chihiza",        level: "5.11c", height: "18m" },
+  { name: "Los Gnomos de Guayara", level: "5.11b", height: "18m" },
+  { name: "El Gangazo",     level: "5.11a", height: "20m" },
+  { name: "Soy Chowi",      level: "5.9",   height: "Por definir" },
 ]
 
 const wallFeatures = [
@@ -163,10 +163,11 @@ export default function MuroPage() {
                     <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-forest text-sm font-bold text-white">
                       {index + 1}
                     </div>
-                    <CardTitle className="text-base">{route.name}</CardTitle>
+                    <span className="text-xs font-semibold text-orange">{route.level}</span>
+                    <CardTitle className="text-sm leading-tight">{route.name}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-xs text-muted-foreground">{route.level}</p>
+                    <p className="text-xs text-muted-foreground">{route.height}</p>
                   </CardContent>
                 </Card>
               </Link>

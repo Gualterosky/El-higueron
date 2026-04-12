@@ -9,19 +9,23 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 6,
-  name: "Fluidez",
-  level: "5.9",
-  height: "14m",
-  anchors: "8",
-  style: "Vertical",
+  routeName: "Permutante",
+  name: "Proyecto",
+  level: "Proyecto",
+  height: "28m",
+  anchors: "14",
+  style: "Deportiva - Proyecto",
   description: `
-    Una escalada fluida y continua que requiere ritmo y consistencia. Los movimientos están bien distribuidos sin secciones que causen fricción. Ideal para trabajar técnica de escalada limpia y eficiente.
+    Un largo viaje de muchas secciones potentes en una pared ligeramente en desplome. Una amplia gama de movimientos técnicos y mucho aguante. Probablemente la línea más difícil del sector hasta ahora.
   `,
   tips: [
-    "Mantén un ritmo constante sin pausas prolongadas",
-    "Enfócate en la economía de movimiento",
-    "Esta ruta premia la técnica sobre la potencia pura",
+    "Una de las rutas más desafiantes del muro",
+    "Múltiples secciones técnicas requieren concentración",
+    "Se necesita excelente resistencia",
+    "Pared en desplome requiere potencia y técnica",
+    "Proyecto - aún no asegurada completamente",
   ],
+  builders: "Néstor Caro & Juan Hernández, 1 Jul 2024",
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================
@@ -41,7 +45,7 @@ export default function RouteMBS06Page() {
         <div className="absolute inset-0 z-0">
           <Image
             src={routeData.image}
-            alt={`Ruta ${routeData.name} - Muro Bendito Sea`}
+            alt={`Ruta ${routeData.routeName} - Muro Bendito Sea`}
             fill
             className="object-cover"
             priority
@@ -54,7 +58,7 @@ export default function RouteMBS06Page() {
             <span className="text-sm font-bold text-white">MBS{String(routeData.number).padStart(2, "0")}</span>
           </div>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
-            {routeData.name}
+            {routeData.routeName}
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-white/90 md:text-xl">
             Muro Bendito Sea - Ruta {routeData.number} de 15
@@ -83,7 +87,7 @@ export default function RouteMBS06Page() {
             <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
               <Image
                 src={routeData.image}
-                alt={`Detalle de la ruta ${routeData.name}`}
+                alt={`Detalle de la ruta ${routeData.routeName}`}
                 fill
                 className="object-cover"
               />
@@ -99,7 +103,7 @@ export default function RouteMBS06Page() {
               </div>
               
               <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
-                {routeData.name}
+                {routeData.routeName}
               </h2>
 
               {/* Route Stats */}

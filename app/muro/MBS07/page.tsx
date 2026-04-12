@@ -4,27 +4,27 @@ import { ArrowLeft, Mountain, Ruler, TrendingUp, Anchor, AlertTriangle } from "l
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
-// ============================================
-// DATOS DE LA RUTA - EDITAR AQUÍ
-// ============================================
 const routeData = {
   number: 7,
-  name: "El Salto",
-  level: "5.10d",
-  height: "17m",
-  anchors: "10",
-  style: "Vertical",
+  routeName: "Payandesuno",
+  name: "5.12b",
+  level: "5.12b",
+  height: "28m",
+  anchors: "13",
+  style: "Deportiva",
   description: `
-    Una escalada emocionante con movimientos dinámicos que requieren confianza y técnica. Los saltos dinámicos son el alma de esta ruta, con descansos estratégicos entre secciones. Un reto mental y físico.
+    La primera línea en el parque, una hermosa línea en desplome. Se pone más difícil conforme subes, aumentando progresivamente el nivel. La línea se mantiene seca la mayor parte del tiempo. Solo una tormenta fuerte podría mojar el último tornillo.
   `,
   tips: [
-    "Los saltos dinámicos requieren precisión en el aterrizaje",
-    "Confía en la roca y tu técnica",
-    "Los movimientos estáticos antes del crux son clave",
+    "La primera línea equipada en el muro",
+    "Línea hermosa y bien formada",
+    "Aumenta progresivamente en dificultad",
+    "Generalmente seca excepto en lluvia fuerte",
+    "Excelente para familiarizarse con el muro",
   ],
+  builders: "Néstor Caro & Juan Hernández, 2 Jun 2024",
   image: "/placeholder.svg?height=800&width=600",
 }
-// ============================================
 
 const routeDetails = [
   { icon: TrendingUp, label: "Nivel", value: routeData.level },
@@ -36,73 +36,41 @@ const routeDetails = [
 export default function RouteMBS07Page() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
       <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src={routeData.image}
-            alt={`Ruta ${routeData.name} - Muro Bendito Sea`}
-            fill
-            className="object-cover"
-            priority
-          />
+          <Image src={routeData.image} alt={`Ruta ${routeData.routeName} - Muro Bendito Sea`} fill className="object-cover" priority />
           <div className="absolute inset-0 bg-gradient-to-b from-forest/60 to-forest/80" />
         </div>
-        
         <div className="container relative z-10 mx-auto px-4 text-center lg:px-8">
           <div className="mb-4 inline-flex items-center justify-center rounded-full bg-orange px-4 py-2">
             <span className="text-sm font-bold text-white">MBS{String(routeData.number).padStart(2, "0")}</span>
           </div>
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
-            {routeData.name}
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg text-white/90 md:text-xl">
-            Muro Bendito Sea - Ruta {routeData.number} de 15
-          </p>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">{routeData.routeName}</h1>
+          <p className="mx-auto max-w-2xl text-lg text-white/90 md:text-xl">Muro Bendito Sea - Ruta {routeData.number} de 15</p>
         </div>
       </section>
 
-      {/* Back Navigation */}
       <section className="border-b bg-beige py-4">
         <div className="container mx-auto px-4 lg:px-8">
-          <Link 
-            href="/muro" 
-            className="inline-flex items-center gap-2 text-sm font-medium text-forest transition-colors hover:text-forest/80"
-          >
+          <Link href="/muro" className="inline-flex items-center gap-2 text-sm font-medium text-forest transition-colors hover:text-forest/80">
             <ArrowLeft className="h-4 w-4" />
             Volver al Muro Bendito Sea
           </Link>
         </div>
       </section>
 
-      {/* Route Details */}
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-            {/* Image */}
             <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
-              <Image
-                src={routeData.image}
-                alt={`Detalle de la ruta ${routeData.name}`}
-                fill
-                className="object-cover"
-              />
+              <Image src={routeData.image} alt={`Detalle de la ruta ${routeData.routeName}`} fill className="object-cover" />
             </div>
-
-            {/* Info */}
             <div>
               <div className="mb-6 flex items-center gap-2">
                 <Mountain className="h-5 w-5 text-forest" />
-                <span className="text-sm font-medium uppercase tracking-wider text-forest">
-                  Detalles de la Ruta
-                </span>
+                <span className="text-sm font-medium uppercase tracking-wider text-forest">Detalles de la Ruta</span>
               </div>
-              
-              <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
-                {routeData.name}
-              </h2>
-
-              {/* Route Stats */}
+              <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">{routeData.routeName}</h2>
               <div className="mb-8 grid grid-cols-2 gap-4">
                 {routeDetails.map((detail) => (
                   <Card key={detail.label} className="border-border">
@@ -111,25 +79,17 @@ export default function RouteMBS07Page() {
                         <detail.icon className="h-6 w-6 text-white" />
                       </div>
                       <div>
-                        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                          {detail.label}
-                        </p>
+                        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{detail.label}</p>
                         <p className="text-lg font-semibold text-foreground">{detail.value}</p>
                       </div>
                     </CardContent>
                   </Card>
                 ))}
               </div>
-
-              {/* Description */}
               <div className="mb-8">
                 <h3 className="mb-4 text-xl font-semibold text-foreground">Descripción</h3>
-                <p className="leading-relaxed text-muted-foreground">
-                  {routeData.description}
-                </p>
+                <p className="leading-relaxed text-muted-foreground">{routeData.description}</p>
               </div>
-
-              {/* Tips */}
               <div className="rounded-xl bg-beige p-6">
                 <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-foreground">
                   <AlertTriangle className="h-5 w-5 text-orange" />
@@ -149,7 +109,6 @@ export default function RouteMBS07Page() {
         </div>
       </section>
 
-      {/* Navigation Between Routes */}
       <section className="border-t bg-beige py-12">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between">
@@ -163,11 +122,9 @@ export default function RouteMBS07Page() {
                 </Button>
               )}
             </div>
-            
             <Button asChild className="bg-orange text-white hover:bg-orange/90">
               <Link href="/muro">Ver todas las rutas</Link>
             </Button>
-            
             <div>
               {routeData.number < 15 && (
                 <Button asChild variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
@@ -182,15 +139,10 @@ export default function RouteMBS07Page() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4 text-center lg:px-8">
-          <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">
-            ¿Necesitas equipo para escalar?
-          </h2>
-          <p className="mx-auto mb-8 max-w-xl text-muted-foreground">
-            Consulta la disponibilidad de equipos de escalada en Camping El Higuerón.
-          </p>
+          <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">¿Necesitas equipo para escalar?</h2>
+          <p className="mx-auto mb-8 max-w-xl text-muted-foreground">Consulta la disponibilidad de equipos de escalada en Camping El Higuerón.</p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
               <Link href="/equipos">Ver equipos disponibles</Link>

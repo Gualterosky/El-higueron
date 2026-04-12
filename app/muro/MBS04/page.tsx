@@ -9,19 +9,22 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 4,
-  name: "La Roca",
-  level: "5.10a",
-  height: "15m",
-  anchors: "9",
-  style: "Vertical",
+  routeName: "Gente Buena",
+  name: "5.9",
+  level: "5.9",
+  height: "Por definir",
+  anchors: "Por definir",
+  style: "Deportiva",
   description: `
-    Ruta clásica de movimientos fuertes con equilibrio técnico. Una escalada desafiante que requiere potencia y precisión. Los movimientos en el crux son enérgicos pero bien distribuidos a lo largo de la línea.
+    Ruta fácil que se ubica en la evidente línea de fácil progresión entre La Niebla y Perdidos en el Bosque. Inicia en Perdidos en el Bosque para luego tirar ligeramente hacia la izquierda hacia la placa a favor, juntándose con La Niebla y finalizando en un descuelgue ubicado en la primera repisa justo donde inicia la fisura alta de Pioneros.
   `,
   tips: [
-    "Trabaja los movimientos de potencia con técnica",
-    "Los descansos son cortos, mantén la concentración",
-    "La flexión de brazos es clave en esta ruta",
+    "Ubicada en una progresión natural de dificultad",
+    "Conecta con otras dos rutas importantes",
+    "Finaliza en un descuelgue bien definido",
+    "Buena opción para escaladores en progresión",
   ],
+  builders: "Leonardo Pineda & Dann Fonseca",
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================
@@ -41,7 +44,7 @@ export default function RouteMBS04Page() {
         <div className="absolute inset-0 z-0">
           <Image
             src={routeData.image}
-            alt={`Ruta ${routeData.name} - Muro Bendito Sea`}
+            alt={`Ruta ${routeData.routeName} - Muro Bendito Sea`}
             fill
             className="object-cover"
             priority
@@ -54,7 +57,7 @@ export default function RouteMBS04Page() {
             <span className="text-sm font-bold text-white">MBS{String(routeData.number).padStart(2, "0")}</span>
           </div>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
-            {routeData.name}
+            {routeData.routeName}
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-white/90 md:text-xl">
             Muro Bendito Sea - Ruta {routeData.number} de 15
@@ -83,7 +86,7 @@ export default function RouteMBS04Page() {
             <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
               <Image
                 src={routeData.image}
-                alt={`Detalle de la ruta ${routeData.name}`}
+                alt={`Detalle de la ruta ${routeData.routeName}`}
                 fill
                 className="object-cover"
               />
@@ -99,7 +102,7 @@ export default function RouteMBS04Page() {
               </div>
               
               <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
-                {routeData.name}
+                {routeData.routeName}
               </h2>
 
               {/* Route Stats */}

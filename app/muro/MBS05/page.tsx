@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Mountain, Ruler, TrendingUp, Anchor, AlertTriangle } from "lucide-react"
+import { ArrowLeft, Mountain, Ruler, TrendingUp, Anchor, AlertTriangle, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -54,7 +54,7 @@ export default function RouteMBS05Page() {
         
         <div className="container relative z-10 mx-auto px-4 text-center lg:px-8">
           <div className="mb-4 inline-flex items-center justify-center rounded-full bg-orange px-4 py-2">
-            <span className="text-sm font-bold text-white">MBS{String(routeData.number).padStart(2, "0")}</span>
+            <span className="text-sm font-bold text-white">{routeData.level}</span>
           </div>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
             {routeData.routeName}
@@ -130,6 +130,15 @@ export default function RouteMBS05Page() {
                 <p className="leading-relaxed text-muted-foreground">
                   {routeData.description}
                 </p>
+              </div>
+
+              {/* Builders */}
+              <div className="mb-6 flex items-center gap-3 rounded-xl border border-border bg-beige p-4">
+                <User className="h-5 w-5 shrink-0 text-forest" />
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Aperturistas</p>
+                  <p className="font-medium text-foreground">{routeData.builders}</p>
+                </div>
               </div>
 
               {/* Tips */}

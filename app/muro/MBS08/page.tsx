@@ -9,22 +9,19 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 8,
-  name: "Ruta 8", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "La Placa",
+  level: "5.10b",
+  height: "16m",
+  anchors: "9",
+  style: "Placa",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Una escalada técnica en placa que desafía la precisión y el uso eficiente de la posición corporal. Cada movimiento cuenta. La roca es pulida y exige una comprensión profunda de la fricción y el equilibrio.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "En placa, la fricción es tu aliada: úsala sabiamente",
+    "Mantén la pelvis cerca de la roca",
+    "Los pies son más importantes que las manos en esta ruta",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

@@ -9,22 +9,19 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 4,
-  name: "Ruta 4", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "La Roca",
+  level: "5.10a",
+  height: "15m",
+  anchors: "9",
+  style: "Vertical",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Ruta clásica de movimientos fuertes con equilibrio técnico. Una escalada desafiante que requiere potencia y precisión. Los movimientos en el crux son enérgicos pero bien distribuidos a lo largo de la línea.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Trabaja los movimientos de potencia con técnica",
+    "Los descansos son cortos, mantén la concentración",
+    "La flexión de brazos es clave en esta ruta",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

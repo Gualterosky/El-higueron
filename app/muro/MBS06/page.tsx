@@ -9,22 +9,19 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 6,
-  name: "Ruta 6", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "Fluidez",
+  level: "5.9",
+  height: "14m",
+  anchors: "8",
+  style: "Vertical",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Una escalada fluida y continua que requiere ritmo y consistencia. Los movimientos están bien distribuidos sin secciones que causen fricción. Ideal para trabajar técnica de escalada limpia y eficiente.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Mantén un ritmo constante sin pausas prolongadas",
+    "Enfócate en la economía de movimiento",
+    "Esta ruta premia la técnica sobre la potencia pura",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

@@ -9,22 +9,19 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 11,
-  name: "Ruta 11", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "Sentencia",
+  level: "5.12a",
+  height: "21m",
+  anchors: "12",
+  style: "Desplome",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Una ruta épica que resume el espíritu del Muro Bendito Sea. Los movimientos en desplome son intensos y demandan potencia explosiva. El crux es severo pero hermoso. Una escalada que te marcará.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Llega al crux descansado y con energía mental clara",
+    "Los movimientos previos al crux son clave para el ritmo",
+    "La tenacidad mental es tan importante como la fuerza física",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

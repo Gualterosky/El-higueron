@@ -9,22 +9,19 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 14,
-  name: "Ruta 14", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "Monolito",
+  level: "5.11d",
+  height: "22m",
+  anchors: "12",
+  style: "Vertical",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Una línea pura y directa que monta el corazón mismo de la montaña. Los movimientos son consistentes y progresivos. La altura es intimidante pero la roca es justa. Una escalada memorable.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Mantén concentración durante toda la escalada",
+    "Los primeros metros establecen el ritmo",
+    "Dosifica tu energía considerando la altura total",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

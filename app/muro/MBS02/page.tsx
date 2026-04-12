@@ -9,22 +9,20 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 2,
-  name: "Ruta 2", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "Pioneros",
+  level: "5.12b",
+  height: "18m",
+  anchors: "10",
+  style: "Deportiva",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Secuencia de movimientos hermosos con jugas manuales que no permiten descansar hasta el final, una vez que entras en el crux.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Requiere una buena técnica de jugas manuales",
+    "Pocos descansos: mantén el ritmo y la concentración",
+    "El crux es intenso pero hermoso",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
+  builders: "Miguel Ángel, 5 Jun 2024",
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

@@ -9,22 +9,19 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 9,
-  name: "Ruta 9", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "Equilibrio",
+  level: "5.11b",
+  height: "19m",
+  anchors: "11",
+  style: "Vertical",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Una escalada que pone a prueba tu equilibrio y comprensión del movimiento. Los balances son importantes para conservar energía. Cada movimiento debe ser deliberado y controlado en esta línea exigente.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Trabaja el movimiento antes de la fuerza bruta",
+    "Los balances pueden ahorrarte mucha energía",
+    "Esta ruta requiere paciencia y concentración",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

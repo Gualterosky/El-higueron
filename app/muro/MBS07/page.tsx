@@ -9,22 +9,19 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 7,
-  name: "Ruta 7", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "El Salto",
+  level: "5.10d",
+  height: "17m",
+  anchors: "10",
+  style: "Vertical",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Una escalada emocionante con movimientos dinámicos que requieren confianza y técnica. Los saltos dinámicos son el alma de esta ruta, con descansos estratégicos entre secciones. Un reto mental y físico.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Los saltos dinámicos requieren precisión en el aterrizaje",
+    "Confía en la roca y tu técnica",
+    "Los movimientos estáticos antes del crux son clave",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

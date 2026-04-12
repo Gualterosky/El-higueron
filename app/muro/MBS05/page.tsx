@@ -9,22 +9,19 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 5,
-  name: "Ruta 5", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "Dinamita",
+  level: "5.11a",
+  height: "20m",
+  anchors: "11",
+  style: "Desplome",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Una escalada explosiva con un carácter desafiante. Los movimientos en desplome requieren técnica explosiva y excelente comprensión del movimiento. Una ruta que premia la creatividad y la potencia controlada.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Los movimientos en desplome requieren impulso controlado",
+    "Usa las piernas para generar potencia",
+    "Busca los descansos para recuperarte entre crux",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

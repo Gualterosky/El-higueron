@@ -9,22 +9,20 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 15,
-  name: "Ruta 15", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  name: "Leyenda",
+  level: "5.12c",
+  height: "24m",
+  anchors: "13",
+  style: "Desplome",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    La ruta cumbre del Muro Bendito Sea. Una escalada épica que combina potencia, técnica y resistencia mental. El desplome final es severo pero accesible. Llegar al top es un logro que te transformará como escalador.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Prepárate mentalmente días antes de intentarla",
+    "Los movimientos previos al crux son fundamentales",
+    "Cada sección tiene su propia lógica y ritmo",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
+  builders: "Equipo de construcción del Muro, Junio 2024",
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================

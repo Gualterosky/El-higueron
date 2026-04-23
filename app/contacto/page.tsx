@@ -29,7 +29,7 @@ export default function ContactoPage() {
     setFormState({ name: "", message: "" })
   }
 
-  const whatsappNumber = "573001234567"
+  const whatsappNumber = "573172973537"
   const whatsappMessage = encodeURIComponent("Hola, me gustaría obtener información sobre Camping El Higuerón")
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 

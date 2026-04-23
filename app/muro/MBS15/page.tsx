@@ -1,33 +1,31 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Mountain, Ruler, TrendingUp, Anchor, AlertTriangle } from "lucide-react"
+import { ArrowLeft, Mountain, Ruler, TrendingUp, Anchor, AlertTriangle, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
-// ============================================
-// DATOS DE LA RUTA - EDITAR AQUÍ
-// ============================================
 const routeData = {
   number: 15,
-  name: "Ruta 15", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  routeName: "Soy Chowi",
+  name: "5.9 - 5.11",
+  level: "5.9 - 5.11",
+  height: "Por definir",
+  anchors: "Por definir",
+  style: "Clásica",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Ruta que en su primera sección ofrece una escalada deportiva amigable, corta y sencilla (5.9). Después de su primera estación hay un alargue mixto que sigue la evidente fisura delgada que exige seguros de tamaño pequeño hasta alcanzar su segunda reunión. La dificultad de esta segunda parte podría ser un 5.11-.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Primera sección deportiva fácil - buen calentamiento",
+    "Segunda parte es escalada mixta/tradicional",
+    "Fisura delgada requiere seguros pequeños",
+    "Se necesita equipo de protección tradicional",
+    "Segunda parte significativamente más difícil (5.11-)",
+    "Excelente para aprender escalada mixta",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
+  builders: "Leonardo Pineda & Dann Fonseca",
   image: "/placeholder.svg?height=800&width=600",
 }
-// ============================================
 
 const routeDetails = [
   { icon: TrendingUp, label: "Nivel", value: routeData.level },
@@ -39,73 +37,41 @@ const routeDetails = [
 export default function RouteMBS15Page() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
       <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src={routeData.image}
-            alt={`Ruta ${routeData.name} - Muro Bendito Sea`}
-            fill
-            className="object-cover"
-            priority
-          />
+          <Image src={routeData.image} alt={`Ruta ${routeData.routeName} - Muro Bendito Sea`} fill className="object-cover" priority />
           <div className="absolute inset-0 bg-gradient-to-b from-forest/60 to-forest/80" />
         </div>
-        
         <div className="container relative z-10 mx-auto px-4 text-center lg:px-8">
           <div className="mb-4 inline-flex items-center justify-center rounded-full bg-orange px-4 py-2">
-            <span className="text-sm font-bold text-white">MBS{String(routeData.number).padStart(2, "0")}</span>
+            <span className="text-sm font-bold text-white">{routeData.level}</span>
           </div>
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
-            {routeData.name}
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg text-white/90 md:text-xl">
-            Muro Bendito Sea - Ruta {routeData.number} de 15
-          </p>
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">{routeData.routeName}</h1>
+          <p className="mx-auto max-w-2xl text-lg text-white/90 md:text-xl">Muro Bendito Sea - Ruta {routeData.number} de 15</p>
         </div>
       </section>
 
-      {/* Back Navigation */}
       <section className="border-b bg-beige py-4">
         <div className="container mx-auto px-4 lg:px-8">
-          <Link 
-            href="/muro" 
-            className="inline-flex items-center gap-2 text-sm font-medium text-forest transition-colors hover:text-forest/80"
-          >
+          <Link href="/muro" className="inline-flex items-center gap-2 text-sm font-medium text-forest transition-colors hover:text-forest/80">
             <ArrowLeft className="h-4 w-4" />
             Volver al Muro Bendito Sea
           </Link>
         </div>
       </section>
 
-      {/* Route Details */}
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-            {/* Image */}
             <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
-              <Image
-                src={routeData.image}
-                alt={`Detalle de la ruta ${routeData.name}`}
-                fill
-                className="object-cover"
-              />
+              <Image src={routeData.image} alt={`Detalle de la ruta ${routeData.routeName}`} fill className="object-cover" />
             </div>
-
-            {/* Info */}
             <div>
               <div className="mb-6 flex items-center gap-2">
                 <Mountain className="h-5 w-5 text-forest" />
-                <span className="text-sm font-medium uppercase tracking-wider text-forest">
-                  Detalles de la Ruta
-                </span>
+                <span className="text-sm font-medium uppercase tracking-wider text-forest">Detalles de la Ruta</span>
               </div>
-              
-              <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
-                {routeData.name}
-              </h2>
-
-              {/* Route Stats */}
+              <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">{routeData.routeName}</h2>
               <div className="mb-8 grid grid-cols-2 gap-4">
                 {routeDetails.map((detail) => (
                   <Card key={detail.label} className="border-border">
@@ -114,25 +80,24 @@ export default function RouteMBS15Page() {
                         <detail.icon className="h-6 w-6 text-white" />
                       </div>
                       <div>
-                        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                          {detail.label}
-                        </p>
+                        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">{detail.label}</p>
                         <p className="text-lg font-semibold text-foreground">{detail.value}</p>
                       </div>
                     </CardContent>
                   </Card>
                 ))}
               </div>
-
-              {/* Description */}
               <div className="mb-8">
                 <h3 className="mb-4 text-xl font-semibold text-foreground">Descripción</h3>
-                <p className="leading-relaxed text-muted-foreground">
-                  {routeData.description}
-                </p>
+                <p className="leading-relaxed text-muted-foreground">{routeData.description}</p>
               </div>
-
-              {/* Tips */}
+              <div className="mb-6 flex items-center gap-3 rounded-xl border border-border bg-beige p-4">
+                <User className="h-5 w-5 shrink-0 text-forest" />
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Aperturistas</p>
+                  <p className="font-medium text-foreground">{routeData.builders}</p>
+                </div>
+              </div>
               <div className="rounded-xl bg-beige p-6">
                 <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-foreground">
                   <AlertTriangle className="h-5 w-5 text-orange" />
@@ -152,7 +117,6 @@ export default function RouteMBS15Page() {
         </div>
       </section>
 
-      {/* Navigation Between Routes */}
       <section className="border-t bg-beige py-12">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between">
@@ -166,11 +130,9 @@ export default function RouteMBS15Page() {
                 </Button>
               )}
             </div>
-            
             <Button asChild className="bg-orange text-white hover:bg-orange/90">
               <Link href="/muro">Ver todas las rutas</Link>
             </Button>
-            
             <div>
               {routeData.number < 15 && (
                 <Button asChild variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
@@ -185,15 +147,10 @@ export default function RouteMBS15Page() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-16 lg:py-24">
         <div className="container mx-auto px-4 text-center lg:px-8">
-          <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">
-            ¿Necesitas equipo para escalar?
-          </h2>
-          <p className="mx-auto mb-8 max-w-xl text-muted-foreground">
-            Consulta la disponibilidad de equipos de escalada en Camping El Higuerón.
-          </p>
+          <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">¿Necesitas equipo para escalar?</h2>
+          <p className="mx-auto mb-8 max-w-xl text-muted-foreground">Consulta la disponibilidad de equipos de escalada en Camping El Higuerón.</p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
               <Link href="/equipos">Ver equipos disponibles</Link>

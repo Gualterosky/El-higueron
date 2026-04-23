@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Mountain, Ruler, TrendingUp, Anchor, AlertTriangle } from "lucide-react"
+import { ArrowLeft, Mountain, Ruler, TrendingUp, Anchor, AlertTriangle, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -9,22 +9,23 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 6,
-  name: "Ruta 6", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  routeName: "Permutante",
+  name: "Proyecto",
+  level: "Proyecto",
+  height: "28m",
+  anchors: "14",
+  style: "Deportiva - Proyecto",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Un largo viaje de muchas secciones potentes en una pared ligeramente en desplome. Una amplia gama de movimientos técnicos y mucho aguante. Probablemente la línea más difícil del sector hasta ahora.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Una de las rutas más desafiantes del muro",
+    "Múltiples secciones técnicas requieren concentración",
+    "Se necesita excelente resistencia",
+    "Pared en desplome requiere potencia y técnica",
+    "Proyecto - aún no asegurada completamente",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
+  builders: "Néstor Caro & Juan Hernández, 1 Jul 2024",
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================
@@ -44,7 +45,7 @@ export default function RouteMBS06Page() {
         <div className="absolute inset-0 z-0">
           <Image
             src={routeData.image}
-            alt={`Ruta ${routeData.name} - Muro Bendito Sea`}
+            alt={`Ruta ${routeData.routeName} - Muro Bendito Sea`}
             fill
             className="object-cover"
             priority
@@ -54,10 +55,10 @@ export default function RouteMBS06Page() {
         
         <div className="container relative z-10 mx-auto px-4 text-center lg:px-8">
           <div className="mb-4 inline-flex items-center justify-center rounded-full bg-orange px-4 py-2">
-            <span className="text-sm font-bold text-white">MBS{String(routeData.number).padStart(2, "0")}</span>
+            <span className="text-sm font-bold text-white">{routeData.level}</span>
           </div>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
-            {routeData.name}
+            {routeData.routeName}
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-white/90 md:text-xl">
             Muro Bendito Sea - Ruta {routeData.number} de 15
@@ -86,7 +87,7 @@ export default function RouteMBS06Page() {
             <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
               <Image
                 src={routeData.image}
-                alt={`Detalle de la ruta ${routeData.name}`}
+                alt={`Detalle de la ruta ${routeData.routeName}`}
                 fill
                 className="object-cover"
               />
@@ -102,7 +103,7 @@ export default function RouteMBS06Page() {
               </div>
               
               <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
-                {routeData.name}
+                {routeData.routeName}
               </h2>
 
               {/* Route Stats */}
@@ -130,6 +131,15 @@ export default function RouteMBS06Page() {
                 <p className="leading-relaxed text-muted-foreground">
                   {routeData.description}
                 </p>
+              </div>
+
+              {/* Builders */}
+              <div className="mb-6 flex items-center gap-3 rounded-xl border border-border bg-beige p-4">
+                <User className="h-5 w-5 shrink-0 text-forest" />
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Aperturistas</p>
+                  <p className="font-medium text-foreground">{routeData.builders}</p>
+                </div>
               </div>
 
               {/* Tips */}

@@ -94,7 +94,7 @@ export function Footer() {
             <ul className="flex flex-col gap-3">
               <li>
                 <a
-                  href="https://wa.me/573001234567"
+                  href="https://wa.me/573172973537"
                   className="flex items-center gap-2 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
                 >
                   <Phone className="h-4 w-4" />

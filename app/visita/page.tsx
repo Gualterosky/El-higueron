@@ -282,7 +282,7 @@ export default function VisitaPage() {
               <Link href="/contacto">Contactar</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
-              <a href="https://wa.me/573001234567" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/573172973537" target="_blank" rel="noopener noreferrer">
                 WhatsApp
               </a>
             </Button>

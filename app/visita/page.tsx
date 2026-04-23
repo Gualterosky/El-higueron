@@ -5,22 +5,20 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const howToGetThere = [
-  "El Higuerón se encuentra en las montañas del bosque alto andino colombiano",
-  "Se recomienda vehículo con buena tracción, especialmente en época de lluvias",
-  "Coordina tu llegada con anticipación para recibir indicaciones precisas",
-  "Ten en cuenta que algunas zonas pueden tener señal limitada de celular",
+  "Vereda Aguadulce Choachí",
+  "Via Bogotá - Choachí Pr 6+100 Ruta 4006A km23",
 ]
 
 const weatherRecommendations = [
   {
     icon: Cloud,
     title: "Clima Variable",
-    description: "El clima de montaña puede cambiar rápidamente. Prepárate para sol, lluvia y frío en un mismo día.",
+    description: "Clima frio. El clima de montaña puede cambiar rápidamente. Prepárate para sol, lluvia y frío en un mismo día. Temperatura promedio 15°C",
   },
   {
     icon: Shirt,
-    title: "Ropa por Capas",
-    description: "Viste en capas que puedas quitar o poner según las condiciones. Incluye ropa impermeable.",
+    title: "Vestimenta recomendada",
+    description: "Depende mucho de la actividad que vayas a hacer, pero por lo general ven preparado para el frio y la lluvia",
   },
 ]
 
@@ -28,9 +26,9 @@ const clothingList = [
   "Chaqueta impermeable y cortaviento",
   "Ropa térmica para las noches",
   "Gorro y guantes para el frío",
-  "Zapatos de trekking cómodos",
+  "Botas o zapatos de trekking cómodos",
   "Ropa cómoda para escalar",
-  "Cambio de ropa seca",
+  "Ropa de cambio)",
 ]
 
 const basicRules = [
@@ -57,10 +55,9 @@ const basicRules = [
 ]
 
 const schedule = [
-  { day: "Lunes a Viernes", hours: "Con reserva previa" },
-  { day: "Sábados", hours: "8:00 AM - 6:00 PM" },
-  { day: "Domingos", hours: "8:00 AM - 5:00 PM" },
-  { day: "Festivos", hours: "Consultar disponibilidad" },
+  { day: "Lunes a Viernes", hours: "7:00 AM - 5:00 PM" },
+  { day: "Sábados, Domingos y Festivos", hours: "7:00 AM - 6:00 PM" },
+
 ]
 
 export default function VisitaPage() {
@@ -78,7 +75,7 @@ export default function VisitaPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-forest/50 to-forest/70" />
         </div>
-        
+
         <div className="container relative z-10 mx-auto px-4 text-center lg:px-8">
           <h1 className="animate-fade-in-up mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
             Planifica tu Visita
@@ -106,7 +103,7 @@ export default function VisitaPage() {
               <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
                 El Higuerón está ubicado en un entorno de montaña, por lo que es importante planificar tu llegada con anticipación.
               </p>
-              
+
               <ul className="space-y-4">
                 {howToGetThere.map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
@@ -115,14 +112,14 @@ export default function VisitaPage() {
                   </li>
                 ))}
               </ul>
-              
+
               <div className="mt-8">
                 <Button asChild className="bg-orange text-white hover:bg-orange/90">
                   <Link href="/contacto">Solicitar indicaciones</Link>
                 </Button>
               </div>
             </div>
-            
+
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src="/placeholder.svg?height=600&width=800"
@@ -146,7 +143,7 @@ export default function VisitaPage() {
               Prepárate para las condiciones de montaña
             </p>
           </div>
-          
+
           <div className="grid gap-8 lg:grid-cols-2">
             {/* Weather Cards */}
             <div className="flex flex-col gap-6">
@@ -164,7 +161,7 @@ export default function VisitaPage() {
                 </Card>
               ))}
             </div>
-            
+
             {/* Clothing List */}
             <Card className="border-none bg-white shadow-sm">
               <CardHeader>
@@ -199,10 +196,10 @@ export default function VisitaPage() {
               Ayúdanos a cuidar este espacio para las futuras generaciones
             </p>
           </div>
-          
+
           <div className="grid gap-6 md:grid-cols-2">
             {basicRules.map((rule) => (
-              <div 
+              <div
                 key={rule.title}
                 className="flex items-start gap-4 rounded-xl border border-border bg-card p-6 transition-all hover:border-forest hover:shadow-sm"
               >
@@ -236,10 +233,10 @@ export default function VisitaPage() {
               <p className="mb-8 text-lg leading-relaxed text-white/90">
                 Los horarios pueden variar según la temporada y las condiciones climáticas. Te recomendamos confirmar antes de tu visita.
               </p>
-              
+
               <div className="space-y-4">
                 {schedule.map((item) => (
-                  <div 
+                  <div
                     key={item.day}
                     className="flex items-center justify-between rounded-lg bg-white/10 px-4 py-3"
                   >
@@ -249,7 +246,7 @@ export default function VisitaPage() {
                 ))}
               </div>
             </div>
-            
+
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src="/placeholder.svg?height=600&width=800"

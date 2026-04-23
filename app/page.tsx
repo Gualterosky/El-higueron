@@ -144,10 +144,13 @@ export default function HomePage() {
               <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
                 Aquí no hay ruido de ciudad ni distracciones innecesarias. Solo el sonido del viento, las aves y el fuego en la noche. Un lugar para acampar, escalar y vivir la montaña de forma simple, real y cercana.
               </p>
-              <div className="flex items-center gap-2 text-forest">
+              <div className="mb-8 flex items-center gap-2 text-forest">
                 <MapPin className="h-5 w-5" />
                 <span className="font-medium">Choachí Cundinamarca - Aguadulce</span>
               </div>
+              <Button asChild size="lg" className="bg-forest text-white hover:bg-forest/90">
+                <Link href="/el-lugar">Conoce el lugar</Link>
+              </Button>
             </div>
           </div>
         </div>

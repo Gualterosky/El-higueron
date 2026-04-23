@@ -7,6 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 const howToGetThere = [
   "Vereda Aguadulce Choachí",
   "Via Bogotá - Choachí Pr 6+100 Ruta 4006A km23",
+  "Algunas zonas cuentan con señal limitada de celular",
+  "Coordina tu llegada previamente para recibir indicaciones claras y actualizadas",
+
+  "Importante: Antes de salir, solicita las indicaciones y recomendaciones del estado de la vía.",
 ]
 
 const weatherRecommendations = [
@@ -24,11 +28,11 @@ const weatherRecommendations = [
 
 const clothingList = [
   "Chaqueta impermeable y cortaviento",
-  "Ropa térmica para las noches",
-  "Gorro y guantes para el frío",
-  "Botas o zapatos de trekking cómodos",
+  "Ropa térmica para la noche",
+  "Gorro y guantes",
+  "Zapatos de trekking o botas para terreno irregular",
   "Ropa cómoda para escalar",
-  "Ropa de cambio)",
+  "Muda de ropa seca",
 ]
 
 const basicRules = [
@@ -55,9 +59,11 @@ const basicRules = [
 ]
 
 const schedule = [
-  { day: "Lunes a Viernes", hours: "7:00 AM - 5:00 PM" },
-  { day: "Sábados, Domingos y Festivos", hours: "7:00 AM - 6:00 PM" },
-
+  { category: "Escalada", day: "Lunes a Viernes", hours: "7:00 AM - 5:00 PM" },
+  { category: "Escalada", day: "Sábados, Domingos y Festivos", hours: "7:00 AM - 6:00 PM" },
+  { category: "Camping", day: "Todos los días", hours: "Reserva previa" },
+  { category: "Caminatas", day: "Todos los días", hours: "Reserva previa" },
+  { category: "Talleres", day: "Todos los días", hours: "Reserva previa" },
 ]
 
 export default function VisitaPage() {
@@ -101,7 +107,7 @@ export default function VisitaPage() {
                 ¿Cómo llegar?
               </h2>
               <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
-                El Higuerón está ubicado en un entorno de montaña, por lo que es importante planificar tu llegada con anticipación.
+                Camping El Higuerón está ubicado en las montañas de Choachí, dentro del ecosistema de bosque altoandino. Al ser una zona rural de montaña, es importante planificar tu llegada con anticipación.
               </p>
 
               <ul className="space-y-4">
@@ -193,7 +199,7 @@ export default function VisitaPage() {
               Normas Básicas
             </h2>
             <p className="mx-auto max-w-2xl text-muted-foreground">
-              Ayúdanos a cuidar este espacio para las futuras generaciones
+              Ayúdanos a cuidar este espacio
             </p>
           </div>
 
@@ -234,14 +240,17 @@ export default function VisitaPage() {
                 Los horarios pueden variar según la temporada y las condiciones climáticas. Te recomendamos confirmar antes de tu visita.
               </p>
 
-              <div className="space-y-4">
-                {schedule.map((item) => (
+              <div className="space-y-3">
+                {schedule.map((item, index) => (
                   <div
-                    key={item.day}
+                    key={index}
                     className="flex items-center justify-between rounded-lg bg-white/10 px-4 py-3"
                   >
-                    <span className="font-medium text-white">{item.day}</span>
-                    <span className="text-white/80">{item.hours}</span>
+                    <div>
+                      <span className="block text-xs font-semibold uppercase tracking-wider text-orange">{item.category}</span>
+                      <span className="font-medium text-white">{item.day}</span>
+                    </div>
+                    <span className="text-sm text-white/80">{item.hours}</span>
                   </div>
                 ))}
               </div>

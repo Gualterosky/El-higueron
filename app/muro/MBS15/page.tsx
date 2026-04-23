@@ -7,8 +7,8 @@ import { Card, CardContent } from "@/components/ui/card"
 const routeData = {
   number: 15,
   routeName: "Soy Chowi",
-  name: "5.9",
-  level: "5.9",
+  name: "5.9 - 5.11",
+  level: "5.9 - 5.11",
   height: "Por definir",
   anchors: "Por definir",
   style: "Clásica",

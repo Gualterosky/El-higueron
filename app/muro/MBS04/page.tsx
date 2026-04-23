@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Mountain, Ruler, TrendingUp, Anchor, AlertTriangle } from "lucide-react"
+import { ArrowLeft, Mountain, Ruler, TrendingUp, Anchor, AlertTriangle, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -9,22 +9,22 @@ import { Card, CardContent } from "@/components/ui/card"
 // ============================================
 const routeData = {
   number: 4,
-  name: "Ruta 4", // Nombre de la ruta
-  level: "Por definir", // Nivel de dificultad (ej: 5a, 6b+, 7a)
-  height: "Por definir", // Altura en metros (ej: "12m")
-  anchors: "Por definir", // Número de chapas (ej: "8 chapas")
-  style: "Por definir", // Estilo (ej: "Vertical", "Desplome", "Placa")
+  routeName: "Gente Buena",
+  name: "5.9",
+  level: "5.9",
+  height: "Por definir",
+  anchors: "Por definir",
+  style: "Deportiva",
   description: `
-    Descripción pendiente de la ruta. 
-    Aquí puedes agregar información detallada sobre las características de la ruta, 
-    los movimientos clave, la roca y cualquier otro detalle relevante para los escaladores.
+    Ruta fácil que se ubica en la evidente línea de fácil progresión entre La Niebla y Perdidos en el Bosque. Inicia en Perdidos en el Bosque para luego tirar ligeramente hacia la izquierda hacia la placa a favor, juntándose con La Niebla y finalizando en un descuelgue ubicado en la primera repisa justo donde inicia la fisura alta de Pioneros.
   `,
   tips: [
-    "Consejo 1 pendiente",
-    "Consejo 2 pendiente",
-    "Consejo 3 pendiente",
+    "Ubicada en una progresión natural de dificultad",
+    "Conecta con otras dos rutas importantes",
+    "Finaliza en un descuelgue bien definido",
+    "Buena opción para escaladores en progresión",
   ],
-  // Imagen de la ruta (reemplazar con imagen real)
+  builders: "Leonardo Pineda & Dann Fonseca",
   image: "/placeholder.svg?height=800&width=600",
 }
 // ============================================
@@ -44,7 +44,7 @@ export default function RouteMBS04Page() {
         <div className="absolute inset-0 z-0">
           <Image
             src={routeData.image}
-            alt={`Ruta ${routeData.name} - Muro Bendito Sea`}
+            alt={`Ruta ${routeData.routeName} - Muro Bendito Sea`}
             fill
             className="object-cover"
             priority
@@ -54,10 +54,10 @@ export default function RouteMBS04Page() {
         
         <div className="container relative z-10 mx-auto px-4 text-center lg:px-8">
           <div className="mb-4 inline-flex items-center justify-center rounded-full bg-orange px-4 py-2">
-            <span className="text-sm font-bold text-white">MBS{String(routeData.number).padStart(2, "0")}</span>
+            <span className="text-sm font-bold text-white">{routeData.level}</span>
           </div>
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
-            {routeData.name}
+            {routeData.routeName}
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-white/90 md:text-xl">
             Muro Bendito Sea - Ruta {routeData.number} de 15
@@ -86,7 +86,7 @@ export default function RouteMBS04Page() {
             <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
               <Image
                 src={routeData.image}
-                alt={`Detalle de la ruta ${routeData.name}`}
+                alt={`Detalle de la ruta ${routeData.routeName}`}
                 fill
                 className="object-cover"
               />
@@ -102,7 +102,7 @@ export default function RouteMBS04Page() {
               </div>
               
               <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
-                {routeData.name}
+                {routeData.routeName}
               </h2>
 
               {/* Route Stats */}
@@ -130,6 +130,15 @@ export default function RouteMBS04Page() {
                 <p className="leading-relaxed text-muted-foreground">
                   {routeData.description}
                 </p>
+              </div>
+
+              {/* Builders */}
+              <div className="mb-6 flex items-center gap-3 rounded-xl border border-border bg-beige p-4">
+                <User className="h-5 w-5 shrink-0 text-forest" />
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Aperturistas</p>
+                  <p className="font-medium text-foreground">{routeData.builders}</p>
+                </div>
               </div>
 
               {/* Tips */}

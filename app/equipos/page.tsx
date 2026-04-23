@@ -1,42 +1,65 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Wrench, Shield, HardHat, Footprints, CircleDot, MessageCircle } from "lucide-react"
+import { Wrench, Shield, HardHat, Footprints, CircleDot, MessageCircle, Tent } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const equipment = [
   {
-    icon: Shield,
-    name: "Arnés",
-    description: "Arneses de escalada deportiva en diferentes tallas para asegurar comodidad y seguridad durante la escalada.",
+    icon: HardHat,
+    name: "Casco",
+    description: "Cascos de seguridad para protección durante la escalada. Recomendado para todas las actividades en pared.",
     forActivity: "Escalada",
+    available: true,
+    image: "https://images.unsplash.com/photo-1612198790700-ce4fcb0b5bb3?w=600&q=80",
   },
   {
     icon: Footprints,
     name: "Pies de Gato",
     description: "Zapatos especializados para escalada en varias tallas. Esenciales para un mejor agarre en la roca.",
     forActivity: "Escalada y Boulder",
+    available: true,
+    image: "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=600&q=80",
   },
   {
-    icon: HardHat,
-    name: "Casco",
-    description: "Cascos de seguridad para protección durante la escalada. Obligatorio para todas las actividades en pared.",
+    icon: Shield,
+    name: "Arnés",
+    description: "Arneses de escalada deportiva en diferentes tallas para asegurar comodidad y seguridad durante la escalada.",
     forActivity: "Escalada",
+    available: true,
+    image: "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=600&q=80",
   },
   {
     icon: CircleDot,
     name: "Crashpads",
     description: "Colchonetas de protección para caídas durante la práctica de boulder. Fundamentales para una sesión segura.",
     forActivity: "Boulder",
+    available: true,
+    image: "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=600&q=80",
+  },
+  {
+    icon: Footprints,
+    name: "Botas",
+    description: "Botas de montaña para senderismo y actividades al aire libre.",
+    forActivity: "Senderismo",
+    available: false,
+    image: "https://images.unsplash.com/photo-1520219306100-ec4afbdb6edf?w=600&q=80",
+  },
+  {
+    icon: Tent,
+    name: "Carpas de Camping",
+    description: "Carpas para acampar en el lugar, ideales para quienes no cuentan con su propio equipo de camping.",
+    forActivity: "Camping",
+    available: false,
+    image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80",
   },
 ]
 
 const importantNotes = [
-  "La disponibilidad de equipos puede variar según la demanda",
-  "Se recomienda reservar con anticipación, especialmente en temporada alta",
-  "Todo el equipo es revisado regularmente para garantizar su buen estado",
-  "Se proporcionan instrucciones básicas de uso",
-  "El usuario es responsable del cuidado del equipo durante su uso",
+  "La disponibilidad de equipos puede variar según la demanda.",
+  "Se recomienda reservar con anticipación, especialmente en temporada alta.",
+  "Como garantía del equipo rentado, se debe dejar un documento de identidad válido en el ingreso. Este será devuelto en el momento en que se retorne el equipo en buen estado.",
+  "El usuario es responsable del cuidado del equipo durante su uso.",
 ]
 
 export default function EquiposPage() {
@@ -99,14 +122,21 @@ export default function EquiposPage() {
           
           <div className="grid gap-8 md:grid-cols-2">
             {equipment.map((item) => (
-              <Card key={item.name} className="border-none bg-white shadow-sm transition-all hover:shadow-md">
+              <Card key={item.name} className={`border-none shadow-sm transition-all hover:shadow-md ${item.available ? "bg-white" : "bg-white/60 opacity-60"}`}>
                 <CardHeader className="pb-2">
                   <div className="flex items-start gap-4">
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-forest">
+                    <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${item.available ? "bg-forest" : "bg-muted"}`}>
                       <item.icon className="h-7 w-7 text-white" />
                     </div>
-                    <div>
-                      <CardTitle className="mb-1 text-xl">{item.name}</CardTitle>
+                    <div className="flex-1">
+                      <div className="mb-1 flex items-center gap-2">
+                        <CardTitle className="text-xl">{item.name}</CardTitle>
+                        {!item.available && (
+                          <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
+                            No disponible
+                          </span>
+                        )}
+                      </div>
                       <span className="inline-block rounded-full bg-beige px-3 py-1 text-xs font-medium text-forest">
                         {item.forActivity}
                       </span>

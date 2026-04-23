@@ -8,25 +8,25 @@ const experiences = [
   {
     icon: Mountain,
     title: "Escalada Deportiva",
-    description: "Más de 12 rutas de escalada en roca natural con diferentes niveles de dificultad en el sector Bendito Sea.",
+    description: "Más de 15 rutas de escalada en roca natural con diferentes niveles de dificultad en el sector Bendito Sea.",
   },
   {
     icon: CircleDot,
     title: "Boulder",
-    description: "Zona de boulders con problemas para todos los niveles, rodeada del paisaje único del bosque alto andino.",
+    description: "Zona de boulders para todos los niveles, rodeada del paisaje único del bosque alto andino.",
   },
   {
     icon: Tent,
     title: "Camping",
-    description: "Espacios para acampar en un ambiente tranquilo y seguro, con fogatas bajo las estrellas de la montaña.",
+    description: "Espacios para acampar en un ambiente tranquilo y seguro, con fogatas bajo las estrellas y actividades recreativas.",
   },
 ]
 
 const features = [
-  { icon: Mountain, label: "+12 rutas de escalada", description: "Diferentes niveles" },
-  { icon: CircleDot, label: "Zona de boulders", description: "Para todos los niveles" },
+  { icon: Mountain, label: "+15 rutas de escalada", description: "5.9 - 5,13" },
+  { icon: CircleDot, label: "Zona de boulders", description: "Distintos niveles" },
   { icon: Tent, label: "Espacio para camping", description: "Ambiente natural" },
-  { icon: Flame, label: "Fogatas y naturaleza", description: "Noches estrelladas" },
+  { icon: Flame, label: "Talleres y senderismo", description: "Actividades al aire libre" },
 ]
 
 const galleryImages = [
@@ -52,13 +52,13 @@ export default function HomePage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-forest/60 via-forest/40 to-forest/70" />
         </div>
-        
+
         <div className="container relative z-10 mx-auto px-4 text-center lg:px-8">
           <h1 className="animate-fade-in-up mb-6 text-balance text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
-            Escalada y camping en el corazón de la montaña
+            Escalada, camping y conexión con la naturaleza en el corazón de la montaña
           </h1>
           <p className="animate-fade-in-up animation-delay-100 mx-auto mb-8 max-w-2xl text-pretty text-lg text-white/90 md:text-xl">
-            Vive la experiencia de Bendito Sea en Camping El Higuerón. Un refugio natural en el bosque alto andino colombiano.
+            Vive una experiencia única en Camping El Higuerón, un refugio natural en el bosque altoandino de Choachí.
           </p>
           <div className="animate-fade-in-up animation-delay-200">
             <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
@@ -86,11 +86,11 @@ export default function HomePage() {
               Descubre las diferentes actividades que puedes disfrutar en Camping El Higuerón
             </p>
           </div>
-          
+
           <div className="grid gap-8 md:grid-cols-3">
             {experiences.map((exp) => (
-              <Card 
-                key={exp.title} 
+              <Card
+                key={exp.title}
                 className="group border-none bg-white shadow-sm transition-all hover:shadow-md"
               >
                 <CardContent className="flex flex-col items-center p-8 text-center">
@@ -118,7 +118,7 @@ export default function HomePage() {
                 className="object-cover"
               />
             </div>
-            
+
             <div>
               <div className="mb-4 flex items-center gap-2">
                 <Trees className="h-5 w-5 text-forest" />
@@ -127,17 +127,17 @@ export default function HomePage() {
                 </span>
               </div>
               <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
-                Un refugio en el bosque alto andino
+                Un refugio entre roca y el bosque de niebla
               </h2>
               <p className="mb-6 text-lg leading-relaxed text-muted-foreground">
-                Camping El Higuerón se encuentra en las montañas de Colombia, rodeado del majestuoso bosque alto andino. Un lugar donde la naturaleza se convierte en tu compañera de aventura.
+                Camping El Higuerón está ubicado en las montañas de Choachí, rodeado de bosque altoandino y formaciones rocosas que dan vida al sector de escalada Bendito Sea. Es un espacio pensado para quienes buscan desconectarse de lo urbano y reconectar con lo esencial.
               </p>
               <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
-                Aquí encontrarás la tranquilidad que buscas, lejos del ruido de la ciudad, con el sonido del viento entre los árboles y el canto de las aves nativas como banda sonora.
+                Aquí no hay ruido de ciudad ni distracciones innecesarias. Solo el sonido del viento, las aves y el fuego en la noche. Un lugar para acampar, escalar y vivir la montaña de forma simple, real y cercana.
               </p>
               <div className="flex items-center gap-2 text-forest">
                 <MapPin className="h-5 w-5" />
-                <span className="font-medium">Colombia - Bosque Alto Andino</span>
+                <span className="font-medium">Choachí Cundinamarca - Aguadulce</span>
               </div>
             </div>
           </div>
@@ -155,10 +155,10 @@ export default function HomePage() {
               Todo lo que necesitas para una experiencia inolvidable en la montaña
             </p>
           </div>
-          
+
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature) => (
-              <div 
+              <div
                 key={feature.label}
                 className="flex flex-col items-center rounded-xl bg-white/10 p-6 text-center backdrop-blur-sm transition-colors hover:bg-white/15"
               >
@@ -182,10 +182,10 @@ export default function HomePage() {
               Un vistazo a lo que te espera en Camping El Higuerón
             </p>
           </div>
-          
+
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {galleryImages.map((image, index) => (
-              <div 
+              <div
                 key={index}
                 className="group relative aspect-square overflow-hidden rounded-xl"
               >
@@ -199,7 +199,7 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-10 text-center">
             <Button asChild variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
               <Link href="/galeria">Ver galería completa</Link>
@@ -212,7 +212,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-beige py-20 lg:py-28">
         <div className="absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-orange/10" />
         <div className="absolute bottom-0 left-0 h-48 w-48 -translate-x-1/2 translate-y-1/2 rounded-full bg-forest/10" />
-        
+
         <div className="container relative mx-auto px-4 text-center lg:px-8">
           <Star className="mx-auto mb-6 h-12 w-12 text-orange" />
           <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">

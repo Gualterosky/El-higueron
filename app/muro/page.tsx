@@ -16,9 +16,9 @@ const routes = [
   { name: "Bendito Sea", level: "5.13a", height: "33m" },
   { name: "Destructor", level: "5.9", height: "14m" },
   { name: "Piscineitor", level: "5.10b", height: "14m" },
-  { name: "Chihiza", level: "5.11d", height: "18m" },
-  { name: "Los Gnomos de Guayara", level: "5.11c", height: "18m" },
-  { name: "El Gangazo", level: "5.9", height: "8m" },
+  { name: "Chihiza", level: "5.11c", height: "18m" },
+  { name: "Los Gnomos de Guayara", level: "5.11b", height: "18m" },
+  { name: "El Gangazo", level: "5.11a", height: "20m" },
   { name: "Soy Chowi", level: "5.9", height: "Por definir" },
 ]
 

@@ -6,24 +6,23 @@ import { Card, CardContent } from "@/components/ui/card"
 
 const routeData = {
   number: 12,
-  routeName: "Orco Grande",
-  name: "5.12b",
-  level: "5.12b",
-  height: "35m",
-  anchors: "16",
+  routeName: "Chihiza",
+  name: "5.11c",
+  level: "5.11c",
+  height: "18m",
+  anchors: "13",
   style: "Deportiva",
   description: `
-    Una ruta largo con algunos pasajes interesantes. El comienzo tiene una sección de agarres pequeños que requiere técnica. Hay un descanso en medio con buenos agarres. La sección superior es menos exigente pero la altura acumulada es significativa. Se requiere excelente resistencia y concentración.
+    Comienza con un desplome con buenos agarres laterales, atraviesa una sección de crimp y progresa a los agarres de lava. La segunda mitad es un desplome con excelentes agarres.
   `,
   tips: [
-    "Línea larga - requiere concentración total",
-    "Agarres pequeños al principio - técnica fina es clave",
-    "Aprovechar el descanso en la mitad",
-    "Dosificar energía considerando la altura total",
-    "Sección superior menos técnica pero exigente",
-    "Requiere resistencia mental y física excepcional",
+    "Desplome inicial con buenos agarres laterales",
+    "Sección de crimp requiere técnica fina",
+    "Progresa hacia agarres de lava únicos",
+    "Segunda mitad también en desplome",
+    "Excelentes agarres en la parte final",
   ],
-  builders: "Néstor Caro & Juan Hernández, 18 Jun 2024",
+  builders: "Néstor Caro & Juan Hernández, 3 Ago 2024",
   image: "/placeholder.svg?height=800&width=600",
 }
 

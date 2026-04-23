@@ -8,22 +8,21 @@ const routeData = {
   number: 11,
   routeName: "Piscineitor",
   name: "5.10b",
-  level: "5.12a",
-  height: "30m",
-  anchors: "14",
+  level: "5.10b",
+  height: "14m",
+  anchors: "7",
   style: "Deportiva",
   description: `
-    Un pasaje técnico de buena pared con algunos crux alrededor del 5.11d. Comienza en una zona de pared suave con buenos agarres, luego entra en una pared más vertical donde necesitarás técnica fina y fricción. Hay un techo pequeño con buenos agarres. La sección superior es menos exigente pero requiere resistencia.
+    El comienzo es un océano de buenos agarres y galletas de arena, hasta que alcanzas un movimiento que requiere puro equilibrio y elevar tus pies muy alto. Necesitas hacer el movimiento para clavar, un salto de fe muy bonito.
   `,
   tips: [
-    "Comienzo amable en pared suave",
-    "Crux alrededor de 5.11d en sección media",
-    "Se requiere técnica fina y buen uso de fricción",
-    "Pequeño techo con agarres mejorables",
-    "Sección superior menos difícil pero exigente en resistencia",
-    "Variedad de técnicas requeridas en toda la ruta",
+    "Comienzo con buenos agarres y galletas de arena",
+    "El crux requiere equilibrio puro",
+    "Eleva tus pies muy alto para el movimiento clave",
+    "Necesitas hacer el movimiento para poder clavar",
+    "Un salto de fe hermoso define la ruta",
   ],
-  builders: "Néstor Caro & Juan Hernández, 15 Jun 2024",
+  builders: "Néstor Caro & Juan Hernández, 4 Ago 2024",
   image: "/placeholder.svg?height=800&width=600",
 }
 

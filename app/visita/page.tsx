@@ -127,11 +127,16 @@ export default function VisitaPage() {
             </div>
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image
-                src="/placeholder.svg?height=600&width=800"
-                alt="Camino hacia El Higuerón"
-                fill
-                className="object-cover"
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d248.57296023079977!2d-73.97274122963603!3d4.563915302608665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1776979264923!5m2!1ses-419!2sco"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación Camping El Higuerón"
+                className="absolute inset-0"
               />
             </div>
           </div>

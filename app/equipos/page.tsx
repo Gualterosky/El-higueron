@@ -11,6 +11,7 @@ const equipment = [
     description: "Cascos de seguridad para protección durante la escalada. Recomendado para todas las actividades en pared.",
     forActivity: "Escalada",
     available: true,
+    image: "https://images.unsplash.com/photo-1612198790700-ce4fcb0b5bb3?w=600&q=80",
   },
   {
     icon: Footprints,
@@ -18,6 +19,7 @@ const equipment = [
     description: "Zapatos especializados para escalada en varias tallas. Esenciales para un mejor agarre en la roca.",
     forActivity: "Escalada y Boulder",
     available: true,
+    image: "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=600&q=80",
   },
   {
     icon: Shield,
@@ -25,6 +27,7 @@ const equipment = [
     description: "Arneses de escalada deportiva en diferentes tallas para asegurar comodidad y seguridad durante la escalada.",
     forActivity: "Escalada",
     available: true,
+    image: "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=600&q=80",
   },
   {
     icon: CircleDot,
@@ -32,6 +35,7 @@ const equipment = [
     description: "Colchonetas de protección para caídas durante la práctica de boulder. Fundamentales para una sesión segura.",
     forActivity: "Boulder",
     available: true,
+    image: "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=600&q=80",
   },
   {
     icon: Footprints,
@@ -39,6 +43,7 @@ const equipment = [
     description: "Botas de montaña para senderismo y actividades al aire libre.",
     forActivity: "Senderismo",
     available: false,
+    image: "https://images.unsplash.com/photo-1520219306100-ec4afbdb6edf?w=600&q=80",
   },
   {
     icon: Tent,
@@ -46,6 +51,7 @@ const equipment = [
     description: "Carpas para acampar en el lugar, ideales para quienes no cuentan con su propio equipo de camping.",
     forActivity: "Camping",
     available: false,
+    image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80",
   },
 ]
 

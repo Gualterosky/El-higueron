@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Mountain, Tent, CircleDot, Trees, Flame, MapPin, Star } from "lucide-react"
+import { Mountain, Tent, CircleDot, Trees, Flame, MapPin, Star, Footprints, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -20,6 +20,16 @@ const experiences = [
     title: "Camping",
     description: "Espacios para acampar en un ambiente tranquilo y seguro, con fogatas bajo las estrellas y actividades recreativas.",
   },
+  {
+    icon: Footprints,
+    title: "Senderismo",
+    description: "Recorridos por senderos del bosque altoandino de niebla, rodeados de fauna y flora nativa de los Andes colombianos.",
+  },
+  {
+    icon: Sparkles,
+    title: "Talleres al Aire Libre",
+    description: "Actividades y talleres en contacto con la naturaleza: fotografía de montaña, orientación, primeros auxilios en roca y más.",
+  },
 ]
 
 const features = [
@@ -37,7 +47,6 @@ const galleryImages = [
 ]
 
 export default function HomePage() {
-  console.log("[v0] HomePage rendered")
   return (
     <>
       {/* Hero Section */}
@@ -87,7 +96,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-5">
             {experiences.map((exp) => (
               <Card
                 key={exp.title}

@@ -6,24 +6,24 @@ import { Card, CardContent } from "@/components/ui/card"
 
 const routeData = {
   number: 14,
-  routeName: "Vengador Oscuro",
-  name: "5.12c",
-  level: "5.12c",
-  height: "32m",
-  anchors: "15",
+  routeName: "El Gangazo",
+  name: "5.11a",
+  level: "5.11a",
+  height: "20m",
+  anchors: "12",
   style: "Deportiva",
   description: `
-    Una ruta épica en el muro, con movimientos de poder combinados con secciones técnicas. El comienzo tiene un techo pequeño que establece el tono. Hay varios crux distribuidos a lo largo de la ruta. La sección final es la más técnica. Se requiere versatilidad completa como escalador.
+    Un corto y resbaladizo 5.9 hasta la primera reunión. Atraviesa hacia la izquierda para alcanzar un desplome y mantén tu resistencia para algunos movimientos técnicos agradables con buenos agarres en la segunda mitad.
   `,
   tips: [
-    "Techo pequeño al principio - establece el ritmo potente",
-    "Múltiples crux distribuidos en la ruta",
-    "Se requiere versatilidad técnica y de poder",
-    "Sección final es la más demandante técnicamente",
-    "Dosificar energía entre diferentes secciones",
-    "Mentalidad fuerte es clave en esta línea épica",
+    "Inicio corto en 5.9 como calentamiento",
+    "Sección inicial puede ser resbaladiza",
+    "Travesía hacia la izquierda para el desplome",
+    "Mantén resistencia para la segunda mitad",
+    "Movimientos técnicos agradables arriba",
+    "Buenos agarres en la parte final",
   ],
-  builders: "Néstor Caro & Juan Hernández, 10 Ago 2024",
+  builders: "Juan Hernández & Néstor Caro, 6 Sep 2024",
   image: "/placeholder.svg?height=800&width=600",
 }
 

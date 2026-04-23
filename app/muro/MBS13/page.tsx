@@ -6,24 +6,24 @@ import { Card, CardContent } from "@/components/ui/card"
 
 const routeData = {
   number: 13,
-  routeName: "Arcaico",
+  routeName: "Los Gnomos de Guayara",
   name: "5.11b",
   level: "5.11b",
-  height: "25m",
+  height: "18m",
   anchors: "12",
-  style: "Deportiva",
+  style: "Clásica Mixta",
   description: `
-    Una línea clásica con algunos pasajes técnicos. El comienzo tiene agarres interesantes que establecen el tono. La sección media tiene algunos movimientos de poder. La parte superior se vuelve más técnica de nuevo. Una ruta bien balanceada que prueba múltiples disciplinas.
+    Línea mixta. Comienza con 6 tornillos usando técnica lateral de tirador (side pull). Escala hacia la repisa a un crux en el slap. Luego abre camino con seguros de tuerca en la segunda mitad a través del muro rocoso hasta un último tornillo y una reunión al final.
   `,
   tips: [
-    "Comienzo con agarres interesantes",
-    "Requiere flexibilidad técnica",
-    "Sección media tiene movimientos de poder",
-    "Superior se vuelve más técnica nuevamente",
-    "Ruta bien balanceada y versátil",
-    "Buena práctica para desarrollar múltiples habilidades",
+    "Primeros 6 tornillos requieren técnica de side pull",
+    "Crux está en el slap después de la repisa",
+    "Segunda mitad requiere seguros de tuerca (gear)",
+    "Se necesita equipo de protección tradicional",
+    "Finaliza con un último tornillo y reunión",
+    "Excelente introducción al escalado mixto",
   ],
-  builders: "Néstor Caro & Juan Hernández, 5 Jul 2024",
+  builders: "Juan Hernández & Néstor Caro, 6 Sep 2024",
   image: "/placeholder.svg?height=800&width=600",
 }
 

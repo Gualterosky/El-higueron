@@ -6,24 +6,24 @@ import { Card, CardContent } from "@/components/ui/card"
 
 const routeData = {
   number: 15,
-  routeName: "Roca Fuerte",
-  name: "5.13b",
-  level: "5.13b",
-  height: "36m",
-  anchors: "17",
-  style: "Deportiva",
+  routeName: "Soy Chowi",
+  name: "5.9",
+  level: "5.9",
+  height: "Por definir",
+  anchors: "Por definir",
+  style: "Clásica",
   description: `
-    La ruta cumbre del Muro Bendito Sea. Una línea épica que combina poder absoluto, técnica excepcional y resistencia mental extrema. El inicio tiene un potente techo. Hay múltiples crux a lo largo de la ruta. La reunión está debajo de un techo pequeño. Llegar al top de esta ruta es un logro que transformará tu confianza como escalador.
+    Ruta que en su primera sección ofrece una escalada deportiva amigable, corta y sencilla (5.9). Después de su primera estación hay un alargue mixto que sigue la evidente fisura delgada que exige seguros de tamaño pequeño hasta alcanzar su segunda reunión. La dificultad de esta segunda parte podría ser un 5.11-.
   `,
   tips: [
-    "Esta es la línea más difícil del muro",
-    "Requiere preparación mental intensa",
-    "Techo potente al comienzo - llega descansado",
-    "Múltiples crux exigen versatilidad máxima",
-    "La concentración es tan importante como la fuerza",
-    "Éxito en esta ruta es un hito importante en tu carrera de escalada",
+    "Primera sección deportiva fácil - buen calentamiento",
+    "Segunda parte es escalada mixta/tradicional",
+    "Fisura delgada requiere seguros pequeños",
+    "Se necesita equipo de protección tradicional",
+    "Segunda parte significativamente más difícil (5.11-)",
+    "Excelente para aprender escalada mixta",
   ],
-  builders: "Néstor Caro & Juan Hernández, 2 Jun 2024",
+  builders: "Leonardo Pineda & Dann Fonseca",
   image: "/placeholder.svg?height=800&width=600",
 }
 

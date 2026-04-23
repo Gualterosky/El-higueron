@@ -6,8 +6,8 @@ import { Card, CardContent } from "@/components/ui/card"
 
 const routeData = {
   number: 11,
-  routeName: "Green Goblin",
-  name: "5.12a",
+  routeName: "Piscineitor",
+  name: "5.10b",
   level: "5.12a",
   height: "30m",
   anchors: "14",

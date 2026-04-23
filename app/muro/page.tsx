@@ -6,20 +6,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const routes = [
   { name: "Jugo de Sangre", level: "5.10c", height: "Por definir" },
-  { name: "Pioneros",       level: "5.12b", height: "18m" },
-  { name: "La Niebla",      level: "Proyecto", height: "18m" },
-  { name: "Gente Buena",    level: "5.9",   height: "Por definir" },
+  { name: "Pioneros", level: "5.12b", height: "18m" },
+  { name: "La Niebla", level: "Proyecto", height: "20m" },
+  { name: "Gente Buena", level: "5.9", height: "Por definir" },
   { name: "Perdidos en el Bosque", level: "5.10a", height: "14m" },
-  { name: "Permutante",     level: "Proyecto", height: "28m" },
-  { name: "Payandesuno",    level: "5.12b", height: "28m" },
-  { name: "China Town",     level: "5.12d", height: "33m" },
-  { name: "Bendito Sea",    level: "5.13a", height: "33m" },
-  { name: "Destructor",     level: "5.9",   height: "14m" },
-  { name: "Piscineitor",    level: "5.10b", height: "14m" },
-  { name: "Chihiza",        level: "5.11c", height: "18m" },
-  { name: "Los Gnomos de Guayara", level: "5.11b", height: "18m" },
-  { name: "El Gangazo",     level: "5.11a", height: "20m" },
-  { name: "Soy Chowi",      level: "5.9",   height: "Por definir" },
+  { name: "Permutante", level: "Proyecto", height: "28m" },
+  { name: "Payandesuno", level: "5.12b", height: "30m" },
+  { name: "China Town", level: "5.12d", height: "33m" },
+  { name: "Bendito Sea", level: "5.13a", height: "33m" },
+  { name: "Destructor", level: "5.9", height: "14m" },
+  { name: "Piscineitor", level: "5.10b", height: "14m" },
+  { name: "Chihiza", level: "5.11d", height: "18m" },
+  { name: "Los Gnomos de Guayara", level: "5.11c", height: "18m" },
+  { name: "El Gangazo", level: "5.9", height: "8m" },
+  { name: "Soy Chowi", level: "5.9", height: "Por definir" },
 ]
 
 const wallFeatures = [
@@ -42,10 +42,10 @@ const wallFeatures = [
 
 const safetyTips = [
   "Siempre escala con un compañero de confianza",
-  "Revisa tu equipo antes de cada escalada",
+  "Revisa tu equipo antes de cada pegue",
   "Conoce tus límites y respétalos",
-  "Usa casco siempre en la zona de escalada",
-  "Verifica el estado de las chapas antes de escalar",
+  "Usa casco siempre en la zona",
+  "Verifica el estado de las chapas antes de asegurar",
   "Respeta las indicaciones del lugar",
 ]
 
@@ -64,7 +64,7 @@ export default function MuroPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-forest/50 to-forest/70" />
         </div>
-        
+
         <div className="container relative z-10 mx-auto px-4 text-center lg:px-8">
           <h1 className="animate-fade-in-up mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
             Muro Bendito Sea
@@ -90,13 +90,13 @@ export default function MuroPage() {
                 Bendito Sea: Escalada en roca natural
               </h2>
               <p className="mb-6 text-lg leading-relaxed text-muted-foreground">
-                Bendito Sea es una impresionante formación rocosa natural ubicada en el corazón de Camping El Higuerón. Esta peña ofrece una experiencia auténtica de escalada deportiva, donde la roca natural se combina con la seguridad de rutas debidamente equipadas.
+                Bendito Sea es una impresionante formación rocosa natural ubicada en el corazón de Camping El Higuerón. Esta peña ofrece una experiencia auténtica de escalada deportiva.
               </p>
               <p className="text-lg leading-relaxed text-muted-foreground">
-                Con 15 rutas de escalada ya equipadas con chapas ancladas, el muro Bendito Sea es un destino ideal tanto para escaladores principiantes como para aquellos que buscan desafíos más exigentes. Cada ruta ofrece características únicas que te permitirán desarrollar y poner a prueba tus habilidades.
+                15 rutas de escalada ya equipadas con chapas ancladas, el muro Bendito Sea es un destino ideal tanto para escaladores principiantes como para aquellos que buscan desafíos más exigentes. Cada ruta ofrece características únicas que te permitirán desarrollar y poner a prueba tus habilidades.
               </p>
             </div>
-            
+
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src="/placeholder.svg?height=600&width=800"
@@ -120,7 +120,7 @@ export default function MuroPage() {
               Todo lo que hace especial a Bendito Sea
             </p>
           </div>
-          
+
           <div className="grid gap-8 md:grid-cols-3">
             {wallFeatures.map((feature) => (
               <Card key={feature.title} className="border-none bg-white shadow-sm">
@@ -151,10 +151,10 @@ export default function MuroPage() {
               Rutas de Escalada
             </h2>
             <p className="mx-auto max-w-2xl text-muted-foreground">
-              Todas las rutas están equipadas con chapas ancladas. La información de niveles se actualizará próximamente.
+              Todas las rutas están equipadas con chapas ancladas.
             </p>
           </div>
-          
+
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {routes.map((route, index) => (
               <Link key={route.name} href={`/muro/MBS${String(index + 1).padStart(2, "0")}`}>
@@ -188,7 +188,7 @@ export default function MuroPage() {
                 className="object-cover"
               />
             </div>
-            
+
             <div>
               <div className="mb-4 flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-forest" />
@@ -227,7 +227,7 @@ export default function MuroPage() {
               <p className="mb-8 text-lg leading-relaxed text-white/90">
                 Aunque el muro Bendito Sea está equipado con chapas ancladas, la escalada sigue siendo una actividad de riesgo. Es fundamental que cada escalador asuma la responsabilidad de su propia seguridad.
               </p>
-              
+
               <ul className="space-y-3">
                 {safetyTips.map((tip, index) => (
                   <li key={index} className="flex items-start gap-3">
@@ -237,7 +237,7 @@ export default function MuroPage() {
                 ))}
               </ul>
             </div>
-            
+
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src="/placeholder.svg?height=600&width=800"

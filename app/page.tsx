@@ -23,12 +23,12 @@ const experiences = [
   {
     icon: Footprints,
     title: "Senderismo",
-    description: "Recorridos por senderos del bosque altoandino de niebla, rodeados de fauna y flora nativa de los Andes colombianos.",
+    description: "Recorridos por senderos del bosque altoandino y el paramo cruz verde, rodeados de fauna y flora del nativa de los Andes colombianos.",
   },
   {
     icon: Sparkles,
     title: "Talleres al Aire Libre",
-    description: "Actividades y talleres en contacto con la naturaleza: fotografía de montaña, orientación, primeros auxilios en roca y más.",
+    description: "Actividades y talleres en contacto con la naturaleza: proximamente.",
   },
 ]
 

@@ -8,17 +8,17 @@ const floraFauna = [
   {
     icon: Bird,
     title: "Aves Nativas",
-    description: "Colibríes, tangaras, y diversas especies endémicas que habitan el bosque alto andino.",
+    description: "Presencia de colibríes, tangaras, carpinteros y otras especies propias del bosque.",
   },
   {
     icon: Flower2,
-    title: "Plantas Nativas",
-    description: "Frailejones, orquídeas, bromelias y una gran variedad de especies del páramo.",
+    title: "Vegetación",
+    description: "Bromelias, musgos, helechos, orquídeas y vegetación de alta montaña.",
   },
   {
     icon: Trees,
     title: "Bosque Andino",
-    description: "Encenillos, robles, cedros y árboles nativos que conforman este ecosistema único.",
+    description: "Siete cueros, gaques, higuerones y otras especies que forman un ecosistema denso y húmedo",
   },
 ]
 
@@ -26,17 +26,17 @@ const characteristics = [
   {
     icon: Mountain,
     title: "Altitud",
-    description: "Ubicado en las montañas del bosque alto andino colombiano.",
+    description: "Ubicado en zona de montaña dentro del bosque altoandino a 3050 msnm",
   },
   {
     icon: Wind,
-    title: "Clima Fresco",
-    description: "Temperaturas frescas durante el día y frías en la noche.",
+    title: "Clima Frio",
+    description: "Días frescos con cambios constantes y noches frías.",
   },
   {
     icon: Droplets,
     title: "Aire Puro",
-    description: "Ambiente limpio y oxigenado, lejos de la contaminación urbana.",
+    description: "Aire limpio, humedad alta y contacto directo con el bosque.",
   },
 ]
 
@@ -55,13 +55,13 @@ export default function ElLugarPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-forest/50 to-forest/70" />
         </div>
-        
+
         <div className="container relative z-10 mx-auto px-4 text-center lg:px-8">
           <h1 className="animate-fade-in-up mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
-            El Lugar
+            Nuestro entorno
           </h1>
           <p className="animate-fade-in-up animation-delay-100 mx-auto max-w-2xl text-lg text-white/90 md:text-xl">
-            Un santuario natural en el corazón del bosque alto andino
+            Un refugio natural entre roca y bosque altoandino
           </p>
         </div>
       </section>
@@ -81,16 +81,17 @@ export default function ElLugarPage() {
                 El Bosque Alto Andino
               </h2>
               <p className="mb-6 text-lg leading-relaxed text-muted-foreground">
-                Camping El Higuerón está ubicado en uno de los ecosistemas más especiales de Colombia: el bosque alto andino. Este ambiente único se caracteriza por su vegetación densa, sus nieblas misteriosas y una biodiversidad extraordinaria.
+                Camping El Higuerón está ubicado en las montañas de Choachí, dentro del ecosistema de bosque altoandino. Un entorno de neblina, humedad y vegetación densa, donde la montaña se vive de forma directa y sin intermediarios.
               </p>
               <p className="mb-6 text-lg leading-relaxed text-muted-foreground">
-                Aquí, la naturaleza te envuelve con sus sonidos, sus aromas y su energía. El canto de las aves al amanecer, el murmullo del viento entre los árboles y el silencio profundo de las noches estrelladas crean una experiencia única de conexión con la naturaleza.
+                Aquí el paisaje no es solo visual: se siente.
+                El viento entre los árboles, el canto de las aves y el silencio de la noche crean un ambiente que cambia constantemente y te obliga a adaptarte al ritmo natural del lugar.
               </p>
               <p className="text-lg leading-relaxed text-muted-foreground">
-                Es un lugar para desconectarse del ruido de la ciudad, respirar aire puro y redescubrir la paz que solo la montaña puede ofrecer.
+                Es un espacio para desconectarse de lo urbano, respirar aire frío de montaña y habitar el entorno tal como es: simple, vivo y auténtico.
               </p>
             </div>
-            
+
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src="/placeholder.svg?height=600&width=800"
@@ -114,7 +115,7 @@ export default function ElLugarPage() {
               Un ambiente natural privilegiado para la aventura y el descanso
             </p>
           </div>
-          
+
           <div className="grid gap-8 md:grid-cols-3">
             {characteristics.map((item) => (
               <Card key={item.title} className="border-none bg-white shadow-sm">
@@ -139,13 +140,13 @@ export default function ElLugarPage() {
               Flora y Fauna
             </h2>
             <p className="mx-auto max-w-2xl text-muted-foreground">
-              Descubre la biodiversidad del ecosistema alto andino
+              Descubre la biodiversidad del ecosistema
             </p>
           </div>
-          
+
           <div className="grid gap-8 md:grid-cols-3">
             {floraFauna.map((item) => (
-              <div 
+              <div
                 key={item.title}
                 className="group rounded-xl border border-border bg-card p-8 transition-all hover:border-forest hover:shadow-md"
               >
@@ -164,10 +165,11 @@ export default function ElLugarPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="order-2 lg:order-1">
               <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
-                Conexión con la naturaleza
+                Conexión con el entorno
               </h2>
               <p className="mb-6 text-lg leading-relaxed text-white/90">
-                En El Higuerón, cada momento es una oportunidad para reconectarte con lo esencial. El ritmo de la naturaleza te invita a desacelerar, a observar, a escuchar.
+                En El Higuerón no hay prisa.
+                El tiempo cambia de ritmo y la experiencia se vuelve más simple: caminar, escalar, observar o simplemente estar.
               </p>
               <p className="mb-8 text-lg leading-relaxed text-white/90">
                 Ya sea escalando, caminando por los senderos o simplemente sentado junto a la fogata, sentirás cómo la montaña te recarga de energía y tranquilidad.
@@ -176,7 +178,7 @@ export default function ElLugarPage() {
                 <Link href="/visita">Planifica tu visita</Link>
               </Button>
             </div>
-            
+
             <div className="relative order-1 aspect-[4/3] overflow-hidden rounded-2xl lg:order-2">
               <Image
                 src="/placeholder.svg?height=600&width=800"

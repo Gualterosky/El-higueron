@@ -16,11 +16,11 @@ const climbingModalities = [
   },
   {
     title: "Boulder",
-    description: "Zona de boulder con problemas de diferentes niveles de dificultad. Escalada a baja altura sin cuerda, ideal para entrenar fuerza y técnica.",
+    description: "Zona de boulder con diferentes niveles de dificultad. Escalada a baja altura sin cuerda, ideal para entrenar fuerza y técnica.",
     icon: CircleDot,
     href: "/boulder",
     image: "/placeholder.svg?height=400&width=600",
-    routes: "Múltiples problemas",
+    routes: "Múltiples niveles",
     height: "Hasta 4m",
   },
 ]
@@ -29,23 +29,22 @@ const includedInEntry = [
   { item: "Acceso al muro de escalada", included: true },
   { item: "Acceso a la zona de boulder", included: true },
   { item: "Uso de senderos", included: true },
-  { item: "Zona de descanso", included: true },
+  { item: "Otras instalaciones", included: true },
   { item: "Seguro médico", included: false },
   { item: "Equipo de escalada", included: false },
 ]
 
 const safetyTips = [
   "Siempre escala con un compañero de confianza",
-  "Revisa tu equipo antes de cada escalada",
+  "Revisa tu equipo antes de cada pegue",
   "Conoce tus límites y no los excedas",
   "Usa casco siempre que estés en la zona de escalada",
-  "Aprende y practica las técnicas de aseguramiento correctas",
   "Respeta las indicaciones del lugar",
 ]
 
 export default function EscaladaPage() {
-  const whatsappNumber = "573172973537"
-  const whatsappMessage = encodeURIComponent("Hola, me interesa información sobre capacitación de escalada con guías profesionales")
+  const whatsappNumber = "573217475413"
+  const whatsappMessage = encodeURIComponent("Hola, me interesa información sobre escalada en roca")
 
   return (
     <div className="flex flex-col">
@@ -61,13 +60,13 @@ export default function EscaladaPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-forest/50 to-forest/70" />
         </div>
-        
+
         <div className="container relative z-10 mx-auto px-4 text-center lg:px-8">
           <h1 className="animate-fade-in-up mb-4 text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
             Escalada
           </h1>
           <p className="animate-fade-in-up animation-delay-100 mx-auto max-w-2xl text-lg text-white/90 md:text-xl">
-            Dos modalidades de escalada en el corazón del bosque alto andino: Muro deportivo y Boulder
+            Dos modalidades de escalada en el corazón del bosque: Muro deportivo y Boulder
           </p>
         </div>
       </section>
@@ -89,7 +88,7 @@ export default function EscaladaPage() {
               Contamos con dos zonas de escalada equipadas para diferentes estilos y niveles de experiencia
             </p>
           </div>
-          
+
           <div className="grid gap-8 lg:grid-cols-2">
             {climbingModalities.map((modality) => (
               <Card key={modality.title} className="group overflow-hidden border-border transition-all hover:border-forest hover:shadow-lg">
@@ -144,13 +143,13 @@ export default function EscaladaPage() {
               <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
                 Ingreso a la zona de escalada
               </h2>
-              
+
               <div className="mb-8 rounded-2xl bg-white p-8 shadow-sm">
                 <div className="mb-6 flex items-baseline gap-2">
                   <span className="text-5xl font-bold text-forest">$8.000</span>
                   <span className="text-muted-foreground">COP / persona</span>
                 </div>
-                
+
                 <h3 className="mb-4 font-semibold text-foreground">El ingreso incluye:</h3>
                 <ul className="space-y-3">
                   {includedInEntry.map((item) => (
@@ -174,12 +173,12 @@ export default function EscaladaPage() {
                   <span className="font-semibold text-foreground">Importante</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  Debes traer tu propio equipo de escalada (arnés, cuerda, cintas express, mosquetones, casco, etc.). 
+                  Debes traer tu propio equipo de escalada (arnés, cuerda, cintas, mosquetones, casco, etc.).
                   El ingreso no incluye seguro médico ni equipo de escalada.
                 </p>
               </div>
             </div>
-            
+
             <div className="space-y-6">
               {/* For Beginners */}
               <Card className="border-forest bg-forest text-white">
@@ -196,14 +195,10 @@ export default function EscaladaPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-white/90">
-                    Si eres nuevo en la escalada o quieres aprender con seguridad, ofrecemos capacitaciones 
-                    con guías profesionales certificados. El paquete incluye:
+                    Si eres nuevo en la escalada o quieres aprender con seguridad, ofrecemos capacitaciones
+                    con guías profesionales. El paquete incluye:
                   </p>
                   <ul className="space-y-2 text-white/90">
-                    <li className="flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4 shrink-0 text-orange" />
-                      Seguro médico incluido
-                    </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 shrink-0 text-orange" />
                       Equipo de escalada completo
@@ -245,8 +240,8 @@ export default function EscaladaPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground">
-                    Si no cuentas con equipo de escalada, puedes rentar todo lo necesario para escalar 
-                    de forma segura: arnés, casco, cuerda, cintas express y más.
+                    Si no cuentas con equipo de escalada, puedes rentar todo lo necesario para escalar
+                    de forma segura: arnés, casco, gatos y más.
                   </p>
                   <Button asChild variant="outline" className="w-full border-forest text-forest hover:bg-forest hover:text-white">
                     <Link href="/equipos">Ver equipos disponibles</Link>
@@ -275,7 +270,7 @@ export default function EscaladaPage() {
               <p className="mb-8 text-lg leading-relaxed text-white/90">
                 La escalada es una actividad de riesgo. Aunque el sector está equipado y mantenido, es fundamental que cada escalador asuma la responsabilidad de su propia seguridad y la de sus compañeros.
               </p>
-              
+
               <ul className="space-y-3">
                 {safetyTips.map((tip, index) => (
                   <li key={index} className="flex items-start gap-3">
@@ -285,7 +280,7 @@ export default function EscaladaPage() {
                 ))}
               </ul>
             </div>
-            
+
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src="/placeholder.svg?height=600&width=800"

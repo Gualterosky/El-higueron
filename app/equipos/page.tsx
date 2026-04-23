@@ -171,7 +171,7 @@ export default function EquiposPage() {
               <Link href="/contacto">Contactar ahora</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-forest">
-              <a href="https://wa.me/573001234567" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/573172973537" target="_blank" rel="noopener noreferrer">
                 WhatsApp
               </a>
             </Button>

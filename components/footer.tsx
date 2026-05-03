@@ -103,11 +103,11 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:info@campingelhigueron.com"
+                  href="mailto:kevinleonardogm01@gmail.com"
                   className="flex items-center gap-2 text-sm text-primary-foreground/80 transition-colors hover:text-primary-foreground"
                 >
                   <Mail className="h-4 w-4" />
-                  <span>info@campingelhigueron.com</span>
+                  <span>kevinleonardogm01@gmail.com</span>
                 </a>
               </li>
             </ul>

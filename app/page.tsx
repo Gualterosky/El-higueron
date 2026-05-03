@@ -144,7 +144,7 @@ export default function HomePage() {
                     Explora más de 50 rutas de escalada en nuestro muro deportivo. Desde principiantes hasta expertos, encuentra tu próximo desafío.
                   </p>
                   <Button asChild className="w-full bg-forest text-white hover:bg-forest/90">
-                    <Link href="/muro">Ver Rutas de Escalada</Link>
+                    <Link href="/escalada">Ver Rutas de Escalada</Link>
                   </Button>
                 </div>
               </CardContent>

@@ -183,6 +183,21 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Equipment CTA */}
+      <section className="bg-beige py-14 lg:py-20">
+        <div className="container mx-auto px-4 text-center lg:px-8">
+          <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">
+            ¿No tienes equipo de escalada?
+          </h2>
+          <p className="mx-auto mb-8 max-w-xl text-muted-foreground">
+            Contamos con equipo en renta para que puedas escalar sin preocupaciones. Desde arneses y cuerdas hasta zapatos de escalada.
+          </p>
+          <Button asChild size="lg" className="bg-forest text-white hover:bg-forest/90">
+            <Link href="/equipos">Ver renta de equipos</Link>
+          </Button>
+        </div>
+      </section>
+
       {/* Gallery Preview */}
       <section className="py-20 lg:py-28">
         <div className="container mx-auto px-4 lg:px-8">

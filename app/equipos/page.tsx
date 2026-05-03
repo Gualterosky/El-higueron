@@ -69,7 +69,7 @@ export default function EquiposPage() {
       <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=600&width=1920"
+            src="/media/Muro bendito sea/Img09.jpg"
             alt="Equipos de escalada"
             fill
             className="object-cover"
@@ -156,13 +156,8 @@ export default function EquiposPage() {
       <section className="py-20 lg:py-28">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image
-                src="/placeholder.svg?height=600&width=800"
-                alt="Equipo de escalada organizado"
-                fill
-                className="object-cover"
-              />
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted">
+              {/* Imagen temporal - será agregada posteriormente */}
             </div>
             
             <div>

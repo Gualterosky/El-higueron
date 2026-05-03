@@ -1,8 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Mountain, Shield, AlertTriangle, CircleDot, MessageCircle, Package, DollarSign, Users, CheckCircle, XCircle } from "lucide-react"
+import { Mountain, Shield, AlertTriangle, CircleDot, Package, DollarSign, Users, CheckCircle, XCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { GuidesModal } from "@/components/guides-modal"
 
 const climbingModalities = [
   {
@@ -10,7 +11,7 @@ const climbingModalities = [
     description: "15 rutas de escalada deportiva en roca natural con chapas ya ancladas. Niveles desde 5.9 hasta 5.13a para todos los escaladores.",
     icon: Mountain,
     href: "/muro",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/media/Muro bendito sea/Img07.jpg",
     routes: "15 rutas",
     height: "14m - 33m",
   },
@@ -19,7 +20,7 @@ const climbingModalities = [
     description: "Zona de boulder con diferentes niveles de dificultad. Escalada a baja altura sin cuerda, ideal para entrenar fuerza y técnica.",
     icon: CircleDot,
     href: "/boulder",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/media/Boulders/IMG_20250920_100731134_MFNR.jpg",
     routes: "Múltiples niveles",
     height: "Hasta 4m",
   },
@@ -43,16 +44,13 @@ const safetyTips = [
 ]
 
 export default function EscaladaPage() {
-  const whatsappNumber = "573217475413"
-  const whatsappMessage = encodeURIComponent("Hola, me interesa información sobre escalada en roca")
-
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1920"
+            src="/media/Muro bendito sea/Img01.jpg"
             alt="Escalada en El Higuerón"
             fill
             className="object-cover"
@@ -212,16 +210,7 @@ export default function EscaladaPage() {
                       Técnicas de seguridad
                     </li>
                   </ul>
-                  <Button asChild size="lg" className="w-full bg-orange text-white hover:bg-orange/90">
-                    <a
-                      href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <MessageCircle className="mr-2 h-5 w-5" />
-                      Contactar por WhatsApp
-                    </a>
-                  </Button>
+                  <GuidesModal />
                 </CardContent>
               </Card>
 
@@ -283,7 +272,7 @@ export default function EscaladaPage() {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Muro bendito sea/Img08.jpg"
                 alt="Equipo de escalada"
                 fill
                 className="object-cover"

@@ -115,6 +115,61 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Activities CTA Section */}
+      <section className="py-20 lg:py-28">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-forest md:text-4xl">
+              Elige tu aventura
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground">
+              Accede a toda la información sobre nuestras actividades principales
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            <Card className="overflow-hidden border-none shadow-sm transition-all hover:shadow-md bg-white">
+              <CardContent className="p-0">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src="/media/Muro bendito sea/Img06.jpg"
+                    alt="Escalada en muro"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-8">
+                  <h3 className="mb-3 text-2xl font-bold text-forest">Escalada en roca</h3>
+                  
+                  <Button asChild className="w-full bg-forest text-white hover:bg-forest/90">
+                    <Link href="/escalada">Ver mas información</Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden border-none shadow-sm transition-all hover:shadow-md bg-white">
+              <CardContent className="p-0">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src="/media/Camping/IMG_20250225_134602260_HDR.jpg"
+                    alt="Camping"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-8">
+                  <h3 className="mb-3 text-2xl font-bold text-forest">Camping y Naturaleza</h3>
+                  <Button asChild className="w-full bg-forest text-white hover:bg-forest/90">
+                    <Link href="/camping">Explorar Camping</Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* About Section */}
       <section className="py-20 lg:py-28">
         <div className="container mx-auto px-4 lg:px-8">

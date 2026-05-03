@@ -126,12 +126,17 @@ export default function VisitaPage() {
               </div>
             </div>
 
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image
-                src="/media/Camping/IMG_20260116_175442021_MFNR.jpg"
-                alt="Zona de camping El Higuerón"
-                fill
-                className="object-cover"
+            <div className="overflow-hidden rounded-2xl shadow-sm">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1773.7359684558824!2d-73.9733160248513!3d4.563568754935271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f97004a994e65%3A0x456db2104dfe6214!2sCamping%20El%20Higuer%C3%B3n!5e0!3m2!1ses-419!2sco!4v1777846746167!5m2!1ses-419!2sco"
+                width="100%"
+                height="420"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación Camping El Higuerón"
+                className="w-full"
               />
             </div>
           </div>

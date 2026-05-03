@@ -11,7 +11,7 @@ const equipment = [
     description: "Cascos de seguridad para protección durante la escalada. Recomendado para todas las actividades en pared.",
     forActivity: "Escalada",
     available: true,
-    image: "https://images.unsplash.com/photo-1612198790700-ce4fcb0b5bb3?w=600&q=80",
+    image: "/media/Equipos/Casco 1.png",
   },
   {
     icon: Footprints,
@@ -19,7 +19,7 @@ const equipment = [
     description: "Zapatos especializados para escalada en varias tallas. Esenciales para un mejor agarre en la roca.",
     forActivity: "Escalada y Boulder",
     available: true,
-    image: "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?w=600&q=80",
+    image: "/media/Equipos/gatos A.jpg",
   },
   {
     icon: Shield,
@@ -27,7 +27,7 @@ const equipment = [
     description: "Arneses de escalada deportiva en diferentes tallas para asegurar comodidad y seguridad durante la escalada.",
     forActivity: "Escalada",
     available: true,
-    image: "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=600&q=80",
+    image: "/media/Equipos/Arnes 2.png",
   },
   {
     icon: CircleDot,
@@ -35,7 +35,7 @@ const equipment = [
     description: "Colchonetas de protección para caídas durante la práctica de boulder. Fundamentales para una sesión segura.",
     forActivity: "Boulder",
     available: true,
-    image: "https://images.unsplash.com/photo-1571008887538-b36bb32f4571?w=600&q=80",
+    image: "/media/Equipos/Crashpad 1a.png",
   },
   {
     icon: Footprints,
@@ -43,7 +43,7 @@ const equipment = [
     description: "Botas de montaña para senderismo y actividades al aire libre.",
     forActivity: "Senderismo",
     available: false,
-    image: "https://images.unsplash.com/photo-1520219306100-ec4afbdb6edf?w=600&q=80",
+    image: "https://passos.com.co/wp-content/uploads/2021/06/1821.png",
   },
   {
     icon: Tent,
@@ -51,7 +51,7 @@ const equipment = [
     description: "Carpas para acampar en el lugar, ideales para quienes no cuentan con su propio equipo de camping.",
     forActivity: "Camping",
     available: false,
-    image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80",
+    image: "/media/Camping/IMG_20260117_080602542_HDR.jpg",
   },
 ]
 
@@ -122,7 +122,22 @@ export default function EquiposPage() {
           
           <div className="grid gap-8 md:grid-cols-2">
             {equipment.map((item) => (
-              <Card key={item.name} className={`border-none shadow-sm transition-all hover:shadow-md ${item.available ? "bg-white" : "bg-white/60 opacity-60"}`}>
+              <Card key={item.name} className={`overflow-hidden border-none shadow-sm transition-all hover:shadow-md ${item.available ? "bg-white" : "bg-white/60 opacity-60"}`}>
+                <div className="relative aspect-[16/9] overflow-hidden">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className="object-cover"
+                  />
+                  {!item.available && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                      <span className="rounded-full bg-white px-4 py-2 text-sm font-medium text-muted-foreground">
+                        No disponible
+                      </span>
+                    </div>
+                  )}
+                </div>
                 <CardHeader className="pb-2">
                   <div className="flex items-start gap-4">
                     <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${item.available ? "bg-forest" : "bg-muted"}`}>
@@ -131,11 +146,6 @@ export default function EquiposPage() {
                     <div className="flex-1">
                       <div className="mb-1 flex items-center gap-2">
                         <CardTitle className="text-xl">{item.name}</CardTitle>
-                        {!item.available && (
-                          <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
-                            No disponible
-                          </span>
-                        )}
                       </div>
                       <span className="inline-block rounded-full bg-beige px-3 py-1 text-xs font-medium text-forest">
                         {item.forActivity}
@@ -157,7 +167,12 @@ export default function EquiposPage() {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted">
-              {/* Imagen temporal - será agregada posteriormente */}
+              <Image
+                src="/media/Equipos/crashpad 2c.png"
+                alt="Equipos de escalada disponibles"
+                fill
+                className="object-cover"
+              />
             </div>
             
             <div>

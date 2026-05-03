@@ -63,6 +63,25 @@ export default function BoulderPage() {
         </div>
       </section>
 
+      {/* Hero Image Destacada */}
+      <section className="relative overflow-hidden">
+        <div className="relative aspect-[21/9] w-full">
+          <Image
+            src="/media/Boulders/IMG_20250920_162115607_MFNR.jpg"
+            alt="Boulder en El Higuerón - acción en roca natural"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-forest/20 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
+            <p className="text-lg font-medium text-white/90 lg:text-2xl">
+              Roca natural, movimiento puro
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Introduction */}
       <section className="py-20 lg:py-28">
         <div className="container mx-auto px-4 lg:px-8">
@@ -84,13 +103,111 @@ export default function BoulderPage() {
                 El boulder es una disciplina que permite un contacto más directo con la roca, sin cuerdas ni arneses, donde cada movimiento cuenta y la lectura del problema es fundamental para el éxito.
               </p>
             </div>
-            
+
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src="/media/Boulders/Img17.jpg"
                 alt="Escalador en boulder"
                 fill
                 className="object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Galería de Boulder */}
+      <section className="bg-beige py-20 lg:py-28">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-forest md:text-4xl">
+              La zona en imágenes
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground">
+              Bloques naturales, caídas y movimiento en el bosque alto andino
+            </p>
+          </div>
+
+          {/* Fila principal: 2 imágenes grandes */}
+          <div className="mb-4 grid gap-4 md:grid-cols-2">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image
+                src="/media/Boulders/IMG_20250914_143103460_MFNR.jpg"
+                alt="Boulder en roca natural"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image
+                src="/media/Boulders/IMG_20250920_100731134_MFNR.jpg"
+                alt="Escalada en bloque"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          </div>
+
+          {/* Fila secundaria: 3 imágenes */}
+          <div className="mb-4 grid gap-4 md:grid-cols-3">
+            <div className="relative aspect-square overflow-hidden rounded-2xl">
+              <Image
+                src="/media/Boulders/IMG_20250920_100954059_HDR.jpg"
+                alt="Detalle de agarre en boulder"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-2xl">
+              <Image
+                src="/media/Boulders/Img18.jpg"
+                alt="Problema de boulder"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-2xl">
+              <Image
+                src="/media/Boulders/Img20.jpg"
+                alt="Escalador trabajando problema"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          </div>
+
+          {/* Fila tercera: 4 imágenes pequeñas */}
+          <div className="grid gap-4 sm:grid-cols-4">
+            <div className="relative aspect-square overflow-hidden rounded-xl">
+              <Image
+                src="/media/Boulders/Img21.jpg"
+                alt="Boulder zona 1"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-xl">
+              <Image
+                src="/media/Boulders/Img22.jpg"
+                alt="Boulder zona 2"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-xl">
+              <Image
+                src="/media/Boulders/Img23.jpg"
+                alt="Boulder zona 3"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-xl">
+              <Image
+                src="/media/Boulders/IMG_20260430_120707095_HDR.jpg"
+                alt="Vista de la zona de boulder"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
           </div>
@@ -167,7 +284,7 @@ export default function BoulderPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Boulders/IMG_20260430_120731304_HDR.jpg"
+                src="/media/Boulders/IMG_20260430_120745606_HDR.jpg"
                 alt="Crashpads para boulder"
                 fill
                 className="object-cover"

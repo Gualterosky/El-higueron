@@ -6,18 +6,18 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const galleryImages = [
-  { src: "/placeholder.svg?height=600&width=800", alt: "Escalador en ruta vertical", category: "Escalada" },
+  { src: "/media/Muro bendito sea/Img01.jpg", alt: "Escaladores en el muro Bendito Sea", category: "Escalada" },
   { src: "/placeholder.svg?height=800&width=600", alt: "Vista panorámica del sector", category: "Naturaleza" },
   { src: "/placeholder.svg?height=600&width=800", alt: "Zona de camping al atardecer", category: "Camping" },
   { src: "/placeholder.svg?height=600&width=800", alt: "Boulder en la mañana", category: "Boulder" },
-  { src: "/placeholder.svg?height=800&width=600", alt: "Bosque alto andino", category: "Naturaleza" },
+  { src: "/media/Muro bendito sea/IMG_20250111_141453567_SR.jpg", alt: "Vista del muro desde el bosque", category: "Naturaleza" },
   { src: "/placeholder.svg?height=600&width=800", alt: "Fogata nocturna", category: "Camping" },
-  { src: "/placeholder.svg?height=600&width=800", alt: "Escalador en repisa", category: "Escalada" },
+  { src: "/media/Muro bendito sea/Img03.jpg", alt: "Escalador en ruta vertical", category: "Escalada" },
   { src: "/placeholder.svg?height=800&width=600", alt: "Amanecer en la montaña", category: "Naturaleza" },
   { src: "/placeholder.svg?height=600&width=800", alt: "Problema de boulder", category: "Boulder" },
   { src: "/placeholder.svg?height=600&width=800", alt: "Carpas bajo las estrellas", category: "Camping" },
-  { src: "/placeholder.svg?height=800&width=600", alt: "Flora del bosque andino", category: "Naturaleza" },
-  { src: "/placeholder.svg?height=600&width=800", alt: "Escalador en desplome", category: "Escalada" },
+  { src: "/media/Muro bendito sea/Img05.jpg", alt: "Escalador en ruta Bendito Sea 5.13a", category: "Escalada" },
+  { src: "/media/Muro bendito sea/Img06.jpg", alt: "Escaladores en competencia", category: "Escalada" },
 ]
 
 const categories = ["Todas", "Escalada", "Boulder", "Camping", "Naturaleza"]

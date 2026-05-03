@@ -34,7 +34,7 @@ export function Navbar() {
             className="h-10 w-auto"
             priority
           />
-          <span className="hidden text-lg font-semibold text-forest sm:inline">El Higuerón</span>
+          <span className="text-lg font-semibold text-forest">El Higuerón</span>
         </Link>
 
         {/* Desktop Navigation */}

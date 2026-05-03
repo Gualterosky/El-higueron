@@ -40,7 +40,7 @@ const features = [
 ]
 
 const galleryImages = [
-  { src: "/placeholder.svg?height=400&width=600", alt: "Escalador en roca" },
+  { src: "/media/Muro bendito sea/Img06.jpg", alt: "Escalador en roca" },
   { src: "/placeholder.svg?height=400&width=600", alt: "Zona de camping" },
   { src: "/placeholder.svg?height=400&width=600", alt: "Bosque alto andino" },
   { src: "/placeholder.svg?height=400&width=600", alt: "Boulder al atardecer" },

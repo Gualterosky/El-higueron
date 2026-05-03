@@ -1,8 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Mountain, Shield, AlertTriangle, CircleDot, MessageCircle, Package, DollarSign, Users, CheckCircle, XCircle } from "lucide-react"
+import { Mountain, Shield, AlertTriangle, CircleDot, Package, DollarSign, Users, CheckCircle, XCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { GuidesModal } from "@/components/guides-modal"
 
 const climbingModalities = [
   {
@@ -43,9 +44,6 @@ const safetyTips = [
 ]
 
 export default function EscaladaPage() {
-  const whatsappNumber = "573217475413"
-  const whatsappMessage = encodeURIComponent("Hola, me interesa información sobre escalada en roca")
-
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -212,16 +210,7 @@ export default function EscaladaPage() {
                       Técnicas de seguridad
                     </li>
                   </ul>
-                  <Button asChild size="lg" className="w-full bg-orange text-white hover:bg-orange/90">
-                    <a
-                      href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <MessageCircle className="mr-2 h-5 w-5" />
-                      Contactar por WhatsApp
-                    </a>
-                  </Button>
+                  <GuidesModal />
                 </CardContent>
               </Card>
 

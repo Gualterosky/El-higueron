@@ -58,7 +58,7 @@ export default function CampingPage() {
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1920"
+            src="/media/Camping/IMG_20260116_175442021_MFNR.jpg"
             alt="Zona de camping en El Higuerón"
             fill
             className="object-cover"
@@ -101,7 +101,7 @@ export default function CampingPage() {
             
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Camping/IMG_20250225_134710067_HDR.jpg"
                 alt="Carpas en el camping"
                 fill
                 className="object-cover"
@@ -145,7 +145,7 @@ export default function CampingPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Camping/IMG_20250225_134830298_MFNR.jpg"
                 alt="Equipo de camping"
                 fill
                 className="object-cover"
@@ -230,7 +230,7 @@ export default function CampingPage() {
             
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Camping/IMG_20260117_080602542_HDR.jpg"
                 alt="Fogata en el camping"
                 fill
                 className="object-cover"

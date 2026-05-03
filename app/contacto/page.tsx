@@ -187,7 +187,7 @@ export default function ContactoPage() {
       {/* Image Section */}
       <section className="relative h-[40vh] overflow-hidden">
         <Image
-          src="/placeholder.svg?height=600&width=1920"
+          src="/media/Naturaleza-paisajes/IMG_20250126_165116990_HDR.jpg"
           alt="Vista de Camping El Higuerón"
           fill
           className="object-cover"

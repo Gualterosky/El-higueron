@@ -10,7 +10,7 @@ const climbingModalities = [
     description: "15 rutas de escalada deportiva en roca natural con chapas ya ancladas. Niveles desde 5.9 hasta 5.13a para todos los escaladores.",
     icon: Mountain,
     href: "/muro",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/media/Muro bendito sea/Img07.jpg",
     routes: "15 rutas",
     height: "14m - 33m",
   },
@@ -19,7 +19,7 @@ const climbingModalities = [
     description: "Zona de boulder con diferentes niveles de dificultad. Escalada a baja altura sin cuerda, ideal para entrenar fuerza y técnica.",
     icon: CircleDot,
     href: "/boulder",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/media/Boulders/Img18.jpg",
     routes: "Múltiples niveles",
     height: "Hasta 4m",
   },
@@ -52,7 +52,7 @@ export default function EscaladaPage() {
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1920"
+            src="/media/Muro bendito sea/Img01.jpg"
             alt="Escalada en El Higuerón"
             fill
             className="object-cover"
@@ -283,7 +283,7 @@ export default function EscaladaPage() {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Muro bendito sea/Img08.jpg"
                 alt="Equipo de escalada"
                 fill
                 className="object-cover"

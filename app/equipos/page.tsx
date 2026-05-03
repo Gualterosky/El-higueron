@@ -43,7 +43,7 @@ const equipment = [
     description: "Botas de montaña para senderismo y actividades al aire libre.",
     forActivity: "Senderismo",
     available: false,
-    image: "/media/Equipos/Gatos B.jpg",
+    image: "https://passos.com.co/wp-content/uploads/2021/06/1821.png",
   },
   {
     icon: Tent,
@@ -51,7 +51,7 @@ const equipment = [
     description: "Carpas para acampar en el lugar, ideales para quienes no cuentan con su propio equipo de camping.",
     forActivity: "Camping",
     available: false,
-    image: "/media/Camping/IMG_20250225_134602260_HDR.jpg",
+    image: "/media/Camping/IMG_20260117_080602542_HDR.jpg",
   },
 ]
 

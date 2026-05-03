@@ -126,12 +126,17 @@ export default function VisitaPage() {
               </div>
             </div>
 
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image
-                src="/media/Camping/IMG_20260116_175442021_MFNR.jpg"
-                alt="Zona de camping El Higuerón"
-                fill
-                className="object-cover"
+            <div className="overflow-hidden rounded-2xl shadow-sm">
+              <iframe
+                src="https://maps.google.com/maps?q=Vereda+Aguadulce+Choachi+Via+Bogota+Choachi+Pr+6+100+Ruta+4006A+km23&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="420"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación Camping El Higuerón"
+                className="w-full"
               />
             </div>
           </div>

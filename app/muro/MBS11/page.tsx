@@ -111,6 +111,25 @@ export default function RouteMBS11Page() {
                   ))}
                 </ul>
               </div>
+
+              {/* Formulario de registro */}
+              <div className="mt-8 rounded-xl bg-white p-6 shadow-sm">
+                <h3 className="mb-4 text-lg font-semibold text-foreground">
+                  Registra tu ascenso
+                </h3>
+                <div className="w-full overflow-hidden rounded-lg">
+                  <iframe
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSe8tExFJ0hEydSTqm5pFH-95abgVcFjBuLSKzKcXtfHsnS55A/viewform?embedded=true"
+                    width="100%"
+                    height="1882"
+                    style={{ border: 0 }}
+                    title="Formulario de registro de ascenso"
+                    className="w-full"
+                  >
+                    Cargando...
+                  </iframe>
+                </div>
+              </div>
             </div>
           </div>
         </div>

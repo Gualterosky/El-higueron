@@ -102,7 +102,7 @@ export default function ContactoPage() {
                     <Facebook className="h-5 w-5" />
                   </a>
                   <a
-                    href="mailto:info@campingelhigueron.com"
+                    href="mailto:kevinleonardogm01@gmail.com"
                     className="flex h-12 w-12 items-center justify-center rounded-full bg-beige text-forest transition-colors hover:bg-forest hover:text-white"
                     aria-label="Email"
                   >

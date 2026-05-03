@@ -56,7 +56,7 @@ export default function MuroPage() {
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1920"
+            src="/media/Muro bendito sea/Img02.jpg"
             alt="Muro de escalada Bendito Sea"
             fill
             className="object-cover"
@@ -99,7 +99,7 @@ export default function MuroPage() {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Muro bendito sea/Img03.jpg"
                 alt="Vista del muro Bendito Sea"
                 fill
                 className="object-cover"
@@ -182,7 +182,7 @@ export default function MuroPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Muro bendito sea/IMG_20250111_141453567_SR.jpg"
                 alt="Ubicación del muro Bendito Sea"
                 fill
                 className="object-cover"
@@ -240,7 +240,7 @@ export default function MuroPage() {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Muro bendito sea/Img04.jpg"
                 alt="Equipo de escalada y seguridad"
                 fill
                 className="object-cover"

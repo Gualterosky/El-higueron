@@ -1,38 +1,13 @@
-"use client"
-
-import { useState } from "react"
 import Image from "next/image"
-import { MessageCircle, Mail, Instagram, Facebook, Send, CheckCircle } from "lucide-react"
+import { MessageCircle, Mail, MapPin, Instagram, Facebook } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { FieldGroup, Field, FieldLabel } from "@/components/ui/field"
+import { Card, CardContent } from "@/components/ui/card"
+
+const whatsappNumber = "573172973537"
+const whatsappMessage = encodeURIComponent("Hola, me gustaría obtener información sobre Camping El Higuerón")
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
 
 export default function ContactoPage() {
-  const [formState, setFormState] = useState({
-    name: "",
-    message: "",
-  })
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    setFormState({ name: "", message: "" })
-  }
-
-  const whatsappNumber = "573172973537"
-  const whatsappMessage = encodeURIComponent("Hola, me gustaría obtener información sobre Camping El Higuerón")
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
-
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -47,138 +22,98 @@ export default function ContactoPage() {
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Contact Cards */}
       <section className="py-20 lg:py-28">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-            {/* WhatsApp Primary */}
-            <div>
-              <div className="mb-8">
-                <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
-                  Escríbenos
-                </h2>
-                <p className="text-lg text-muted-foreground">
-                  La forma más rápida de contactarnos es a través de WhatsApp. Te responderemos lo antes posible.
-                </p>
-              </div>
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-forest md:text-4xl">
+              Encuéntranos
+            </h2>
+            <p className="mx-auto max-w-xl text-lg text-muted-foreground">
+              Elige el canal que prefieras para comunicarte con nosotros
+            </p>
+          </div>
 
-              {/* WhatsApp Card */}
-              <Card className="mb-8 border-2 border-[#25D366] bg-[#25D366]/5">
-                <CardContent className="flex flex-col items-center p-8 text-center">
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366]">
-                    <MessageCircle className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="mb-2 text-xl font-semibold text-foreground">WhatsApp</h3>
-                  <p className="mb-6 text-muted-foreground">
-                    Respuesta rápida y directa
-                  </p>
-                  <Button asChild size="lg" className="bg-[#25D366] text-white hover:bg-[#20BD5A]">
-                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                      <MessageCircle className="mr-2 h-5 w-5" />
-                      Contactar por WhatsApp
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Social Media */}
-              <div>
-                <h3 className="mb-4 text-lg font-semibold text-foreground">
-                  Síguenos en redes
-                </h3>
-                <div className="flex gap-4">
-                  <a
-                    href="#"
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-beige text-forest transition-colors hover:bg-forest hover:text-white"
-                    aria-label="Instagram"
-                  >
-                    <Instagram className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="#"
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-beige text-forest transition-colors hover:bg-forest hover:text-white"
-                    aria-label="Facebook"
-                  >
-                    <Facebook className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="mailto:info@campingelhigueron.com"
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-beige text-forest transition-colors hover:bg-forest hover:text-white"
-                    aria-label="Email"
-                  >
-                    <Mail className="h-5 w-5" />
-                  </a>
+          <div className="grid gap-6 md:grid-cols-3">
+            {/* Ubicación */}
+            <Card className="border-none shadow-sm bg-white">
+              <CardContent className="flex flex-col items-center p-8 text-center">
+                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-beige">
+                  <MapPin className="h-8 w-8 text-forest" />
                 </div>
-              </div>
-            </div>
+                <h3 className="mb-2 text-xl font-semibold text-foreground">Ubicación</h3>
+                <p className="mb-1 text-muted-foreground">Vereda Aguadulce, Choachí</p>
+                <p className="mb-6 text-muted-foreground">Vía Bogotá–Choachí km 23</p>
+                <Button asChild variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
+                  <a
+                    href="https://maps.app.goo.gl/TDdgkTqjRL3mNb816"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Ver en Google Maps
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
 
-            {/* Contact Form */}
-            <div>
-              <Card className="border-border">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Send className="h-5 w-5 text-forest" />
-                    Envíanos un mensaje
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {isSubmitted ? (
-                    <div className="flex flex-col items-center py-8 text-center">
-                      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-forest">
-                        <CheckCircle className="h-8 w-8 text-white" />
-                      </div>
-                      <h3 className="mb-2 text-xl font-semibold text-foreground">
-                        Mensaje enviado
-                      </h3>
-                      <p className="mb-6 text-muted-foreground">
-                        Gracias por contactarnos. Te responderemos lo antes posible.
-                      </p>
-                      <Button 
-                        variant="outline" 
-                        className="border-forest text-forest hover:bg-forest hover:text-white"
-                        onClick={() => setIsSubmitted(false)}
-                      >
-                        Enviar otro mensaje
-                      </Button>
-                    </div>
-                  ) : (
-                    <form onSubmit={handleSubmit}>
-                      <FieldGroup>
-                        <Field>
-                          <FieldLabel htmlFor="name">Nombre</FieldLabel>
-                          <Input
-                            id="name"
-                            placeholder="Tu nombre"
-                            value={formState.name}
-                            onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                            required
-                          />
-                        </Field>
-                        
-                        <Field>
-                          <FieldLabel htmlFor="message">Mensaje</FieldLabel>
-                          <Textarea
-                            id="message"
-                            placeholder="Escribe tu mensaje o consulta..."
-                            rows={5}
-                            value={formState.message}
-                            onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                            required
-                          />
-                        </Field>
-                        
-                        <Button 
-                          type="submit" 
-                          className="w-full bg-orange text-white hover:bg-orange/90"
-                          disabled={isSubmitting}
-                        >
-                          {isSubmitting ? "Enviando..." : "Enviar mensaje"}
-                        </Button>
-                      </FieldGroup>
-                    </form>
-                  )}
-                </CardContent>
-              </Card>
+            {/* WhatsApp */}
+            <Card className="border-2 border-[#25D366] bg-[#25D366]/5 shadow-sm">
+              <CardContent className="flex flex-col items-center p-8 text-center">
+                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366]">
+                  <MessageCircle className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold text-foreground">WhatsApp</h3>
+                <p className="mb-6 text-muted-foreground">
+                  Respuesta rápida y directa. La forma más fácil de contactarnos.
+                </p>
+                <Button asChild size="lg" className="bg-[#25D366] text-white hover:bg-[#20BD5A]">
+                  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    Escribir por WhatsApp
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Correo */}
+            <Card className="border-none shadow-sm bg-white">
+              <CardContent className="flex flex-col items-center p-8 text-center">
+                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-beige">
+                  <Mail className="h-8 w-8 text-forest" />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold text-foreground">Correo</h3>
+                <p className="mb-6 text-muted-foreground break-all">
+                  kevinleonardogm01@gmail.com
+                </p>
+                <Button asChild variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
+                  <a href="mailto:kevinleonardogm01@gmail.com">
+                    Enviar correo
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Redes Sociales */}
+          <div className="mt-16 text-center">
+            <h3 className="mb-6 text-lg font-semibold text-foreground">
+              Síguenos en redes
+            </h3>
+            <div className="flex justify-center gap-4">
+              <a
+                href="#"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-beige text-forest transition-colors hover:bg-forest hover:text-white"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a
+                href="#"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-beige text-forest transition-colors hover:bg-forest hover:text-white"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
             </div>
           </div>
         </div>

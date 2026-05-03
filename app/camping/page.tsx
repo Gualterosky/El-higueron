@@ -145,8 +145,8 @@ export default function CampingPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Camping/IMG_20250225_134830298_MFNR.jpg"
-                alt="Equipo de camping"
+                src="/media/Camping/IMG_20250129_074449185_HDR.jpg"
+                alt="Amanecer en el camping"
                 fill
                 className="object-cover"
               />
@@ -227,13 +227,115 @@ export default function CampingPage() {
                 Contamos con una zona designada para fogatas donde podrás disfrutar de este momento de manera segura y responsable con el entorno natural.
               </p>
             </div>
-            
+
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Camping/IMG_20260117_080602542_HDR.jpg"
+                src="/media/Camping/Fogata1.jpg"
                 alt="Fogata en el camping"
                 fill
                 className="object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Galería de fogatas */}
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {["Fogata2.jpg", "Fogata3.jpg", "Fogata4.jpg", "Fogata5.jpg", "Fogata6.jpg", "IMG_20260117_080602542_HDR.jpg"].map((img) => (
+              <div key={img} className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                <Image
+                  src={`/media/Camping/${img}`}
+                  alt="Fogata en El Higuerón"
+                  fill
+                  className="object-cover transition-transform duration-300 hover:scale-105"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Galería General de Camping */}
+      <section className="bg-beige py-20 lg:py-28">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-forest md:text-4xl">
+              El lugar
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground">
+              Espacios, amanecer y entorno del camping en El Higuerón
+            </p>
+          </div>
+
+          {/* Fila 1: imagen panorámica */}
+          <div className="mb-4 relative aspect-[21/9] overflow-hidden rounded-2xl">
+            <Image
+              src="/media/Camping/IMG_20250920_125059918_HDR.jpg"
+              alt="Vista panorámica del camping"
+              fill
+              className="object-cover"
+            />
+          </div>
+
+          {/* Fila 2: 3 imágenes */}
+          <div className="mb-4 grid gap-4 md:grid-cols-3">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image
+                src="/media/Camping/IMG_20260116_175452246_MFNR.jpg"
+                alt="Zona de camping al atardecer"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image
+                src="/media/Camping/IMG_20260116_175500969_MFNR.jpg"
+                alt="Ambiente de camping nocturno"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image
+                src="/media/Camping/IMG_20250129_074449185_HDR.jpg"
+                alt="Amanecer en el camping"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          </div>
+
+          {/* Fila 3: 4 imágenes cuadradas */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="relative aspect-square overflow-hidden rounded-xl">
+              <Image
+                src="/media/Camping/IMG_20250225_134602260_HDR.jpg"
+                alt="Camping en El Higuerón"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-xl">
+              <Image
+                src="/media/Camping/IMG_20250225_134723182_MFNR.jpg"
+                alt="Área de camping"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-xl">
+              <Image
+                src="/media/Camping/IMG_20250225_134741147_HDR.jpg"
+                alt="Naturaleza del camping"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-xl">
+              <Image
+                src="/media/Camping/IMG_20250225_134909280_HDR.jpg"
+                alt="Entorno natural del camping"
+                fill
+                className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
           </div>

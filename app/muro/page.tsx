@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Mountain, Shield, AlertTriangle, MapPin, Anchor, Route } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import RouteGuideSection from "./RouteGuideSection"
 
 const routes = [
   { name: "Jugo de Sangre", level: "5.10c", height: "Por definir" },
@@ -175,6 +176,9 @@ export default function MuroPage() {
           </div>
         </div>
       </section>
+
+      {/* Route Guide Section */}
+      <RouteGuideSection />
 
       {/* Location Section */}
       <section className="bg-beige py-20 lg:py-28">

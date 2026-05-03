@@ -139,12 +139,10 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="p-8">
-                  <h3 className="mb-3 text-2xl font-bold text-forest">Escalada en Muro</h3>
-                  <p className="mb-6 text-muted-foreground">
-                    Explora más de 50 rutas de escalada en nuestro muro deportivo. Desde principiantes hasta expertos, encuentra tu próximo desafío.
-                  </p>
+                  <h3 className="mb-3 text-2xl font-bold text-forest">Escalada en roca</h3>
+                  
                   <Button asChild className="w-full bg-forest text-white hover:bg-forest/90">
-                    <Link href="/escalada">Ver Rutas de Escalada</Link>
+                    <Link href="/escalada">Ver mas información</Link>
                   </Button>
                 </div>
               </CardContent>
@@ -162,9 +160,6 @@ export default function HomePage() {
                 </div>
                 <div className="p-8">
                   <h3 className="mb-3 text-2xl font-bold text-forest">Camping y Naturaleza</h3>
-                  <p className="mb-6 text-muted-foreground">
-                    Disfruta de una experiencia única acampando en la naturaleza. Fogatas, senderismo y conexión con el bosque altoandino.
-                  </p>
                   <Button asChild className="w-full bg-forest text-white hover:bg-forest/90">
                     <Link href="/camping">Explorar Camping</Link>
                   </Button>

@@ -41,9 +41,9 @@ const features = [
 
 const galleryImages = [
   { src: "/media/Muro bendito sea/Img06.jpg", alt: "Escalador en roca" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Zona de camping" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Bosque alto andino" },
-  { src: "/placeholder.svg?height=400&width=600", alt: "Boulder al atardecer" },
+  { src: "/media/Camping/IMG_20250225_134602260_HDR.jpg", alt: "Zona de camping" },
+  { src: "/media/Naturaleza-paisajes/IMG_20250225_135937239_HDR.jpg", alt: "Bosque alto andino" },
+  { src: "/media/Boulders/IMG_20250920_100731134_MFNR.jpg", alt: "Boulder al atardecer" },
 ]
 
 export default function HomePage() {
@@ -53,7 +53,7 @@ export default function HomePage() {
       <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=1080&width=1920"
+            src="/media/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
             alt="Montañas y naturaleza en Camping El Higuerón"
             fill
             className="object-cover"
@@ -121,7 +121,7 @@ export default function HomePage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Naturaleza-paisajes/IMG_20250225_140002347_MFNR.jpg"
                 alt="Bosque alto andino"
                 fill
                 className="object-cover"

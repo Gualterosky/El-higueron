@@ -47,7 +47,7 @@ export default function ElLugarPage() {
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1920"
+            src="/media/Naturaleza-paisajes/IMG_20250126_162756601_HDR.jpg"
             alt="Bosque alto andino en El Higuerón"
             fill
             className="object-cover"
@@ -94,7 +94,7 @@ export default function ElLugarPage() {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Naturaleza-paisajes/IMG_20250225_140005398_MFNR.jpg"
                 alt="Vista del bosque alto andino"
                 fill
                 className="object-cover"
@@ -181,7 +181,7 @@ export default function ElLugarPage() {
 
             <div className="relative order-1 aspect-[4/3] overflow-hidden rounded-2xl lg:order-2">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Naturaleza-paisajes/IMG_20250121_174841943_MFNR.jpg"
                 alt="Atardecer en la montaña"
                 fill
                 className="object-cover"

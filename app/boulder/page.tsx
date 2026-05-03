@@ -44,7 +44,7 @@ export default function BoulderPage() {
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1920"
+            src="/media/Boulders/IMG_20250920_092321682_HDR.jpg"
             alt="Zona de boulder en El Higuerón"
             fill
             className="object-cover"
@@ -87,7 +87,7 @@ export default function BoulderPage() {
             
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Boulders/Img17.jpg"
                 alt="Escalador en boulder"
                 fill
                 className="object-cover"
@@ -167,7 +167,7 @@ export default function BoulderPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Boulders/IMG_20260430_120731304_HDR.jpg"
                 alt="Crashpads para boulder"
                 fill
                 className="object-cover"

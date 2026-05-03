@@ -73,7 +73,7 @@ export default function VisitaPage() {
       <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=600&width=1920"
+            src="/media/Naturaleza-paisajes/IMG_20250225_140255317_HDR.jpg"
             alt="Sendero hacia El Higuerón"
             fill
             className="object-cover"
@@ -263,7 +263,7 @@ export default function VisitaPage() {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
+                src="/media/Naturaleza-paisajes/IMG_20250121_174930570_HDR.jpg"
                 alt="Amanecer en El Higuerón"
                 fill
                 className="object-cover"

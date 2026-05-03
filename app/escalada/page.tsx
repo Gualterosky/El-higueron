@@ -19,7 +19,7 @@ const climbingModalities = [
     description: "Zona de boulder con diferentes niveles de dificultad. Escalada a baja altura sin cuerda, ideal para entrenar fuerza y técnica.",
     icon: CircleDot,
     href: "/boulder",
-    image: "/media/Boulders/Img18.jpg",
+    image: "/media/Boulders/IMG_20250920_100731134_MFNR.jpg",
     routes: "Múltiples niveles",
     height: "Hasta 4m",
   },

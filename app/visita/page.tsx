@@ -127,16 +127,11 @@ export default function VisitaPage() {
             </div>
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d248.57296023079977!2d-73.97274122963603!3d4.563915302608665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1776979264923!5m2!1ses-419!2sco"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Ubicación Camping El Higuerón"
-                className="absolute inset-0"
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250225_140255317_HDR.jpg"
+                alt="Sendero hacia El Higuerón"
+                fill
+                className="object-cover"
               />
             </div>
           </div>
@@ -155,9 +150,9 @@ export default function VisitaPage() {
             </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-2">
+          <div className="grid gap-8 lg:grid-cols-3">
             {/* Weather Cards */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 lg:col-span-2">
               {weatherRecommendations.map((item) => (
                 <Card key={item.title} className="border-none bg-white shadow-sm">
                   <CardContent className="flex items-start gap-4 p-6">
@@ -182,16 +177,52 @@ export default function VisitaPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="grid gap-3 sm:grid-cols-2">
+                <ul className="grid gap-3">
                   {clothingList.map((item, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 shrink-0 text-forest" />
-                      <span className="text-muted-foreground">{item}</span>
+                      <span className="text-sm text-muted-foreground">{item}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Weather Images */}
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250121_174825464_HDR.jpg"
+                alt="Clima de montaña"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
+                alt="Montañas en El Higuerón"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250225_135937239_HDR.jpg"
+                alt="Bosque verde andino"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250225_140002347_MFNR.jpg"
+                alt="Bosque al atardecer"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -223,6 +254,34 @@ export default function VisitaPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Nature Images */}
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250126_162640140_HDR.jpg"
+                alt="Bosque andino"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250127_121755579_MFNR.jpg"
+                alt="Valle de montaña"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250126_165116990_HDR.jpg"
+                alt="Vista panorámica"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -263,8 +322,44 @@ export default function VisitaPage() {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Naturaleza-paisajes/IMG_20250310_112834414_MFNR.jpg"
-                alt="Amanecer en El Higuerón"
+                src="/media/Naturaleza-paisajes/IMG_20250121_174841943_MFNR.jpg"
+                alt="Atardecer en El Higuerón"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Additional Schedule Images */}
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250126_162756601_HDR.jpg"
+                alt="Amanecer en el bosque"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250126_163432836_HDR.jpg"
+                alt="Sendero en la montaña"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250126_165114112_HDR.jpg"
+                alt="Vista nocturna"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250121_174829604_HDR.jpg"
+                alt="Puesta de sol"
                 fill
                 className="object-cover"
               />

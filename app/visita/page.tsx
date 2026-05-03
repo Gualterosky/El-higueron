@@ -73,8 +73,8 @@ export default function VisitaPage() {
       <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=600&width=1920"
-            alt="Sendero hacia El Higuerón"
+            src="/media/Muro bendito sea/IMG_20250322_174755948_HDR.jpg"
+            alt="Escalada en El Higuerón"
             fill
             className="object-cover"
             priority
@@ -127,16 +127,11 @@ export default function VisitaPage() {
             </div>
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d248.57296023079977!2d-73.97274122963603!3d4.563915302608665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1776979264923!5m2!1ses-419!2sco"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Ubicación Camping El Higuerón"
-                className="absolute inset-0"
+              <Image
+                src="/media/Camping/IMG_20260116_175442021_MFNR.jpg"
+                alt="Zona de camping El Higuerón"
+                fill
+                className="object-cover"
               />
             </div>
           </div>
@@ -155,9 +150,9 @@ export default function VisitaPage() {
             </p>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-2">
+          <div className="grid gap-8 lg:grid-cols-3">
             {/* Weather Cards */}
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 lg:col-span-2">
               {weatherRecommendations.map((item) => (
                 <Card key={item.title} className="border-none bg-white shadow-sm">
                   <CardContent className="flex items-start gap-4 p-6">
@@ -182,16 +177,52 @@ export default function VisitaPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="grid gap-3 sm:grid-cols-2">
+                <ul className="grid gap-3">
                   {clothingList.map((item, index) => (
                     <li key={index} className="flex items-center gap-2">
                       <CheckCircle className="h-4 w-4 shrink-0 text-forest" />
-                      <span className="text-muted-foreground">{item}</span>
+                      <span className="text-sm text-muted-foreground">{item}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Activity Images - Diverse */}
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Muro bendito sea/Img03.jpg"
+                alt="Escalada deportiva"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Boulders/Img22.jpg"
+                alt="Boulder en la naturaleza"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Camping/IMG_20250225_134710067_HDR.jpg"
+                alt="Carpas en el camping"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
+                alt="Paisaje de montaña"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -223,6 +254,34 @@ export default function VisitaPage() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Activity Images - Diverse */}
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Muro bendito sea/Img06.jpg"
+                alt="Escaladores en el muro"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Camping/IMG_20260117_080602542_HDR.jpg"
+                alt="Fogata en el camping"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Boulders/IMG_20250920_100731134_MFNR.jpg"
+                alt="Boulder con crashpad"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -263,8 +322,44 @@ export default function VisitaPage() {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholder.svg?height=600&width=800"
-                alt="Amanecer en El Higuerón"
+                src="/media/Muro bendito sea/Img05.jpg"
+                alt="Escalador en ruta"
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Activities Gallery */}
+          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Boulders/IMG_20250920_092321682_HDR.jpg"
+                alt="Zona de boulder"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Camping/IMG_20250225_134602260_HDR.jpg"
+                alt="Camping entre árboles"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Muro bendito sea/Img11.jpg"
+                alt="Vista del muro"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250121_174841943_MFNR.jpg"
+                alt="Atardecer en la montaña"
                 fill
                 className="object-cover"
               />

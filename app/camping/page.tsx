@@ -145,8 +145,8 @@ export default function CampingPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Camping/IMG_20250225_134830298_MFNR.jpg"
-                alt="Equipo de camping"
+                src="/media/Camping/IMG_20250129_074449185_HDR.jpg"
+                alt="Amanecer en el camping"
                 fill
                 className="object-cover"
               />

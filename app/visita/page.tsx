@@ -263,7 +263,7 @@ export default function VisitaPage() {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Naturaleza-paisajes/IMG_20250121_174930570_HDR.jpg"
+                src="/media/Naturaleza-paisajes/IMG_20250310_112834414_MFNR.jpg"
                 alt="Amanecer en El Higuerón"
                 fill
                 className="object-cover"

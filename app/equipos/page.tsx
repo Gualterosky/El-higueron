@@ -156,13 +156,8 @@ export default function EquiposPage() {
       <section className="py-20 lg:py-28">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image
-                src="/media/Muro bendito sea/Img10.jpg"
-                alt="Equipo de escalada organizado"
-                fill
-                className="object-cover"
-              />
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted">
+              {/* Imagen temporal - será agregada posteriormente */}
             </div>
             
             <div>

@@ -27,7 +27,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
           <Image
-            src="/media/Logo-verde.png"
+            src="/media/Logo.png"
             alt="El Higuerón - Camping y Escalada"
             width={40}
             height={40}

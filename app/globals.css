@@ -11,31 +11,31 @@
   --card-foreground: oklch(0.25 0.02 150);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.25 0.02 150);
-  
+
   /* Dark green as primary */
   --primary: oklch(0.35 0.08 150);
   --primary-foreground: oklch(0.98 0.005 90);
-  
+
   /* Warm beige as secondary */
   --secondary: oklch(0.92 0.03 80);
   --secondary-foreground: oklch(0.25 0.02 150);
-  
+
   /* Stone gray as muted */
   --muted: oklch(0.85 0.01 80);
   --muted-foreground: oklch(0.45 0.02 150);
-  
+
   /* Forest green as accent */
   --accent: oklch(0.45 0.1 145);
   --accent-foreground: oklch(0.98 0.005 90);
-  
+
   /* Orange for CTAs */
   --destructive: oklch(0.65 0.18 50);
   --destructive-foreground: oklch(0.98 0.005 90);
-  
+
   --border: oklch(0.88 0.02 80);
   --input: oklch(0.92 0.02 80);
   --ring: oklch(0.45 0.1 145);
-  
+
   /* Custom colors for the camping theme */
   --forest: oklch(0.35 0.08 150);
   --forest-light: oklch(0.45 0.1 145);
@@ -44,7 +44,7 @@
   --stone: oklch(0.55 0.02 80);
   --orange: oklch(0.65 0.18 50);
   --orange-hover: oklch(0.60 0.20 50);
-  
+
   --chart-1: oklch(0.35 0.08 150);
   --chart-2: oklch(0.45 0.1 145);
   --chart-3: oklch(0.65 0.18 50);
@@ -155,9 +155,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     scroll-behavior: smooth;
   }
@@ -169,6 +171,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -179,6 +182,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -207,5 +211,3 @@
 .animation-delay-400 {
   animation-delay: 400ms;
 }
-
-/* comentario

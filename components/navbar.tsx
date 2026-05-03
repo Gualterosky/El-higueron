@@ -1,9 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, Mountain } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -25,7 +26,14 @@ export function Navbar() {
       <nav className="container mx-auto flex h-16 items-center justify-between px-4 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-          <Mountain className="h-7 w-7 text-forest" />
+          <Image
+            src="/media/Logo.png"
+            alt="El Higuerón - Camping y Escalada"
+            width={40}
+            height={40}
+            className="h-10 w-auto"
+            priority
+          />
           <span className="text-lg font-semibold text-forest">El Higuerón</span>
         </Link>
 

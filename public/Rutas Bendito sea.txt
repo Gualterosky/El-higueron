@@ -1,0 +1,102 @@
+Rutas Bendito sea
+
+Te voy a dar la guia de las rutas:
+-El primer numero es el numero de la ruta
+-Luego debajo va el nivel de la ruta, este puede estar vacio a veces, en su mayoría va 5. un numero del 9 al 13 y una letra, al lado va el nombre de la ruta
+-Debajo la clasificación si es deportiva, clásica u algotra, también puede tener mas información como de si es proyecto (aun no definido) y los números de al lado son metros de altura el primer numero acompañado por una "m", y el otro numero solo es la cantidad de anclajes
+-El siguiente renglón es una descripción de la ruta o un consejo (asegura de siempre traducirlo a español)
+-El ultimo renglón donde dice "Equip" son los nombres de los aperturistas de la ruta y el dia que la construyeron 
+
+
+1
+5.10c Jugo de sangre 
+Deportiva
+Inicia justo donde esta un arbol. Esta a la izquierda de pioneros y es una buena opción para calentar.
+Equip: Leonardo Pineda & Dann Fonseca
+
+2
+5.12b Pioneros 
+Deportiva 18m, 10
+Hand jammings and beautiful moves in a sequence that doesn't allow you to rest until the end after you enter the crux.
+Equip: Miguel angel, 5 Jun 2024
+
+
+3
+La Niebla 
+Deportiva - Proyecto 18m, 12
+A simple beginning until you reach the overhang. Then it's pure crux on small holds and a really long move that might need a dyno for shorter climbers.
+Equip: Nestor Caro & Juan hernadez, 19 Jun 2024
+
+
+4
+5.9 Gente buena 
+Deportiva
+Ruta facil que se ubica en la evidente linea de facil progresion entre la nielba y perdidos en el bosque. Inicia en perdidos en el bosque para luego tirar ligeramente hacia la izquiera hacia la placa a favor juntandose con la niebla y finalizando en un descuelgue ubicado en la primera repisa justo donde inicia la fisura alta de pioneros.
+Equip: Leonardo Pineda & Dann Fonseca
+
+5
+5.10a Perdidos en el Bosque 
+Deportiva 14m, 7
+With the first bolt right next to you, there is a small crux reaching the second bolt. After that, good holds and really good feet. The movement to the reunion defines the 5.10a
+Equip: Nestor Caro & Juan hernadez, 19 Jun 2024
+
+6
+Permutante
+Deportiva - Proyecto 28m, 14
+A long journey of many powerful sections in a slightly overhanged wall. A wide range of technical movements and a lot of endurance. Probably the hardest line in the sector so far.
+Equip: Nestor Caro & Juan hernadez, 1 Jul 2024
+
+7
+5.12b Payandesuno
+Deportiva 28m, 13
+The first line in the park, a beautiful overhanged line. It grows harder the higher you get, increasing progressively the level. The line remains dry most of the time. Only a hard storm might get the last bolt wet.
+Equip: Nestor Caro & Juan hernadez, 2 Jun 2024
+
+8
+5.12d China Town
+Deportiva 33m, 16
+A powerful Bouldery start with small holds and high feet. Followed by a small roof of long moves. Followed by a slappy section full of crimps. On the overhang keep going left for an overhanged section of long moves and good holds. A lot of stamina until a crimpy end
+Equip: Nestor Caro & Juan hernadez, 12 Jun 2024
+
+9
+5.13a Bendito sea
+Deportiva 33m, 15
+The line has 4 sections, each of them with their own small crux. There is a full resting area on the middle of the line. Cliping the bolt before the reunion is scary but totally safe. The reunion and the last bolt get damp under heavy rain
+Equip: Nestor Caro & Juan hernadez, 3 Jun 2024
+
+10
+5.9 Destructor
+Clásica mixta 14m, 7
+Mixed line, a gentle beginning through some bolts and an interesting last move on the crag, where you need to place some gear to reach the reunion on the left.
+Equip: Nestor Caro & Juan hernadez, 4 Ag 2024
+
+11
+5.10b Piscineitor
+Deportiva 14m, 7
+The beginning is an ocean of good holds and sand cookies, until you reach a movement that requires pure balance and rising your feet really high. You need to do the movement to clip, a nice leap of faith.
+Equip: Nestor Caro & Juan hernadez, 4 Ag 2024
+
+12
+5.11c Chihiza
+Deportiva 18m, 13
+Starts with an overhang with good sidepulls, traverse a crimp section and progress to the lava holds. The second half is an overhang with great holds
+Equip: Nestor Caro & Juan hernadez, 3 Ag 2024
+
+13
+5.11b Los Gnomos de Guayara
+Clásica mixta 18m, 12
+Mixed Line. Starts with 6 bolts using technical side pull technique. Climb your way into the ledge to a crux in the slap. Then work your way with gear on the second half through the crag until a last bolt and a reunion at the end!
+Equip: Juan hernadez & Nestor Caro, 6 Sep 2024
+
+
+14
+5.11a El Gangazo
+Deportiva 20m, 12
+A short and slappy 5.9 Until the first reunion. Traverse to left to reach an overhang and keep your stamina for some nice technical moves with good holds on the second half.
+Equip: Juan hernadez & Nestor Caro, 6 Sep 2024
+
+15
+5.9 Soy Chowi 
+Clásica
+Ruta que en su primera sección ofrece una escalada deportiva amigable, corta y sencilla (5.9). Después de su primera estacion hay un alargue mixto que sigue la evidente fisura delgada que exige seguros de tamaño pequeño hasta alcanzar su segunda reunión. La dificultad de esta segunda parte podría ser un 5.11-
+Equip: Leonardo Pineda & Dann Fonseca

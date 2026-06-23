@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { Navbar } from '@/components/navbar'
-import { Footer } from '@/components/footer'
-import { WhatsAppButton } from '@/components/whatsapp-button'
+import { LayoutShell } from '@/components/layout-shell'
 import './globals.css'
 
 const inter = Inter({ 
@@ -39,11 +37,8 @@ export default function RootLayout({
     <html lang="es" className={inter.variable} data-scroll-behavior="smooth">
       <body className="min-h-screen font-sans antialiased">
         <div className="flex min-h-screen flex-col">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <LayoutShell>{children}</LayoutShell>
         </div>
-        <WhatsAppButton />
         <Analytics />
       </body>
     </html>

@@ -5,7 +5,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 
-const AUTH_ROUTES = ["/login"]
+const AUTH_ROUTES = ["/login", "/skale-ecolodge", "/skale-peregrino"]
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()

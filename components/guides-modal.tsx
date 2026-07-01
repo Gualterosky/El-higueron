@@ -9,11 +9,6 @@ export function GuidesModal() {
 
   const guides = [
     {
-      name: 'Pizza y Roca',
-      instagram: 'https://www.instagram.com/pizzayroca/',
-      whatsapp: '+420735779242',
-    },
-    {
       name: 'Skale Peregrino',
       instagram: 'https://www.instagram.com/skale_peregrino/',
       whatsapp: '+573217475413',
@@ -49,9 +44,9 @@ export function GuidesModal() {
 
             {/* Header */}
             <div className="border-b border-border px-6 py-6 sm:px-8">
-              <h2 className="text-2xl font-bold text-foreground">Nuestros Guías Profesionales</h2>
+              <h2 className="text-2xl font-bold text-foreground">Guías Profesionales</h2>
               <p className="mt-2 text-muted-foreground">
-                Contacta directamente con nuestros guías de escalada para agendar una capacitación
+                Contacta directamente con guías de escalada para agendar una capacitación
               </p>
             </div>
 

@@ -5,7 +5,7 @@ import path from "path"
 
 // Helper function to read instructions from the markdown file
 function getSystemInstructions(): string {
-  const filePath = path.join(process.cwd(), "corporate-ai-chatbot", "Memoria Camping_El_Higueron.md")
+  const filePath = path.join(process.cwd(), "public", "Memoria_Camping_El_Higueron.md")
   try {
     if (fs.existsSync(filePath)) {
       return fs.readFileSync(filePath, "utf-8")

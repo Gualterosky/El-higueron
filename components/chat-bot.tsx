@@ -214,14 +214,23 @@ export function ChatBot() {
                   </div>
                 )}
                 <div
-                  className={`max-w-[80%] p-3.5 rounded-2xl text-xs sm:text-sm leading-relaxed ${
+                  className={`max-w-[88%] p-3.5 rounded-2xl text-xs sm:text-sm ${
                     msg.role === "user"
                       ? "bg-gradient-to-br from-emerald-600 to-emerald-700 text-white rounded-br-md shadow-md shadow-emerald-900/10"
                       : "bg-white text-stone-800 shadow-sm border border-stone-100 rounded-bl-md"
                   }`}
                 >
-                  <div className={`prose prose-xs sm:prose-sm max-w-none ${msg.role === 'user' ? 'prose-invert text-white' : 'prose-stone text-stone-800'}`}>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  <div className={`chat-markdown ${msg.role === "user" ? "chat-markdown-user" : "chat-markdown-bot"}`}>
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        table: ({ node, ...rest }) => (
+                          <div className="chat-table-wrap">
+                            <table {...rest} />
+                          </div>
+                        ),
+                      }}
+                    >
                       {msg.parts[0].text}
                     </ReactMarkdown>
                   </div>

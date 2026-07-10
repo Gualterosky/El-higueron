@@ -269,10 +269,11 @@
   animation: gentleFloat 3.2s ease-in-out infinite;
 }
 
-/* Keeps the chat window's top edge inside the viewport (button + gap ≈ 6rem, plus breathing room).
-   The second declaration overrides the first in browsers that support dvh (dynamic viewport height),
-   which is more reliable on mobile when the browser's address bar shows/hides. */
+/* Keeps the chat window's top edge inside the viewport. The window is anchored to the same
+   bottom-6 offset as the toggle button (1.5rem) plus a little breathing room at the top.
+   The second declaration overrides the first in browsers that support dvh (dynamic viewport
+   height), which is more reliable on mobile when the browser's address bar shows/hides. */
 .chat-window-height {
-  max-height: calc(100vh - 8rem);
-  max-height: calc(100dvh - 8rem);
+  max-height: calc(100vh - 3.5rem);
+  max-height: calc(100dvh - 3.5rem);
 }

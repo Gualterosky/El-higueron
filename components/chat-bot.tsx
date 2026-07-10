@@ -137,10 +137,12 @@ export function ChatBot() {
   }
 
   return (
-    <div ref={containerRef} className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-      {/* Chat Window */}
+    <div ref={containerRef} className="fixed bottom-6 right-6 z-50">
+      {/* Chat Window: anchored to the same bottom-right corner as the toggle button, so it
+          overlaps and covers it instead of stacking on top with a gap (keeps the window lower,
+          which avoids it getting cut off at the top of the screen). */}
       {isOpen && (
-        <div className="chat-window-height mb-4 w-[calc(100vw-3rem)] sm:w-[390px] h-[600px] bg-white rounded-[1.75rem] shadow-2xl shadow-emerald-950/25 flex flex-col overflow-hidden border border-emerald-900/5 animate-pop-in origin-bottom-right">
+        <div className="chat-window-height absolute bottom-0 right-0 z-20 w-[calc(100vw-3rem)] sm:w-[390px] h-[600px] bg-white rounded-[1.75rem] shadow-2xl shadow-emerald-950/25 flex flex-col overflow-hidden border border-emerald-900/5 animate-pop-in origin-bottom-right">
           {/* Header */}
           <div className="relative shrink-0 overflow-hidden bg-gradient-to-br from-[#1f4a30] via-emerald-700 to-emerald-600 px-5 py-4 flex items-center justify-between text-white">
             {/* Decorative glows */}
@@ -270,7 +272,7 @@ export function ChatBot() {
       )}
 
       {/* Floating Toggle Button */}
-      <span className="group relative flex h-16 w-16 items-center justify-center">
+      <span className="group relative z-10 flex h-16 w-16 items-center justify-center">
         {/* Tooltip */}
         <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 translate-x-2 scale-95 whitespace-nowrap rounded-full bg-stone-900/90 px-3.5 py-2 text-xs font-medium text-white opacity-0 shadow-lg backdrop-blur-sm transition-all duration-200 group-hover:translate-x-0 group-hover:scale-100 group-hover:opacity-100">
           {isOpen ? "Cerrar chat" : "Habla con un asistente"}

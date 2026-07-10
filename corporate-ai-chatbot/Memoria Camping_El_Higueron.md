@@ -147,6 +147,28 @@ El nombre **Higuerón** proviene del árbol *Oreopanax bogotensis*, algunos lo c
 
 ---
 
+## 🥾 Recomendaciones para Participar en la Experiencia
+
+Para garantizar una visita segura, cómoda y alineada con nuestro enfoque ecológico, sigue estas recomendaciones obligatorias y sugeridas:
+
+### 1. Equipaje y Vestimenta
+*   **Ropa abrigada e impermeable:** El camping está en un ecosistema de bosque de niebla y bosque altoandino; el clima puede cambiar rápidamente y las noches son frías.
+*   **Calzado adecuado:** Usa botas de trekking o tenis con buen agarre para los senderos y las zonas de roca.
+*   **Para escaladores:** Si cuentas con equipo propio (arnés, casco, pies de gato, crashpad), te sugerimos traerlo. De lo contrario, contamos con servicio de renta de equipos en las instalaciones por un valor de $20.000 COP por día por elemento.
+
+### 2. Sostenibilidad y Medio Ambiente (Bajo Impacto)
+*   **Cero basura:** Trae bolsas para recoger y llevar de regreso todos tus residuos urbanos. Operamos bajo un concepto de bajo impacto ambiental.
+*   **Cuidado de la flora y fauna:** No arranques plantas nativas ni molestes a los animales locales.
+*   **Fogatas:** Las fogatas bajo las estrellas solo están permitidas en los espacios seguros y designados de la zona de camping.
+
+### 3. Seguridad y Logística
+*   **Asunción de riesgo:** La escalada es una actividad de riesgo asumida plenamente por el usuario. Se debe escalar con responsabilidad.
+*   **Garantía para equipos:** Si vas a alquilar equipos, recuerda que es obligatorio dejar un documento de identidad original (Cédula o Pasaporte) como garantía.
+*   **Pagos y efectivo:** Te sugerimos llevar dinero en efectivo para los costos de ingreso ($8.000 COP por día) y camping ($15.000 COP por noche por persona), previendo fallas de señal en la zona para transacciones virtuales.
+*   **Uso del mapa:** Si vienes en transporte público, mantén el mapa digital abierto, ya que algunos conductores de bus no conocen la entrada exacta del parque en el sector de Aguadulce.
+
+---
+
 ## 📞 Información de Contacto
 * **WhatsApp:** +57 3172973537
 * **Sitio Web:** [elhigueron.xyz](https://elhigueron.xyz/)

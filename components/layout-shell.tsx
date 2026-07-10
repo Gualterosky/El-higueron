@@ -4,7 +4,11 @@ import { usePathname } from "next/navigation"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
-import { ChatBot } from "@/components/chat-bot"
+import dynamic from "next/dynamic"
+
+const ChatBot = dynamic(() => import("@/components/chat-bot").then((mod) => mod.ChatBot), {
+  ssr: false,
+})
 
 const AUTH_ROUTES = ["/login", "/skale-ecolodge", "/skale-peregrino"]
 

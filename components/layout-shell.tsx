@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
+import { ChatBot } from "@/components/chat-bot"
 
 const AUTH_ROUTES = ["/login", "/skale-ecolodge", "/skale-peregrino"]
 
@@ -21,6 +22,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
       <main className="flex-1">{children}</main>
       <Footer />
       <WhatsAppButton />
+      <ChatBot />
     </>
   )
 }

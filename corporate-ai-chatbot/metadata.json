@@ -1,0 +1,8 @@
+{
+  "name": "Corporate AI Chatbot",
+  "description": "A professional company website with an integrated AI-powered chatbot that handles customer inquiries about services and company information.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

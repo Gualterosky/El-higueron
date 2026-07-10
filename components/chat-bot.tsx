@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, FormEvent } from "react"
 import {
   Send,
   X,
-  Sprout,
+  Shrub,
   Sparkles,
   Loader2,
   Tent,
@@ -140,7 +140,7 @@ export function ChatBot() {
     <div ref={containerRef} className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       {/* Chat Window */}
       {isOpen && (
-        <div className="mb-4 w-[calc(100vw-3rem)] sm:w-[390px] h-[600px] max-h-[calc(100dvh-7.5rem)] bg-white rounded-[1.75rem] shadow-2xl shadow-emerald-950/25 flex flex-col overflow-hidden border border-emerald-900/5 animate-pop-in origin-bottom-right">
+        <div className="chat-window-height mb-4 w-[calc(100vw-3rem)] sm:w-[390px] h-[600px] bg-white rounded-[1.75rem] shadow-2xl shadow-emerald-950/25 flex flex-col overflow-hidden border border-emerald-900/5 animate-pop-in origin-bottom-right">
           {/* Header */}
           <div className="relative shrink-0 overflow-hidden bg-gradient-to-br from-[#1f4a30] via-emerald-700 to-emerald-600 px-5 py-4 flex items-center justify-between text-white">
             {/* Decorative glows */}
@@ -150,7 +150,7 @@ export function ChatBot() {
             <div className="relative z-10 flex items-center gap-3">
               <div className="relative">
                 <div className="w-11 h-11 bg-white/15 rounded-2xl flex items-center justify-center backdrop-blur-sm ring-1 ring-white/25">
-                  <Sprout size={22} className="text-emerald-50" />
+                  <Shrub size={22} className="text-emerald-50" />
                 </div>
                 <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-emerald-400 ring-2 ring-emerald-700">
                   <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
@@ -178,7 +178,7 @@ export function ChatBot() {
             {messages.length === 0 && (
               <div className="text-center py-6 px-2 animate-fade-in">
                 <div className="w-16 h-16 bg-gradient-to-br from-emerald-100 to-emerald-50 text-emerald-700 rounded-[1.6rem] flex items-center justify-center mx-auto mb-5 shadow-inner ring-1 ring-emerald-200/60 animate-gentle-float">
-                  <Sprout size={30} />
+                  <Shrub size={30} />
                 </div>
                 <h2 className="text-lg font-bold text-stone-800 mb-2">¡Hola! Soy Mr. Gaque</h2>
                 <p className="text-stone-500 text-xs max-w-[260px] mx-auto leading-relaxed mb-6">
@@ -208,7 +208,7 @@ export function ChatBot() {
               >
                 {msg.role === "model" && (
                   <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shrink-0 shadow-sm">
-                    <Sprout size={14} className="text-white" />
+                    <Shrub size={14} className="text-white" />
                   </div>
                 )}
                 <div
@@ -229,7 +229,7 @@ export function ChatBot() {
             {isLoading && (
               <div className="flex items-end gap-2 justify-start">
                 <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shrink-0 shadow-sm">
-                  <Sprout size={14} className="text-white" />
+                  <Shrub size={14} className="text-white" />
                 </div>
                 <div className="bg-white px-4 py-3.5 rounded-2xl rounded-bl-md border border-stone-100 shadow-sm">
                   <div className="flex items-center gap-1.5">
@@ -270,7 +270,7 @@ export function ChatBot() {
       )}
 
       {/* Floating Toggle Button */}
-      <span className="group relative flex h-14 w-14 items-center justify-center">
+      <span className="group relative flex h-16 w-16 items-center justify-center">
         {/* Tooltip */}
         <span className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 translate-x-2 scale-95 whitespace-nowrap rounded-full bg-stone-900/90 px-3.5 py-2 text-xs font-medium text-white opacity-0 shadow-lg backdrop-blur-sm transition-all duration-200 group-hover:translate-x-0 group-hover:scale-100 group-hover:opacity-100">
           {isOpen ? "Cerrar chat" : "Habla con un asistente"}
@@ -284,7 +284,7 @@ export function ChatBot() {
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`relative flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:ring-offset-2 cursor-pointer ${
+          className={`relative flex h-16 w-16 items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-700 focus:ring-offset-2 cursor-pointer ${
             isOpen
               ? "bg-stone-800 text-white shadow-stone-900/30"
               : "bg-gradient-to-br from-[#2d5a3d] via-emerald-600 to-emerald-500 text-white shadow-emerald-900/30 ring-1 ring-white/20"
@@ -292,11 +292,11 @@ export function ChatBot() {
           aria-label="Abrir chat de Mr. Gaque"
         >
           {isOpen ? (
-            <X className="h-6 w-6" />
+            <X className="h-7 w-7" />
           ) : (
             <span className="relative flex items-center justify-center">
-              <Sprout className="h-6 w-6" strokeWidth={2.25} />
-              <Sparkles className="absolute -top-2.5 -right-2.5 h-3.5 w-3.5 text-amber-200 drop-shadow" />
+              <Shrub className="h-9 w-9" strokeWidth={2} />
+              <Sparkles className="absolute -top-3 -right-3 h-4 w-4 text-amber-200 drop-shadow" />
             </span>
           )}
         </button>

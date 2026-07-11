@@ -47,6 +47,79 @@ Este documento contiene la información oficial y las directrices de control par
 
 ---
 
+## Informacion de utilidad al cliente
+
+### 🍽️ Alimentación y Agua
+*   **Servicio de Restaurante:** El camping **no ofrece** servicio de restaurante ni venta de comidas. Sin embargo, hay opciones de restaurantes externos a solo 5 minutos caminando del camping.
+*   **Ingreso de Alimentos:** Está totalmente permitido el ingreso de alimentos y bebidas por parte de los visitantes.
+*   **Agua en las Instalaciones:** El agua proviene directamente del páramo. Es agua pura y totalmente limpia; sin embargo, no cuenta con un proceso de tratamiento industrial (no es tratada). Se puede consumir bajo el criterio del usuario o se sugiere hervirla previamente si lo consideran necesario.
+
+---
+
+### 🚿 Infraestructura y Servicios
+*   **Baños y Duchas:** Contamos con servicio de baño. El agua de las duchas no es caliente, es agua al clima (fresca de la naturaleza, aunque es ecosistema frio, el agua puede estar entre 15 y 4 grados centigrados).
+*   **Energía Eléctrica y Carga de Celulares:** No hay electricidad ni puntos de energía en la zona de carpas ni en los muros de escalada. El único punto de energía disponible es en la **Recepción**. Los usuarios pueden dejar guardando y cargando su celular allí sin ningún problema.
+*   **Señal de Celular:** El operador que funciona con excelente cobertura en la zona es **Movistar**. Otros operadores presentan muchas fallas y dificultades de señal.
+*   **Servicio de Wi-Fi:** No ofrecemos servicio de Wi-Fi en el camping. El enfoque es la desconexión urbana.
+
+### Equipamiento de Camping y Fogatas
+*   **Carpa y Elementos de Dormir:** El precio de la noche de camping ($15.000 COP) **no incluye carpa, colchoneta ni cobijas**. **Cada visitante debe traer obligatoriamente su propia carpa** y elementos de camping. El parque no ofrece servicio de alquiler de carpas ni de colchonetas (únicamente se alquila equipo de escalada).
+*   **Leña para Fogatas:** Contamos con leña disponible para las fogatas dentro de la zona de camping. Los visitantes pueden recogerla en el lugar y ya se encuentra previamente cortada. Este servicio **no tiene ningún costo adicional** (ya viene incluido con el ingreso/estadía).
+
+### 2. Servicio de Parqueadero
+El predio cuenta con parqueadero disponible para los visitantes bajo las siguientes tarifas fijas:
+*   **Carros:** $5.000 COP por todo el día.
+*   **Motos:** $2.000 COP por todo el día.
+*   **Condición del cobro:** El valor se cobra de manera global por todo el día, **no se realiza cobro por horas**.
+
+### 3. Ubicación de Zonas y Servicios Sanitarios
+*   **Distribución del Parque:** La recepcion queda a 300 metros de las instalaciones ya que es un bosque extenzo. La zona de Camping y la zona de Boulders se encuentran integradas (están mezcladas en el mismo sector). Además, este espacio está ubicado muy cerca del muro de escalada deportiva "Bendito Sea".
+*   **Ubicación del Baño:** Para comodidad de los deportistas y campistas, el servicio de baño se encuentra instalado justamente allí, dentro de la misma zona de camping.
+
+---
+
+### 🐾 Política sobre Mascotas
+*   **Ingreso y Costo:** Las mascotas son bienvenidas y **no tienen ningún costo adicional**.
+*   **Reglas de Control y Cuidado Ambiental:** 
+    *   Es obligatorio ingresar y mantener a la mascota con correa en la zona de recepción y en los lugares cercanos donde haya animales de granja (como vacas), para evitar que los molesten.
+    *   En las demás zonas del parque se pueden soltar un poco, siempre y cuando permanezcan bajo el estricto control y supervisión de sus dueños.
+    *   El enfoque principal es la protección de la fauna. Está estrictamente prohibido que las mascotas ataquen o molesten a los animales domésticos del sector o a los animales salvajes nativos del ecosistema (como aves, roedores de monte, entre otros).
+
+---
+
+### 📅 Horarios de Operación y Tiempos de Entrega
+*   **Horario de Apertura:** 7:00 AM.
+*   **Horario de Cierre:** 6:00 PM.
+*   **Entrega de la Zona de Camping (Check-out):** Al día siguiente de su estadía, los visitantes pueden entregar la zona de camping de manera flexible. Se sugiere que sea máximo hacia el mediodía y es obligatorio que se realice **antes de que llegue la noche**. Si la salida se posterga hasta horas de la noche, se cobrará automáticamente como un día adicional.
+
+---
+
+### 💳 Métodos de Pago Aceptados
+Para el pago del ingreso al predio, el camping acepta exclusivamente los siguientes medios:
+*   Dinero en efectivo.
+*   Transferencias por **Nequi**.
+*   Transferencias por **Bre-B**.
+
+---
+
+### 📝 Reservas y Disponibilidad
+*   **Ingreso por el Día (Escalada y Boulder):** No se requiere ningún tipo de reserva previa. Los usuarios pueden llegar directamente a las instalaciones a disfrutar de las actividades del día.
+*   **Para Acampar (Zona de Camping):** No se exige una reserva pagada con anterioridad, pero **se sugiere obligatoriamente avisar e informar** previamente al número de contacto oficial de WhatsApp. El cliente debe reportar el día de su visita, la cantidad de personas que asisten y las noches que planean quedarse para tenerlo registrado en el control de aforo.
+*   **Cancelaciones:** Si por algún motivo el usuario no puede asistir o debe cancelar su visita, no hay penalidad; únicamente le solicitamos el favor de informar al WhatsApp para liberar el espacio programado.
+
+---
+
+## 🧗‍♂️ Guías, Senderismo y Talleres Especiales
+
+### 1. Servicio de Guías (Escalada y Senderismo)
+*   **Operación Externa:** El servicio de guías especializados para la escalada en roca o para las caminatas/trekking se maneja con **empresas externas** autorizadas.
+*   **Línea de Información:** El chatbot **no cuenta con tarifas, horarios ni disponibilidad directa** para el servicio de guías o caminatas programadas. Toda la información detallada, cotizaciones y contacto con los guías externos se debe solicitar directamente a nuestra línea oficial de **WhatsApp**.
+
+### 2. Talleres al Aire Libre y Actividades Fusionadas
+*   **Estado del Proyecto:** Actualmente nos encontramos diseñando y planeando talleres especiales para realizarse durante las horas de camping, con el fin de fusionar la escalada, el boulder, el senderismo y la experiencia de campamento en un solo espacio interactivo.
+*   **Pilotos y Fechas:** Aunque estas actividades están en fase de planeación y desarrollo, ya se están llevando a cabo algunas **actividades piloto**. 
+*   **Cómo Participar:** Si deseas conocer los detalles de lo que estamos armando, enterarte de las posibles fechas de los próximos talleres o participar en las pruebas piloto actuales, por favor escribe directamente a nuestro **WhatsApp** para que el equipo encargado te brinde la información actualizada en tiempo real.
+
 ## 📊 Guía de Rutas de Escalada
 
 ### Muro Bendito Sea
@@ -164,7 +237,7 @@ Para garantizar una visita segura, cómoda y alineada con nuestro enfoque ecoló
 ### 3. Seguridad y Logística
 *   **Asunción de riesgo:** La escalada es una actividad de riesgo asumida plenamente por el usuario. Se debe escalar con responsabilidad.
 *   **Garantía para equipos:** Si vas a alquilar equipos, recuerda que es obligatorio dejar un documento de identidad original (Cédula o Pasaporte) como garantía.
-*   **Pagos y efectivo:** Te sugerimos llevar dinero en efectivo para los costos de ingreso ($8.000 COP por día) y camping ($15.000 COP por noche por persona), previendo fallas de señal en la zona para transacciones virtuales.
+*   **Pagos y efectivo:** Te sugerimos llevar dinero en efectivo para los costos no solo aqui sino tambien para transporte o restaurantes, previendo fallas de señal en la zona para transacciones virtuales.
 *   **Uso del mapa:** Si vienes en transporte público, mantén el mapa digital abierto, ya que algunos conductores de bus no conocen la entrada exacta del parque en el sector de Aguadulce.
 
 ---

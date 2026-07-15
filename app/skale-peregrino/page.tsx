@@ -33,10 +33,14 @@ const PUB1: PostConfig = {
   location: "Colombia",
   aspectRatio: "9:16",
 
-  // Sube los archivos a /public/media/skale-peregrino/ y ponlos aquí.
+  // Sube los archivos a /public/media/skale-peregrino/ o pega un enlace de Google Drive.
   // CARRUSEL → varias líneas   |   POST ÚNICO → una sola línea   |   VIDEO → type: "video"
   media: [
-    { type: "video", src: "/media/skale-peregrino/Video Skale 15072026.mp4" },
+    {
+      type: "video",
+      src: "https://drive.google.com/file/d/1j8SltweMscJ3qpHhCMfRzo2xV0w754VD/view?usp=sharing",
+      downloadName: "Video Skale 15072026.mp4",
+    },
   ],
 
   caption: `¿Alguna vez has sentido que tus piernas cobran vida propia en la roca? 😂🧗‍♂️

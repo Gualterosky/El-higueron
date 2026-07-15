@@ -19,12 +19,19 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import {
+  extractGoogleDriveId,
+  getGoogleDriveDownloadPath,
+  getGoogleDrivePreviewUrl,
+  isGoogleDriveUrl,
+} from "@/lib/google-drive"
 
 export type MediaItem = {
   type: "image" | "video"
   src: string
   alt?: string
   poster?: string
+  downloadName?: string
 }
 
 export type PostConfig = {
@@ -92,9 +99,19 @@ function PostCard({ config, index }: { config: PostConfig; index: number }) {
   }
 
   const handleSingleDownload = (item: MediaItem, i: number) => {
-    const originalName = item.src.split("/").pop() ?? `archivo-${i + 1}`
-    downloadFile(item.src, `pub${index + 1}-${originalName}`)
+    const driveId = extractGoogleDriveId(item.src)
+    const downloadSrc = driveId
+      ? getGoogleDriveDownloadPath(driveId, item.downloadName)
+      : item.src
+    const originalName =
+      item.downloadName ?? item.src.split("/").pop()?.split("?")[0] ?? `archivo-${i + 1}`
+    downloadFile(downloadSrc, `pub${index + 1}-${originalName}`)
   }
+
+  const driveVideoId =
+    current?.type === "video" && isGoogleDriveUrl(current.src)
+      ? extractGoogleDriveId(current.src)
+      : null
 
   return (
     <div>
@@ -170,14 +187,24 @@ function PostCard({ config, index }: { config: PostConfig; index: number }) {
               <p className="text-sm text-neutral-400 font-medium">Contenido por agregar</p>
             </div>
           ) : current.type === "video" ? (
-            <video
-              src={current.src}
-              poster={current.poster}
-              className="w-full h-full object-cover"
-              controls
-              playsInline
-              suppressHydrationWarning
-            />
+            driveVideoId ? (
+              <iframe
+                src={getGoogleDrivePreviewUrl(driveVideoId)}
+                className="absolute inset-0 h-full w-full border-0"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                title="Video"
+              />
+            ) : (
+              <video
+                src={current.src}
+                poster={current.poster}
+                className="w-full h-full object-cover"
+                controls
+                playsInline
+                suppressHydrationWarning
+              />
+            )
           ) : (
             <Image
               src={current.src}

@@ -1,15 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { X, Instagram, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export function GuidesModal() {
   const [isOpen, setIsOpen] = useState(false)
+  const t = useTranslations('Escalada.guides')
 
   const guides = [
     {
-      name: 'Skale Peregrino',
+      name: t('skalePeregrino.name'),
       instagram: 'https://www.instagram.com/skale_peregrino/',
       whatsapp: '+573217475413',
     },
@@ -28,7 +30,7 @@ export function GuidesModal() {
         className="w-full bg-orange text-white hover:bg-orange/90"
       >
         <MessageCircle className="mr-2 h-5 w-5" />
-        Contactar guía
+        {t('cta')}
       </Button>
 
       {isOpen && (
@@ -44,9 +46,9 @@ export function GuidesModal() {
 
             {/* Header */}
             <div className="border-b border-border px-6 py-6 sm:px-8">
-              <h2 className="text-2xl font-bold text-foreground">Guías Profesionales</h2>
+              <h2 className="text-2xl font-bold text-foreground">{t('modalTitle')}</h2>
               <p className="mt-2 text-muted-foreground">
-                Contacta directamente con guías de escalada para agendar una capacitación
+                {t('modalSubtitle')}
               </p>
             </div>
 
@@ -72,7 +74,7 @@ export function GuidesModal() {
                           rel="noopener noreferrer"
                         >
                           <Instagram className="h-4 w-4" />
-                          Instagram
+                          {t('instagram')}
                         </a>
                       </Button>
 
@@ -87,7 +89,7 @@ export function GuidesModal() {
                           rel="noopener noreferrer"
                         >
                           <MessageCircle className="h-4 w-4" />
-                          WhatsApp
+                          {t('whatsapp')}
                         </a>
                       </Button>
                     </div>
@@ -103,7 +105,7 @@ export function GuidesModal() {
                 variant="outline"
                 className="w-full"
               >
-                Cerrar
+                {t('close')}
               </Button>
             </div>
           </div>

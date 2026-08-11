@@ -1,0 +1,1288 @@
+{
+  "Meta": {
+    "title": "Camping El Higuerón | Escalada y Camping en la Montaña",
+    "description": "Vive la experiencia de Bendito Sea en Camping El Higuerón. Escalada deportiva, boulder y camping en el corazón del bosque alto andino colombiano.",
+    "ogTitle": "Camping El Higuerón | Escalada y Camping en la Montaña",
+    "ogDescription": "Vive la experiencia de Bendito Sea en Camping El Higuerón. Escalada deportiva, boulder y camping en el corazón del bosque alto andino.",
+    "logoAlt": "El Higuerón - Camping y Escalada",
+    "loginTitle": "Acceso administrativo | El Higuerón",
+    "formTitle": "Formulario",
+    "formDescription": "Ayúdanos a crear un mejor servicio.",
+    "eventoTitleFallback": "Eventos | El Higuerón",
+    "eventoDescriptionFallback": "Próximos eventos en Camping El Higuerón.",
+    "eventoTitlePattern": "{titulo} | El Higuerón"
+  },
+  "Nav": {
+    "brand": "El Higuerón",
+    "links": {
+      "escalada": "Escalada",
+      "camping": "Camping",
+      "equipos": "Renta de equipos",
+      "visita": "Visita",
+      "galeria": "Galería",
+      "contacto": "Contacto"
+    },
+    "cta": "Planifica tu visita",
+    "aria": {
+      "openMenu": "Abrir menú",
+      "closeMenu": "Cerrar menú"
+    }
+  },
+  "Footer": {
+    "brand": "El Higuerón",
+    "tagline": "Un espacio natural para la escalada, el boulder y el camping en el corazón del bosque alto andino colombiano.",
+    "sections": {
+      "quickLinks": "Enlaces Rápidos",
+      "moreInfo": "Más Información",
+      "contact": "Contacto"
+    },
+    "links": {
+      "inicio": "Inicio",
+      "elLugar": "El Lugar",
+      "escalada": "Escalada",
+      "boulder": "Boulder",
+      "camping": "Camping",
+      "equipos": "Equipos",
+      "visita": "Visita",
+      "galeria": "Galería",
+      "contacto": "Contacto"
+    },
+    "whatsapp": "WhatsApp",
+    "copyright": "© {year} Camping El Higuerón. Todos los derechos reservados."
+  },
+  "Home": {
+    "hero": {
+      "title": "Escalada, camping y conexión con la naturaleza en el corazón de la montaña",
+      "subtitle": "Vive una experiencia única en Camping El Higuerón, un refugio natural en el bosque altoandino de Choachí.",
+      "cta": "Planifica tu visita",
+      "imageAlt": "Montañas y naturaleza en Camping El Higuerón"
+    },
+    "experiences": {
+      "title": "Vive la experiencia",
+      "subtitle": "Descubre las diferentes actividades que puedes disfrutar en Camping El Higuerón",
+      "escalada": {
+        "title": "Escalada Deportiva",
+        "description": "Más de 15 rutas de escalada en roca natural con diferentes niveles de dificultad en el sector Bendito Sea."
+      },
+      "boulder": {
+        "title": "Boulder",
+        "description": "Zona de boulders para todos los niveles, rodeada del paisaje único del bosque alto andino."
+      },
+      "camping": {
+        "title": "Camping",
+        "description": "Espacios para acampar en un ambiente tranquilo y seguro, con fogatas bajo las estrellas y actividades recreativas."
+      },
+      "senderismo": {
+        "title": "Senderismo",
+        "description": "Recorridos por senderos del bosque altoandino y el paramo cruz verde, rodeados de fauna y flora del nativa de los Andes colombianos."
+      },
+      "talleres": {
+        "title": "Talleres al Aire Libre",
+        "description": "Actividades y talleres en contacto con la naturaleza: proximamente."
+      }
+    },
+    "adventures": {
+      "title": "Elige tu aventura",
+      "subtitle": "Accede a toda la información sobre nuestras actividades principales",
+      "escalada": {
+        "title": "Escalada en roca",
+        "cta": "Ver mas información",
+        "imageAlt": "Escalada en muro"
+      },
+      "camping": {
+        "title": "Camping y Naturaleza",
+        "cta": "Explorar Camping",
+        "imageAlt": "Camping"
+      }
+    },
+    "about": {
+      "eyebrow": "Sobre el lugar",
+      "title": "Un refugio entre roca y el bosque de niebla",
+      "p1": "Camping El Higuerón está ubicado en las montañas de Choachí, rodeado de bosque altoandino y formaciones rocosas que dan vida al sector de escalada Bendito Sea. Es un espacio pensado para quienes buscan desconectarse de lo urbano y reconectar con lo esencial.",
+      "p2": "Aquí no hay ruido de ciudad ni distracciones innecesarias. Solo el sonido del viento, las aves y el fuego en la noche. Un lugar para acampar, escalar y vivir la montaña de forma simple, real y cercana.",
+      "location": "Choachí Cundinamarca - Aguadulce",
+      "cta": "Conoce el lugar",
+      "imageAlt": "Bosque alto andino"
+    },
+    "features": {
+      "title": "Lo que encontrarás",
+      "subtitle": "Todo lo que necesitas para una experiencia inolvidable en la montaña",
+      "routes": {
+        "label": "+15 rutas de escalada",
+        "description": "5.9 - 5,13"
+      },
+      "boulder": {
+        "label": "Zona de boulders",
+        "description": "Distintos niveles"
+      },
+      "camping": {
+        "label": "Espacio para camping",
+        "description": "Ambiente natural"
+      },
+      "activities": {
+        "label": "Talleres y senderismo",
+        "description": "Actividades al aire libre"
+      }
+    },
+    "equipment": {
+      "title": "¿No tienes equipo de escalada?",
+      "description": "Contamos con equipo en renta para que puedas escalar sin preocupaciones. Desde arneses y cuerdas hasta zapatos de escalada.",
+      "cta": "Ver renta de equipos"
+    },
+    "gallery": {
+      "title": "Galería",
+      "subtitle": "Un vistazo a lo que te espera en Camping El Higuerón",
+      "cta": "Ver galería completa",
+      "alts": [
+        "Escalador en roca",
+        "Zona de camping",
+        "Bosque alto andino",
+        "Boulder al atardecer"
+      ]
+    },
+    "cta": {
+      "title": "Reserva o consulta disponibilidad",
+      "description": "Estamos aquí para ayudarte a planificar tu próxima aventura en la montaña. Contáctanos y resolveremos todas tus dudas.",
+      "primary": "Contactar ahora",
+      "secondary": "Más información"
+    }
+  },
+  "Escalada": {
+    "hero": {
+      "title": "Escalada",
+      "subtitle": "Dos modalidades de escalada en el corazón del bosque: Muro deportivo y Boulder",
+      "imageAlt": "Escalada en El Higuerón"
+    },
+    "modalities": {
+      "eyebrow": "Modalidades",
+      "title": "Elige tu estilo de escalada",
+      "subtitle": "Contamos con dos zonas de escalada equipadas para diferentes estilos y niveles de experiencia",
+      "availableLabel": "disponibles",
+      "heightLabel": "altura",
+      "cta": "Ver detalles y rutas",
+      "muro": {
+        "title": "Muro Bendito Sea",
+        "description": "15 rutas de escalada deportiva en roca natural con chapas ya ancladas. Niveles desde 5.9 hasta 5.13a para todos los escaladores.",
+        "routes": "15 rutas",
+        "height": "14m - 33m"
+      },
+      "boulder": {
+        "title": "Boulder",
+        "description": "Zona de boulder con diferentes niveles de dificultad. Escalada a baja altura sin cuerda, ideal para entrenar fuerza y técnica.",
+        "routes": "Múltiples niveles",
+        "height": "Hasta 4m"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Tarifas",
+      "title": "Ingreso a la zona de escalada",
+      "price": "$8.000",
+      "unit": "COP / persona",
+      "includesTitle": "El ingreso incluye:",
+      "includes": {
+        "accessWall": "Acceso al muro de escalada",
+        "accessBoulder": "Acceso a la zona de boulder",
+        "trails": "Uso de senderos",
+        "facilities": "Otras instalaciones",
+        "insurance": "Seguro médico",
+        "gear": "Equipo de escalada"
+      },
+      "important": "Importante",
+      "importantText": "Debes traer tu propio equipo de escalada (arnés, cuerda, cintas, mosquetones, casco, etc.). El ingreso no incluye seguro médico ni equipo de escalada."
+    },
+    "beginners": {
+      "eyebrow": "Para Principiantes",
+      "title": "Capacitación con guías profesionales",
+      "body": "Si eres nuevo en la escalada o quieres aprender con seguridad, ofrecemos capacitaciones con guías profesionales. El paquete incluye:",
+      "items": [
+        "Equipo de escalada completo",
+        "Instrucción personalizada",
+        "Técnicas de seguridad"
+      ]
+    },
+    "rental": {
+      "eyebrow": "Alquiler de Equipos",
+      "title": "¿No tienes equipo propio?",
+      "body": "Si no cuentas con equipo de escalada, puedes rentar todo lo necesario para escalar de forma segura: arnés, casco, gatos y más.",
+      "cta": "Ver equipos disponibles"
+    },
+    "safety": {
+      "eyebrow": "Tu Seguridad Primero",
+      "title": "Recomendaciones de Seguridad",
+      "intro": "La escalada es una actividad de riesgo. Aunque el sector está equipado y mantenido, es fundamental que cada escalador asuma la responsabilidad de su propia seguridad y la de sus compañeros.",
+      "tips": [
+        "Siempre escala con un compañero de confianza",
+        "Revisa tu equipo antes de cada pegue",
+        "Conoce tus límites y no los excedas",
+        "Usa casco siempre que estés en la zona de escalada",
+        "Respeta las indicaciones del lugar"
+      ],
+      "imageAlt": "Equipo de escalada"
+    },
+    "cta": {
+      "title": "¿Listo para escalar?",
+      "subtitle": "Explora las rutas disponibles o planifica tu visita al sector de escalada.",
+      "primary": "Ver rutas del Muro",
+      "secondary": "Planifica tu visita"
+    },
+    "guides": {
+      "cta": "Contactar guía",
+      "modalTitle": "Guías Profesionales",
+      "modalSubtitle": "Contacta directamente con guías de escalada para agendar una capacitación",
+      "close": "Cerrar",
+      "instagram": "Instagram",
+      "whatsapp": "WhatsApp",
+      "skalePeregrino": {
+        "name": "Skale Peregrino"
+      }
+    }
+  },
+  "Boulder": {
+    "hero": {
+      "title": "Boulder",
+      "subtitle": "Escalada en bloque en un entorno natural único",
+      "imageAlt": "Zona de boulder en El Higuerón"
+    },
+    "banner": {
+      "caption": "Roca natural, movimiento puro",
+      "imageAlt": "Boulder en El Higuerón - acción en roca natural"
+    },
+    "intro": {
+      "eyebrow": "Zona de Boulder",
+      "title": "Escalada en bloque al aire libre",
+      "p1": "La zona de boulder de Camping El Higuerón ofrece una experiencia única de escalada en bloque. Rodeado del bosque alto andino, encontrarás diversos problemas en roca natural que pondrán a prueba tu técnica, fuerza y creatividad.",
+      "p2": "El boulder es una disciplina que permite un contacto más directo con la roca, sin cuerdas ni arneses, donde cada movimiento cuenta y la lectura del problema es fundamental para el éxito.",
+      "imageAlt": "Escalador en boulder"
+    },
+    "gallery": {
+      "title": "La zona en imágenes",
+      "subtitle": "Bloques naturales, caídas y movimiento en el bosque alto andino"
+    },
+    "features": {
+      "title": "Características de la zona",
+      "subtitle": "Un espacio natural para la práctica del boulder",
+      "blocks": {
+        "title": "Bloques Naturales",
+        "description": "Formaciones rocosas naturales con diversidad de agarres y movimientos."
+      },
+      "nature": {
+        "title": "Entorno Natural",
+        "description": "Boulder al aire libre rodeado del paisaje del bosque alto andino."
+      },
+      "landing": {
+        "title": "Zona de Aterrizaje",
+        "description": "Áreas con terreno adecuado para la práctica segura con crashpads."
+      }
+    },
+    "levels": {
+      "eyebrow": "Niveles de Dificultad",
+      "title": "Problemas por nivel",
+      "subtitle": "Clasificación según la escala V (Hueco Scale), la más utilizada para boulder en Colombia y Latinoamérica.",
+      "v0": {
+        "grade": "V0-V1",
+        "level": "Iniciación",
+        "description": "Problemas básicos ideales para conocer la disciplina y desarrollar técnica."
+      },
+      "v2": {
+        "grade": "V2-V3",
+        "level": "Principiante",
+        "description": "Mayor complejidad en movimientos y mejor condición física requerida."
+      },
+      "v4": {
+        "grade": "V4-V5",
+        "level": "Intermedio",
+        "description": "Problemas técnicos que requieren fuerza y lectura de movimientos."
+      },
+      "v6": {
+        "grade": "V6+",
+        "level": "Avanzado",
+        "description": "Desafíos exigentes para escaladores con experiencia en boulder."
+      }
+    },
+    "crashpads": {
+      "eyebrow": "Seguridad",
+      "title": "Uso de Crashpads",
+      "p1": "Los crashpads son colchonetas especiales diseñadas para amortiguar las caídas durante la práctica del boulder. Son esenciales para practicar de forma segura.",
+      "p2": "Consulta la disponibilidad de crashpads en nuestra sección de equipos. Si traes el tuyo, asegúrate de ubicarlo correctamente según la zona de caída del problema que estés trabajando.",
+      "imageAlt": "Crashpads para boulder",
+      "tips": [
+        "Siempre usa crashpads para proteger las caídas",
+        "Practica con un spotter que te ayude a guiar las caídas",
+        "Revisa la zona de aterrizaje antes de cada intento",
+        "Calienta adecuadamente antes de intentar problemas difíciles",
+        "Conoce tus límites y descansa cuando sea necesario"
+      ]
+    },
+    "cta": {
+      "title": "¿Listo para el boulder?",
+      "subtitle": "Consulta la disponibilidad de crashpads o planifica tu visita a la zona de boulder.",
+      "primary": "Ver equipos disponibles",
+      "secondary": "Contactar"
+    }
+  },
+  "Camping": {
+    "hero": {
+      "title": "Camping",
+      "subtitle": "Acampa bajo las estrellas en el bosque alto andino",
+      "imageAlt": "Zona de camping en El Higuerón"
+    },
+    "intro": {
+      "eyebrow": "La Experiencia",
+      "title": "Camping en la naturaleza",
+      "p1": "Camping El Higuerón ofrece un espacio para acampar en un ambiente tranquilo y seguro, rodeado de la naturaleza del bosque alto andino. Aquí podrás desconectarte del mundo moderno y reconectarte con lo esencial.",
+      "p2": "Ya sea que vengas a escalar, a hacer boulder, o simplemente a disfrutar de la montaña, nuestro camping es el lugar perfecto para pasar la noche y despertar con los sonidos del bosque.",
+      "imageAlt": "Carpas en el camping"
+    },
+    "includes": {
+      "title": "¿Qué incluye?",
+      "subtitle": "Lo que encontrarás en nuestra zona de camping",
+      "tents": {
+        "title": "Espacio para Carpas",
+        "description": "Zonas delimitadas y niveladas para instalar tu carpa con comodidad."
+      },
+      "fire": {
+        "title": "Zona de Fogata",
+        "description": "Área común para hacer fogatas de manera segura y responsable."
+      },
+      "water": {
+        "title": "Acceso a Agua",
+        "description": "Punto de agua disponible para las necesidades básicas durante tu estadía."
+      }
+    },
+    "bring": {
+      "eyebrow": "Prepárate",
+      "title": "¿Qué traer?",
+      "intro": "Para disfrutar al máximo tu experiencia de camping, te recomendamos traer lo siguiente:",
+      "imageAlt": "Amanecer en el camping",
+      "items": [
+        "Carpa resistente al frío y la humedad",
+        "Sleeping bag para temperaturas bajas",
+        "Colchoneta o aislante térmico",
+        "Ropa abrigada en capas",
+        "Linterna o frontal con baterías extra",
+        "Comida y snacks suficientes",
+        "Utensilios para cocinar",
+        "Botiquín básico de primeros auxilios"
+      ]
+    },
+    "atmosphere": {
+      "title": "El ambiente",
+      "subtitle": "Lo que te espera en las noches de montaña",
+      "cold": {
+        "title": "Noches Frías",
+        "description": "Las temperaturas pueden bajar considerablemente. Ven preparado con buen abrigo."
+      },
+      "stars": {
+        "title": "Cielo Estrellado",
+        "description": "Lejos de la contaminación lumínica, las noches revelan un cielo impresionante."
+      },
+      "silence": {
+        "title": "Silencio Natural",
+        "description": "Solo el sonido del viento y la naturaleza acompañarán tu descanso."
+      }
+    },
+    "fire": {
+      "eyebrow": "Fogatas",
+      "title": "Noches junto al fuego",
+      "p1": "No hay nada como terminar el día alrededor de una fogata. Compartir historias, calentar las manos y contemplar las llamas mientras el cielo se llena de estrellas es parte esencial de la experiencia en El Higuerón.",
+      "p2": "Contamos con una zona designada para fogatas donde podrás disfrutar de este momento de manera segura y responsable con el entorno natural.",
+      "imageAlt": "Fogata en el camping",
+      "galleryAlt": "Fogata en El Higuerón"
+    },
+    "place": {
+      "title": "El lugar",
+      "subtitle": "Espacios, amanecer y entorno del camping en El Higuerón"
+    },
+    "cta": {
+      "title": "¿Listo para acampar?",
+      "subtitle": "Consulta disponibilidad y planifica tu próxima noche bajo las estrellas.",
+      "primary": "Consultar disponibilidad",
+      "secondary": "Información de visita"
+    }
+  },
+  "Equipos": {
+    "hero": {
+      "title": "Equipos",
+      "subtitle": "Equipamiento disponible para tu aventura",
+      "imageAlt": "Equipos de escalada"
+    },
+    "intro": {
+      "eyebrow": "Equipamiento",
+      "title": "Todo lo que necesitas para escalar",
+      "body": "En Camping El Higuerón contamos con equipos disponibles para que puedas disfrutar de la escalada y el boulder aunque no tengas tu propio material. Consulta la disponibilidad antes de tu visita."
+    },
+    "list": {
+      "title": "Equipos Disponibles",
+      "subtitle": "Material de calidad para tu seguridad y comodidad"
+    },
+    "unavailable": "No disponible",
+    "items": {
+      "casco": {
+        "name": "Casco",
+        "description": "Cascos de seguridad para protección durante la escalada. Recomendado para todas las actividades en pared.",
+        "forActivity": "Escalada"
+      },
+      "gatos": {
+        "name": "Pies de Gato",
+        "description": "Zapatos especializados para escalada en varias tallas. Esenciales para un mejor agarre en la roca.",
+        "forActivity": "Escalada y Boulder"
+      },
+      "arnes": {
+        "name": "Arnés",
+        "description": "Arneses de escalada deportiva en diferentes tallas para asegurar comodidad y seguridad durante la escalada.",
+        "forActivity": "Escalada"
+      },
+      "crashpads": {
+        "name": "Crashpads",
+        "description": "Colchonetas de protección para caídas durante la práctica de boulder. Fundamentales para una sesión segura.",
+        "forActivity": "Boulder"
+      },
+      "botas": {
+        "name": "Botas",
+        "description": "Botas de montaña para senderismo y actividades al aire libre.",
+        "forActivity": "Senderismo"
+      },
+      "carpas": {
+        "name": "Carpas de Camping",
+        "description": "Carpas para acampar en el lugar, ideales para quienes no cuentan con su propio equipo de camping.",
+        "forActivity": "Camping"
+      }
+    },
+    "notes": {
+      "title": "Información importante",
+      "intro": "Ten en cuenta las siguientes consideraciones sobre el uso de los equipos:",
+      "imageAlt": "Equipos de escalada disponibles",
+      "items": [
+        "La disponibilidad de equipos puede variar según la demanda.",
+        "Se recomienda reservar con anticipación, especialmente en temporada alta.",
+        "Como garantía del equipo rentado, se debe dejar un documento de identidad válido en el ingreso. Este será devuelto en el momento en que se retorne el equipo en buen estado.",
+        "El usuario es responsable del cuidado del equipo durante su uso."
+      ]
+    },
+    "cta": {
+      "title": "Consultar disponibilidad",
+      "subtitle": "Contáctanos para verificar la disponibilidad de equipos en las fechas de tu visita. Te responderemos lo antes posible.",
+      "primary": "Contactar ahora",
+      "whatsapp": "WhatsApp"
+    }
+  },
+  "Visita": {
+    "hero": {
+      "title": "Planifica tu Visita",
+      "subtitle": "Todo lo que necesitas saber antes de venir",
+      "imageAlt": "Escalada en El Higuerón"
+    },
+    "location": {
+      "eyebrow": "Ubicación",
+      "title": "¿Cómo llegar?",
+      "intro": "Camping El Higuerón está ubicado en las montañas de Choachí, dentro del ecosistema de bosque altoandino. Al ser una zona rural de montaña, es importante planificar tu llegada con anticipación.",
+      "items": [
+        "Vereda Aguadulce Choachí",
+        "Via Bogotá - Choachí Pr 6+100 Ruta 4006A km23",
+        "Algunas zonas cuentan con señal limitada de celular",
+        "Coordina tu llegada previamente para recibir indicaciones claras y actualizadas",
+        "Importante: Antes de salir, solicita las indicaciones y recomendaciones del estado de la vía."
+      ],
+      "cta": "Solicitar indicaciones",
+      "mapTitle": "Ubicación Camping El Higuerón"
+    },
+    "weather": {
+      "title": "Clima y Vestimenta",
+      "subtitle": "Prepárate para las condiciones de montaña",
+      "variable": {
+        "title": "Clima Variable",
+        "description": "Clima frio. El clima de montaña puede cambiar rápidamente. Prepárate para sol, lluvia y frío en un mismo día. Temperatura promedio 15°C"
+      },
+      "clothing": {
+        "title": "Vestimenta recomendada",
+        "description": "Depende mucho de la actividad que vayas a hacer, pero por lo general ven preparado para el frio y la lluvia"
+      }
+    },
+    "clothing": {
+      "cardTitle": "Qué vestir",
+      "items": [
+        "Chaqueta impermeable y cortaviento",
+        "Ropa térmica para la noche",
+        "Gorro y guantes",
+        "Zapatos de trekking o botas para terreno irregular",
+        "Ropa cómoda para escalar",
+        "Muda de ropa seca"
+      ]
+    },
+    "rules": {
+      "title": "Normas Básicas",
+      "subtitle": "Ayúdanos a cuidar este espacio",
+      "nature": {
+        "title": "Respeta la naturaleza",
+        "description": "No arranques plantas, no molestes a los animales y camina solo por los senderos marcados."
+      },
+      "trash": {
+        "title": "No dejes basura",
+        "description": "Todo lo que traigas, debes llevártelo. No dejes ningún residuo en el lugar."
+      },
+      "fire": {
+        "title": "Fogatas responsables",
+        "description": "Solo haz fogatas en las zonas designadas. Asegúrate de apagarlas completamente antes de retirarte."
+      },
+      "safety": {
+        "title": "Seguridad personal",
+        "description": "Escala de manera responsable, usa el equipo adecuado y conoce tus límites."
+      }
+    },
+    "schedule": {
+      "eyebrow": "Horarios",
+      "title": "Horarios de visita",
+      "intro": "Los horarios pueden variar según la temporada y las condiciones climáticas. Te recomendamos confirmar antes de tu visita.",
+      "rows": [
+        {
+          "category": "Escalada",
+          "day": "Lunes a Viernes",
+          "hours": "7:00 AM - 5:00 PM"
+        },
+        {
+          "category": "Escalada",
+          "day": "Sábados, Domingos y Festivos",
+          "hours": "7:00 AM - 6:00 PM"
+        },
+        {
+          "category": "Camping",
+          "day": "Todos los días",
+          "hours": "Reserva previa"
+        },
+        {
+          "category": "Caminatas",
+          "day": "Todos los días",
+          "hours": "Reserva previa"
+        },
+        {
+          "category": "Talleres",
+          "day": "Todos los días",
+          "hours": "Reserva previa"
+        }
+      ]
+    },
+    "cta": {
+      "title": "¿Tienes más preguntas?",
+      "subtitle": "Contáctanos y resolveremos todas tus dudas. Estamos aquí para ayudarte a planificar tu visita perfecta.",
+      "primary": "Contactar",
+      "whatsapp": "WhatsApp"
+    }
+  },
+  "Galeria": {
+    "hero": {
+      "title": "Galería",
+      "subtitle": "Imágenes de la experiencia en Camping El Higuerón"
+    },
+    "filters": {
+      "all": "Todas",
+      "escalada": "Escalada",
+      "boulder": "Boulder",
+      "camping": "Camping",
+      "naturaleza": "Naturaleza"
+    },
+    "lightbox": {
+      "close": "Cerrar",
+      "prev": "Anterior",
+      "next": "Siguiente"
+    }
+  },
+  "Contacto": {
+    "hero": {
+      "title": "Contacto",
+      "subtitle": "Estamos aquí para ayudarte a planificar tu visita"
+    },
+    "findUs": {
+      "title": "Encuéntranos",
+      "subtitle": "Elige el canal que prefieras para comunicarte con nosotros"
+    },
+    "location": {
+      "title": "Ubicación",
+      "line1": "Vereda Aguadulce, Choachí",
+      "line2": "Vía Bogotá–Choachí km 23",
+      "mapsCta": "Ver en Google Maps"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "body": "Respuesta rápida y directa. La forma más fácil de contactarnos.",
+      "cta": "Escribir por WhatsApp",
+      "prefill": "Hola, me gustaría obtener información sobre Camping El Higuerón"
+    },
+    "email": {
+      "title": "Correo",
+      "cta": "Enviar correo"
+    },
+    "social": {
+      "title": "Síguenos en redes"
+    },
+    "banner": {
+      "text": "Te esperamos en la montaña",
+      "imageAlt": "Vista de Camping El Higuerón"
+    }
+  },
+  "ElLugar": {
+    "hero": {
+      "title": "Nuestro entorno",
+      "subtitle": "Un refugio natural entre roca y bosque altoandino",
+      "imageAlt": "Bosque alto andino en El Higuerón"
+    },
+    "intro": {
+      "eyebrow": "Nuestro Entorno",
+      "title": "El Bosque Alto Andino",
+      "p1": "Camping El Higuerón está ubicado en las montañas de Choachí, dentro del ecosistema de bosque altoandino. Un entorno de neblina, humedad y vegetación densa, donde la montaña se vive de forma directa y sin intermediarios.",
+      "p2": "Aquí el paisaje no es solo visual: se siente. El viento entre los árboles, el canto de las aves y el silencio de la noche crean un ambiente que cambia constantemente y te obliga a adaptarte al ritmo natural del lugar.",
+      "p3": "Es un espacio para desconectarse de lo urbano, respirar aire frío de montaña y habitar el entorno tal como es: simple, vivo y auténtico.",
+      "imageAlt": "Vista del bosque alto andino"
+    },
+    "characteristics": {
+      "title": "Características del lugar",
+      "subtitle": "Un ambiente natural privilegiado para la aventura y el descanso",
+      "altitude": {
+        "title": "Altitud",
+        "description": "Ubicado en zona de montaña dentro del bosque altoandino a 3050 msnm"
+      },
+      "climate": {
+        "title": "Clima Frio",
+        "description": "Días frescos con cambios constantes y noches frías."
+      },
+      "air": {
+        "title": "Aire Puro",
+        "description": "Aire limpio, humedad alta y contacto directo con el bosque."
+      }
+    },
+    "floraFauna": {
+      "title": "Flora y Fauna",
+      "subtitle": "Descubre la biodiversidad del ecosistema",
+      "birds": {
+        "title": "Aves Nativas",
+        "description": "Presencia de colibríes, tangaras, carpinteros y otras especies propias del bosque."
+      },
+      "vegetation": {
+        "title": "Vegetación",
+        "description": "Bromelias, musgos, helechos, orquídeas y vegetación de alta montaña."
+      },
+      "forest": {
+        "title": "Bosque Andino",
+        "description": "Siete cueros, gaques, higuerones y otras especies que forman un ecosistema denso y húmedo"
+      }
+    },
+    "connection": {
+      "title": "Conexión con el entorno",
+      "p1": "En El Higuerón no hay prisa. El tiempo cambia de ritmo y la experiencia se vuelve más simple: caminar, escalar, observar o simplemente estar.",
+      "p2": "Ya sea escalando, caminando por los senderos o simplemente sentado junto a la fogata, sentirás cómo la montaña te recarga de energía y tranquilidad.",
+      "cta": "Planifica tu visita",
+      "imageAlt": "Atardecer en la montaña"
+    }
+  },
+  "Muro": {
+    "hero": {
+      "title": "Muro Bendito Sea",
+      "subtitle": "Una peña natural con 15 rutas equipadas para la escalada deportiva",
+      "imageAlt": "Muro de escalada Bendito Sea"
+    },
+    "intro": {
+      "eyebrow": "Muro de Escalada",
+      "title": "Bendito Sea: Escalada en roca natural",
+      "p1": "Bendito Sea es una impresionante formación rocosa natural ubicada en el corazón de Camping El Higuerón. Esta peña ofrece una experiencia auténtica de escalada deportiva.",
+      "p2": "15 rutas de escalada ya equipadas con chapas ancladas, el muro Bendito Sea es un destino ideal tanto para escaladores principiantes como para aquellos que buscan desafíos más exigentes. Cada ruta ofrece características únicas que te permitirán desarrollar y poner a prueba tus habilidades.",
+      "imageAlt": "Vista del muro Bendito Sea"
+    },
+    "features": {
+      "title": "Características del muro",
+      "subtitle": "Todo lo que hace especial a Bendito Sea",
+      "rock": {
+        "title": "Roca Natural",
+        "description": "Una peña natural con formaciones únicas perfectas para la escalada deportiva."
+      },
+      "routes": {
+        "title": "15 Rutas Equipadas",
+        "description": "Todas las rutas cuentan con chapas ya ancladas para una escalada segura."
+      },
+      "levels": {
+        "title": "Múltiples Niveles",
+        "description": "Rutas de distintos niveles de dificultad para todos los escaladores."
+      }
+    },
+    "routes": {
+      "eyebrow": "Las 15 Rutas",
+      "title": "Rutas de Escalada",
+      "subtitle": "Todas las rutas están equipadas con chapas ancladas.",
+      "list": [
+        {
+          "name": "Jugo de Sangre",
+          "level": "5.10c",
+          "height": "Por definir"
+        },
+        {
+          "name": "Pioneros",
+          "level": "5.12b",
+          "height": "18m"
+        },
+        {
+          "name": "La Niebla",
+          "level": "Proyecto",
+          "height": "20m"
+        },
+        {
+          "name": "Gente Buena",
+          "level": "5.9",
+          "height": "Por definir"
+        },
+        {
+          "name": "Perdidos en el Bosque",
+          "level": "5.10a",
+          "height": "14m"
+        },
+        {
+          "name": "Permutante",
+          "level": "Proyecto",
+          "height": "28m"
+        },
+        {
+          "name": "Payandesuno",
+          "level": "5.12b",
+          "height": "30m"
+        },
+        {
+          "name": "China Town",
+          "level": "5.12d",
+          "height": "33m"
+        },
+        {
+          "name": "Bendito Sea",
+          "level": "5.13a",
+          "height": "33m"
+        },
+        {
+          "name": "Destructor",
+          "level": "5.9",
+          "height": "14m"
+        },
+        {
+          "name": "Piscineitor",
+          "level": "5.10b",
+          "height": "14m"
+        },
+        {
+          "name": "Chihiza",
+          "level": "5.11c",
+          "height": "18m"
+        },
+        {
+          "name": "Los Gnomos de Guayara",
+          "level": "5.11b",
+          "height": "18m"
+        },
+        {
+          "name": "El Gangazo",
+          "level": "5.11a",
+          "height": "20m"
+        },
+        {
+          "name": "Soy Chowi",
+          "level": "5.9",
+          "height": "Por definir"
+        }
+      ]
+    },
+    "guide": {
+      "eyebrow": "Guía Visual",
+      "title": "Mapa de Rutas",
+      "subtitle": "Consulta la guía visual con la ubicación y numeración de todas las rutas del muro Bendito Sea. Puedes ampliarla o descargarla para llevarla contigo.",
+      "fullscreen": "Ver en pantalla completa",
+      "download": "Descargar guía",
+      "close": "Cerrar",
+      "imageAlt": "Guía de rutas del muro Bendito Sea"
+    },
+    "location": {
+      "eyebrow": "Ubicación",
+      "title": "¿Dónde encontrar el muro?",
+      "p1": "El muro Bendito Sea se encuentra dentro de las instalaciones de Camping El Higuerón, en medio del bosque alto andino. Su ubicación privilegiada te permite disfrutar de la escalada mientras estás rodeado de un paisaje natural impresionante.",
+      "p2": "Desde la zona de camping, el acceso al muro es sencillo y está señalizado. Te recomendamos consultar con nuestro equipo para obtener indicaciones precisas y conocer las condiciones del día.",
+      "imageAlt": "Ubicación del muro Bendito Sea"
+    },
+    "safety": {
+      "eyebrow": "Tu Seguridad Primero",
+      "title": "Recomendaciones de Seguridad",
+      "intro": "Aunque el muro Bendito Sea está equipado con chapas ancladas, la escalada sigue siendo una actividad de riesgo. Es fundamental que cada escalador asuma la responsabilidad de su propia seguridad.",
+      "tips": [
+        "Siempre escala con un compañero de confianza",
+        "Revisa tu equipo antes de cada pegue",
+        "Conoce tus límites y respétalos",
+        "Usa casco siempre en la zona",
+        "Verifica el estado de las chapas antes de asegurar",
+        "Respeta las indicaciones del lugar"
+      ],
+      "imageAlt": "Equipo de escalada y seguridad"
+    },
+    "cta": {
+      "title": "¿Listo para escalar Bendito Sea?",
+      "subtitle": "Consulta la disponibilidad de equipos o planifica tu visita al muro de escalada.",
+      "primary": "Ver equipos disponibles",
+      "secondary": "Planifica tu visita"
+    }
+  },
+  "MuroRoute": {
+    "hero": {
+      "subtitle": "Muro Bendito Sea · Ruta {n} de 15"
+    },
+    "back": "Volver al Muro Bendito Sea",
+    "details": {
+      "eyebrow": "Detalles de la Ruta"
+    },
+    "labels": {
+      "nivel": "Nivel",
+      "altura": "Altura",
+      "chapas": "Chapas",
+      "estilo": "Estilo"
+    },
+    "descriptionTitle": "Descripción",
+    "buildersLabel": "Aperturistas",
+    "tipsTitle": "Consejos para esta ruta",
+    "registerTitle": "Registra tu ascenso",
+    "formLoading": "Cargando...",
+    "formIframeTitle": "Formulario de registro de ascenso",
+    "prev": "Ruta anterior",
+    "next": "Ruta siguiente",
+    "allRoutes": "Ver todas las rutas",
+    "cta": {
+      "title": "¿Necesitas equipo para escalar?",
+      "subtitle": "Consulta la disponibilidad de equipos de escalada en Camping El Higuerón.",
+      "equipos": "Ver equipos disponibles",
+      "visita": "Planifica tu visita"
+    },
+    "styles": {
+      "deportiva": "Deportiva",
+      "deportivaProyecto": "Deportiva - Proyecto",
+      "clasicaMixta": "Clásica Mixta",
+      "clasica": "Clásica"
+    },
+    "proyecto": "Proyecto",
+    "porDefinir": "Por definir",
+    "MBS01": {
+      "routeName": "Jugo de Sangre",
+      "description": "Inicia justo donde está un árbol. Está a la izquierda de Pioneros y es una buena opción para calentar.",
+      "tips": [
+        "Ubicada a la izquierda de la ruta Pioneros",
+        "Excelente opción para calentar antes de rutas más difíciles",
+        "Comienza cerca de un árbol característico"
+      ]
+    },
+    "MBS02": {
+      "routeName": "Pioneros",
+      "description": "Secuencia de movimientos hermosos con jugas manuales que no permiten descansar hasta el final, una vez que entras en el crux.",
+      "tips": [
+        "Requiere una buena técnica de jugas manuales",
+        "Pocos descansos: mantén el ritmo y la concentración",
+        "El crux es intenso pero hermoso"
+      ]
+    },
+    "MBS03": {
+      "routeName": "La Niebla",
+      "description": "Un comienzo simple hasta alcanzar el saliente. Luego es puro crux en agarres pequeños y un movimiento realmente largo que podría necesitar un salto dinámico para escaladores más bajos.",
+      "tips": [
+        "Inicio accesible pero el crux es desafiante",
+        "Agarres muy pequeños en el saliente",
+        "Se requiere un movimiento largo y potente",
+        "Escaladores bajos pueden necesitar un movimiento dinámico"
+      ]
+    },
+    "MBS04": {
+      "routeName": "Gente Buena",
+      "description": "Ruta fácil que se ubica en la evidente línea de fácil progresión entre La Niebla y Perdidos en el Bosque. Inicia en Perdidos en el Bosque para luego tirar ligeramente hacia la izquierda hacia la placa a favor, juntándose con La Niebla y finalizando en un descuelgue ubicado en la primera repisa justo donde inicia la fisura alta de Pioneros.",
+      "tips": [
+        "Ubicada en una progresión natural de dificultad",
+        "Conecta con otras dos rutas importantes",
+        "Finaliza en un descuelgue bien definido",
+        "Buena opción para escaladores en progresión"
+      ]
+    },
+    "MBS05": {
+      "routeName": "Perdidos en el Bosque",
+      "description": "Con el primer tornillo justo al lado, hay un pequeño crux alcanzando el segundo tornillo. Después de eso, buenos agarres y pies muy buenos. El movimiento hacia la reunión define el 5.10a.",
+      "tips": [
+        "Primer tornillo está bien colocado para empezar",
+        "Pequeño crux en los primeros metros",
+        "Buenos agarres y pies en la sección media",
+        "El movimiento final define la dificultad"
+      ]
+    },
+    "MBS06": {
+      "routeName": "Permutante",
+      "description": "Un largo viaje de muchas secciones potentes en una pared ligeramente en desplome. Una amplia gama de movimientos técnicos y mucho aguante. Probablemente la línea más difícil del sector hasta ahora.",
+      "tips": [
+        "Una de las rutas más desafiantes del muro",
+        "Múltiples secciones técnicas requieren concentración",
+        "Se necesita excelente resistencia",
+        "Pared en desplome requiere potencia y técnica",
+        "Proyecto - aún no asegurada completamente"
+      ]
+    },
+    "MBS07": {
+      "routeName": "Payandesuno",
+      "description": "La primera línea en el parque, una hermosa línea en desplome. Se pone más difícil conforme subes, aumentando progresivamente el nivel. La línea se mantiene seca la mayor parte del tiempo. Solo una tormenta fuerte podría mojar el último tornillo.",
+      "tips": [
+        "La primera línea equipada en el muro",
+        "Línea hermosa y bien formada",
+        "Aumenta progresivamente en dificultad",
+        "Generalmente seca excepto en lluvia fuerte",
+        "Excelente para familiarizarse con el muro"
+      ]
+    },
+    "MBS08": {
+      "routeName": "China Town",
+      "description": "Un comienzo potente tipo boulder con agarres pequeños y pies altos. Seguido por un pequeño techo con movimientos largos. Seguido por una sección resbaladiza llena de crisps. En el desplome mantén hacia la izquierda para una sección en desplome de movimientos largos y buenos agarres. Mucho aguante hasta un final cripado.",
+      "tips": [
+        "Inicio boulder potente - ¡tómate tiempo para calentar!",
+        "Agarres pequeños requieren técnica fina",
+        "Techo técnico con movimientos largos",
+        "Sección de crisps resbaladiza - cuidado con los pies",
+        "La izquierda del desplome tiene buenos agarres",
+        "Se requiere excelente resistencia hasta el final"
+      ]
+    },
+    "MBS09": {
+      "routeName": "Bendito Sea",
+      "description": "La línea tiene 4 secciones, cada una con su propio pequeño crux. Hay una zona de descanso completo en medio de la línea. Clavar el tornillo antes de la reunión es aterrador pero totalmente seguro. La reunión y el último tornillo se humedecen bajo lluvia fuerte.",
+      "tips": [
+        "Ruta con nombre del muro - muy significativa",
+        "Cuatro secciones distintas cada una con su propio crux",
+        "Descanso importante en la mitad de la ruta",
+        "El tornillo pre-reunión inspira confianza - ¡es totalmente seguro!",
+        "Última sección puede estar mojada después de lluvia",
+        "Se requiere técnica y resistencia excepcionales"
+      ]
+    },
+    "MBS10": {
+      "routeName": "Destructor",
+      "description": "Línea mixta, un comienzo gentil a través de algunos tornillos y un movimiento final interesante en el muro rocoso, donde necesitas colocar algunos seguros de tuerca para alcanzar la reunión a la izquierda.",
+      "tips": [
+        "Ruta mixta: combina deportivo y clásico",
+        "Comienzo fácil con buenos tornillos",
+        "Se requieren seguros de tuerca en la sección final",
+        "Movimiento final técnico e interesante",
+        "Buena introducción al escalado mixto",
+        "Reunión está a la izquierda del muro"
+      ]
+    },
+    "MBS11": {
+      "routeName": "Piscineitor",
+      "description": "El comienzo es un océano de buenos agarres y galletas de arena, hasta que alcanzas un movimiento que requiere puro equilibrio y elevar tus pies muy alto. Necesitas hacer el movimiento para clavar, un salto de fe muy bonito.",
+      "tips": [
+        "Comienzo con buenos agarres y galletas de arena",
+        "El crux requiere equilibrio puro",
+        "Eleva tus pies muy alto para el movimiento clave",
+        "Necesitas hacer el movimiento para poder clavar",
+        "Un salto de fe hermoso define la ruta"
+      ]
+    },
+    "MBS12": {
+      "routeName": "Chihiza",
+      "description": "Comienza con un desplome con buenos agarres laterales, atraviesa una sección de crimp y progresa a los agarres de lava. La segunda mitad es un desplome con excelentes agarres.",
+      "tips": [
+        "Desplome inicial con buenos agarres laterales",
+        "Sección de crimp requiere técnica fina",
+        "Progresa hacia agarres de lava únicos",
+        "Segunda mitad también en desplome",
+        "Excelentes agarres en la parte final"
+      ]
+    },
+    "MBS13": {
+      "routeName": "Los Gnomos de Guayara",
+      "description": "Línea mixta. Comienza con 6 tornillos usando técnica lateral de tirador (side pull). Escala hacia la repisa a un crux en el slap. Luego abre camino con seguros de tuerca en la segunda mitad a través del muro rocoso hasta un último tornillo y una reunión al final.",
+      "tips": [
+        "Primeros 6 tornillos requieren técnica de side pull",
+        "Crux está en el slap después de la repisa",
+        "Segunda mitad requiere seguros de tuerca (gear)",
+        "Se necesita equipo de protección tradicional",
+        "Finaliza con un último tornillo y reunión",
+        "Excelente introducción al escalado mixto"
+      ]
+    },
+    "MBS14": {
+      "routeName": "El Gangazo",
+      "description": "Un corto y resbaladizo 5.9 hasta la primera reunión. Atraviesa hacia la izquierda para alcanzar un desplome y mantén tu resistencia para algunos movimientos técnicos agradables con buenos agarres en la segunda mitad.",
+      "tips": [
+        "Inicio corto en 5.9 como calentamiento",
+        "Sección inicial puede ser resbaladiza",
+        "Travesía hacia la izquierda para el desplome",
+        "Mantén resistencia para la segunda mitad",
+        "Movimientos técnicos agradables arriba",
+        "Buenos agarres en la parte final"
+      ]
+    },
+    "MBS15": {
+      "routeName": "Soy Chowi",
+      "description": "Ruta que en su primera sección ofrece una escalada deportiva amigable, corta y sencilla (5.9). Después de su primera estación hay un alargue mixto que sigue la evidente fisura delgada que exige seguros de tamaño pequeño hasta alcanzar su segunda reunión. La dificultad de esta segunda parte podría ser un 5.11-.",
+      "tips": [
+        "Primera sección deportiva fácil - buen calentamiento",
+        "Segunda parte es escalada mixta/tradicional",
+        "Fisura delgada requiere seguros pequeños",
+        "Se necesita equipo de protección tradicional",
+        "Segunda parte significativamente más difícil (5.11-)",
+        "Excelente para aprender escalada mixta"
+      ]
+    }
+  },
+  "Evento": {
+    "empty": {
+      "title": "No hay eventos programados",
+      "body": "Por ahora no tenemos eventos activos. Vuelve pronto para conocer nuestras próximas actividades, festivales y talleres.",
+      "cta": "Volver al inicio"
+    },
+    "draft": {
+      "banner": "Vista previa: la información de este evento es tentativa y aún no es oficial. Fechas, premios y precios pueden cambiar.",
+      "label": "Vista previa:"
+    },
+    "sections": {
+      "destacados": {
+        "eyebrow": "Lo que vivirás",
+        "title": "¿Por qué participar?"
+      },
+      "categorias": {
+        "eyebrow": "Categorías",
+        "title": "Encuentra tu nivel"
+      },
+      "premios": {
+        "eyebrow": "Premios",
+        "title": "Compite por grandes premios"
+      },
+      "agenda": {
+        "eyebrow": "Agenda",
+        "title": "Cronograma del día"
+      },
+      "inscripcion": {
+        "eyebrow": "Inscripción",
+        "title": "Elige tu modalidad",
+        "note": "Las inscripciones oficiales se habilitarán pronto. Esta es una vista previa del evento."
+      },
+      "galeria": {
+        "eyebrow": "Galería",
+        "title": "El ambiente del evento"
+      },
+      "faqs": {
+        "eyebrow": "Preguntas frecuentes",
+        "title": "Resolvemos tus dudas"
+      }
+    },
+    "content": {
+      "etiqueta": "Festival de Escalada",
+      "titulo": "Festival de Escalada El Higuerón",
+      "subtitulo": "Un día para escalar, competir y celebrar la comunidad escaladora en el corazón del bosque.",
+      "fecha": "Por confirmar",
+      "lugar": "Camping El Higuerón",
+      "textoCta": "Quiero inscribirme",
+      "descripcion": [
+        "El Festival de Escalada El Higuerón reunirá a escaladores de todos los niveles para disfrutar de un día completo de escalada deportiva y boulder en roca natural, rodeados de montañas y bosque.",
+        "Más que una competencia, es una celebración de la comunidad: música, fogata, intercambio de experiencias y la oportunidad de superar tus propios límites mientras compites por premios.",
+        "Esta es una versión preliminar del evento. Las fechas, premios y precios son tentativos y se confirmarán en la convocatoria oficial."
+      ],
+      "destacados": [
+        {
+          "titulo": "Premios por categoría",
+          "descripcion": "Compite y gana premios en tu nivel de escalada."
+        },
+        {
+          "titulo": "Muro y Boulder",
+          "descripcion": "Escala en nuestras dos modalidades sobre roca natural."
+        },
+        {
+          "titulo": "Comunidad escaladora",
+          "descripcion": "Conecta con escaladores de toda la región."
+        },
+        {
+          "titulo": "Fogata y música",
+          "descripcion": "Cierre del día con ambiente de campamento."
+        }
+      ],
+      "categorias": [
+        {
+          "nombre": "Principiante",
+          "descripcion": "Para quienes están dando sus primeros pegues. Rutas accesibles y ambiente de apoyo."
+        },
+        {
+          "nombre": "Intermedio",
+          "descripcion": "Para escaladores con experiencia que buscan retar su técnica."
+        },
+        {
+          "nombre": "Avanzado",
+          "descripcion": "Para los más fuertes: las rutas más exigentes del sector."
+        },
+        {
+          "nombre": "Boulder",
+          "descripcion": "Categoría especial de escalada en bloque, sin cuerda y a baja altura."
+        }
+      ],
+      "premios": [
+        {
+          "posicion": "1er lugar",
+          "descripcion": "Premio principal por categoría",
+          "valor": "Por definir"
+        },
+        {
+          "posicion": "2do lugar",
+          "descripcion": "Segundo premio por categoría",
+          "valor": "Por definir"
+        },
+        {
+          "posicion": "3er lugar",
+          "descripcion": "Tercer premio por categoría",
+          "valor": "Por definir"
+        },
+        {
+          "posicion": "Reconocimientos",
+          "descripcion": "Menciones especiales y sorpresas de patrocinadores",
+          "valor": "Por definir"
+        }
+      ],
+      "agenda": [
+        {
+          "hora": "07:30",
+          "titulo": "Registro y entrega de kits",
+          "descripcion": "Acreditación de participantes y revisión de equipo."
+        },
+        {
+          "hora": "08:30",
+          "titulo": "Calentamiento y apertura",
+          "descripcion": "Bienvenida e indicaciones de seguridad."
+        },
+        {
+          "hora": "09:00",
+          "titulo": "Rondas clasificatorias",
+          "descripcion": "Competencia por categorías en muro y boulder."
+        },
+        {
+          "hora": "13:00",
+          "titulo": "Almuerzo y descanso",
+          "descripcion": "Pausa para recargar energías."
+        },
+        {
+          "hora": "14:30",
+          "titulo": "Rondas finales",
+          "descripcion": "Las mejores rutas de cada categoría."
+        },
+        {
+          "hora": "17:00",
+          "titulo": "Premiación",
+          "descripcion": "Entrega de premios y reconocimientos."
+        },
+        {
+          "hora": "18:30",
+          "titulo": "Fogata de cierre",
+          "descripcion": "Música, comunidad y celebración."
+        }
+      ],
+      "planes": [
+        {
+          "nombre": "Participante",
+          "precio": "Por definir",
+          "unidad": "COP / persona",
+          "incluye": [
+            "Inscripción a una categoría",
+            "Kit del festival",
+            "Acceso a muro y boulder",
+            "Hidratación durante el evento",
+            "Acceso a la fogata de cierre"
+          ]
+        },
+        {
+          "nombre": "Acompañante",
+          "precio": "Por definir",
+          "unidad": "COP / persona",
+          "incluye": [
+            "Acceso al evento como espectador",
+            "Acceso a zonas comunes",
+            "Acceso a la fogata de cierre"
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "pregunta": "¿Necesito experiencia previa?",
+          "respuesta": "No. Hay una categoría de principiantes pensada para quienes recién comienzan. Lo importante es venir con ganas de disfrutar."
+        },
+        {
+          "pregunta": "¿Debo llevar mi propio equipo?",
+          "respuesta": "Recomendamos traer tu equipo de escalada. Habrá opción de alquiler de equipo en el sitio. Los detalles se confirmarán en la convocatoria oficial."
+        },
+        {
+          "pregunta": "¿Cómo me inscribo?",
+          "respuesta": "La inscripción oficial se abrirá pronto. Esta página es un borrador previo del evento."
+        },
+        {
+          "pregunta": "¿Puedo ir solo a ver?",
+          "respuesta": "Sí, habrá entrada para acompañantes y espectadores que quieran disfrutar del ambiente."
+        }
+      ],
+      "cierreTitulo": "¿Listo para el reto?",
+      "cierreDescripcion": "Prepárate para el primer Festival de Escalada El Higuerón. Pronto abriremos las inscripciones oficiales."
+    }
+  },
+  "Login": {
+    "brand": "El Higuerón",
+    "title": "Acceso administrativo",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "submit": "Iniciar sesión",
+    "restricted": "Acceso restringido solo a personal autorizado."
+  },
+  "Form": {
+    "iframeTitle": "Estudio de Alquiler de Equipo para Montaña y Aventura",
+    "loading": "Cargando…"
+  },
+  "WhatsApp": {
+    "aria": "Contactar por WhatsApp",
+    "tooltip": "Contáctanos por WhatsApp",
+    "prefill": "Hola, me gustaría obtener información sobre Camping El Higuerón"
+  },
+  "Chat": {
+    "name": "Mr. Gaque",
+    "status": "Asesor · en línea",
+    "welcome": {
+      "title": "¡Hola! Soy Mr. Gaque",
+      "body": "Tu asesor en Camping El Higuerón. ¿En qué rincón de la montaña te gustaría perderte hoy?"
+    },
+    "suggestions": [
+      "¿Qué zonas de camping tienen?",
+      "¿Cuáles son los precios?",
+      "Rutas de escalada disponibles",
+      "¿Cómo llego a El Higuerón?"
+    ],
+    "placeholder": "Conversa con Mr. Gaque...",
+    "footer": "Camping El Higuerón",
+    "tooltip": {
+      "open": "Habla con un asistente",
+      "close": "Cerrar chat"
+    },
+    "aria": {
+      "open": "Abrir chat de Mr. Gaque",
+      "close": "Cerrar chat"
+    },
+    "errors": {
+      "unexpected": "Ocurrió un error inesperado al procesar tu solicitud.",
+      "prefix": "⚠️ **Error:**",
+      "connection": "No se pudo conectar con el servidor. Por favor revisa tu conexión."
+    },
+    "api": {
+      "missingKey": "API Key de OpenAI no configurada. Por favor, añade OPENAI_API_KEY a tus variables de entorno.",
+      "unavailable": "El servicio de chat no está disponible en este momento.",
+      "quota": "Has agotado tu cuota de OpenAI. Por favor, revisa tu plan y facturación.",
+      "invalidKey": "La API Key de OpenAI no es válida o ha expirado."
+    }
+  },
+  "Common": {
+    "brand": "El Higuerón",
+    "brandFull": "Camping El Higuerón",
+    "planVisit": "Planifica tu visita",
+    "contactNow": "Contactar ahora",
+    "contact": "Contactar",
+    "whatsapp": "WhatsApp",
+    "seeEquipment": "Ver equipos disponibles",
+    "porDefinir": "Por definir",
+    "porConfirmar": "Por confirmar",
+    "loading": "Cargando…",
+    "close": "Cerrar",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "copPerPerson": "COP / persona"
+  }
+}

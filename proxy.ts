@@ -1,11 +1,8 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import createMiddleware from "next-intl/middleware"
+import { routing } from "./i18n/routing"
 
-export async function proxy(request: NextRequest) {
-  return NextResponse.next({ request })
-}
+export default createMiddleware(routing)
 
 export const config = {
-  matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
-  ],
+  matcher: ["/((?!api|trpc|_next|_vercel|.*\\..*).*)"],
 }

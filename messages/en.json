@@ -1,0 +1,1288 @@
+{
+  "Meta": {
+    "title": "Camping El Higuerón | Climbing and Camping in the Mountains",
+    "description": "Experience Bendito Sea at Camping El Higuerón. Sport climbing, boulder, and camping in the heart of Colombia's high Andean forest.",
+    "ogTitle": "Camping El Higuerón | Climbing and Camping in the Mountains",
+    "ogDescription": "Experience Bendito Sea at Camping El Higuerón. Sport climbing, boulder, and camping in the heart of the high Andean forest.",
+    "logoAlt": "El Higuerón - Camping and Climbing",
+    "loginTitle": "Admin access | El Higuerón",
+    "formTitle": "Form",
+    "formDescription": "Help us create a better service.",
+    "eventoTitleFallback": "Events | El Higuerón",
+    "eventoDescriptionFallback": "Upcoming events at Camping El Higuerón.",
+    "eventoTitlePattern": "{titulo} | El Higuerón"
+  },
+  "Nav": {
+    "brand": "El Higuerón",
+    "links": {
+      "escalada": "Climbing",
+      "camping": "Camping",
+      "equipos": "Gear rental",
+      "visita": "Visit",
+      "galeria": "Gallery",
+      "contacto": "Contact"
+    },
+    "cta": "Plan your visit",
+    "aria": {
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu"
+    }
+  },
+  "Footer": {
+    "brand": "El Higuerón",
+    "tagline": "A natural space for climbing, boulder, and camping in the heart of Colombia's high Andean forest.",
+    "sections": {
+      "quickLinks": "Quick Links",
+      "moreInfo": "More Information",
+      "contact": "Contact"
+    },
+    "links": {
+      "inicio": "Home",
+      "elLugar": "The Place",
+      "escalada": "Climbing",
+      "boulder": "Boulder",
+      "camping": "Camping",
+      "equipos": "Gear",
+      "visita": "Visit",
+      "galeria": "Gallery",
+      "contacto": "Contact"
+    },
+    "whatsapp": "WhatsApp",
+    "copyright": "© {year} Camping El Higuerón. All rights reserved."
+  },
+  "Home": {
+    "hero": {
+      "title": "Climbing, camping, and a connection with nature in the heart of the mountains",
+      "subtitle": "Live a unique experience at Camping El Higuerón, a natural refuge in the high Andean forest of Choachí.",
+      "cta": "Plan your visit",
+      "imageAlt": "Mountains and nature at Camping El Higuerón"
+    },
+    "experiences": {
+      "title": "Live the experience",
+      "subtitle": "Discover the different activities you can enjoy at Camping El Higuerón",
+      "escalada": {
+        "title": "Sport Climbing",
+        "description": "More than 15 natural-rock climbing routes with different difficulty levels in the Bendito Sea sector."
+      },
+      "boulder": {
+        "title": "Boulder",
+        "description": "A boulder area for all levels, surrounded by the unique landscape of the high Andean forest."
+      },
+      "camping": {
+        "title": "Camping",
+        "description": "Camping spaces in a calm, safe setting, with campfires under the stars and recreational activities."
+      },
+      "senderismo": {
+        "title": "Hiking",
+        "description": "Trails through the high Andean forest and Cruz Verde páramo, surrounded by native flora and fauna of the Colombian Andes."
+      },
+      "talleres": {
+        "title": "Outdoor Workshops",
+        "description": "Activities and workshops in contact with nature: coming soon."
+      }
+    },
+    "adventures": {
+      "title": "Choose your adventure",
+      "subtitle": "Get all the information about our main activities",
+      "escalada": {
+        "title": "Rock climbing",
+        "cta": "See more information",
+        "imageAlt": "Climbing on the wall"
+      },
+      "camping": {
+        "title": "Camping and Nature",
+        "cta": "Explore Camping",
+        "imageAlt": "Camping"
+      }
+    },
+    "about": {
+      "eyebrow": "About the place",
+      "title": "A refuge between rock and cloud forest",
+      "p1": "Camping El Higuerón is located in the mountains of Choachí, surrounded by high Andean forest and rock formations that bring the Bendito Sea climbing sector to life. It is a space for those seeking to disconnect from the city and reconnect with what matters.",
+      "p2": "Here there is no city noise or unnecessary distractions. Only the sound of the wind, the birds, and the fire at night. A place to camp, climb, and live the mountain in a simple, real, and close way.",
+      "location": "Choachí, Cundinamarca - Aguadulce",
+      "cta": "Discover the place",
+      "imageAlt": "High Andean forest"
+    },
+    "features": {
+      "title": "What you'll find",
+      "subtitle": "Everything you need for an unforgettable mountain experience",
+      "routes": {
+        "label": "+15 climbing routes",
+        "description": "5.9 - 5,13"
+      },
+      "boulder": {
+        "label": "Boulder area",
+        "description": "Different levels"
+      },
+      "camping": {
+        "label": "Camping space",
+        "description": "Natural setting"
+      },
+      "activities": {
+        "label": "Workshops and hiking",
+        "description": "Outdoor activities"
+      }
+    },
+    "equipment": {
+      "title": "Don't have climbing gear?",
+      "description": "We offer rental gear so you can climb without worries. From harnesses and ropes to climbing shoes.",
+      "cta": "See gear rental"
+    },
+    "gallery": {
+      "title": "Gallery",
+      "subtitle": "A glimpse of what awaits you at Camping El Higuerón",
+      "cta": "See full gallery",
+      "alts": [
+        "Climber on rock",
+        "Camping area",
+        "High Andean forest",
+        "Boulder at sunset"
+      ]
+    },
+    "cta": {
+      "title": "Book or check availability",
+      "description": "We're here to help you plan your next mountain adventure. Contact us and we'll answer all your questions.",
+      "primary": "Contact now",
+      "secondary": "More information"
+    }
+  },
+  "Escalada": {
+    "hero": {
+      "title": "Climbing",
+      "subtitle": "Two climbing styles in the heart of the forest: sport wall and boulder",
+      "imageAlt": "Climbing at El Higuerón"
+    },
+    "modalities": {
+      "eyebrow": "Modalities",
+      "title": "Choose your climbing style",
+      "subtitle": "We have two climbing areas equipped for different styles and experience levels",
+      "availableLabel": "available",
+      "heightLabel": "height",
+      "cta": "See details and routes",
+      "muro": {
+        "title": "Muro Bendito Sea",
+        "description": "15 sport climbing routes on natural rock with bolts already in place. Grades from 5.9 to 5.13a for all climbers.",
+        "routes": "15 routes",
+        "height": "14m - 33m"
+      },
+      "boulder": {
+        "title": "Boulder",
+        "description": "A boulder area with different difficulty levels. Low-height climbing without a rope, ideal for training strength and technique.",
+        "routes": "Multiple levels",
+        "height": "Up to 4m"
+      }
+    },
+    "pricing": {
+      "eyebrow": "Rates",
+      "title": "Entry to the climbing area",
+      "price": "$8.000",
+      "unit": "COP / person",
+      "includesTitle": "Entry includes:",
+      "includes": {
+        "accessWall": "Access to the climbing wall",
+        "accessBoulder": "Access to the boulder area",
+        "trails": "Use of trails",
+        "facilities": "Other facilities",
+        "insurance": "Medical insurance",
+        "gear": "Climbing gear"
+      },
+      "important": "Important",
+      "importantText": "You must bring your own climbing gear (harness, rope, quickdraws, carabiners, helmet, etc.). Entry does not include medical insurance or climbing gear."
+    },
+    "beginners": {
+      "eyebrow": "For Beginners",
+      "title": "Training with professional guides",
+      "body": "If you're new to climbing or want to learn safely, we offer training with professional guides. The package includes:",
+      "items": [
+        "Full climbing gear",
+        "Personalized instruction",
+        "Safety techniques"
+      ]
+    },
+    "rental": {
+      "eyebrow": "Gear Rental",
+      "title": "Don't have your own gear?",
+      "body": "If you don't have climbing gear, you can rent everything you need to climb safely: harness, helmet, climbing shoes, and more.",
+      "cta": "See available gear"
+    },
+    "safety": {
+      "eyebrow": "Your Safety First",
+      "title": "Safety Recommendations",
+      "intro": "Climbing is a risky activity. Although the sector is equipped and maintained, every climber must take responsibility for their own safety and that of their partners.",
+      "tips": [
+        "Always climb with a trusted partner",
+        "Check your gear before every attempt",
+        "Know your limits and don't exceed them",
+        "Always wear a helmet in the climbing area",
+        "Respect the site guidelines"
+      ],
+      "imageAlt": "Climbing gear"
+    },
+    "cta": {
+      "title": "Ready to climb?",
+      "subtitle": "Explore the available routes or plan your visit to the climbing sector.",
+      "primary": "See Wall routes",
+      "secondary": "Plan your visit"
+    },
+    "guides": {
+      "cta": "Contact a guide",
+      "modalTitle": "Professional Guides",
+      "modalSubtitle": "Contact climbing guides directly to schedule a training session",
+      "close": "Close",
+      "instagram": "Instagram",
+      "whatsapp": "WhatsApp",
+      "skalePeregrino": {
+        "name": "Skale Peregrino"
+      }
+    }
+  },
+  "Boulder": {
+    "hero": {
+      "title": "Boulder",
+      "subtitle": "Bouldering in a unique natural setting",
+      "imageAlt": "Boulder area at El Higuerón"
+    },
+    "banner": {
+      "caption": "Natural rock, pure movement",
+      "imageAlt": "Boulder at El Higuerón - action on natural rock"
+    },
+    "intro": {
+      "eyebrow": "Boulder Area",
+      "title": "Outdoor bouldering",
+      "p1": "The boulder area at Camping El Higuerón offers a unique bouldering experience. Surrounded by high Andean forest, you'll find diverse problems on natural rock that will challenge your technique, strength, and creativity.",
+      "p2": "Boulder is a discipline that allows more direct contact with the rock, without ropes or harnesses, where every move counts and reading the problem is essential for success.",
+      "imageAlt": "Climber bouldering"
+    },
+    "gallery": {
+      "title": "The area in pictures",
+      "subtitle": "Natural blocks, falls, and movement in the high Andean forest"
+    },
+    "features": {
+      "title": "Area features",
+      "subtitle": "A natural space for bouldering",
+      "blocks": {
+        "title": "Natural Blocks",
+        "description": "Natural rock formations with a diversity of holds and moves."
+      },
+      "nature": {
+        "title": "Natural Setting",
+        "description": "Outdoor boulder surrounded by the landscape of the high Andean forest."
+      },
+      "landing": {
+        "title": "Landing Zone",
+        "description": "Areas with suitable terrain for safe practice with crashpads."
+      }
+    },
+    "levels": {
+      "eyebrow": "Difficulty Levels",
+      "title": "Problems by level",
+      "subtitle": "Classification using the V scale (Hueco Scale), the most widely used for boulder in Colombia and Latin America.",
+      "v0": {
+        "grade": "V0-V1",
+        "level": "Introduction",
+        "description": "Basic problems ideal for learning the discipline and developing technique."
+      },
+      "v2": {
+        "grade": "V2-V3",
+        "level": "Beginner",
+        "description": "Greater complexity in moves and better fitness required."
+      },
+      "v4": {
+        "grade": "V4-V5",
+        "level": "Intermediate",
+        "description": "Technical problems that require strength and reading moves."
+      },
+      "v6": {
+        "grade": "V6+",
+        "level": "Advanced",
+        "description": "Demanding challenges for climbers with boulder experience."
+      }
+    },
+    "crashpads": {
+      "eyebrow": "Safety",
+      "title": "Using Crashpads",
+      "p1": "Crashpads are special mats designed to cushion falls while bouldering. They are essential for practicing safely.",
+      "p2": "Check crashpad availability in our gear section. If you bring your own, make sure to place it correctly for the landing zone of the problem you're working.",
+      "imageAlt": "Crashpads for boulder",
+      "tips": [
+        "Always use crashpads to protect falls",
+        "Practice with a spotter to help guide falls",
+        "Check the landing zone before every attempt",
+        "Warm up properly before trying hard problems",
+        "Know your limits and rest when needed"
+      ]
+    },
+    "cta": {
+      "title": "Ready for boulder?",
+      "subtitle": "Check crashpad availability or plan your visit to the boulder area.",
+      "primary": "See available gear",
+      "secondary": "Contact"
+    }
+  },
+  "Camping": {
+    "hero": {
+      "title": "Camping",
+      "subtitle": "Camp under the stars in the high Andean forest",
+      "imageAlt": "Camping area at El Higuerón"
+    },
+    "intro": {
+      "eyebrow": "The Experience",
+      "title": "Camping in nature",
+      "p1": "Camping El Higuerón offers a place to camp in a calm, safe setting, surrounded by the nature of the high Andean forest. Here you can disconnect from the modern world and reconnect with what is essential.",
+      "p2": "Whether you come to climb, boulder, or simply enjoy the mountain, our campground is the perfect place to spend the night and wake up to the sounds of the forest.",
+      "imageAlt": "Tents at the campground"
+    },
+    "includes": {
+      "title": "What's included?",
+      "subtitle": "What you'll find in our camping area",
+      "tents": {
+        "title": "Tent Space",
+        "description": "Marked, leveled areas to set up your tent comfortably."
+      },
+      "fire": {
+        "title": "Campfire Area",
+        "description": "A shared area for making campfires safely and responsibly."
+      },
+      "water": {
+        "title": "Water Access",
+        "description": "A water point available for basic needs during your stay."
+      }
+    },
+    "bring": {
+      "eyebrow": "Get ready",
+      "title": "What to bring?",
+      "intro": "To make the most of your camping experience, we recommend bringing the following:",
+      "imageAlt": "Sunrise at the campground",
+      "items": [
+        "Tent resistant to cold and humidity",
+        "Sleeping bag for low temperatures",
+        "Sleeping pad or thermal insulator",
+        "Warm layered clothing",
+        "Flashlight or headlamp with extra batteries",
+        "Enough food and snacks",
+        "Cooking utensils",
+        "Basic first-aid kit"
+      ]
+    },
+    "atmosphere": {
+      "title": "The atmosphere",
+      "subtitle": "What awaits you on mountain nights",
+      "cold": {
+        "title": "Cold Nights",
+        "description": "Temperatures can drop considerably. Come prepared with warm layers."
+      },
+      "stars": {
+        "title": "Starry Sky",
+        "description": "Far from light pollution, the nights reveal an impressive sky."
+      },
+      "silence": {
+        "title": "Natural Silence",
+        "description": "Only the sound of the wind and nature will accompany your rest."
+      }
+    },
+    "fire": {
+      "eyebrow": "Campfires",
+      "title": "Nights by the fire",
+      "p1": "There's nothing like ending the day around a campfire. Sharing stories, warming your hands, and watching the flames while the sky fills with stars is an essential part of the experience at El Higuerón.",
+      "p2": "We have a designated campfire area where you can enjoy this moment safely and responsibly with the natural surroundings.",
+      "imageAlt": "Campfire at the campground",
+      "galleryAlt": "Campfire at El Higuerón"
+    },
+    "place": {
+      "title": "The place",
+      "subtitle": "Spaces, sunrise, and surroundings of the campground at El Higuerón"
+    },
+    "cta": {
+      "title": "Ready to camp?",
+      "subtitle": "Check availability and plan your next night under the stars.",
+      "primary": "Check availability",
+      "secondary": "Visit information"
+    }
+  },
+  "Equipos": {
+    "hero": {
+      "title": "Gear",
+      "subtitle": "Equipment available for your adventure",
+      "imageAlt": "Climbing gear"
+    },
+    "intro": {
+      "eyebrow": "Equipment",
+      "title": "Everything you need to climb",
+      "body": "At Camping El Higuerón we have gear available so you can enjoy climbing and boulder even if you don't have your own equipment. Check availability before your visit."
+    },
+    "list": {
+      "title": "Available Gear",
+      "subtitle": "Quality equipment for your safety and comfort"
+    },
+    "unavailable": "Unavailable",
+    "items": {
+      "casco": {
+        "name": "Helmet",
+        "description": "Safety helmets for protection while climbing. Recommended for all wall activities.",
+        "forActivity": "Climbing"
+      },
+      "gatos": {
+        "name": "Climbing Shoes",
+        "description": "Specialized climbing shoes in various sizes. Essential for better grip on the rock.",
+        "forActivity": "Climbing and Boulder"
+      },
+      "arnes": {
+        "name": "Harness",
+        "description": "Sport climbing harnesses in different sizes for comfort and safety while climbing.",
+        "forActivity": "Climbing"
+      },
+      "crashpads": {
+        "name": "Crashpads",
+        "description": "Protection mats for falls while bouldering. Essential for a safe session.",
+        "forActivity": "Boulder"
+      },
+      "botas": {
+        "name": "Boots",
+        "description": "Mountain boots for hiking and outdoor activities.",
+        "forActivity": "Hiking"
+      },
+      "carpas": {
+        "name": "Camping Tents",
+        "description": "Tents for camping on site, ideal for those without their own camping gear.",
+        "forActivity": "Camping"
+      }
+    },
+    "notes": {
+      "title": "Important information",
+      "intro": "Keep the following considerations in mind regarding gear use:",
+      "imageAlt": "Available climbing gear",
+      "items": [
+        "Gear availability may vary depending on demand.",
+        "We recommend booking in advance, especially in peak season.",
+        "As a deposit for rented gear, a valid ID must be left at check-in. It will be returned when the gear is brought back in good condition.",
+        "The user is responsible for taking care of the gear during use."
+      ]
+    },
+    "cta": {
+      "title": "Check availability",
+      "subtitle": "Contact us to verify gear availability for the dates of your visit. We'll get back to you as soon as possible.",
+      "primary": "Contact now",
+      "whatsapp": "WhatsApp"
+    }
+  },
+  "Visita": {
+    "hero": {
+      "title": "Plan Your Visit",
+      "subtitle": "Everything you need to know before coming",
+      "imageAlt": "Climbing at El Higuerón"
+    },
+    "location": {
+      "eyebrow": "Location",
+      "title": "How to get here?",
+      "intro": "Camping El Higuerón is located in the mountains of Choachí, within the high Andean forest ecosystem. As a rural mountain area, it's important to plan your arrival in advance.",
+      "items": [
+        "Vereda Aguadulce, Choachí",
+        "Bogotá - Choachí road Pr 6+100 Route 4006A km 23",
+        "Some areas have limited cell signal",
+        "Coordinate your arrival in advance to receive clear, up-to-date directions",
+        "Important: Before leaving, ask for directions and road condition recommendations."
+      ],
+      "cta": "Request directions",
+      "mapTitle": "Camping El Higuerón location"
+    },
+    "weather": {
+      "title": "Weather and Clothing",
+      "subtitle": "Prepare for mountain conditions",
+      "variable": {
+        "title": "Variable Weather",
+        "description": "Cold climate. Mountain weather can change quickly. Be ready for sun, rain, and cold in the same day. Average temperature 15°C"
+      },
+      "clothing": {
+        "title": "Recommended clothing",
+        "description": "It depends a lot on the activity you'll do, but in general come prepared for cold and rain"
+      }
+    },
+    "clothing": {
+      "cardTitle": "What to wear",
+      "items": [
+        "Waterproof and windproof jacket",
+        "Thermal clothing for the night",
+        "Hat and gloves",
+        "Trekking shoes or boots for uneven terrain",
+        "Comfortable climbing clothes",
+        "A change of dry clothes"
+      ]
+    },
+    "rules": {
+      "title": "Basic Rules",
+      "subtitle": "Help us take care of this place",
+      "nature": {
+        "title": "Respect nature",
+        "description": "Don't pick plants, don't disturb animals, and walk only on marked trails."
+      },
+      "trash": {
+        "title": "Leave no trash",
+        "description": "Everything you bring, you must take with you. Leave no waste behind."
+      },
+      "fire": {
+        "title": "Responsible campfires",
+        "description": "Only make campfires in designated areas. Make sure they are fully out before you leave."
+      },
+      "safety": {
+        "title": "Personal safety",
+        "description": "Climb responsibly, use the right gear, and know your limits."
+      }
+    },
+    "schedule": {
+      "eyebrow": "Hours",
+      "title": "Visiting hours",
+      "intro": "Hours may vary depending on the season and weather conditions. We recommend confirming before your visit.",
+      "rows": [
+        {
+          "category": "Climbing",
+          "day": "Monday to Friday",
+          "hours": "7:00 AM - 5:00 PM"
+        },
+        {
+          "category": "Climbing",
+          "day": "Saturdays, Sundays and holidays",
+          "hours": "7:00 AM - 6:00 PM"
+        },
+        {
+          "category": "Camping",
+          "day": "Every day",
+          "hours": "Prior reservation"
+        },
+        {
+          "category": "Hikes",
+          "day": "Every day",
+          "hours": "Prior reservation"
+        },
+        {
+          "category": "Workshops",
+          "day": "Every day",
+          "hours": "Prior reservation"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Have more questions?",
+      "subtitle": "Contact us and we'll answer all your questions. We're here to help you plan your perfect visit.",
+      "primary": "Contact",
+      "whatsapp": "WhatsApp"
+    }
+  },
+  "Galeria": {
+    "hero": {
+      "title": "Gallery",
+      "subtitle": "Images of the experience at Camping El Higuerón"
+    },
+    "filters": {
+      "all": "All",
+      "escalada": "Climbing",
+      "boulder": "Boulder",
+      "camping": "Camping",
+      "naturaleza": "Nature"
+    },
+    "lightbox": {
+      "close": "Close",
+      "prev": "Previous",
+      "next": "Next"
+    }
+  },
+  "Contacto": {
+    "hero": {
+      "title": "Contact",
+      "subtitle": "We're here to help you plan your visit"
+    },
+    "findUs": {
+      "title": "Find us",
+      "subtitle": "Choose the channel you prefer to get in touch with us"
+    },
+    "location": {
+      "title": "Location",
+      "line1": "Vereda Aguadulce, Choachí",
+      "line2": "Bogotá–Choachí road km 23",
+      "mapsCta": "View on Google Maps"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "body": "Fast, direct replies. The easiest way to contact us.",
+      "cta": "Message on WhatsApp",
+      "prefill": "Hi, I'd like to get information about Camping El Higuerón"
+    },
+    "email": {
+      "title": "Email",
+      "cta": "Send email"
+    },
+    "social": {
+      "title": "Follow us on social media"
+    },
+    "banner": {
+      "text": "We'll be waiting for you in the mountains",
+      "imageAlt": "View of Camping El Higuerón"
+    }
+  },
+  "ElLugar": {
+    "hero": {
+      "title": "Our surroundings",
+      "subtitle": "A natural refuge between rock and high Andean forest",
+      "imageAlt": "High Andean forest at El Higuerón"
+    },
+    "intro": {
+      "eyebrow": "Our Surroundings",
+      "title": "The High Andean Forest",
+      "p1": "Camping El Higuerón is located in the mountains of Choachí, within the high Andean forest ecosystem. A setting of mist, humidity, and dense vegetation, where the mountain is lived directly and without intermediaries.",
+      "p2": "Here the landscape is not only visual: you feel it. The wind through the trees, the birdsong, and the silence of the night create an atmosphere that constantly changes and invites you to adapt to the natural rhythm of the place.",
+      "p3": "It is a space to disconnect from the urban, breathe cold mountain air, and inhabit the surroundings as they are: simple, alive, and authentic.",
+      "imageAlt": "View of the high Andean forest"
+    },
+    "characteristics": {
+      "title": "Place characteristics",
+      "subtitle": "A privileged natural setting for adventure and rest",
+      "altitude": {
+        "title": "Altitude",
+        "description": "Located in a mountain area within the high Andean forest at 3050 masl"
+      },
+      "climate": {
+        "title": "Cold Climate",
+        "description": "Cool days with constant changes and cold nights."
+      },
+      "air": {
+        "title": "Clean Air",
+        "description": "Clean air, high humidity, and direct contact with the forest."
+      }
+    },
+    "floraFauna": {
+      "title": "Flora and Fauna",
+      "subtitle": "Discover the biodiversity of the ecosystem",
+      "birds": {
+        "title": "Native Birds",
+        "description": "Presence of hummingbirds, tanagers, woodpeckers, and other species native to the forest."
+      },
+      "vegetation": {
+        "title": "Vegetation",
+        "description": "Bromeliads, mosses, ferns, orchids, and high-mountain vegetation."
+      },
+      "forest": {
+        "title": "Andean Forest",
+        "description": "Siete cueros, gaques, higuerones, and other species that form a dense, humid ecosystem"
+      }
+    },
+    "connection": {
+      "title": "Connection with the surroundings",
+      "p1": "At El Higuerón there is no rush. Time changes pace and the experience becomes simpler: walking, climbing, observing, or simply being.",
+      "p2": "Whether climbing, walking the trails, or simply sitting by the campfire, you'll feel how the mountain recharges you with energy and calm.",
+      "cta": "Plan your visit",
+      "imageAlt": "Sunset in the mountains"
+    }
+  },
+  "Muro": {
+    "hero": {
+      "title": "Muro Bendito Sea",
+      "subtitle": "A natural crag with 15 equipped routes for sport climbing",
+      "imageAlt": "Bendito Sea climbing wall"
+    },
+    "intro": {
+      "eyebrow": "Climbing Wall",
+      "title": "Bendito Sea: Climbing on natural rock",
+      "p1": "Bendito Sea is an impressive natural rock formation in the heart of Camping El Higuerón. This crag offers an authentic sport climbing experience.",
+      "p2": "With 15 climbing routes already equipped with bolted anchors, the Bendito Sea wall is an ideal destination for both beginners and those seeking more demanding challenges. Each route offers unique features that let you develop and test your skills.",
+      "imageAlt": "View of the Bendito Sea wall"
+    },
+    "features": {
+      "title": "Wall features",
+      "subtitle": "Everything that makes Bendito Sea special",
+      "rock": {
+        "title": "Natural Rock",
+        "description": "A natural crag with unique formations perfect for sport climbing."
+      },
+      "routes": {
+        "title": "15 Equipped Routes",
+        "description": "All routes have bolts already in place for safe climbing."
+      },
+      "levels": {
+        "title": "Multiple Levels",
+        "description": "Routes of different difficulty levels for all climbers."
+      }
+    },
+    "routes": {
+      "eyebrow": "The 15 Routes",
+      "title": "Climbing Routes",
+      "subtitle": "All routes are equipped with bolted anchors.",
+      "list": [
+        {
+          "name": "Jugo de Sangre",
+          "level": "5.10c",
+          "height": "To be defined"
+        },
+        {
+          "name": "Pioneros",
+          "level": "5.12b",
+          "height": "18m"
+        },
+        {
+          "name": "La Niebla",
+          "level": "Project",
+          "height": "20m"
+        },
+        {
+          "name": "Gente Buena",
+          "level": "5.9",
+          "height": "To be defined"
+        },
+        {
+          "name": "Perdidos en el Bosque",
+          "level": "5.10a",
+          "height": "14m"
+        },
+        {
+          "name": "Permutante",
+          "level": "Project",
+          "height": "28m"
+        },
+        {
+          "name": "Payandesuno",
+          "level": "5.12b",
+          "height": "30m"
+        },
+        {
+          "name": "China Town",
+          "level": "5.12d",
+          "height": "33m"
+        },
+        {
+          "name": "Bendito Sea",
+          "level": "5.13a",
+          "height": "33m"
+        },
+        {
+          "name": "Destructor",
+          "level": "5.9",
+          "height": "14m"
+        },
+        {
+          "name": "Piscineitor",
+          "level": "5.10b",
+          "height": "14m"
+        },
+        {
+          "name": "Chihiza",
+          "level": "5.11c",
+          "height": "18m"
+        },
+        {
+          "name": "Los Gnomos de Guayara",
+          "level": "5.11b",
+          "height": "18m"
+        },
+        {
+          "name": "El Gangazo",
+          "level": "5.11a",
+          "height": "20m"
+        },
+        {
+          "name": "Soy Chowi",
+          "level": "5.9",
+          "height": "To be defined"
+        }
+      ]
+    },
+    "guide": {
+      "eyebrow": "Visual Guide",
+      "title": "Route Map",
+      "subtitle": "Check the visual guide with the location and numbering of all Bendito Sea wall routes. You can enlarge it or download it to take with you.",
+      "fullscreen": "View fullscreen",
+      "download": "Download guide",
+      "close": "Close",
+      "imageAlt": "Route guide for the Bendito Sea wall"
+    },
+    "location": {
+      "eyebrow": "Location",
+      "title": "Where to find the wall?",
+      "p1": "The Bendito Sea wall is within the Camping El Higuerón grounds, in the middle of the high Andean forest. Its privileged location lets you enjoy climbing while surrounded by an impressive natural landscape.",
+      "p2": "From the camping area, access to the wall is straightforward and signposted. We recommend checking with our team for precise directions and the day's conditions.",
+      "imageAlt": "Location of the Bendito Sea wall"
+    },
+    "safety": {
+      "eyebrow": "Your Safety First",
+      "title": "Safety Recommendations",
+      "intro": "Although the Bendito Sea wall is equipped with bolted anchors, climbing remains a risky activity. Every climber must take responsibility for their own safety.",
+      "tips": [
+        "Always climb with a trusted partner",
+        "Check your gear before every attempt",
+        "Know your limits and respect them",
+        "Always wear a helmet in the area",
+        "Check the condition of the bolts before clipping",
+        "Respect the site guidelines"
+      ],
+      "imageAlt": "Climbing gear and safety"
+    },
+    "cta": {
+      "title": "Ready to climb Bendito Sea?",
+      "subtitle": "Check gear availability or plan your visit to the climbing wall.",
+      "primary": "See available gear",
+      "secondary": "Plan your visit"
+    }
+  },
+  "MuroRoute": {
+    "hero": {
+      "subtitle": "Muro Bendito Sea · Route {n} of 15"
+    },
+    "back": "Back to Muro Bendito Sea",
+    "details": {
+      "eyebrow": "Route Details"
+    },
+    "labels": {
+      "nivel": "Grade",
+      "altura": "Height",
+      "chapas": "Bolts",
+      "estilo": "Style"
+    },
+    "descriptionTitle": "Description",
+    "buildersLabel": "First ascentionists",
+    "tipsTitle": "Tips for this route",
+    "registerTitle": "Log your ascent",
+    "formLoading": "Loading...",
+    "formIframeTitle": "Ascent registration form",
+    "prev": "Previous route",
+    "next": "Next route",
+    "allRoutes": "See all routes",
+    "cta": {
+      "title": "Need gear to climb?",
+      "subtitle": "Check climbing gear availability at Camping El Higuerón.",
+      "equipos": "See available gear",
+      "visita": "Plan your visit"
+    },
+    "styles": {
+      "deportiva": "Sport",
+      "deportivaProyecto": "Sport - Project",
+      "clasicaMixta": "Mixed traditional",
+      "clasica": "Traditional"
+    },
+    "proyecto": "Project",
+    "porDefinir": "To be defined",
+    "MBS01": {
+      "routeName": "Jugo de Sangre",
+      "description": "It starts right where a tree is. It is to the left of Pioneros and is a good option for warming up.",
+      "tips": [
+        "Located to the left of the Pioneros route",
+        "Excellent option for warming up before harder routes",
+        "Starts near a distinctive tree"
+      ]
+    },
+    "MBS02": {
+      "routeName": "Pioneros",
+      "description": "A sequence of beautiful moves with hand jugs that don't allow rest until the end once you enter the crux.",
+      "tips": [
+        "Requires good hand-jug technique",
+        "Few rests: keep your pace and focus",
+        "The crux is intense but beautiful"
+      ]
+    },
+    "MBS03": {
+      "routeName": "La Niebla",
+      "description": "A simple start until you reach the overhang. Then it's pure crux on small holds and a really long move that may need a dynamic jump for shorter climbers.",
+      "tips": [
+        "Accessible start but the crux is challenging",
+        "Very small holds on the overhang",
+        "A long, powerful move is required",
+        "Shorter climbers may need a dynamic move"
+      ]
+    },
+    "MBS04": {
+      "routeName": "Gente Buena",
+      "description": "An easy route on the obvious line of easy progression between La Niebla and Perdidos en el Bosque. It starts on Perdidos en el Bosque, then trends slightly left onto the favorable slab, joins La Niebla, and finishes at a lower-off on the first ledge right where the high crack of Pioneros begins.",
+      "tips": [
+        "Located on a natural progression of difficulty",
+        "Connects with two other important routes",
+        "Finishes at a well-defined lower-off",
+        "A good option for climbers in progression"
+      ]
+    },
+    "MBS05": {
+      "routeName": "Perdidos en el Bosque",
+      "description": "With the first bolt right beside you, there is a small crux reaching the second bolt. After that, good holds and very good feet. The move to the anchor defines the 5.10a.",
+      "tips": [
+        "First bolt is well placed to start",
+        "Small crux in the first meters",
+        "Good holds and feet in the middle section",
+        "The final move defines the difficulty"
+      ]
+    },
+    "MBS06": {
+      "routeName": "Permutante",
+      "description": "A long journey of many powerful sections on a slightly overhanging wall. A wide range of technical moves and a lot of endurance. Probably the hardest line in the sector so far.",
+      "tips": [
+        "One of the most challenging routes on the wall",
+        "Multiple technical sections require focus",
+        "Excellent endurance is needed",
+        "Overhanging wall requires power and technique",
+        "Project - not fully established yet"
+      ]
+    },
+    "MBS07": {
+      "routeName": "Payandesuno",
+      "description": "The first line in the park, a beautiful overhanging line. It gets harder as you go up, progressively increasing the grade. The line stays dry most of the time. Only a strong storm might wet the last bolt.",
+      "tips": [
+        "The first line equipped on the wall",
+        "A beautiful, well-formed line",
+        "Progressively increases in difficulty",
+        "Generally dry except in heavy rain",
+        "Excellent for getting familiar with the wall"
+      ]
+    },
+    "MBS08": {
+      "routeName": "China Town",
+      "description": "A powerful boulder-style start with small holds and high feet. Followed by a small roof with long moves. Followed by a slippery section full of crimps. On the overhang, stay left for an overhanging section of long moves and good holds. Lots of endurance to a crimpy finish.",
+      "tips": [
+        "Powerful boulder start - take time to warm up!",
+        "Small holds require fine technique",
+        "Technical roof with long moves",
+        "Slippery crimp section - watch your feet",
+        "The left side of the overhang has good holds",
+        "Excellent endurance is required to the end"
+      ]
+    },
+    "MBS09": {
+      "routeName": "Bendito Sea",
+      "description": "The line has 4 sections, each with its own small crux. There is a full rest zone in the middle of the line. Clipping the bolt before the anchor is scary but totally safe. The anchor and the last bolt get wet in heavy rain.",
+      "tips": [
+        "Route named after the wall - very meaningful",
+        "Four distinct sections each with its own crux",
+        "Important rest in the middle of the route",
+        "The pre-anchor bolt inspires confidence - it's totally safe!",
+        "Last section may be wet after rain",
+        "Exceptional technique and endurance are required"
+      ]
+    },
+    "MBS10": {
+      "routeName": "Destructor",
+      "description": "A mixed line, a gentle start through some bolts and an interesting final move on the rocky wall, where you need to place some nut protection to reach the anchor on the left.",
+      "tips": [
+        "Mixed route: combines sport and traditional",
+        "Easy start with good bolts",
+        "Nut protection is required in the final section",
+        "Technical and interesting final move",
+        "A good introduction to mixed climbing",
+        "Anchor is to the left of the wall"
+      ]
+    },
+    "MBS11": {
+      "routeName": "Piscineitor",
+      "description": "The start is an ocean of good holds and sandy cookies until you reach a move that requires pure balance and raising your feet very high. You need to make the move to clip — a very nice leap of faith.",
+      "tips": [
+        "Start with good holds and sandy cookies",
+        "The crux requires pure balance",
+        "Raise your feet very high for the key move",
+        "You need to make the move to be able to clip",
+        "A beautiful leap of faith defines the route"
+      ]
+    },
+    "MBS12": {
+      "routeName": "Chihiza",
+      "description": "It starts with an overhang with good side pulls, crosses a crimp section, and progresses to the lava holds. The second half is an overhang with excellent holds.",
+      "tips": [
+        "Initial overhang with good side pulls",
+        "Crimp section requires fine technique",
+        "Progresses toward unique lava holds",
+        "Second half is also overhanging",
+        "Excellent holds on the final part"
+      ]
+    },
+    "MBS13": {
+      "routeName": "Los Gnomos de Guayara",
+      "description": "Mixed line. It starts with 6 bolts using side-pull technique. Climb to the ledge into a slap crux. Then work your way with nut protection through the second half across the rocky wall to a final bolt and an anchor at the end.",
+      "tips": [
+        "First 6 bolts require side-pull technique",
+        "Crux is in the slap after the ledge",
+        "Second half requires nut protection (gear)",
+        "Traditional protection gear is needed",
+        "Finishes with a final bolt and anchor",
+        "Excellent introduction to mixed climbing"
+      ]
+    },
+    "MBS14": {
+      "routeName": "El Gangazo",
+      "description": "A short, slippery 5.9 to the first anchor. Traverse left to reach an overhang and keep your endurance for some nice technical moves with good holds in the second half.",
+      "tips": [
+        "Short 5.9 start as a warm-up",
+        "Initial section can be slippery",
+        "Traverse left for the overhang",
+        "Keep endurance for the second half",
+        "Nice technical moves up high",
+        "Good holds on the final part"
+      ]
+    },
+    "MBS15": {
+      "routeName": "Soy Chowi",
+      "description": "A route whose first section offers friendly, short, and easy sport climbing (5.9). After its first belay there is a mixed extension that follows the obvious thin crack requiring small protection until its second anchor. The difficulty of this second part could be around 5.11-.",
+      "tips": [
+        "Easy sport first section - good warm-up",
+        "Second part is mixed/traditional climbing",
+        "Thin crack requires small protection",
+        "Traditional protection gear is needed",
+        "Second part significantly harder (5.11-)",
+        "Excellent for learning mixed climbing"
+      ]
+    }
+  },
+  "Evento": {
+    "empty": {
+      "title": "No events scheduled",
+      "body": "We don't have active events right now. Check back soon for our upcoming activities, festivals, and workshops.",
+      "cta": "Back to home"
+    },
+    "draft": {
+      "banner": "Preview: the information for this event is tentative and not yet official. Dates, prizes, and prices may change.",
+      "label": "Preview:"
+    },
+    "sections": {
+      "destacados": {
+        "eyebrow": "What you'll experience",
+        "title": "Why take part?"
+      },
+      "categorias": {
+        "eyebrow": "Categories",
+        "title": "Find your level"
+      },
+      "premios": {
+        "eyebrow": "Prizes",
+        "title": "Compete for great prizes"
+      },
+      "agenda": {
+        "eyebrow": "Schedule",
+        "title": "Day timeline"
+      },
+      "inscripcion": {
+        "eyebrow": "Registration",
+        "title": "Choose your modality",
+        "note": "Official registration will open soon. This is a preview of the event."
+      },
+      "galeria": {
+        "eyebrow": "Gallery",
+        "title": "The event atmosphere"
+      },
+      "faqs": {
+        "eyebrow": "Frequently asked questions",
+        "title": "We answer your questions"
+      }
+    },
+    "content": {
+      "etiqueta": "Climbing Festival",
+      "titulo": "El Higuerón Climbing Festival",
+      "subtitulo": "A day to climb, compete, and celebrate the climbing community in the heart of the forest.",
+      "fecha": "To be confirmed",
+      "lugar": "Camping El Higuerón",
+      "textoCta": "I want to register",
+      "descripcion": [
+        "The El Higuerón Climbing Festival will bring together climbers of all levels for a full day of sport climbing and boulder on natural rock, surrounded by mountains and forest.",
+        "More than a competition, it is a celebration of community: music, campfire, sharing experiences, and the chance to push your limits while competing for prizes.",
+        "This is a preliminary version of the event. Dates, prizes, and prices are tentative and will be confirmed in the official call."
+      ],
+      "destacados": [
+        {
+          "titulo": "Prizes by category",
+          "descripcion": "Compete and win prizes at your climbing level."
+        },
+        {
+          "titulo": "Wall and Boulder",
+          "descripcion": "Climb in our two modalities on natural rock."
+        },
+        {
+          "titulo": "Climbing community",
+          "descripcion": "Connect with climbers from across the region."
+        },
+        {
+          "titulo": "Campfire and music",
+          "descripcion": "End the day with a camp atmosphere."
+        }
+      ],
+      "categorias": [
+        {
+          "nombre": "Beginner",
+          "descripcion": "For those taking their first goes. Accessible routes and a supportive atmosphere."
+        },
+        {
+          "nombre": "Intermediate",
+          "descripcion": "For experienced climbers looking to challenge their technique."
+        },
+        {
+          "nombre": "Advanced",
+          "descripcion": "For the strongest: the most demanding routes in the sector."
+        },
+        {
+          "nombre": "Boulder",
+          "descripcion": "Special category for low-height climbing without a rope."
+        }
+      ],
+      "premios": [
+        {
+          "posicion": "1st place",
+          "descripcion": "Main prize by category",
+          "valor": "To be defined"
+        },
+        {
+          "posicion": "2nd place",
+          "descripcion": "Second prize by category",
+          "valor": "To be defined"
+        },
+        {
+          "posicion": "3rd place",
+          "descripcion": "Third prize by category",
+          "valor": "To be defined"
+        },
+        {
+          "posicion": "Recognitions",
+          "descripcion": "Special mentions and sponsor surprises",
+          "valor": "To be defined"
+        }
+      ],
+      "agenda": [
+        {
+          "hora": "07:30",
+          "titulo": "Registration and kit pickup",
+          "descripcion": "Participant check-in and gear review."
+        },
+        {
+          "hora": "08:30",
+          "titulo": "Warm-up and opening",
+          "descripcion": "Welcome and safety briefings."
+        },
+        {
+          "hora": "09:00",
+          "titulo": "Qualifier rounds",
+          "descripcion": "Competition by category on wall and boulder."
+        },
+        {
+          "hora": "13:00",
+          "titulo": "Lunch and rest",
+          "descripcion": "A break to recharge."
+        },
+        {
+          "hora": "14:30",
+          "titulo": "Final rounds",
+          "descripcion": "The best routes in each category."
+        },
+        {
+          "hora": "17:00",
+          "titulo": "Awards",
+          "descripcion": "Prize and recognition ceremony."
+        },
+        {
+          "hora": "18:30",
+          "titulo": "Closing campfire",
+          "descripcion": "Music, community, and celebration."
+        }
+      ],
+      "planes": [
+        {
+          "nombre": "Participant",
+          "precio": "To be defined",
+          "unidad": "COP / person",
+          "incluye": [
+            "Registration in one category",
+            "Festival kit",
+            "Access to wall and boulder",
+            "Hydration during the event",
+            "Access to the closing campfire"
+          ]
+        },
+        {
+          "nombre": "Companion",
+          "precio": "To be defined",
+          "unidad": "COP / person",
+          "incluye": [
+            "Access to the event as a spectator",
+            "Access to common areas",
+            "Access to the closing campfire"
+          ]
+        }
+      ],
+      "faqs": [
+        {
+          "pregunta": "Do I need prior experience?",
+          "respuesta": "No. There is a beginners category designed for those just starting. What matters is coming ready to enjoy."
+        },
+        {
+          "pregunta": "Do I need to bring my own gear?",
+          "respuesta": "We recommend bringing your climbing gear. There will be a rental option on site. Details will be confirmed in the official call."
+        },
+        {
+          "pregunta": "How do I register?",
+          "respuesta": "Official registration will open soon. This page is a preliminary draft of the event."
+        },
+        {
+          "pregunta": "Can I just come to watch?",
+          "respuesta": "Yes, there will be entry for companions and spectators who want to enjoy the atmosphere."
+        }
+      ],
+      "cierreTitulo": "Ready for the challenge?",
+      "cierreDescripcion": "Get ready for the first El Higuerón Climbing Festival. We'll open official registration soon."
+    }
+  },
+  "Login": {
+    "brand": "El Higuerón",
+    "title": "Admin access",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "restricted": "Access restricted to authorized staff only."
+  },
+  "Form": {
+    "iframeTitle": "Mountain and Adventure Gear Rental Study",
+    "loading": "Loading…"
+  },
+  "WhatsApp": {
+    "aria": "Contact via WhatsApp",
+    "tooltip": "Contact us on WhatsApp",
+    "prefill": "Hi, I'd like to get information about Camping El Higuerón"
+  },
+  "Chat": {
+    "name": "Mr. Gaque",
+    "status": "Advisor · online",
+    "welcome": {
+      "title": "Hi! I'm Mr. Gaque",
+      "body": "Your advisor at Camping El Higuerón. Which corner of the mountain would you like to get lost in today?"
+    },
+    "suggestions": [
+      "What camping areas do you have?",
+      "What are the prices?",
+      "Available climbing routes",
+      "How do I get to El Higuerón?"
+    ],
+    "placeholder": "Chat with Mr. Gaque...",
+    "footer": "Camping El Higuerón",
+    "tooltip": {
+      "open": "Talk to an assistant",
+      "close": "Close chat"
+    },
+    "aria": {
+      "open": "Open Mr. Gaque chat",
+      "close": "Close chat"
+    },
+    "errors": {
+      "unexpected": "An unexpected error occurred while processing your request.",
+      "prefix": "⚠️ **Error:**",
+      "connection": "Could not connect to the server. Please check your connection."
+    },
+    "api": {
+      "missingKey": "OpenAI API key not configured. Please add OPENAI_API_KEY to your environment variables.",
+      "unavailable": "The chat service is not available at this time.",
+      "quota": "You have exhausted your OpenAI quota. Please check your plan and billing.",
+      "invalidKey": "The OpenAI API key is invalid or has expired."
+    }
+  },
+  "Common": {
+    "brand": "El Higuerón",
+    "brandFull": "Camping El Higuerón",
+    "planVisit": "Plan your visit",
+    "contactNow": "Contact now",
+    "contact": "Contact",
+    "whatsapp": "WhatsApp",
+    "seeEquipment": "See available gear",
+    "porDefinir": "To be defined",
+    "porConfirmar": "To be confirmed",
+    "loading": "Loading…",
+    "close": "Close",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "copPerPerson": "COP / person"
+  }
+}

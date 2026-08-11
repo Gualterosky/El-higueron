@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { CheckCircle } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 import { Card, CardContent } from "@/components/ui/card"
 import {
   Accordion,
@@ -41,12 +42,17 @@ export function EventoDescripcion({ evento }: { evento: Evento }) {
 }
 
 /** Puntos destacados con icono. */
-export function EventoDestacados({ evento }: { evento: Evento }) {
+export async function EventoDestacados({ evento }: { evento: Evento }) {
   if (!evento.destacados?.length) return null
+  const t = await getTranslations("Evento")
+
   return (
     <section className="bg-beige py-16 lg:py-24">
       <div className="container mx-auto px-4 lg:px-8">
-        <TituloSeccion etiqueta="Lo que vivirás" titulo="¿Por qué participar?" />
+        <TituloSeccion
+          etiqueta={t("sections.destacados.eyebrow")}
+          titulo={t("sections.destacados.title")}
+        />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {evento.destacados.map((d) => {
             const Icono = getIcono(d.icono)
@@ -69,12 +75,17 @@ export function EventoDestacados({ evento }: { evento: Evento }) {
 }
 
 /** Categorías o niveles de participación. */
-export function EventoCategorias({ evento }: { evento: Evento }) {
+export async function EventoCategorias({ evento }: { evento: Evento }) {
   if (!evento.categorias?.length) return null
+  const t = await getTranslations("Evento")
+
   return (
     <section className="py-16 lg:py-24">
       <div className="container mx-auto px-4 lg:px-8">
-        <TituloSeccion etiqueta="Categorías" titulo="Encuentra tu nivel" />
+        <TituloSeccion
+          etiqueta={t("sections.categorias.eyebrow")}
+          titulo={t("sections.categorias.title")}
+        />
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {evento.categorias.map((c) => (
             <Card key={c.nombre} className="border-border transition-all hover:border-forest hover:shadow-md">
@@ -91,17 +102,19 @@ export function EventoCategorias({ evento }: { evento: Evento }) {
 }
 
 /** Premios del evento. */
-export function EventoPremios({ evento }: { evento: Evento }) {
+export async function EventoPremios({ evento }: { evento: Evento }) {
   if (!evento.premios?.length) return null
+  const t = await getTranslations("Evento")
+
   return (
     <section className="bg-forest py-16 lg:py-24">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="mb-12 text-center">
           <span className="mb-2 block text-sm font-medium uppercase tracking-wider text-orange">
-            Premios
+            {t("sections.premios.eyebrow")}
           </span>
           <h2 className="text-balance text-3xl font-bold text-white md:text-4xl">
-            Compite por grandes premios
+            {t("sections.premios.title")}
           </h2>
         </div>
         <div className="mx-auto grid max-w-4xl gap-6 sm:grid-cols-2">
@@ -121,12 +134,17 @@ export function EventoPremios({ evento }: { evento: Evento }) {
 }
 
 /** Cronograma del evento. */
-export function EventoAgenda({ evento }: { evento: Evento }) {
+export async function EventoAgenda({ evento }: { evento: Evento }) {
   if (!evento.agenda?.length) return null
+  const t = await getTranslations("Evento")
+
   return (
     <section className="py-16 lg:py-24">
       <div className="container mx-auto max-w-3xl px-4 lg:px-8">
-        <TituloSeccion etiqueta="Agenda" titulo="Cronograma del día" />
+        <TituloSeccion
+          etiqueta={t("sections.agenda.eyebrow")}
+          titulo={t("sections.agenda.title")}
+        />
         <ol className="relative border-l border-border">
           {evento.agenda.map((item, i) => (
             <li key={i} className="mb-8 ml-6 last:mb-0">
@@ -147,12 +165,17 @@ export function EventoAgenda({ evento }: { evento: Evento }) {
 }
 
 /** Planes de inscripción. */
-export function EventoInscripcion({ evento }: { evento: Evento }) {
+export async function EventoInscripcion({ evento }: { evento: Evento }) {
   if (!evento.planes?.length) return null
+  const t = await getTranslations("Evento")
+
   return (
     <section id="inscripcion" className="bg-beige py-16 lg:py-24">
       <div className="container mx-auto px-4 lg:px-8">
-        <TituloSeccion etiqueta="Inscripción" titulo="Elige tu modalidad" />
+        <TituloSeccion
+          etiqueta={t("sections.inscripcion.eyebrow")}
+          titulo={t("sections.inscripcion.title")}
+        />
         <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
           {evento.planes.map((plan) => (
             <Card
@@ -210,7 +233,7 @@ export function EventoInscripcion({ evento }: { evento: Evento }) {
           ))}
         </div>
         <p className="mx-auto mt-8 max-w-xl text-center text-sm text-muted-foreground">
-          Las inscripciones oficiales se habilitarán pronto. Esta es una vista previa del evento.
+          {t("sections.inscripcion.note")}
         </p>
       </div>
     </section>
@@ -218,12 +241,17 @@ export function EventoInscripcion({ evento }: { evento: Evento }) {
 }
 
 /** Galería de imágenes. */
-export function EventoGaleria({ evento }: { evento: Evento }) {
+export async function EventoGaleria({ evento }: { evento: Evento }) {
   if (!evento.galeria?.length) return null
+  const t = await getTranslations("Evento")
+
   return (
     <section className="py-16 lg:py-24">
       <div className="container mx-auto px-4 lg:px-8">
-        <TituloSeccion etiqueta="Galería" titulo="El ambiente del evento" />
+        <TituloSeccion
+          etiqueta={t("sections.galeria.eyebrow")}
+          titulo={t("sections.galeria.title")}
+        />
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {evento.galeria.map((src, i) => (
             <div key={i} className="relative aspect-square overflow-hidden rounded-xl">
@@ -242,12 +270,17 @@ export function EventoGaleria({ evento }: { evento: Evento }) {
 }
 
 /** Preguntas frecuentes. */
-export function EventoFaqs({ evento }: { evento: Evento }) {
+export async function EventoFaqs({ evento }: { evento: Evento }) {
   if (!evento.faqs?.length) return null
+  const t = await getTranslations("Evento")
+
   return (
     <section className="bg-beige py-16 lg:py-24">
       <div className="container mx-auto max-w-3xl px-4 lg:px-8">
-        <TituloSeccion etiqueta="Preguntas frecuentes" titulo="Resolvemos tus dudas" />
+        <TituloSeccion
+          etiqueta={t("sections.faqs.eyebrow")}
+          titulo={t("sections.faqs.title")}
+        />
         <Accordion type="single" collapsible className="w-full">
           {evento.faqs.map((faq, i) => (
             <AccordionItem key={i} value={`faq-${i}`}>

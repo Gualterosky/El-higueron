@@ -10,7 +10,7 @@ const ChatBot = dynamic(() => import("@/components/chat-bot").then((mod) => mod.
   ssr: false,
 })
 
-const AUTH_ROUTES = ["/login", "/skale-ecolodge", "/skale-peregrino"]
+const AUTH_ROUTES = ["/login"]
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()

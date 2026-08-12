@@ -5,7 +5,9 @@
     "ogTitle": "Camping El Higuerón | Climbing and Camping in the Mountains",
     "ogDescription": "Experience Bendito Sea at Camping El Higuerón. Sport climbing, boulder, and camping in the heart of the high Andean forest.",
     "logoAlt": "El Higuerón - Camping and Climbing",
-    "loginTitle": "Admin access | El Higuerón",
+    "loginTitle": "Sign in | El Higuerón",
+    "registerTitle": "Create account | El Higuerón",
+    "changePasswordTitle": "Change password | El Higuerón",
     "formTitle": "Form",
     "formDescription": "Help us create a better service.",
     "eventoTitleFallback": "Events | El Higuerón",
@@ -23,6 +25,9 @@
       "contacto": "Contact"
     },
     "cta": "Plan your visit",
+    "login": "Sign in",
+    "account": "My account",
+    "signOut": "Sign out",
     "aria": {
       "openMenu": "Open menu",
       "closeMenu": "Close menu"
@@ -1219,11 +1224,98 @@
   },
   "Login": {
     "brand": "El Higuerón",
-    "title": "Admin access",
+    "title": "Sign in",
     "email": "Email",
     "password": "Password",
     "submit": "Sign in",
-    "restricted": "Access restricted to authorized staff only."
+    "restricted": "Visitors can create an account. Staff and admin use assigned credentials.",
+    "noAccount": "Don't have an account?",
+    "registerLink": "Register",
+    "errors": {
+      "invalid": "Incorrect email or password."
+    }
+  },
+  "Register": {
+    "brand": "El Higuerón",
+    "title": "Create account",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirm": "Confirm password",
+    "submit": "Create account",
+    "hasAccount": "Already have an account?",
+    "loginLink": "Sign in",
+    "errors": {
+      "mismatch": "Passwords do not match.",
+      "tooShort": "Password must be at least 8 characters.",
+      "failed": "Could not create the account. Try another email."
+    }
+  },
+  "ChangePassword": {
+    "brand": "El Higuerón",
+    "title": "Change your password",
+    "description": "For security you must change the temporary password before continuing.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirm": "Confirm new password",
+    "submit": "Save password",
+    "errors": {
+      "mismatch": "Passwords do not match.",
+      "tooShort": "New password must be at least 8 characters.",
+      "samePassword": "New password must be different from the current one.",
+      "invalidCurrent": "Current password is incorrect.",
+      "failed": "Could not update the password."
+    }
+  },
+  "Panel": {
+    "adminTitle": "Administration",
+    "staffTitle": "Staff panel",
+    "adminWelcome": "Administrator panel",
+    "adminDescription": "Manage staff users, settings, and camping operations.",
+    "staffWelcome": "Team panel",
+    "staffDescription": "Manage reviews, reservations, and posts.",
+    "signOut": "Sign out",
+    "nav": {
+      "dashboard": "Home",
+      "users": "Users",
+      "settings": "Settings",
+      "reviews": "Reviews",
+      "reservations": "Reservations",
+      "posts": "Posts"
+    },
+    "placeholders": {
+      "usersTitle": "Users",
+      "usersBody": "You will be able to create staff accounts here. Coming soon.",
+      "settingsTitle": "Settings",
+      "settingsBody": "Global platform settings. Coming soon.",
+      "reviewsTitle": "Reviews",
+      "reviewsBody": "Review moderation. Coming soon.",
+      "reservationsTitle": "Reservations",
+      "reservationsBody": "Reservation management. Coming soon.",
+      "postsTitle": "Posts",
+      "postsBody": "Post moderation. Coming soon."
+    }
+  },
+  "Cuenta": {
+    "title": "My account",
+    "welcome": "Hi, {name}",
+    "description": "From here you will be able to leave reviews, create posts, and request reservations.",
+    "signOut": "Sign out",
+    "backHome": "Back to site",
+    "nav": {
+      "profile": "Profile",
+      "reviews": "My reviews",
+      "posts": "My posts",
+      "reservations": "My reservations"
+    },
+    "placeholders": {
+      "reviewsTitle": "My reviews",
+      "reviewsBody": "Soon you will be able to create and view your reviews here.",
+      "postsTitle": "My posts",
+      "postsBody": "Soon you will be able to publish content from your account.",
+      "reservationsTitle": "My reservations",
+      "reservationsBody": "Soon you will be able to request and track reservations here."
+    }
   },
   "Form": {
     "iframeTitle": "Mountain and Adventure Gear Rental Study",

@@ -10,13 +10,19 @@ const ChatBot = dynamic(() => import("@/components/chat-bot").then((mod) => mod.
   ssr: false,
 })
 
-const AUTH_ROUTES = ["/login"]
+const AUTH_ROUTES = ["/login", "/registro", "/cambiar-contrasena"]
+const PANEL_PREFIXES = ["/admin", "/staff", "/cuenta"]
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isAuthRoute = AUTH_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`))
+  const isAuthRoute = AUTH_ROUTES.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
+  )
+  const isPanelRoute = PANEL_PREFIXES.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
+  )
 
-  if (isAuthRoute) {
+  if (isAuthRoute || isPanelRoute) {
     return <main className="flex-1">{children}</main>
   }
 

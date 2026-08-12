@@ -1,10 +1,8 @@
 import type { Metadata } from "next"
 import { TreePine } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
-import { LoginForm } from "@/components/auth/login-form"
-import { getSession } from "@/lib/auth/session"
-import { homePathForRole } from "@/lib/auth/roles"
-import { redirect } from "next/navigation"
+import { ChangePasswordForm } from "@/components/auth/change-password-form"
+import { requirePasswordChange } from "@/lib/auth/session"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -15,23 +13,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "Meta" })
 
   return {
-    title: t("loginTitle"),
+    title: t("changePasswordTitle"),
     robots: { index: false, follow: false },
   }
 }
 
-export default async function LoginPage({ params }: Props) {
+export default async function ChangePasswordPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const t = await getTranslations("Login")
-
-  const session = await getSession()
-  if (session) {
-    if (session.user.mustChangePassword) {
-      redirect(`/${locale}/cambiar-contrasena`)
-    }
-    redirect(`/${locale}${homePathForRole(session.user.role)}`)
-  }
+  await requirePasswordChange(locale)
+  const t = await getTranslations("ChangePassword")
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-forest px-4">
@@ -54,10 +45,7 @@ export default async function LoginPage({ params }: Props) {
         </div>
 
         <div className="px-8 py-8">
-          <LoginForm />
-          <p className="mt-6 text-center text-xs text-muted-foreground">
-            {t("restricted")}
-          </p>
+          <ChangePasswordForm />
         </div>
       </div>
     </div>

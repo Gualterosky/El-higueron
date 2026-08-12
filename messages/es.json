@@ -5,7 +5,9 @@
     "ogTitle": "Camping El Higuerón | Escalada y Camping en la Montaña",
     "ogDescription": "Vive la experiencia de Bendito Sea en Camping El Higuerón. Escalada deportiva, boulder y camping en el corazón del bosque alto andino.",
     "logoAlt": "El Higuerón - Camping y Escalada",
-    "loginTitle": "Acceso administrativo | El Higuerón",
+    "loginTitle": "Acceso | El Higuerón",
+    "registerTitle": "Crear cuenta | El Higuerón",
+    "changePasswordTitle": "Cambiar contraseña | El Higuerón",
     "formTitle": "Formulario",
     "formDescription": "Ayúdanos a crear un mejor servicio.",
     "eventoTitleFallback": "Eventos | El Higuerón",
@@ -23,6 +25,9 @@
       "contacto": "Contacto"
     },
     "cta": "Planifica tu visita",
+    "login": "Iniciar sesión",
+    "account": "Mi cuenta",
+    "signOut": "Cerrar sesión",
     "aria": {
       "openMenu": "Abrir menú",
       "closeMenu": "Cerrar menú"
@@ -1219,11 +1224,98 @@
   },
   "Login": {
     "brand": "El Higuerón",
-    "title": "Acceso administrativo",
+    "title": "Iniciar sesión",
     "email": "Correo electrónico",
     "password": "Contraseña",
     "submit": "Iniciar sesión",
-    "restricted": "Acceso restringido solo a personal autorizado."
+    "restricted": "Visitantes pueden crear cuenta. Staff y administrador usan las credenciales asignadas.",
+    "noAccount": "¿No tienes cuenta?",
+    "registerLink": "Regístrate",
+    "errors": {
+      "invalid": "Correo o contraseña incorrectos."
+    }
+  },
+  "Register": {
+    "brand": "El Higuerón",
+    "title": "Crear cuenta",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirm": "Confirmar contraseña",
+    "submit": "Crear cuenta",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "loginLink": "Inicia sesión",
+    "errors": {
+      "mismatch": "Las contraseñas no coinciden.",
+      "tooShort": "La contraseña debe tener al menos 8 caracteres.",
+      "failed": "No se pudo crear la cuenta. Intenta con otro correo."
+    }
+  },
+  "ChangePassword": {
+    "brand": "El Higuerón",
+    "title": "Cambia tu contraseña",
+    "description": "Por seguridad debes cambiar la contraseña temporal antes de continuar.",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "confirm": "Confirmar nueva contraseña",
+    "submit": "Guardar contraseña",
+    "errors": {
+      "mismatch": "Las contraseñas no coinciden.",
+      "tooShort": "La nueva contraseña debe tener al menos 8 caracteres.",
+      "samePassword": "La nueva contraseña debe ser distinta a la actual.",
+      "invalidCurrent": "La contraseña actual no es correcta.",
+      "failed": "No se pudo actualizar la contraseña."
+    }
+  },
+  "Panel": {
+    "adminTitle": "Administración",
+    "staffTitle": "Panel staff",
+    "adminWelcome": "Panel del administrador",
+    "adminDescription": "Gestiona usuarios staff, configuración y operaciones del camping.",
+    "staffWelcome": "Panel del equipo",
+    "staffDescription": "Administra reseñas, reservas y publicaciones.",
+    "signOut": "Cerrar sesión",
+    "nav": {
+      "dashboard": "Inicio",
+      "users": "Usuarios",
+      "settings": "Configuración",
+      "reviews": "Reseñas",
+      "reservations": "Reservas",
+      "posts": "Publicaciones"
+    },
+    "placeholders": {
+      "usersTitle": "Usuarios",
+      "usersBody": "Aquí podrás crear cuentas staff. Próximamente.",
+      "settingsTitle": "Configuración",
+      "settingsBody": "Ajustes globales de la plataforma. Próximamente.",
+      "reviewsTitle": "Reseñas",
+      "reviewsBody": "Moderación de reseñas. Próximamente.",
+      "reservationsTitle": "Reservas",
+      "reservationsBody": "Gestión de reservas. Próximamente.",
+      "postsTitle": "Publicaciones",
+      "postsBody": "Moderación de publicaciones. Próximamente."
+    }
+  },
+  "Cuenta": {
+    "title": "Mi cuenta",
+    "welcome": "Hola, {name}",
+    "description": "Desde aquí podrás dejar reseñas, crear publicaciones y pedir reservas.",
+    "signOut": "Cerrar sesión",
+    "backHome": "Volver al sitio",
+    "nav": {
+      "profile": "Perfil",
+      "reviews": "Mis reseñas",
+      "posts": "Mis publicaciones",
+      "reservations": "Mis reservas"
+    },
+    "placeholders": {
+      "reviewsTitle": "Mis reseñas",
+      "reviewsBody": "Pronto podrás crear y ver tus reseñas aquí.",
+      "postsTitle": "Mis publicaciones",
+      "postsBody": "Pronto podrás publicar contenido desde tu cuenta.",
+      "reservationsTitle": "Mis reservas",
+      "reservationsBody": "Pronto podrás solicitar y seguir tus reservas aquí."
+    }
   },
   "Form": {
     "iframeTitle": "Estudio de Alquiler de Equipo para Montaña y Aventura",

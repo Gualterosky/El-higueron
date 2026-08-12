@@ -18,6 +18,8 @@ function createDb() {
   return drizzle(sql, { schema })
 }
 
+export type Db = ReturnType<typeof createDb>
+
 const globalForDb = globalThis as unknown as {
   db: ReturnType<typeof createDb> | undefined
 }

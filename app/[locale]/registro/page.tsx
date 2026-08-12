@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
 import { TreePine } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
-import { LoginForm } from "@/components/auth/login-form"
+import { redirect } from "next/navigation"
+import { RegisterForm } from "@/components/auth/register-form"
 import { getSession } from "@/lib/auth/session"
 import { homePathForRole } from "@/lib/auth/roles"
-import { redirect } from "next/navigation"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -15,15 +15,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "Meta" })
 
   return {
-    title: t("loginTitle"),
+    title: t("registerTitle"),
     robots: { index: false, follow: false },
   }
 }
 
-export default async function LoginPage({ params }: Props) {
+export default async function RegisterPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const t = await getTranslations("Login")
+  const t = await getTranslations("Register")
 
   const session = await getSession()
   if (session) {
@@ -54,10 +54,7 @@ export default async function LoginPage({ params }: Props) {
         </div>
 
         <div className="px-8 py-8">
-          <LoginForm />
-          <p className="mt-6 text-center text-xs text-muted-foreground">
-            {t("restricted")}
-          </p>
+          <RegisterForm />
         </div>
       </div>
     </div>

@@ -49,11 +49,17 @@ function toAppSession(
 }
 
 export async function getSession(): Promise<AppSession | null> {
-  const raw = await auth.api.getSession({
-    headers: await headers(),
-  })
-  if (!raw) return null
-  return toAppSession(raw)
+  try {
+    const raw = await auth.api.getSession({
+      headers: await headers(),
+    })
+    if (!raw) return null
+    return toAppSession(raw)
+  } catch (error) {
+    // Avoid crashing public auth pages (e.g. missing production env vars).
+    console.error("[auth] getSession failed:", error)
+    return null
+  }
 }
 
 export async function requireSession(locale: string): Promise<AppSession> {

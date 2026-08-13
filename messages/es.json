@@ -1271,17 +1271,138 @@
     "adminTitle": "Administración",
     "staffTitle": "Panel staff",
     "adminWelcome": "Panel del administrador",
-    "adminDescription": "Gestiona usuarios staff, configuración y operaciones del camping.",
+    "adminDescription": "Gestiona usuarios, reseñas, reservas, publicaciones y el contenido del sitio.",
     "staffWelcome": "Panel del equipo",
     "staffDescription": "Administra reseñas, reservas y publicaciones.",
     "signOut": "Cerrar sesión",
+    "comingSoon": "Próximamente",
     "nav": {
       "dashboard": "Inicio",
       "users": "Usuarios",
       "settings": "Configuración",
+      "content": "Contenido",
       "reviews": "Reseñas",
       "reservations": "Reservas",
       "posts": "Publicaciones"
+    },
+    "home": {
+      "categories": {
+        "users": {
+          "title": "Gestión de usuarios",
+          "description": "Crear, modificar o eliminar usuarios."
+        },
+        "reviews": {
+          "title": "Gestión de reseñas",
+          "description": "Responder y moderar reseñas de visitantes."
+        },
+        "reservations": {
+          "title": "Gestión de reservas",
+          "description": "Revisar y administrar solicitudes de reserva."
+        },
+        "posts": {
+          "title": "Gestión de publicaciones",
+          "description": "Aprobar u ocultar contenido de visitantes."
+        },
+        "content": {
+          "title": "Gestión de contenido",
+          "description": "Ocultar secciones del sitio y modo mantenimiento."
+        }
+      }
+    },
+    "users": {
+      "title": "Gestión de usuarios",
+      "description": "Crea, modifica o elimina usuarios del sistema. Las acciones se activarán más adelante.",
+      "create": "Crear usuario",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "columns": {
+        "name": "Nombre",
+        "email": "Correo",
+        "role": "Rol",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "roles": {
+        "administrador": "Administrador",
+        "staff": "Staff",
+        "visitante": "Visitante"
+      },
+      "status": {
+        "active": "Activo",
+        "inactive": "Inactivo"
+      }
+    },
+    "reviews": {
+      "title": "Gestión de reseñas",
+      "description": "Revisa reseñas de visitantes y prepara respuestas. El envío real llegará más adelante.",
+      "rating": "{count} de 5",
+      "replyLabel": "Respuesta",
+      "replyPlaceholder": "Escribe una respuesta…",
+      "sendReply": "Enviar respuesta",
+      "status": {
+        "pending": "Pendiente",
+        "replied": "Respondida"
+      }
+    },
+    "reservations": {
+      "title": "Gestión de reservas",
+      "description": "Consulta solicitudes de reserva. Confirmar o cancelar se habilitará más adelante.",
+      "confirm": "Confirmar",
+      "cancel": "Cancelar",
+      "columns": {
+        "guest": "Huésped",
+        "dates": "Fechas",
+        "type": "Tipo",
+        "people": "Personas",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "types": {
+        "camping": "Camping",
+        "escalada": "Escalada",
+        "visita": "Visita"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "confirmed": "Confirmada",
+        "cancelled": "Cancelada"
+      }
+    },
+    "posts": {
+      "title": "Gestión de publicaciones",
+      "description": "Modera publicaciones de usuarios visitantes. Las acciones se activarán más adelante.",
+      "approve": "Aprobar",
+      "hide": "Ocultar",
+      "delete": "Eliminar",
+      "status": {
+        "pending": "Pendiente",
+        "approved": "Aprobada",
+        "hidden": "Oculta"
+      }
+    },
+    "content": {
+      "title": "Gestión de contenido",
+      "description": "Oculta temporalmente secciones de la página principal y activa el aviso de mantenimiento. Por ahora solo es una vista previa.",
+      "sectionsTitle": "Secciones del sitio",
+      "sectionsDescription": "Activa el interruptor para marcar una sección como oculta temporalmente.",
+      "sectionHidden": "Oculta (vista previa)",
+      "sectionVisible": "Visible",
+      "previewNote": "Estos cambios no afectan el sitio público todavía.",
+      "sections": {
+        "escalada": "Información de escalada",
+        "camping": "Información de camping",
+        "equipos": "Equipos",
+        "visita": "Planifica tu visita",
+        "galeria": "Galería"
+      },
+      "maintenanceTitle": "Modo mantenimiento",
+      "maintenanceDescription": "Muestra un letrero indicando que el sitio está en mantenimiento.",
+      "maintenanceToggle": "Activar mantenimiento",
+      "maintenanceOn": "Activo (solo vista previa)",
+      "maintenanceOff": "Desactivado",
+      "bannerTitle": "Este sitio está en mantenimiento",
+      "bannerBody": "Estamos trabajando para mejorar tu experiencia. Vuelve pronto a El Higuerón.",
+      "bannerIdle": "Activa el modo mantenimiento para ver el letrero de aviso."
     },
     "placeholders": {
       "usersTitle": "Usuarios",

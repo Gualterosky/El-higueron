@@ -7,7 +7,7 @@ import {
   LogOut,
   MessageSquareText,
   Newspaper,
-  Settings,
+  PanelsTopLeft,
   Users,
 } from "lucide-react"
 import { Link, usePathname, useRouter } from "@/i18n/navigation"
@@ -64,27 +64,27 @@ const ADMIN_ITEMS: NavItem[] = [
     roles: ["administrador"],
   },
   {
-    href: "/admin/configuracion",
-    labelKey: "settings",
-    icon: Settings,
-    roles: ["administrador"],
-  },
-  {
-    href: "/staff/resenas",
+    href: "/admin/resenas",
     labelKey: "reviews",
     icon: MessageSquareText,
     roles: ["administrador"],
   },
   {
-    href: "/staff/reservas",
+    href: "/admin/reservas",
     labelKey: "reservations",
     icon: CalendarDays,
     roles: ["administrador"],
   },
   {
-    href: "/staff/publicaciones",
+    href: "/admin/publicaciones",
     labelKey: "posts",
     icon: Newspaper,
+    roles: ["administrador"],
+  },
+  {
+    href: "/admin/contenido",
+    labelKey: "content",
+    icon: PanelsTopLeft,
     roles: ["administrador"],
   },
 ]

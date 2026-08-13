@@ -1271,17 +1271,138 @@
     "adminTitle": "Administration",
     "staffTitle": "Staff panel",
     "adminWelcome": "Administrator panel",
-    "adminDescription": "Manage staff users, settings, and camping operations.",
+    "adminDescription": "Manage users, reviews, reservations, posts, and site content.",
     "staffWelcome": "Team panel",
     "staffDescription": "Manage reviews, reservations, and posts.",
     "signOut": "Sign out",
+    "comingSoon": "Coming soon",
     "nav": {
       "dashboard": "Home",
       "users": "Users",
       "settings": "Settings",
+      "content": "Content",
       "reviews": "Reviews",
       "reservations": "Reservations",
       "posts": "Posts"
+    },
+    "home": {
+      "categories": {
+        "users": {
+          "title": "User management",
+          "description": "Create, edit, or remove users."
+        },
+        "reviews": {
+          "title": "Review management",
+          "description": "Reply to and moderate visitor reviews."
+        },
+        "reservations": {
+          "title": "Reservation management",
+          "description": "Review and manage booking requests."
+        },
+        "posts": {
+          "title": "Post management",
+          "description": "Approve or hide visitor content."
+        },
+        "content": {
+          "title": "Content management",
+          "description": "Hide site sections and enable maintenance mode."
+        }
+      }
+    },
+    "users": {
+      "title": "User management",
+      "description": "Create, edit, or remove system users. Actions will be enabled later.",
+      "create": "Create user",
+      "edit": "Edit",
+      "delete": "Delete",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "roles": {
+        "administrador": "Administrator",
+        "staff": "Staff",
+        "visitante": "Visitor"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      }
+    },
+    "reviews": {
+      "title": "Review management",
+      "description": "Review visitor feedback and draft replies. Real sending will come later.",
+      "rating": "{count} of 5",
+      "replyLabel": "Reply",
+      "replyPlaceholder": "Write a reply…",
+      "sendReply": "Send reply",
+      "status": {
+        "pending": "Pending",
+        "replied": "Replied"
+      }
+    },
+    "reservations": {
+      "title": "Reservation management",
+      "description": "Browse booking requests. Confirming or cancelling will be enabled later.",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "columns": {
+        "guest": "Guest",
+        "dates": "Dates",
+        "type": "Type",
+        "people": "People",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "types": {
+        "camping": "Camping",
+        "escalada": "Climbing",
+        "visita": "Visit"
+      },
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "cancelled": "Cancelled"
+      }
+    },
+    "posts": {
+      "title": "Post management",
+      "description": "Moderate visitor posts. Actions will be enabled later.",
+      "approve": "Approve",
+      "hide": "Hide",
+      "delete": "Delete",
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "hidden": "Hidden"
+      }
+    },
+    "content": {
+      "title": "Content management",
+      "description": "Temporarily hide main site sections and enable the maintenance notice. Preview only for now.",
+      "sectionsTitle": "Site sections",
+      "sectionsDescription": "Turn the switch on to mark a section as temporarily hidden.",
+      "sectionHidden": "Hidden (preview)",
+      "sectionVisible": "Visible",
+      "previewNote": "These changes do not affect the public site yet.",
+      "sections": {
+        "escalada": "Climbing information",
+        "camping": "Camping information",
+        "equipos": "Equipment",
+        "visita": "Plan your visit",
+        "galeria": "Gallery"
+      },
+      "maintenanceTitle": "Maintenance mode",
+      "maintenanceDescription": "Show a banner indicating the site is under maintenance.",
+      "maintenanceToggle": "Enable maintenance",
+      "maintenanceOn": "On (preview only)",
+      "maintenanceOff": "Off",
+      "bannerTitle": "This site is under maintenance",
+      "bannerBody": "We are working to improve your experience. Please check back soon at El Higuerón.",
+      "bannerIdle": "Enable maintenance mode to preview the notice banner."
     },
     "placeholders": {
       "usersTitle": "Users",

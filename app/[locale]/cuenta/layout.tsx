@@ -2,6 +2,8 @@ import { setRequestLocale } from "next-intl/server"
 import { requireRole } from "@/lib/auth/session"
 import { CuentaShell } from "@/components/panel/cuenta-shell"
 
+export const dynamic = "force-dynamic"
+
 type Props = {
   children: React.ReactNode
   params: Promise<{ locale: string }>

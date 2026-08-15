@@ -2,6 +2,8 @@ import { setRequestLocale } from "next-intl/server"
 import { PanelShell } from "@/components/panel/panel-shell"
 import { requireRole } from "@/lib/auth/session"
 
+export const dynamic = "force-dynamic"
+
 type Props = {
   children: React.ReactNode
   params: Promise<{ locale: string }>

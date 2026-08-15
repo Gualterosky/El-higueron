@@ -1235,6 +1235,11 @@
       "invalid": "Incorrect email or password."
     }
   },
+  "Maintenance": {
+    "title": "This site is under maintenance",
+    "body": "We are working to improve your experience. Please check back soon at El Higuerón.",
+    "loginLink": "Admin access"
+  },
   "Register": {
     "brand": "El Higuerón",
     "title": "Create account",
@@ -1385,12 +1390,12 @@
     },
     "content": {
       "title": "Content management",
-      "description": "Temporarily hide main site sections and enable the maintenance notice. Preview only for now.",
+      "description": "Temporarily hide site sections (coming soon) and enable the maintenance notice.",
       "sectionsTitle": "Site sections",
       "sectionsDescription": "Turn the switch on to mark a section as temporarily hidden.",
       "sectionHidden": "Hidden (preview)",
       "sectionVisible": "Visible",
-      "previewNote": "These changes do not affect the public site yet.",
+      "previewNote": "These section changes do not affect the public site yet.",
       "sections": {
         "escalada": "Climbing information",
         "camping": "Camping information",
@@ -1399,13 +1404,15 @@
         "galeria": "Gallery"
       },
       "maintenanceTitle": "Maintenance mode",
-      "maintenanceDescription": "Show a banner indicating the site is under maintenance.",
+      "maintenanceDescription": "Hides the public site and shows the maintenance notice. Only login (and the admin panel after signing in) remain accessible.",
       "maintenanceToggle": "Enable maintenance",
-      "maintenanceOn": "On (preview only)",
+      "maintenanceOn": "On — the public site is hidden",
       "maintenanceOff": "Off",
+      "maintenanceSaving": "Saving…",
+      "maintenanceError": "Could not update maintenance mode. Please try again.",
       "bannerTitle": "This site is under maintenance",
       "bannerBody": "We are working to improve your experience. Please check back soon at El Higuerón.",
-      "bannerIdle": "Enable maintenance mode to preview the notice banner."
+      "bannerIdle": "Enable maintenance mode to hide the site and show the notice."
     },
     "placeholders": {
       "usersTitle": "Users",

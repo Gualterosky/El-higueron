@@ -57,5 +57,13 @@ export const verification = pgTable("verification", {
   updatedAt: timestamp("updated_at").defaultNow(),
 })
 
+/** Singleton site configuration (id = "default"). */
+export const siteSettings = pgTable("site_settings", {
+  id: text("id").primaryKey(),
+  maintenanceMode: boolean("maintenance_mode").notNull().default(false),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+})
+
 export type User = typeof user.$inferSelect
 export type Session = typeof session.$inferSelect
+export type SiteSettings = typeof siteSettings.$inferSelect

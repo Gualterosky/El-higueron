@@ -4,6 +4,7 @@ import dynamic from "next/dynamic"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
+import { MaintenanceScreen } from "@/components/maintenance-screen"
 import { usePathname } from "@/i18n/navigation"
 
 const ChatBot = dynamic(() => import("@/components/chat-bot").then((mod) => mod.ChatBot), {
@@ -13,8 +14,28 @@ const ChatBot = dynamic(() => import("@/components/chat-bot").then((mod) => mod.
 const AUTH_ROUTES = ["/login", "/registro", "/cambiar-contrasena"]
 const PANEL_PREFIXES = ["/admin", "/staff", "/cuenta"]
 
-export function LayoutShell({ children }: { children: React.ReactNode }) {
+/** Routes reachable while the public site is in maintenance mode. */
+const MAINTENANCE_ALLOWED = ["/login", "/admin", "/cambiar-contrasena"] as const
+
+function isMaintenanceAllowed(pathname: string) {
+  return MAINTENANCE_ALLOWED.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
+  )
+}
+
+export function LayoutShell({
+  children,
+  maintenanceMode = false,
+}: {
+  children: React.ReactNode
+  maintenanceMode?: boolean
+}) {
   const pathname = usePathname()
+
+  if (maintenanceMode && !isMaintenanceAllowed(pathname)) {
+    return <MaintenanceScreen />
+  }
+
   const isAuthRoute = AUTH_ROUTES.some(
     (route) => pathname === route || pathname.startsWith(`${route}/`),
   )

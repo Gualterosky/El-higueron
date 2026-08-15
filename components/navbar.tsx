@@ -10,6 +10,11 @@ import { Link, usePathname, useRouter } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
 import { signOut, useSession } from "@/lib/auth-client"
 import { homePathForRole, isRole } from "@/lib/auth/roles"
+import {
+  CONTENT_SECTIONS,
+  type ContentSection,
+  type HiddenSections,
+} from "@/lib/site-settings/types"
 
 const navHrefs = [
   { href: "/escalada" as const, key: "escalada" as const },
@@ -20,7 +25,15 @@ const navHrefs = [
   { href: "/contacto" as const, key: "contacto" as const },
 ]
 
-export function Navbar() {
+function isHideableSection(key: string): key is ContentSection {
+  return (CONTENT_SECTIONS as readonly string[]).includes(key)
+}
+
+export function Navbar({
+  hiddenSections,
+}: {
+  hiddenSections?: HiddenSections
+}) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
@@ -30,6 +43,10 @@ export function Navbar() {
 
   const role = isRole(session?.user?.role) ? session.user.role : null
   const accountHref = role ? homePathForRole(role) : null
+  const visibleLinks = navHrefs.filter(
+    (link) => !(isHideableSection(link.key) && hiddenSections?.[link.key]),
+  )
+  const showVisitaCta = !hiddenSections?.visita
 
   async function handleSignOut() {
     await signOut()
@@ -54,7 +71,7 @@ export function Navbar() {
         </Link>
 
         <div className="hidden items-center gap-1 lg:flex">
-          {navHrefs.map((link) => (
+          {visibleLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -96,9 +113,11 @@ export function Navbar() {
               </Link>
             </Button>
           )}
-          <Button asChild className="bg-orange text-white hover:bg-orange/90">
-            <Link href="/visita">{t("cta")}</Link>
-          </Button>
+          {showVisitaCta ? (
+            <Button asChild className="bg-orange text-white hover:bg-orange/90">
+              <Link href="/visita">{t("cta")}</Link>
+            </Button>
+          ) : null}
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -120,7 +139,7 @@ export function Navbar() {
       {isOpen && (
         <div className="border-t border-border/40 bg-background lg:hidden">
           <div className="container mx-auto flex flex-col gap-1 px-4 py-4">
-            {navHrefs.map((link) => (
+            {visibleLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -162,11 +181,13 @@ export function Navbar() {
                   </Link>
                 </Button>
               )}
-              <Button asChild className="w-full bg-orange text-white hover:bg-orange/90">
-                <Link href="/visita" onClick={() => setIsOpen(false)}>
-                  {t("cta")}
-                </Link>
-              </Button>
+              {showVisitaCta ? (
+                <Button asChild className="w-full bg-orange text-white hover:bg-orange/90">
+                  <Link href="/visita" onClick={() => setIsOpen(false)}>
+                    {t("cta")}
+                  </Link>
+                </Button>
+              ) : null}
             </div>
           </div>
         </div>

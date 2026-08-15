@@ -3,25 +3,38 @@
 import { Mountain, Instagram, Facebook, Mail, Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
+import {
+  CONTENT_SECTIONS,
+  type ContentSection,
+  type HiddenSections,
+} from "@/lib/site-settings/types"
 
-export function Footer() {
+function isHideableSection(key: string): key is ContentSection {
+  return (CONTENT_SECTIONS as readonly string[]).includes(key)
+}
+
+export function Footer({
+  hiddenSections,
+}: {
+  hiddenSections?: HiddenSections
+}) {
   const t = useTranslations("Footer")
   const tCommon = useTranslations("Common")
 
   const quickLinks = [
-    { href: "/" as const, label: t("links.inicio") },
-    { href: "/el-lugar" as const, label: t("links.elLugar") },
-    { href: "/escalada" as const, label: t("links.escalada") },
-    { href: "/boulder" as const, label: t("links.boulder") },
-    { href: "/camping" as const, label: t("links.camping") },
-  ]
+    { href: "/" as const, key: "inicio" as const, label: t("links.inicio") },
+    { href: "/el-lugar" as const, key: "elLugar" as const, label: t("links.elLugar") },
+    { href: "/escalada" as const, key: "escalada" as const, label: t("links.escalada") },
+    { href: "/boulder" as const, key: "boulder" as const, label: t("links.boulder") },
+    { href: "/camping" as const, key: "camping" as const, label: t("links.camping") },
+  ].filter((link) => !(isHideableSection(link.key) && hiddenSections?.[link.key]))
 
   const moreLinks = [
-    { href: "/equipos" as const, label: t("links.equipos") },
-    { href: "/visita" as const, label: t("links.visita") },
-    { href: "/galeria" as const, label: t("links.galeria") },
-    { href: "/contacto" as const, label: t("links.contacto") },
-  ]
+    { href: "/equipos" as const, key: "equipos" as const, label: t("links.equipos") },
+    { href: "/visita" as const, key: "visita" as const, label: t("links.visita") },
+    { href: "/galeria" as const, key: "galeria" as const, label: t("links.galeria") },
+    { href: "/contacto" as const, key: "contacto" as const, label: t("links.contacto") },
+  ].filter((link) => !(isHideableSection(link.key) && hiddenSections?.[link.key]))
 
   return (
     <footer className="border-t border-border bg-forest text-primary-foreground">

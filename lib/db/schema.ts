@@ -61,6 +61,11 @@ export const verification = pgTable("verification", {
 export const siteSettings = pgTable("site_settings", {
   id: text("id").primaryKey(),
   maintenanceMode: boolean("maintenance_mode").notNull().default(false),
+  hideEscalada: boolean("hide_escalada").notNull().default(false),
+  hideCamping: boolean("hide_camping").notNull().default(false),
+  hideEquipos: boolean("hide_equipos").notNull().default(false),
+  hideVisita: boolean("hide_visita").notNull().default(false),
+  hideGaleria: boolean("hide_galeria").notNull().default(false),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
 

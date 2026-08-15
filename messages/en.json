@@ -1390,12 +1390,13 @@
     },
     "content": {
       "title": "Content management",
-      "description": "Temporarily hide site sections (coming soon) and enable the maintenance notice.",
+      "description": "Temporarily hide site sections and enable the maintenance notice.",
       "sectionsTitle": "Site sections",
-      "sectionsDescription": "Turn the switch on to mark a section as temporarily hidden.",
-      "sectionHidden": "Hidden (preview)",
+      "sectionsDescription": "Turn the switch on to hide a section from the menu, its page, and related links.",
+      "sectionHidden": "Hidden on the public site",
       "sectionVisible": "Visible",
-      "previewNote": "These section changes do not affect the public site yet.",
+      "sectionSaving": "Saving…",
+      "sectionError": "Could not update the section. Please try again.",
       "sections": {
         "escalada": "Climbing information",
         "camping": "Camping information",

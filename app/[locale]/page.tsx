@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Mountain, Tent, CircleDot, Trees, Flame, MapPin, Star, Footprints, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { getHiddenSections } from "@/lib/site-settings"
 
 export default async function HomePage({
   params,
@@ -14,12 +15,14 @@ export default async function HomePage({
   const { locale } = await params
   setRequestLocale(locale)
   const t = await getTranslations('Home')
+  const hidden = await getHiddenSections()
 
   const experiences = [
     {
       icon: Mountain,
       title: t('experiences.escalada.title'),
       description: t('experiences.escalada.description'),
+      section: "escalada" as const,
     },
     {
       icon: CircleDot,
@@ -30,6 +33,7 @@ export default async function HomePage({
       icon: Tent,
       title: t('experiences.camping.title'),
       description: t('experiences.camping.description'),
+      section: "camping" as const,
     },
     {
       icon: Footprints,
@@ -41,14 +45,32 @@ export default async function HomePage({
       title: t('experiences.talleres.title'),
       description: t('experiences.talleres.description'),
     },
-  ]
+  ].filter((exp) => !("section" in exp && exp.section && hidden[exp.section]))
 
   const features = [
-    { icon: Mountain, label: t('features.routes.label'), description: t('features.routes.description') },
-    { icon: CircleDot, label: t('features.boulder.label'), description: t('features.boulder.description') },
-    { icon: Tent, label: t('features.camping.label'), description: t('features.camping.description') },
-    { icon: Flame, label: t('features.activities.label'), description: t('features.activities.description') },
-  ]
+    {
+      icon: Mountain,
+      label: t('features.routes.label'),
+      description: t('features.routes.description'),
+      section: "escalada" as const,
+    },
+    {
+      icon: CircleDot,
+      label: t('features.boulder.label'),
+      description: t('features.boulder.description'),
+    },
+    {
+      icon: Tent,
+      label: t('features.camping.label'),
+      description: t('features.camping.description'),
+      section: "camping" as const,
+    },
+    {
+      icon: Flame,
+      label: t('features.activities.label'),
+      description: t('features.activities.description'),
+    },
+  ].filter((feature) => !("section" in feature && feature.section && hidden[feature.section]))
 
   const galleryAlts = t.raw('gallery.alts') as string[]
   const galleryImages = [
@@ -57,6 +79,13 @@ export default async function HomePage({
     { src: "/media/Naturaleza-paisajes/IMG_20250225_135937239_HDR.jpg", alt: galleryAlts[2] },
     { src: "/media/Boulders/IMG_20250920_100731134_MFNR.jpg", alt: galleryAlts[3] },
   ]
+
+  const showEscalada = !hidden.escalada
+  const showCamping = !hidden.camping
+  const showAdventures = showEscalada || showCamping
+  const showEquipos = !hidden.equipos
+  const showGaleria = !hidden.galeria
+  const showVisita = !hidden.visita
 
   return (
     <>
@@ -80,11 +109,13 @@ export default async function HomePage({
           <p className="animate-fade-in-up animation-delay-100 mx-auto mb-8 max-w-2xl text-pretty text-lg text-white/90 md:text-xl">
             {t('hero.subtitle')}
           </p>
-          <div className="animate-fade-in-up animation-delay-200">
-            <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
-              <Link href="/visita">{t('hero.cta')}</Link>
-            </Button>
-          </div>
+          {showVisita ? (
+            <div className="animate-fade-in-up animation-delay-200">
+              <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
+                <Link href="/visita">{t('hero.cta')}</Link>
+              </Button>
+            </div>
+          ) : null}
         </div>
 
         {/* Scroll indicator */}
@@ -96,90 +127,97 @@ export default async function HomePage({
       </section>
 
       {/* Experience Highlights */}
-      <section className="bg-beige py-20 lg:py-28">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-forest md:text-4xl">
-              {t('experiences.title')}
-            </h2>
-            <p className="mx-auto max-w-2xl text-muted-foreground">
-              {t('experiences.subtitle')}
-            </p>
-          </div>
+      {experiences.length > 0 ? (
+        <section className="bg-beige py-20 lg:py-28">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="mb-12 text-center">
+              <h2 className="mb-4 text-3xl font-bold text-forest md:text-4xl">
+                {t('experiences.title')}
+              </h2>
+              <p className="mx-auto max-w-2xl text-muted-foreground">
+                {t('experiences.subtitle')}
+              </p>
+            </div>
 
-          <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-5">
-            {experiences.map((exp) => (
-              <Card
-                key={exp.title}
-                className="group border-none bg-white shadow-sm transition-all hover:shadow-md"
-              >
-                <CardContent className="flex flex-col items-center p-8 text-center">
-                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-beige transition-colors group-hover:bg-forest">
-                    <exp.icon className="h-8 w-8 text-forest transition-colors group-hover:text-white" />
-                  </div>
-                  <h3 className="mb-3 text-xl font-semibold text-foreground">{exp.title}</h3>
-                  <p className="text-muted-foreground">{exp.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+            <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-5">
+              {experiences.map((exp) => (
+                <Card
+                  key={exp.title}
+                  className="group border-none bg-white shadow-sm transition-all hover:shadow-md"
+                >
+                  <CardContent className="flex flex-col items-center p-8 text-center">
+                    <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-beige transition-colors group-hover:bg-forest">
+                      <exp.icon className="h-8 w-8 text-forest transition-colors group-hover:text-white" />
+                    </div>
+                    <h3 className="mb-3 text-xl font-semibold text-foreground">{exp.title}</h3>
+                    <p className="text-muted-foreground">{exp.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* Activities CTA Section */}
-      <section className="py-20 lg:py-28">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-forest md:text-4xl">
-              {t('adventures.title')}
-            </h2>
-            <p className="mx-auto max-w-2xl text-muted-foreground">
-              {t('adventures.subtitle')}
-            </p>
-          </div>
+      {showAdventures ? (
+        <section className="py-20 lg:py-28">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="mb-12 text-center">
+              <h2 className="mb-4 text-3xl font-bold text-forest md:text-4xl">
+                {t('adventures.title')}
+              </h2>
+              <p className="mx-auto max-w-2xl text-muted-foreground">
+                {t('adventures.subtitle')}
+              </p>
+            </div>
 
-          <div className="grid gap-8 md:grid-cols-2">
-            <Card className="overflow-hidden border-none shadow-sm transition-all hover:shadow-md bg-white">
-              <CardContent className="p-0">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
-                    src="/media/Muro bendito sea/Img06.jpg"
-                    alt={t('adventures.escalada.imageAlt')}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="mb-3 text-2xl font-bold text-forest">{t('adventures.escalada.title')}</h3>
-                  
-                  <Button asChild className="w-full bg-forest text-white hover:bg-forest/90">
-                    <Link href="/escalada">{t('adventures.escalada.cta')}</Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <div className={`grid gap-8 ${showEscalada && showCamping ? "md:grid-cols-2" : "md:grid-cols-1 md:max-w-xl md:mx-auto"}`}>
+              {showEscalada ? (
+                <Card className="overflow-hidden border-none shadow-sm transition-all hover:shadow-md bg-white">
+                  <CardContent className="p-0">
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <Image
+                        src="/media/Muro bendito sea/Img06.jpg"
+                        alt={t('adventures.escalada.imageAlt')}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-8">
+                      <h3 className="mb-3 text-2xl font-bold text-forest">{t('adventures.escalada.title')}</h3>
+                      <Button asChild className="w-full bg-forest text-white hover:bg-forest/90">
+                        <Link href="/escalada">{t('adventures.escalada.cta')}</Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : null}
 
-            <Card className="overflow-hidden border-none shadow-sm transition-all hover:shadow-md bg-white">
-              <CardContent className="p-0">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
-                    src="/media/Camping/IMG_20250225_134602260_HDR.jpg"
-                    alt={t('adventures.camping.imageAlt')}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="mb-3 text-2xl font-bold text-forest">{t('adventures.camping.title')}</h3>
-                  <Button asChild className="w-full bg-forest text-white hover:bg-forest/90">
-                    <Link href="/camping">{t('adventures.camping.cta')}</Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+              {showCamping ? (
+                <Card className="overflow-hidden border-none shadow-sm transition-all hover:shadow-md bg-white">
+                  <CardContent className="p-0">
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <Image
+                        src="/media/Camping/IMG_20250225_134602260_HDR.jpg"
+                        alt={t('adventures.camping.imageAlt')}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-8">
+                      <h3 className="mb-3 text-2xl font-bold text-forest">{t('adventures.camping.title')}</h3>
+                      <Button asChild className="w-full bg-forest text-white hover:bg-forest/90">
+                        <Link href="/camping">{t('adventures.camping.cta')}</Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ) : null}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* About Section */}
       <section className="py-20 lg:py-28">
@@ -223,83 +261,89 @@ export default async function HomePage({
       </section>
 
       {/* Key Features */}
-      <section className="bg-forest py-20 lg:py-28">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
-              {t('features.title')}
-            </h2>
-            <p className="mx-auto max-w-2xl text-white/80">
-              {t('features.subtitle')}
-            </p>
-          </div>
+      {features.length > 0 ? (
+        <section className="bg-forest py-20 lg:py-28">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="mb-12 text-center">
+              <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+                {t('features.title')}
+              </h2>
+              <p className="mx-auto max-w-2xl text-white/80">
+                {t('features.subtitle')}
+              </p>
+            </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature) => (
-              <div
-                key={feature.label}
-                className="flex flex-col items-center rounded-xl bg-white/10 p-6 text-center backdrop-blur-sm transition-colors hover:bg-white/15"
-              >
-                <feature.icon className="mb-4 h-10 w-10 text-orange" />
-                <h3 className="mb-1 text-lg font-semibold text-white">{feature.label}</h3>
-                <p className="text-sm text-white/70">{feature.description}</p>
-              </div>
-            ))}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {features.map((feature) => (
+                <div
+                  key={feature.label}
+                  className="flex flex-col items-center rounded-xl bg-white/10 p-6 text-center backdrop-blur-sm transition-colors hover:bg-white/15"
+                >
+                  <feature.icon className="mb-4 h-10 w-10 text-orange" />
+                  <h3 className="mb-1 text-lg font-semibold text-white">{feature.label}</h3>
+                  <p className="text-sm text-white/70">{feature.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* Equipment CTA */}
-      <section className="bg-beige py-14 lg:py-20">
-        <div className="container mx-auto px-4 text-center lg:px-8">
-          <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">
-            {t('equipment.title')}
-          </h2>
-          <p className="mx-auto mb-8 max-w-xl text-muted-foreground">
-            {t('equipment.description')}
-          </p>
-          <Button asChild size="lg" className="bg-forest text-white hover:bg-forest/90">
-            <Link href="/equipos">{t('equipment.cta')}</Link>
-          </Button>
-        </div>
-      </section>
-
-      {/* Gallery Preview */}
-      <section className="py-20 lg:py-28">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
-              {t('gallery.title')}
+      {showEquipos ? (
+        <section className="bg-beige py-14 lg:py-20">
+          <div className="container mx-auto px-4 text-center lg:px-8">
+            <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">
+              {t('equipment.title')}
             </h2>
-            <p className="mx-auto max-w-2xl text-muted-foreground">
-              {t('gallery.subtitle')}
+            <p className="mx-auto mb-8 max-w-xl text-muted-foreground">
+              {t('equipment.description')}
             </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {galleryImages.map((image, index) => (
-              <div
-                key={index}
-                className="group relative aspect-square overflow-hidden rounded-xl"
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-forest/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <Button asChild variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
-              <Link href="/galeria">{t('gallery.cta')}</Link>
+            <Button asChild size="lg" className="bg-forest text-white hover:bg-forest/90">
+              <Link href="/equipos">{t('equipment.cta')}</Link>
             </Button>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
+
+      {/* Gallery Preview */}
+      {showGaleria ? (
+        <section className="py-20 lg:py-28">
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="mb-12 text-center">
+              <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
+                {t('gallery.title')}
+              </h2>
+              <p className="mx-auto max-w-2xl text-muted-foreground">
+                {t('gallery.subtitle')}
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {galleryImages.map((image, index) => (
+                <div
+                  key={index}
+                  className="group relative aspect-square overflow-hidden rounded-xl"
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-forest/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 text-center">
+              <Button asChild variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
+                <Link href="/galeria">{t('gallery.cta')}</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* CTA Section */}
       <section className="relative overflow-hidden bg-beige py-20 lg:py-28">
@@ -318,9 +362,11 @@ export default async function HomePage({
             <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
               <Link href="/contacto">{t('cta.primary')}</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
-              <Link href="/visita">{t('cta.secondary')}</Link>
-            </Button>
+            {showVisita ? (
+              <Button asChild size="lg" variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
+                <Link href="/visita">{t('cta.secondary')}</Link>
+              </Button>
+            ) : null}
           </div>
         </div>
       </section>

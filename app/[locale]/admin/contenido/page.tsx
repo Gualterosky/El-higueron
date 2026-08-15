@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server"
 import { AdminContentPanel } from "@/components/admin/admin-content-panel"
-import { getMaintenanceMode } from "@/lib/site-settings"
+import { getSiteSettings } from "@/lib/site-settings"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -9,7 +9,12 @@ type Props = {
 export default async function AdminContentPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const maintenanceMode = await getMaintenanceMode()
+  const settings = await getSiteSettings()
 
-  return <AdminContentPanel initialMaintenance={maintenanceMode} />
+  return (
+    <AdminContentPanel
+      initialMaintenance={settings.maintenanceMode}
+      initialHidden={settings.hiddenSections}
+    />
+  )
 }

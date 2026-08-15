@@ -1235,6 +1235,11 @@
       "invalid": "Correo o contraseña incorrectos."
     }
   },
+  "Maintenance": {
+    "title": "Este sitio está en mantenimiento",
+    "body": "Estamos trabajando para mejorar tu experiencia. Vuelve pronto a El Higuerón.",
+    "loginLink": "Acceso administrativo"
+  },
   "Register": {
     "brand": "El Higuerón",
     "title": "Crear cuenta",
@@ -1385,12 +1390,12 @@
     },
     "content": {
       "title": "Gestión de contenido",
-      "description": "Oculta temporalmente secciones de la página principal y activa el aviso de mantenimiento. Por ahora solo es una vista previa.",
+      "description": "Oculta temporalmente secciones del sitio (próximamente) y activa el aviso de mantenimiento.",
       "sectionsTitle": "Secciones del sitio",
       "sectionsDescription": "Activa el interruptor para marcar una sección como oculta temporalmente.",
       "sectionHidden": "Oculta (vista previa)",
       "sectionVisible": "Visible",
-      "previewNote": "Estos cambios no afectan el sitio público todavía.",
+      "previewNote": "Estos cambios de secciones no afectan el sitio público todavía.",
       "sections": {
         "escalada": "Información de escalada",
         "camping": "Información de camping",
@@ -1399,13 +1404,15 @@
         "galeria": "Galería"
       },
       "maintenanceTitle": "Modo mantenimiento",
-      "maintenanceDescription": "Muestra un letrero indicando que el sitio está en mantenimiento.",
+      "maintenanceDescription": "Oculta el sitio público y muestra el aviso de mantenimiento. Solo el login (y el panel admin tras iniciar sesión) permanecen accesibles.",
       "maintenanceToggle": "Activar mantenimiento",
-      "maintenanceOn": "Activo (solo vista previa)",
+      "maintenanceOn": "Activo — el sitio público está oculto",
       "maintenanceOff": "Desactivado",
+      "maintenanceSaving": "Guardando…",
+      "maintenanceError": "No se pudo actualizar el modo mantenimiento. Intenta de nuevo.",
       "bannerTitle": "Este sitio está en mantenimiento",
       "bannerBody": "Estamos trabajando para mejorar tu experiencia. Vuelve pronto a El Higuerón.",
-      "bannerIdle": "Activa el modo mantenimiento para ver el letrero de aviso."
+      "bannerIdle": "Activa el modo mantenimiento para ocultar el sitio y mostrar el aviso."
     },
     "placeholders": {
       "usersTitle": "Usuarios",

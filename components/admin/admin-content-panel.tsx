@@ -1,18 +1,25 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
+import { useRouter } from "@/i18n/navigation"
 import { useTranslations } from "next-intl"
 import { Construction } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { ComingSoonBadge } from "@/components/admin/coming-soon-badge"
+import { setMaintenanceModeAction } from "@/lib/site-settings/actions"
 
 const SECTIONS = ["escalada", "camping", "equipos", "visita", "galeria"] as const
 
 type SectionKey = (typeof SECTIONS)[number]
 
-export function AdminContentPanel() {
+export function AdminContentPanel({
+  initialMaintenance = false,
+}: {
+  initialMaintenance?: boolean
+}) {
   const t = useTranslations("Panel.content")
+  const router = useRouter()
   const [hidden, setHidden] = useState<Record<SectionKey, boolean>>({
     escalada: false,
     camping: false,
@@ -20,10 +27,28 @@ export function AdminContentPanel() {
     visita: false,
     galeria: false,
   })
-  const [maintenance, setMaintenance] = useState(false)
+  const [maintenance, setMaintenance] = useState(initialMaintenance)
+  const [maintenanceError, setMaintenanceError] = useState<string | null>(null)
+  const [isPending, startTransition] = useTransition()
 
   function toggleSection(key: SectionKey, value: boolean) {
     setHidden((prev) => ({ ...prev, [key]: value }))
+  }
+
+  function onMaintenanceChange(checked: boolean) {
+    const previous = maintenance
+    setMaintenance(checked)
+    setMaintenanceError(null)
+
+    startTransition(async () => {
+      const result = await setMaintenanceModeAction(checked)
+      if (!result.ok) {
+        setMaintenance(previous)
+        setMaintenanceError(t("maintenanceError"))
+        return
+      }
+      router.refresh()
+    })
   }
 
   return (
@@ -31,16 +56,16 @@ export function AdminContentPanel() {
       <div className="space-y-1">
         <div className="flex flex-wrap items-center gap-2">
           <h2 className="text-2xl font-semibold text-forest">{t("title")}</h2>
-          <ComingSoonBadge />
         </div>
         <p className="max-w-2xl text-muted-foreground">{t("description")}</p>
       </div>
 
       <section className="space-y-4">
-        <div>
+        <div className="flex flex-wrap items-center gap-2">
           <h3 className="text-lg font-medium text-forest">{t("sectionsTitle")}</h3>
-          <p className="text-sm text-muted-foreground">{t("sectionsDescription")}</p>
+          <ComingSoonBadge />
         </div>
+        <p className="text-sm text-muted-foreground">{t("sectionsDescription")}</p>
 
         <ul className="divide-y divide-border/60 rounded-xl border border-border/60">
           {SECTIONS.map((section) => (
@@ -80,13 +105,23 @@ export function AdminContentPanel() {
               {t("maintenanceToggle")}
             </Label>
             <p className="text-xs text-muted-foreground">
-              {maintenance ? t("maintenanceOn") : t("maintenanceOff")}
+              {isPending
+                ? t("maintenanceSaving")
+                : maintenance
+                  ? t("maintenanceOn")
+                  : t("maintenanceOff")}
             </p>
+            {maintenanceError ? (
+              <p className="mt-1 text-xs text-destructive" role="alert">
+                {maintenanceError}
+              </p>
+            ) : null}
           </div>
           <Switch
             id="maintenance-mode"
             checked={maintenance}
-            onCheckedChange={setMaintenance}
+            disabled={isPending}
+            onCheckedChange={onMaintenanceChange}
             aria-label={t("maintenanceToggle")}
           />
         </div>

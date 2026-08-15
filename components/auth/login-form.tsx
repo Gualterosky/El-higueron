@@ -66,7 +66,7 @@ export function LoginForm() {
           id="email"
           name="email"
           type="email"
-          placeholder="admin@elhigueron.com"
+          placeholder="correo@ejemplo.com"
           autoComplete="email"
           required
           className="h-10 border-border bg-beige/50 focus-visible:ring-forest"

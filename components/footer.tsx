@@ -25,6 +25,7 @@ export function Footer({
     { href: "/" as const, key: "inicio" as const, label: t("links.inicio") },
     { href: "/el-lugar" as const, key: "elLugar" as const, label: t("links.elLugar") },
     { href: "/escalada" as const, key: "escalada" as const, label: t("links.escalada") },
+    { href: "/muro" as const, key: "muro" as const, label: t("links.muro") },
     { href: "/boulder" as const, key: "boulder" as const, label: t("links.boulder") },
     { href: "/camping" as const, key: "camping" as const, label: t("links.camping") },
   ].filter((link) => !(isHideableSection(link.key) && hiddenSections?.[link.key]))

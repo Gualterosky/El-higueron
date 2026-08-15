@@ -28,6 +28,7 @@ export default async function HomePage({
       icon: CircleDot,
       title: t('experiences.boulder.title'),
       description: t('experiences.boulder.description'),
+      section: "boulder" as const,
     },
     {
       icon: Tent,
@@ -58,6 +59,7 @@ export default async function HomePage({
       icon: CircleDot,
       label: t('features.boulder.label'),
       description: t('features.boulder.description'),
+      section: "boulder" as const,
     },
     {
       icon: Tent,

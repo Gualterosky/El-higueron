@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation"
 import { CircleDot, Shield, Trees, TrendingUp, AlertTriangle, Footprints } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { assertSectionVisible } from "@/lib/site-settings"
 
 export default async function BoulderPage({
   params,
@@ -13,6 +14,7 @@ export default async function BoulderPage({
 }) {
   const { locale } = await params
   setRequestLocale(locale)
+  await assertSectionVisible("boulder", locale)
   const t = await getTranslations('Boulder')
 
   const boulderLevels = [

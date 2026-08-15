@@ -45,6 +45,7 @@
       "inicio": "Home",
       "elLugar": "The Place",
       "escalada": "Climbing",
+      "muro": "Wall",
       "boulder": "Boulder",
       "camping": "Camping",
       "equipos": "Gear",
@@ -1399,6 +1400,8 @@
       "sectionError": "Could not update the section. Please try again.",
       "sections": {
         "escalada": "Climbing information",
+        "muro": "Climbing wall",
+        "boulder": "Boulder",
         "camping": "Camping information",
         "equipos": "Equipment",
         "visita": "Plan your visit",

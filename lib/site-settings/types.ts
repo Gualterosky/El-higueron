@@ -1,5 +1,7 @@
 export const CONTENT_SECTIONS = [
   "escalada",
+  "muro",
+  "boulder",
   "camping",
   "equipos",
   "visita",
@@ -17,6 +19,8 @@ export type AppSiteSettings = {
 
 export const DEFAULT_HIDDEN_SECTIONS: HiddenSections = {
   escalada: false,
+  muro: false,
+  boulder: false,
   camping: false,
   equipos: false,
   visita: false,

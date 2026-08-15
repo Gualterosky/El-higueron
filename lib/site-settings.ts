@@ -26,12 +26,16 @@ export type { AppSiteSettings } from "@/lib/site-settings/types"
 const SECTION_COLUMN: Record<
   ContentSection,
   | "hideEscalada"
+  | "hideMuro"
+  | "hideBoulder"
   | "hideCamping"
   | "hideEquipos"
   | "hideVisita"
   | "hideGaleria"
 > = {
   escalada: "hideEscalada",
+  muro: "hideMuro",
+  boulder: "hideBoulder",
   camping: "hideCamping",
   equipos: "hideEquipos",
   visita: "hideVisita",
@@ -52,6 +56,8 @@ function rowToSettings(
     maintenanceMode: Boolean(row.maintenanceMode),
     hiddenSections: {
       escalada: Boolean(row.hideEscalada),
+      muro: Boolean(row.hideMuro),
+      boulder: Boolean(row.hideBoulder),
       camping: Boolean(row.hideCamping),
       equipos: Boolean(row.hideEquipos),
       visita: Boolean(row.hideVisita),

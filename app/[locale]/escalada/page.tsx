@@ -6,7 +6,7 @@ import { Mountain, Shield, AlertTriangle, CircleDot, Package, DollarSign, Users,
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { GuidesModal } from "@/components/guides-modal"
-import { assertSectionVisible } from "@/lib/site-settings"
+import { assertSectionVisible, getHiddenSections } from "@/lib/site-settings"
 
 export default async function EscaladaPage({
   params,
@@ -17,27 +17,30 @@ export default async function EscaladaPage({
   setRequestLocale(locale)
   await assertSectionVisible("escalada", locale)
   const t = await getTranslations('Escalada')
+  const hidden = await getHiddenSections()
 
   const climbingModalities = [
     {
       title: t('modalities.muro.title'),
       description: t('modalities.muro.description'),
       icon: Mountain,
-      href: "/muro",
+      href: "/muro" as const,
       image: "/media/Muro bendito sea/Img07.jpg",
       routes: t('modalities.muro.routes'),
       height: t('modalities.muro.height'),
+      section: "muro" as const,
     },
     {
       title: t('modalities.boulder.title'),
       description: t('modalities.boulder.description'),
       icon: CircleDot,
-      href: "/boulder",
+      href: "/boulder" as const,
       image: "/media/Boulders/IMG_20250920_100731134_MFNR.jpg",
       routes: t('modalities.boulder.routes'),
       height: t('modalities.boulder.height'),
+      section: "boulder" as const,
     },
-  ]
+  ].filter((modality) => !hidden[modality.section])
 
   const includedInEntry = [
     { item: t('pricing.includes.accessWall'), included: true },
@@ -290,12 +293,16 @@ export default async function EscaladaPage({
             {t('cta.subtitle')}
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
-              <Link href="/muro">{t('cta.primary')}</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
-              <Link href="/visita">{t('cta.secondary')}</Link>
-            </Button>
+            {!hidden.muro ? (
+              <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
+                <Link href="/muro">{t('cta.primary')}</Link>
+              </Button>
+            ) : null}
+            {!hidden.visita ? (
+              <Button asChild size="lg" variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
+                <Link href="/visita">{t('cta.secondary')}</Link>
+              </Button>
+            ) : null}
           </div>
         </div>
       </section>

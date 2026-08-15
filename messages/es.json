@@ -45,6 +45,7 @@
       "inicio": "Inicio",
       "elLugar": "El Lugar",
       "escalada": "Escalada",
+      "muro": "Muro",
       "boulder": "Boulder",
       "camping": "Camping",
       "equipos": "Equipos",
@@ -1399,6 +1400,8 @@
       "sectionError": "No se pudo actualizar la sección. Intenta de nuevo.",
       "sections": {
         "escalada": "Información de escalada",
+        "muro": "Muro de escalada",
+        "boulder": "Boulder",
         "camping": "Información de camping",
         "equipos": "Equipos",
         "visita": "Planifica tu visita",

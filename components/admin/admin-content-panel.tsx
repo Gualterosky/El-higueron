@@ -6,33 +6,52 @@ import { useTranslations } from "next-intl"
 import { Construction } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { ComingSoonBadge } from "@/components/admin/coming-soon-badge"
-import { setMaintenanceModeAction } from "@/lib/site-settings/actions"
+import {
+  setHiddenSectionAction,
+  setMaintenanceModeAction,
+} from "@/lib/site-settings/actions"
+import {
+  CONTENT_SECTIONS,
+  DEFAULT_HIDDEN_SECTIONS,
+  type ContentSection,
+  type HiddenSections,
+} from "@/lib/site-settings/types"
 
-const SECTIONS = ["escalada", "camping", "equipos", "visita", "galeria"] as const
-
-type SectionKey = (typeof SECTIONS)[number]
+const DEFAULT_HIDDEN = DEFAULT_HIDDEN_SECTIONS
 
 export function AdminContentPanel({
   initialMaintenance = false,
+  initialHidden = DEFAULT_HIDDEN,
 }: {
   initialMaintenance?: boolean
+  initialHidden?: HiddenSections
 }) {
   const t = useTranslations("Panel.content")
   const router = useRouter()
-  const [hidden, setHidden] = useState<Record<SectionKey, boolean>>({
-    escalada: false,
-    camping: false,
-    equipos: false,
-    visita: false,
-    galeria: false,
-  })
+  const [hidden, setHidden] = useState<HiddenSections>(initialHidden)
   const [maintenance, setMaintenance] = useState(initialMaintenance)
+  const [sectionError, setSectionError] = useState<string | null>(null)
   const [maintenanceError, setMaintenanceError] = useState<string | null>(null)
-  const [isPending, startTransition] = useTransition()
+  const [pendingSection, setPendingSection] = useState<ContentSection | null>(null)
+  const [isMaintenancePending, startMaintenanceTransition] = useTransition()
+  const [isSectionPending, startSectionTransition] = useTransition()
 
-  function toggleSection(key: SectionKey, value: boolean) {
-    setHidden((prev) => ({ ...prev, [key]: value }))
+  function onSectionChange(section: ContentSection, checked: boolean) {
+    const previous = hidden[section]
+    setHidden((prev) => ({ ...prev, [section]: checked }))
+    setSectionError(null)
+    setPendingSection(section)
+
+    startSectionTransition(async () => {
+      const result = await setHiddenSectionAction(section, checked)
+      setPendingSection(null)
+      if (!result.ok) {
+        setHidden((prev) => ({ ...prev, [section]: previous }))
+        setSectionError(t("sectionError"))
+        return
+      }
+      router.refresh()
+    })
   }
 
   function onMaintenanceChange(checked: boolean) {
@@ -40,7 +59,7 @@ export function AdminContentPanel({
     setMaintenance(checked)
     setMaintenanceError(null)
 
-    startTransition(async () => {
+    startMaintenanceTransition(async () => {
       const result = await setMaintenanceModeAction(checked)
       if (!result.ok) {
         setMaintenance(previous)
@@ -54,21 +73,18 @@ export function AdminContentPanel({
   return (
     <div className="space-y-8">
       <div className="space-y-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-2xl font-semibold text-forest">{t("title")}</h2>
-        </div>
+        <h2 className="text-2xl font-semibold text-forest">{t("title")}</h2>
         <p className="max-w-2xl text-muted-foreground">{t("description")}</p>
       </div>
 
       <section className="space-y-4">
-        <div className="flex flex-wrap items-center gap-2">
+        <div>
           <h3 className="text-lg font-medium text-forest">{t("sectionsTitle")}</h3>
-          <ComingSoonBadge />
+          <p className="text-sm text-muted-foreground">{t("sectionsDescription")}</p>
         </div>
-        <p className="text-sm text-muted-foreground">{t("sectionsDescription")}</p>
 
         <ul className="divide-y divide-border/60 rounded-xl border border-border/60">
-          {SECTIONS.map((section) => (
+          {CONTENT_SECTIONS.map((section) => (
             <li
               key={section}
               className="flex items-center justify-between gap-4 px-4 py-3 sm:px-5"
@@ -78,19 +94,28 @@ export function AdminContentPanel({
                   {t(`sections.${section}`)}
                 </Label>
                 <p className="text-xs text-muted-foreground">
-                  {hidden[section] ? t("sectionHidden") : t("sectionVisible")}
+                  {isSectionPending && pendingSection === section
+                    ? t("sectionSaving")
+                    : hidden[section]
+                      ? t("sectionHidden")
+                      : t("sectionVisible")}
                 </p>
               </div>
               <Switch
                 id={`section-${section}`}
                 checked={hidden[section]}
-                onCheckedChange={(checked) => toggleSection(section, checked)}
+                disabled={isSectionPending}
+                onCheckedChange={(checked) => onSectionChange(section, checked)}
                 aria-label={t(`sections.${section}`)}
               />
             </li>
           ))}
         </ul>
-        <p className="text-xs text-muted-foreground">{t("previewNote")}</p>
+        {sectionError ? (
+          <p className="text-xs text-destructive" role="alert">
+            {sectionError}
+          </p>
+        ) : null}
       </section>
 
       <section className="space-y-4">
@@ -105,7 +130,7 @@ export function AdminContentPanel({
               {t("maintenanceToggle")}
             </Label>
             <p className="text-xs text-muted-foreground">
-              {isPending
+              {isMaintenancePending
                 ? t("maintenanceSaving")
                 : maintenance
                   ? t("maintenanceOn")
@@ -120,7 +145,7 @@ export function AdminContentPanel({
           <Switch
             id="maintenance-mode"
             checked={maintenance}
-            disabled={isPending}
+            disabled={isMaintenancePending}
             onCheckedChange={onMaintenanceChange}
             aria-label={t("maintenanceToggle")}
           />

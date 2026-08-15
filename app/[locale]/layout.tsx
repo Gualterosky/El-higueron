@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 import { Analytics } from "@vercel/analytics/next"
 import { LayoutShell } from "@/components/layout-shell"
 import { routing } from "@/i18n/routing"
-import { getMaintenanceMode } from "@/lib/site-settings"
+import { getSiteSettings } from "@/lib/site-settings"
 import { Inter } from "next/font/google"
 
 const inter = Inter({
@@ -49,9 +49,9 @@ export default async function LocaleLayout({ children, params }: Props) {
   }
 
   setRequestLocale(locale)
-  const [messages, maintenanceMode] = await Promise.all([
+  const [messages, settings] = await Promise.all([
     getMessages(),
-    getMaintenanceMode(),
+    getSiteSettings(),
   ])
 
   return (
@@ -59,7 +59,12 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className="min-h-screen font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
           <div className="flex min-h-screen flex-col">
-            <LayoutShell maintenanceMode={maintenanceMode}>{children}</LayoutShell>
+            <LayoutShell
+              maintenanceMode={settings.maintenanceMode}
+              hiddenSections={settings.hiddenSections}
+            >
+              {children}
+            </LayoutShell>
           </div>
         </NextIntlClientProvider>
         <Analytics />

@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { assertSectionVisible } from "@/lib/site-settings"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -12,6 +13,7 @@ type Props = {
 export default async function EquiposPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
+  await assertSectionVisible("equipos", locale)
   const t = await getTranslations("Equipos")
 
   const equipment = [

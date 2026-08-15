@@ -6,6 +6,7 @@ import { Mountain, Shield, AlertTriangle, CircleDot, Package, DollarSign, Users,
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { GuidesModal } from "@/components/guides-modal"
+import { assertSectionVisible } from "@/lib/site-settings"
 
 export default async function EscaladaPage({
   params,
@@ -14,6 +15,7 @@ export default async function EscaladaPage({
 }) {
   const { locale } = await params
   setRequestLocale(locale)
+  await assertSectionVisible("escalada", locale)
   const t = await getTranslations('Escalada')
 
   const climbingModalities = [

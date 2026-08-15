@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { MaintenanceScreen } from "@/components/maintenance-screen"
 import { usePathname } from "@/i18n/navigation"
+import type { HiddenSections } from "@/lib/site-settings/types"
 
 const ChatBot = dynamic(() => import("@/components/chat-bot").then((mod) => mod.ChatBot), {
   ssr: false,
@@ -26,9 +27,11 @@ function isMaintenanceAllowed(pathname: string) {
 export function LayoutShell({
   children,
   maintenanceMode = false,
+  hiddenSections,
 }: {
   children: React.ReactNode
   maintenanceMode?: boolean
+  hiddenSections?: HiddenSections
 }) {
   const pathname = usePathname()
 
@@ -49,9 +52,9 @@ export function LayoutShell({
 
   return (
     <>
-      <Navbar />
+      <Navbar hiddenSections={hiddenSections} />
       <main className="flex-1">{children}</main>
-      <Footer />
+      <Footer hiddenSections={hiddenSections} />
       <WhatsAppButton />
       <ChatBot />
     </>

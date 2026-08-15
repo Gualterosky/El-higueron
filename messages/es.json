@@ -1390,12 +1390,13 @@
     },
     "content": {
       "title": "Gestión de contenido",
-      "description": "Oculta temporalmente secciones del sitio (próximamente) y activa el aviso de mantenimiento.",
+      "description": "Oculta temporalmente secciones del sitio y activa el aviso de mantenimiento.",
       "sectionsTitle": "Secciones del sitio",
-      "sectionsDescription": "Activa el interruptor para marcar una sección como oculta temporalmente.",
-      "sectionHidden": "Oculta (vista previa)",
+      "sectionsDescription": "Activa el interruptor para ocultar una sección del menú, la página y los enlaces relacionados.",
+      "sectionHidden": "Oculta en el sitio público",
       "sectionVisible": "Visible",
-      "previewNote": "Estos cambios de secciones no afectan el sitio público todavía.",
+      "sectionSaving": "Guardando…",
+      "sectionError": "No se pudo actualizar la sección. Intenta de nuevo.",
       "sections": {
         "escalada": "Información de escalada",
         "camping": "Información de camping",

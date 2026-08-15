@@ -1,5 +1,5 @@
 import { headers } from "next/headers"
-import { redirect } from "next/navigation"
+import { redirect, unstable_rethrow } from "next/navigation"
 import { auth } from "@/lib/auth"
 import {
   homePathForRole,
@@ -49,14 +49,18 @@ function toAppSession(
 }
 
 export async function getSession(): Promise<AppSession | null> {
+  // Must stay outside try/catch so Next.js can opt the route into dynamic rendering.
+  const requestHeaders = await headers()
+
   try {
     const raw = await auth.api.getSession({
-      headers: await headers(),
+      headers: requestHeaders,
     })
     if (!raw) return null
     return toAppSession(raw)
   } catch (error) {
-    // Avoid crashing public auth pages (e.g. missing production env vars).
+    // Re-throw Next.js control-flow errors (dynamic bailout, redirect, notFound).
+    unstable_rethrow(error)
     console.error("[auth] getSession failed:", error)
     return null
   }

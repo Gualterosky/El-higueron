@@ -1276,6 +1276,9 @@
     "staffDescription": "Administra reseñas, reservas y publicaciones.",
     "signOut": "Cerrar sesión",
     "comingSoon": "Próximamente",
+    "errorTitle": "No se pudo cargar el panel",
+    "errorBody": "Ocurrió un error al mostrar la administración. Intenta de nuevo.",
+    "errorRetry": "Reintentar",
     "nav": {
       "dashboard": "Inicio",
       "users": "Usuarios",

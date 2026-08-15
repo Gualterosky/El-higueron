@@ -1,20 +1,26 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { Lock, Loader2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { Link, useRouter } from "@/i18n/navigation"
+import { Link } from "@/i18n/navigation"
 import { signIn } from "@/lib/auth-client"
 import { homePathForRole, isRole } from "@/lib/auth/roles"
 
 export function LoginForm() {
   const t = useTranslations("Login")
-  const router = useRouter()
+  const locale = useLocale()
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+
+  function navigateAfterAuth(path: string) {
+    // Full navigation so the new session cookie is always sent to the server.
+    // Soft router.push after sign-in can leave /admin blank in production.
+    window.location.assign(`/${locale}${path}`)
+  }
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -41,14 +47,12 @@ export function LoginForm() {
       }
 
       if (user.mustChangePassword) {
-        router.push("/cambiar-contrasena")
-        router.refresh()
+        navigateAfterAuth("/cambiar-contrasena")
         return
       }
 
       const role = isRole(user.role) ? user.role : "visitante"
-      router.push(homePathForRole(role))
-      router.refresh()
+      navigateAfterAuth(homePathForRole(role))
     })
   }
 

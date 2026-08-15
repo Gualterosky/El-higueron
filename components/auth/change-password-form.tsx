@@ -1,17 +1,16 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { KeyRound, Loader2 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { useRouter } from "@/i18n/navigation"
 import { completeForcedPasswordChange } from "@/lib/auth/actions"
 
 export function ChangePasswordForm() {
   const t = useTranslations("ChangePassword")
-  const router = useRouter()
+  const locale = useLocale()
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
@@ -48,8 +47,7 @@ export function ChangePasswordForm() {
         return
       }
 
-      router.push(result.redirectTo)
-      router.refresh()
+      window.location.assign(`/${locale}${result.redirectTo}`)
     })
   }
 

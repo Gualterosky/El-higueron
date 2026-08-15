@@ -1276,6 +1276,9 @@
     "staffDescription": "Manage reviews, reservations, and posts.",
     "signOut": "Sign out",
     "comingSoon": "Coming soon",
+    "errorTitle": "Could not load the panel",
+    "errorBody": "Something went wrong while loading administration. Please try again.",
+    "errorRetry": "Try again",
     "nav": {
       "dashboard": "Home",
       "users": "Users",

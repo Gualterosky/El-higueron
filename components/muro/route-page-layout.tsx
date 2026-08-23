@@ -8,6 +8,8 @@ import {
   AlertTriangle,
   User,
 } from "lucide-react"
+import { AscentForm } from "@/components/muro/ascent-form"
+import { RoutePublications } from "@/components/muro/route-publications"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -179,22 +181,13 @@ export async function RoutePageLayout({ routeId, locale }: Props) {
                 </ul>
               </div>
 
+              <RoutePublications routeId={routeId} locale={locale} />
+
               <div className="mt-8 rounded-xl bg-white p-6 shadow-sm">
-                <h3 className="mb-4 text-lg font-semibold text-foreground">
+                <h3 className="mb-6 text-lg font-semibold text-foreground">
                   {t("registerTitle")}
                 </h3>
-                <div className="w-full overflow-hidden rounded-lg">
-                  <iframe
-                    src="https://docs.google.com/forms/d/e/1FAIpQLSe8tExFJ0hEydSTqm5pFH-95abgVcFjBuLSKzKcXtfHsnS55A/viewform?embedded=true"
-                    width="100%"
-                    height="1882"
-                    style={{ border: 0 }}
-                    title={t("formIframeTitle")}
-                    className="w-full"
-                  >
-                    {t("formLoading")}
-                  </iframe>
-                </div>
+                <AscentForm routeId={routeId} />
               </div>
             </div>
           </div>

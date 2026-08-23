@@ -1,4 +1,4 @@
-import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core"
+import { boolean, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core"
 
 /**
  * Better Auth core tables + app roles.
@@ -71,6 +71,20 @@ export const siteSettings = pgTable("site_settings", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
 
+/** Climb ascent posts submitted from individual route pages. */
+export const climbPost = pgTable("climb_post", {
+  id: text("id").primaryKey(),
+  authorName: text("author_name").notNull(),
+  ascentDate: text("ascent_date").notNull(),
+  routeId: text("route_id").notNull(),
+  comment: text("comment").notNull(),
+  contactInfo: text("contact_info").notNull(),
+  rating: integer("rating").notNull(),
+  status: text("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
 export type User = typeof user.$inferSelect
 export type Session = typeof session.$inferSelect
 export type SiteSettings = typeof siteSettings.$inferSelect
+export type ClimbPost = typeof climbPost.$inferSelect

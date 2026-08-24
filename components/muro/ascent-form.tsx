@@ -31,6 +31,12 @@ export function AscentForm({ routeId }: Props) {
   const [serverError, setServerError] = useState<string | null>(null)
   const [hovered, setHovered] = useState(0)
 
+  const currentRoute = MURO_ROUTES.find((r) => r.id === routeId)
+  const defaultRouteValue =
+    currentRoute?.subLevels?.length
+      ? `${routeId}-${currentRoute.subLevels[0]}`
+      : routeId
+
   const schema = z.object({
     authorName: z.string().min(2, t("ascentForm.errorMin2")).max(100),
     ascentDate: z.string().min(1, t("ascentForm.errorRequired")),
@@ -45,7 +51,7 @@ export function AscentForm({ routeId }: Props) {
   const form = useForm<AscentFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      routeId,
+      routeId: defaultRouteValue,
       rating: 0,
     },
   })
@@ -54,11 +60,15 @@ export function AscentForm({ routeId }: Props) {
 
   async function onSubmit(data: AscentFormValues) {
     setServerError(null)
-    const result = await submitClimbPostAction(data)
-    if (result.ok) {
-      setSubmitted(true)
-    } else {
-      setServerError("error" in result ? result.error : t("ascentForm.errorGeneral"))
+    try {
+      const result = await submitClimbPostAction(data)
+      if (result.ok) {
+        setSubmitted(true)
+      } else {
+        setServerError("error" in result ? result.error : t("ascentForm.errorGeneral"))
+      }
+    } catch {
+      setServerError(t("ascentForm.errorGeneral"))
     }
   }
 
@@ -82,6 +92,7 @@ export function AscentForm({ routeId }: Props) {
           <Input
             id="authorName"
             placeholder={t("ascentForm.authorNamePlaceholder")}
+            suppressHydrationWarning
             {...form.register("authorName")}
           />
           {form.formState.errors.authorName && (
@@ -99,6 +110,7 @@ export function AscentForm({ routeId }: Props) {
             id="ascentDate"
             type="date"
             max={new Date().toISOString().split("T")[0]}
+            suppressHydrationWarning
             {...form.register("ascentDate")}
           />
           {form.formState.errors.ascentDate && (
@@ -114,18 +126,28 @@ export function AscentForm({ routeId }: Props) {
           {t("ascentForm.routeId")} <span className="text-destructive">*</span>
         </Label>
         <Select
-          defaultValue={routeId}
+          defaultValue={defaultRouteValue}
           onValueChange={(v) => form.setValue("routeId", v, { shouldValidate: true })}
         >
           <SelectTrigger>
             <SelectValue placeholder={t("ascentForm.routeSelectPlaceholder")} />
           </SelectTrigger>
           <SelectContent>
-            {MURO_ROUTES.map((route) => (
-              <SelectItem key={route.id} value={route.id}>
-                {route.id} — {t(`${route.id}.routeName` as Parameters<typeof t>[0])}
-              </SelectItem>
-            ))}
+            {MURO_ROUTES.flatMap((route) => {
+              const name = t(`${route.id}.routeName` as Parameters<typeof t>[0])
+              if (route.subLevels?.length) {
+                return route.subLevels.map((lvl) => (
+                  <SelectItem key={`${route.id}-${lvl}`} value={`${route.id}-${lvl}`}>
+                    {name} {lvl}
+                  </SelectItem>
+                ))
+              }
+              return [
+                <SelectItem key={route.id} value={route.id}>
+                  {name} {route.level}
+                </SelectItem>,
+              ]
+            })}
           </SelectContent>
         </Select>
         {form.formState.errors.routeId && (
@@ -192,6 +214,8 @@ export function AscentForm({ routeId }: Props) {
         <Input
           id="contactInfo"
           placeholder={t("ascentForm.contactInfoPlaceholder")}
+          suppressHydrationWarning
+          autoComplete="off"
           {...form.register("contactInfo")}
         />
         <p className="text-xs text-muted-foreground">{t("ascentForm.contactInfoHint")}</p>

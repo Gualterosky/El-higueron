@@ -4,6 +4,7 @@ export type MuroRouteMeta = {
   id: `MBS${string}`
   number: number
   level: string
+  subLevels?: string[]
   height: string | "Por definir"
   anchors: string | "Por definir"
   styleKey: StyleKey
@@ -125,7 +126,7 @@ export const MURO_ROUTES: MuroRouteMeta[] = [
   {
     id: "MBS12",
     number: 12,
-    level: "5.11c",
+    level: "5.11d",
     height: "18m",
     anchors: "13",
     styleKey: "deportiva",
@@ -135,7 +136,7 @@ export const MURO_ROUTES: MuroRouteMeta[] = [
   {
     id: "MBS13",
     number: 13,
-    level: "5.11b",
+    level: "5.11c",
     height: "18m",
     anchors: "12",
     styleKey: "clasicaMixta",
@@ -145,7 +146,8 @@ export const MURO_ROUTES: MuroRouteMeta[] = [
   {
     id: "MBS14",
     number: 14,
-    level: "5.11a",
+    level: "5.9 / 5.11b",
+    subLevels: ["5.9", "5.11b"],
     height: "20m",
     anchors: "12",
     styleKey: "deportiva",
@@ -155,7 +157,8 @@ export const MURO_ROUTES: MuroRouteMeta[] = [
   {
     id: "MBS15",
     number: 15,
-    level: "5.9 - 5.11",
+    level: "5.9 / 5.11a",
+    subLevels: ["5.9", "5.11a"],
     height: "Por definir",
     anchors: "Por definir",
     styleKey: "clasica",

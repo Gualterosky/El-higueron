@@ -1,6 +1,5 @@
 "use client"
 
-import { useTranslations } from "next-intl"
 import {
   CalendarDays,
   LayoutDashboard,
@@ -89,20 +88,27 @@ const ADMIN_ITEMS: NavItem[] = [
   },
 ]
 
+type PanelTranslations = {
+  title: string
+  signOut: string
+  nav: Record<string, string>
+}
+
 export function PanelShell({
   role,
   userName,
   children,
+  translations,
 }: {
   role: Role
   userName: string
   children: React.ReactNode
+  translations: PanelTranslations
 }) {
-  const t = useTranslations("Panel")
   const pathname = usePathname()
   const router = useRouter()
   const items = role === "administrador" ? ADMIN_ITEMS : STAFF_ITEMS
-  const title = role === "administrador" ? t("adminTitle") : t("staffTitle")
+  const title = translations.title
 
   async function handleSignOut() {
     await signOut()
@@ -142,7 +148,7 @@ export function PanelShell({
                   )}
                 >
                   <Icon className="h-4 w-4" />
-                  {t(`nav.${item.labelKey}`)}
+                  {translations.nav[item.labelKey]}
                 </Link>
               )
             })}
@@ -156,7 +162,7 @@ export function PanelShell({
               onClick={handleSignOut}
             >
               <LogOut className="h-4 w-4" />
-              {t("signOut")}
+              {translations.signOut}
             </Button>
           </div>
         </aside>

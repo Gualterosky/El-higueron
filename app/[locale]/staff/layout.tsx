@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server"
+import { getTranslations, setRequestLocale } from "next-intl/server"
 import { PanelShell } from "@/components/panel/panel-shell"
 import { requireRole } from "@/lib/auth/session"
 
@@ -12,10 +12,27 @@ type Props = {
 export default async function StaffLayout({ children, params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const session = await requireRole(locale, ["staff", "administrador"])
+  const [session, t] = await Promise.all([
+    requireRole(locale, ["staff", "administrador"]),
+    getTranslations("Panel"),
+  ])
+
+  const role = session.user.role === "administrador" ? "administrador" : "staff"
+  const translations = {
+    title: role === "administrador" ? t("adminTitle") : t("staffTitle"),
+    signOut: t("signOut"),
+    nav: {
+      dashboard: t("nav.dashboard"),
+      users: t("nav.users"),
+      reviews: t("nav.reviews"),
+      reservations: t("nav.reservations"),
+      posts: t("nav.posts"),
+      content: t("nav.content"),
+    },
+  }
 
   return (
-    <PanelShell role={session.user.role === "administrador" ? "administrador" : "staff"} userName={session.user.name}>
+    <PanelShell role={role} userName={session.user.name} translations={translations}>
       {children}
     </PanelShell>
   )

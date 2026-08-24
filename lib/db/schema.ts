@@ -81,6 +81,8 @@ export const climbPost = pgTable("climb_post", {
   contactInfo: text("contact_info").notNull(),
   rating: integer("rating").notNull(),
   status: text("status").notNull().default("pending"),
+  socialMediaUrl: text("social_media_url"),
+  mediaUrls: text("media_urls").array(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 

@@ -1332,7 +1332,8 @@
       "content": "Content",
       "reviews": "Reviews",
       "reservations": "Reservations",
-      "posts": "Posts"
+      "posts": "Posts",
+      "chatbot": "Chatbot"
     },
     "home": {
       "categories": {
@@ -1355,6 +1356,10 @@
         "content": {
           "title": "Content management",
           "description": "Hide site sections and enable maintenance mode."
+        },
+        "chatbot": {
+          "title": "Chatbot conversations",
+          "description": "Browse the questions and answers from the Mr. Gaque assistant."
         }
       }
     },
@@ -1430,6 +1435,24 @@
         "pending": "Pending",
         "approved": "Approved",
         "hidden": "Hidden"
+      }
+    },
+    "chatbot": {
+      "title": "Chatbot conversations",
+      "description": "Review the questions users ask the Mr. Gaque assistant. Each row is an anonymous session with its full question-and-answer history.",
+      "noResults": "No conversations recorded yet.",
+      "sessionLabel": "Session",
+      "messagesLabel": "messages",
+      "localeLabel": "Language",
+      "dateLabel": "Started",
+      "lastActivityLabel": "Last activity",
+      "userQuestion": "User",
+      "botAnswer": "Mr. Gaque",
+      "expand": "View conversation",
+      "collapse": "Hide conversation",
+      "locales": {
+        "es": "Spanish",
+        "en": "English"
       }
     },
     "content": {

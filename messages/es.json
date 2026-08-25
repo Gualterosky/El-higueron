@@ -1332,7 +1332,8 @@
       "content": "Contenido",
       "reviews": "Reseñas",
       "reservations": "Reservas",
-      "posts": "Publicaciones"
+      "posts": "Publicaciones",
+      "chatbot": "Chatbot"
     },
     "home": {
       "categories": {
@@ -1355,6 +1356,10 @@
         "content": {
           "title": "Gestión de contenido",
           "description": "Ocultar secciones del sitio y modo mantenimiento."
+        },
+        "chatbot": {
+          "title": "Conversaciones del chatbot",
+          "description": "Consulta las preguntas y respuestas del asistente Mr. Gaque."
         }
       }
     },
@@ -1430,6 +1435,24 @@
         "pending": "Pendiente",
         "approved": "Aprobada",
         "hidden": "Oculta"
+      }
+    },
+    "chatbot": {
+      "title": "Conversaciones del chatbot",
+      "description": "Revisa las preguntas que hacen los usuarios al asistente Mr. Gaque. Cada fila es una sesión anónima con su historial completo de preguntas y respuestas.",
+      "noResults": "Aún no hay conversaciones registradas.",
+      "sessionLabel": "Sesión",
+      "messagesLabel": "mensajes",
+      "localeLabel": "Idioma",
+      "dateLabel": "Inicio",
+      "lastActivityLabel": "Última actividad",
+      "userQuestion": "Usuario",
+      "botAnswer": "Mr. Gaque",
+      "expand": "Ver conversación",
+      "collapse": "Ocultar conversación",
+      "locales": {
+        "es": "Español",
+        "en": "Inglés"
       }
     },
     "content": {

@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  BotMessageSquare,
   CalendarDays,
   LayoutDashboard,
   LogOut,
@@ -84,6 +85,12 @@ const ADMIN_ITEMS: NavItem[] = [
     href: "/admin/contenido",
     labelKey: "content",
     icon: PanelsTopLeft,
+    roles: ["administrador"],
+  },
+  {
+    href: "/admin/chatbot",
+    labelKey: "chatbot",
+    icon: BotMessageSquare,
     roles: ["administrador"],
   },
 ]

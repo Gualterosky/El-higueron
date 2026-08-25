@@ -86,7 +86,29 @@ export const climbPost = pgTable("climb_post", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
+/** Anonymous chatbot conversation sessions (one per browser). */
+export const chatSession = pgTable("chat_session", {
+  id: text("id").primaryKey(),
+  locale: text("locale").notNull().default("es"),
+  userAgent: text("user_agent"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+})
+
+/** Individual message pairs saved from chatbot conversations. */
+export const chatMessage = pgTable("chat_message", {
+  id: text("id").primaryKey(),
+  sessionId: text("session_id")
+    .notNull()
+    .references(() => chatSession.id, { onDelete: "cascade" }),
+  userMessage: text("user_message").notNull(),
+  botResponse: text("bot_response").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
 export type User = typeof user.$inferSelect
 export type Session = typeof session.$inferSelect
 export type SiteSettings = typeof siteSettings.$inferSelect
 export type ClimbPost = typeof climbPost.$inferSelect
+export type ChatSession = typeof chatSession.$inferSelect
+export type ChatMessage = typeof chatMessage.$inferSelect

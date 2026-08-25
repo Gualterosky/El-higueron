@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl"
 import {
+  BotMessageSquare,
   CalendarDays,
   MessageSquareText,
   Newspaper,
@@ -35,6 +36,11 @@ const CATEGORIES = [
     href: "/admin/contenido",
     labelKey: "content",
     icon: PanelsTopLeft,
+  },
+  {
+    href: "/admin/chatbot",
+    labelKey: "chatbot",
+    icon: BotMessageSquare,
   },
 ] as const
 

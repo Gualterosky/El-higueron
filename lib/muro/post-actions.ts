@@ -1,6 +1,6 @@
 "use server"
 
-import { and, desc, eq } from "drizzle-orm"
+import { and, desc, eq, ne } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { db } from "@/lib/db"
@@ -48,7 +48,7 @@ export async function getApprovedPostsByRouteAction(routeId: string) {
   return db
     .select()
     .from(climbPost)
-    .where(and(eq(climbPost.routeId, routeId), eq(climbPost.status, "approved")))
+    .where(and(eq(climbPost.routeId, routeId), ne(climbPost.status, "hidden")))
     .orderBy(desc(climbPost.createdAt))
 }
 

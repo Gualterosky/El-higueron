@@ -862,7 +862,7 @@
       "submit": "Enviar publicación",
       "submitting": "Enviando...",
       "successTitle": "¡Publicación enviada!",
-      "successBody": "Estará visible una vez que el equipo la apruebe.",
+      "successBody": "Tu publicación ya está visible en el muro.",
       "errorGeneral": "No se pudo enviar. Intenta de nuevo.",
       "errorMin2": "Mínimo 2 caracteres",
       "errorMin5": "Mínimo 5 caracteres",
@@ -1350,7 +1350,7 @@
         },
         "posts": {
           "title": "Gestión de publicaciones",
-          "description": "Aprobar u ocultar contenido de visitantes."
+          "description": "Revisar y eliminar publicaciones inapropiadas de visitantes."
         },
         "content": {
           "title": "Gestión de contenido",
@@ -1419,8 +1419,8 @@
     },
     "posts": {
       "title": "Gestión de publicaciones",
-      "description": "Modera publicaciones de ascensos enviadas desde las rutas del muro.",
-      "approve": "Aprobar",
+      "description": "Las publicaciones son visibles de inmediato. Revísalas y elimina las que sean inapropiadas.",
+      "approve": "Marcar como revisada",
       "hide": "Ocultar",
       "delete": "Eliminar",
       "noResults": "No hay publicaciones aún.",

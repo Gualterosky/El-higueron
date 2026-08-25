@@ -52,7 +52,12 @@ export function AdminPostsPanel({ initialPosts }: { initialPosts: ClimbPost[] })
           {posts.map((post) => (
             <article
               key={post.id}
-              className="flex flex-col gap-4 rounded-xl border border-border/60 bg-beige/20 p-4 sm:flex-row sm:items-start sm:justify-between sm:p-5"
+              className={cn(
+                "flex flex-col gap-4 rounded-xl border p-4 sm:flex-row sm:items-start sm:justify-between sm:p-5",
+                post.status === "pending"
+                  ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
+                  : "border-border/60 bg-beige/20"
+              )}
             >
               <div className="min-w-0 space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
@@ -68,7 +73,9 @@ export function AdminPostsPanel({ initialPosts }: { initialPosts: ClimbPost[] })
                     className={
                       post.status === "approved"
                         ? "border-transparent bg-forest text-white"
-                        : undefined
+                        : post.status === "pending"
+                          ? "border-amber-400 bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300"
+                          : undefined
                     }
                   >
                     {t(`status.${post.status as "pending" | "approved" | "hidden"}`)}

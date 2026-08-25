@@ -22,8 +22,21 @@ interface Message {
 }
 
 const AUTO_OPEN_HASH = "gaque"
+const SESSION_STORAGE_KEY = "chat_session_id"
 
 const SUGGESTION_ICONS = [Tent, CalendarCheck, Mountain, MapPin]
+
+function getOrCreateSessionId(): string {
+  try {
+    const existing = localStorage.getItem(SESSION_STORAGE_KEY)
+    if (existing) return existing
+    const id = crypto.randomUUID()
+    localStorage.setItem(SESSION_STORAGE_KEY, id)
+    return id
+  } catch {
+    return crypto.randomUUID()
+  }
+}
 
 export function ChatBot() {
   const t = useTranslations("Chat")
@@ -32,6 +45,7 @@ export function ChatBot() {
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const sessionIdRef = useRef<string | null>(null)
 
   const containerRef = useRef<HTMLDivElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -45,6 +59,10 @@ export function ChatBot() {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
+
+  useEffect(() => {
+    sessionIdRef.current = getOrCreateSessionId()
+  }, [])
 
   useEffect(() => {
     const checkHash = () => {
@@ -106,6 +124,7 @@ export function ChatBot() {
           message: userMessage,
           history: messages,
           locale,
+          sessionId: sessionIdRef.current,
         }),
       })
 

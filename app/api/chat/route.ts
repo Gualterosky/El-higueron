@@ -4,6 +4,9 @@ import fs from "fs"
 import path from "path"
 import esMessages from "@/messages/es.json"
 import enMessages from "@/messages/en.json"
+import { db } from "@/lib/db"
+import { chatMessage, chatSession } from "@/lib/db/schema"
+import { eq } from "drizzle-orm"
 
 const chatErrors = {
   es: esMessages.Chat.api,
@@ -46,9 +49,55 @@ e invita al usuario a contactar por WhatsApp: +57 3172973537.
   return `${languageRule}\n\n${knowledge}`
 }
 
+/** Persist the session (upsert) and save the message pair — errors are swallowed so they never break the chat. */
+async function logChatMessage(opts: {
+  sessionId: string
+  locale: string
+  userAgent: string | null
+  userMessage: string
+  botResponse: string
+}) {
+  try {
+    const { sessionId, locale, userAgent, userMessage, botResponse } = opts
+
+    const existing = await db
+      .select({ id: chatSession.id })
+      .from(chatSession)
+      .where(eq(chatSession.id, sessionId))
+      .limit(1)
+
+    const now = new Date()
+
+    if (existing.length === 0) {
+      await db.insert(chatSession).values({
+        id: sessionId,
+        locale,
+        userAgent,
+        createdAt: now,
+        updatedAt: now,
+      })
+    } else {
+      await db
+        .update(chatSession)
+        .set({ updatedAt: now, locale })
+        .where(eq(chatSession.id, sessionId))
+    }
+
+    await db.insert(chatMessage).values({
+      id: crypto.randomUUID(),
+      sessionId,
+      userMessage,
+      botResponse,
+      createdAt: now,
+    })
+  } catch (err) {
+    console.error("Chat logging error:", err)
+  }
+}
+
 export async function POST(req: Request) {
   try {
-    const { message, history, locale: bodyLocale } = await req.json()
+    const { message, history, locale: bodyLocale, sessionId } = await req.json()
     const locale = bodyLocale === "en" ? "en" : "es"
     const errors = chatErrors[locale]
 
@@ -82,6 +131,12 @@ export async function POST(req: Request) {
     })
 
     const text = completion.choices[0]?.message?.content || ""
+
+    // Persist conversation asynchronously — never fail the response over this
+    if (sessionId && typeof sessionId === "string" && sessionId.length > 0) {
+      const userAgent = req.headers.get("user-agent")
+      void logChatMessage({ sessionId, locale, userAgent, userMessage: message, botResponse: text })
+    }
 
     return NextResponse.json({ text })
   } catch (error: unknown) {

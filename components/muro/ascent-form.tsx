@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Star, CheckCircle2 } from "lucide-react"
+import { Star, CheckCircle2, Link2, CheckCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select"
 import { MURO_ROUTES } from "@/lib/muro/routes"
 import { submitClimbPostAction } from "@/lib/muro/post-actions"
+import { detectPlatform } from "@/components/muro/social-embed"
 
 type Props = {
   routeId: string
@@ -30,6 +31,7 @@ export function AscentForm({ routeId }: Props) {
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
   const [hovered, setHovered] = useState(0)
+  const [showSocialInput, setShowSocialInput] = useState(false)
 
   const currentRoute = MURO_ROUTES.find((r) => r.id === routeId)
   const defaultRouteValue =
@@ -44,6 +46,12 @@ export function AscentForm({ routeId }: Props) {
     comment: z.string().min(5, t("ascentForm.errorMin5")).max(2000),
     contactInfo: z.string().min(3, t("ascentForm.errorRequired")).max(200),
     rating: z.number().int().min(1, t("ascentForm.errorRating")).max(5),
+    socialMediaUrl: z
+      .string()
+      .refine((v) => !v || v.startsWith("https://"), {
+        message: t("ascentForm.errorUrlInvalid"),
+      })
+      .optional(),
   })
 
   type AscentFormValues = z.infer<typeof schema>
@@ -226,6 +234,31 @@ export function AscentForm({ routeId }: Props) {
         )}
       </div>
 
+      {/* ── Multimedia ── */}
+      <div className="space-y-2">
+        <p className="text-sm font-medium text-foreground">{t("ascentForm.mediaSection")}</p>
+        <button
+          type="button"
+          onClick={() => {
+            if (showSocialInput) form.setValue("socialMediaUrl", "")
+            setShowSocialInput((v) => !v)
+          }}
+          className={cn(
+            "flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors",
+            showSocialInput
+              ? "border-forest bg-forest/10 text-forest"
+              : "border-border text-muted-foreground hover:bg-muted/50"
+          )}
+        >
+          <Link2 className="h-4 w-4" />
+          {t("ascentForm.mediaTypeSocial")}
+        </button>
+
+        {showSocialInput && (
+          <SocialUrlField form={form} t={t} />
+        )}
+      </div>
+
       {serverError && (
         <p className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive" role="alert">
           {serverError}
@@ -240,5 +273,49 @@ export function AscentForm({ routeId }: Props) {
         {form.formState.isSubmitting ? t("ascentForm.submitting") : t("ascentForm.submit")}
       </Button>
     </form>
+  )
+}
+
+type SocialUrlFieldProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  t: any
+}
+
+function SocialUrlField({ form, t }: SocialUrlFieldProps) {
+  const url: string = form.watch("socialMediaUrl") ?? ""
+  const platform = url.startsWith("https://") ? detectPlatform(url) : null
+
+  const platformLabels: Record<string, string> = {
+    youtube: t("ascentForm.socialPlatformYoutube"),
+    instagram: t("ascentForm.socialPlatformInstagram"),
+    facebook: t("ascentForm.socialPlatformFacebook"),
+    tiktok: t("ascentForm.socialPlatformTiktok"),
+    vimeo: t("ascentForm.socialPlatformVimeo"),
+    unknown: t("ascentForm.socialPlatformUnknown"),
+  }
+
+  return (
+    <div className="space-y-1.5 pt-1">
+      <Input
+        type="url"
+        placeholder={t("ascentForm.socialMediaUrlPlaceholder")}
+        suppressHydrationWarning
+        {...form.register("socialMediaUrl")}
+      />
+      {platform && (
+        <p className="flex items-center gap-1 text-xs text-forest">
+          <CheckCircle className="h-3 w-3" />
+          {platformLabels[platform]}
+        </p>
+      )}
+      <p className="text-xs text-muted-foreground">{t("ascentForm.socialMediaUrlHint")}</p>
+      {form.formState.errors.socialMediaUrl && (
+        <p className="text-xs text-destructive" role="alert">
+          {form.formState.errors.socialMediaUrl.message}
+        </p>
+      )}
+    </div>
   )
 }

@@ -14,6 +14,7 @@ const submitSchema = z.object({
   contactInfo: z.string().min(3).max(200),
   rating: z.number().int().min(1).max(5),
   socialMediaUrl: z.string().optional().nullable(),
+  mediaUrls: z.array(z.string()).optional().nullable(),
 })
 
 export type ClimbPostInput = z.infer<typeof submitSchema>
@@ -34,6 +35,7 @@ export async function submitClimbPostAction(
       contactInfo: parsed.data.contactInfo,
       rating: parsed.data.rating,
       socialMediaUrl: parsed.data.socialMediaUrl?.trim() || null,
+      mediaUrls: parsed.data.mediaUrls?.length ? parsed.data.mediaUrls : null,
       status: "pending",
     })
     return { ok: true }

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Star, CheckCircle2, Link2, CheckCircle } from "lucide-react"
+import { Star, CheckCircle2, Link2, CheckCircle, Upload } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -21,6 +21,7 @@ import {
 import { MURO_ROUTES } from "@/lib/muro/routes"
 import { submitClimbPostAction } from "@/lib/muro/post-actions"
 import { detectPlatform } from "@/components/muro/social-embed"
+import { MediaUploader } from "@/components/muro/media-uploader"
 
 type Props = {
   routeId: string
@@ -32,6 +33,8 @@ export function AscentForm({ routeId }: Props) {
   const [serverError, setServerError] = useState<string | null>(null)
   const [hovered, setHovered] = useState(0)
   const [showSocialInput, setShowSocialInput] = useState(false)
+  const [showUploadInput, setShowUploadInput] = useState(false)
+  const [uploadedUrls, setUploadedUrls] = useState<string[]>([])
 
   const currentRoute = MURO_ROUTES.find((r) => r.id === routeId)
   const defaultRouteValue =
@@ -69,7 +72,10 @@ export function AscentForm({ routeId }: Props) {
   async function onSubmit(data: AscentFormValues) {
     setServerError(null)
     try {
-      const result = await submitClimbPostAction(data)
+      const result = await submitClimbPostAction({
+        ...data,
+        mediaUrls: uploadedUrls.length > 0 ? uploadedUrls : null,
+      })
       if (result.ok) {
         setSubmitted(true)
       } else {
@@ -237,26 +243,44 @@ export function AscentForm({ routeId }: Props) {
       {/* ── Multimedia ── */}
       <div className="space-y-2">
         <p className="text-sm font-medium text-foreground">{t("ascentForm.mediaSection")}</p>
-        <button
-          type="button"
-          onClick={() => {
-            if (showSocialInput) form.setValue("socialMediaUrl", "")
-            setShowSocialInput((v) => !v)
-          }}
-          className={cn(
-            "flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors",
-            showSocialInput
-              ? "border-forest bg-forest/10 text-forest"
-              : "border-border text-muted-foreground hover:bg-muted/50"
-          )}
-        >
-          <Link2 className="h-4 w-4" />
-          {t("ascentForm.mediaTypeSocial")}
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              if (showSocialInput) form.setValue("socialMediaUrl", "")
+              setShowSocialInput((v) => !v)
+            }}
+            className={cn(
+              "flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors",
+              showSocialInput
+                ? "border-forest bg-forest/10 text-forest"
+                : "border-border text-muted-foreground hover:bg-muted/50"
+            )}
+          >
+            <Link2 className="h-4 w-4" />
+            {t("ascentForm.mediaTypeSocial")}
+          </button>
 
-        {showSocialInput && (
-          <SocialUrlField form={form} t={t} />
-        )}
+          <button
+            type="button"
+            onClick={() => {
+              if (showUploadInput) setUploadedUrls([])
+              setShowUploadInput((v) => !v)
+            }}
+            className={cn(
+              "flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors",
+              showUploadInput
+                ? "border-forest bg-forest/10 text-forest"
+                : "border-border text-muted-foreground hover:bg-muted/50"
+            )}
+          >
+            <Upload className="h-4 w-4" />
+            {t("ascentForm.mediaTypeUpload")}
+          </button>
+        </div>
+
+        {showSocialInput && <SocialUrlField form={form} t={t} />}
+        {showUploadInput && <MediaUploader onUrlsChange={setUploadedUrls} />}
       </div>
 
       {serverError && (

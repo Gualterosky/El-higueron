@@ -88,12 +88,10 @@ export function SocialEmbed({ url, className = "" }: Props) {
   if (platform === "facebook") {
     const encoded = encodeURIComponent(url)
     return (
-      <div className={`overflow-hidden rounded-lg ${className}`}>
+      <div className={`aspect-video w-full overflow-hidden rounded-lg ${className}`}>
         <iframe
           src={`https://www.facebook.com/plugins/video.php?href=${encoded}&show_text=false&width=560`}
-          width="560"
-          height="315"
-          className="max-w-full border-0"
+          className="h-full w-full border-0"
           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           allowFullScreen
         />
@@ -155,7 +153,7 @@ function TikTokEmbed({
   className?: string
 }) {
   return (
-    <div className={className}>
+    <div className={`mx-auto max-w-[325px] ${className ?? ""}`}>
       <blockquote
         className="tiktok-embed"
         cite={url}

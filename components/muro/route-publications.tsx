@@ -70,6 +70,31 @@ export async function RoutePublications({ routeId, locale }: Props) {
                 {post.socialMediaUrl && (
                   <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
                 )}
+                {post.mediaUrls && post.mediaUrls.length > 0 && (
+                  <div className={`mt-2 grid gap-1.5 ${post.mediaUrls.length === 1 ? "grid-cols-1" : "grid-cols-2"}`}>
+                    {post.mediaUrls.map((url) => {
+                      const isVideo = /\.(mp4|mov|avi|webm)(\?|$)/i.test(url) || url.includes("/video/upload/")
+                      return isVideo ? (
+                        <video
+                          key={url}
+                          src={url}
+                          controls
+                          className="w-full rounded-lg object-cover"
+                          style={{ maxHeight: "280px" }}
+                        />
+                      ) : (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          key={url}
+                          src={url}
+                          alt=""
+                          className="w-full rounded-lg object-cover"
+                          style={{ maxHeight: "280px" }}
+                        />
+                      )
+                    })}
+                  </div>
+                )}
               </article>
             )
           })}

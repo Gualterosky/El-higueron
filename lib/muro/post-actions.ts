@@ -13,6 +13,7 @@ const submitSchema = z.object({
   comment: z.string().min(5).max(2000),
   contactInfo: z.string().min(3).max(200),
   rating: z.number().int().min(1).max(5),
+  socialMediaUrl: z.string().optional().nullable(),
 })
 
 export type ClimbPostInput = z.infer<typeof submitSchema>
@@ -26,7 +27,13 @@ export async function submitClimbPostAction(
   try {
     await db.insert(climbPost).values({
       id: crypto.randomUUID(),
-      ...parsed.data,
+      authorName: parsed.data.authorName,
+      ascentDate: parsed.data.ascentDate,
+      routeId: parsed.data.routeId,
+      comment: parsed.data.comment,
+      contactInfo: parsed.data.contactInfo,
+      rating: parsed.data.rating,
+      socialMediaUrl: parsed.data.socialMediaUrl?.trim() || null,
       status: "pending",
     })
     return { ok: true }

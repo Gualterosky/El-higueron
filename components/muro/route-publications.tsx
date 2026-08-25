@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server"
 import { cn } from "@/lib/utils"
 import type { ClimbPost } from "@/lib/db/schema"
 import { getApprovedPostsByRoute } from "@/lib/muro/post-queries"
+import { SocialEmbed } from "@/components/muro/social-embed"
 
 type Props = {
   routeId: string
@@ -66,6 +67,9 @@ export async function RoutePublications({ routeId, locale }: Props) {
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   {post.comment}
                 </p>
+                {post.socialMediaUrl && (
+                  <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
+                )}
               </article>
             )
           })}

@@ -1,4 +1,4 @@
-import { and, desc, eq, like, or } from "drizzle-orm"
+import { and, desc, eq, like, ne, or } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { climbPost } from "@/lib/db/schema"
 
@@ -9,7 +9,7 @@ export async function getApprovedPostsByRoute(routeId: string) {
     .where(
       and(
         or(eq(climbPost.routeId, routeId), like(climbPost.routeId, `${routeId}-%`)),
-        eq(climbPost.status, "approved")
+        ne(climbPost.status, "hidden")
       )
     )
     .orderBy(desc(climbPost.createdAt))

@@ -862,7 +862,7 @@
       "submit": "Submit post",
       "submitting": "Submitting...",
       "successTitle": "Post submitted!",
-      "successBody": "It will appear here once the team approves it.",
+      "successBody": "Your post is now live on the wall.",
       "errorGeneral": "Could not submit. Please try again.",
       "errorMin2": "Minimum 2 characters",
       "errorMin5": "Minimum 5 characters",
@@ -1350,7 +1350,7 @@
         },
         "posts": {
           "title": "Post management",
-          "description": "Approve or hide visitor content."
+          "description": "Review and remove inappropriate visitor posts."
         },
         "content": {
           "title": "Content management",
@@ -1419,8 +1419,8 @@
     },
     "posts": {
       "title": "Post management",
-      "description": "Moderate ascent posts submitted from the climbing wall routes.",
-      "approve": "Approve",
+      "description": "Posts are published immediately. Review them and remove any that are inappropriate.",
+      "approve": "Mark as reviewed",
       "hide": "Hide",
       "delete": "Delete",
       "noResults": "No posts yet.",

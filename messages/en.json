@@ -320,6 +320,12 @@
         "Know your limits and rest when needed"
       ]
     },
+    "posts": {
+      "eyebrow": "Community",
+      "title": "What the community says",
+      "subtitle": "Posts from boulderers who have been here. Share your session.",
+      "formTitle": "Share your boulder session"
+    },
     "cta": {
       "title": "Ready for boulder?",
       "subtitle": "Check crashpad availability or plan your visit to the boulder area.",
@@ -399,6 +405,12 @@
     "place": {
       "title": "The place",
       "subtitle": "Spaces, sunrise, and surroundings of the campground at El Higuerón"
+    },
+    "posts": {
+      "eyebrow": "Community",
+      "title": "What the community says",
+      "subtitle": "Posts from campers who have lived the experience. Share yours.",
+      "formTitle": "Share your experience"
     },
     "cta": {
       "title": "Ready to camp?",
@@ -1071,6 +1083,82 @@
       ]
     }
   },
+  "CampingPost": {
+    "publicationsTitle": "Camper posts",
+    "publicationsEmpty": "Be the first to share your camping experience.",
+    "registerTitle": "Share your experience",
+    "form": {
+      "authorName": "Name",
+      "authorNamePlaceholder": "Your full name",
+      "visitDate": "Visit date",
+      "comment": "Comment",
+      "commentPlaceholder": "Tell us about your night camping, what you liked, recommendations...",
+      "contactInfo": "Contact info",
+      "contactInfoPlaceholder": "Phone or email address",
+      "contactInfoHint": "Only visible to staff. Will not be published.",
+      "rating": "How was your experience?",
+      "submit": "Submit post",
+      "submitting": "Submitting...",
+      "successTitle": "Post submitted!",
+      "successBody": "Your post will be visible soon. Thanks for sharing!",
+      "errorGeneral": "Could not submit. Please try again.",
+      "errorMin2": "Minimum 2 characters",
+      "errorMin5": "Minimum 5 characters",
+      "errorRequired": "Required field",
+      "errorRating": "Please select a rating",
+      "mediaSection": "Multimedia",
+      "mediaTypeSocial": "Add social media link",
+      "socialMediaUrlPlaceholder": "https://instagram.com/p/...",
+      "socialMediaUrlHint": "Supports YouTube, Instagram, Facebook, TikTok and Vimeo",
+      "socialPlatformUnknown": "External link",
+      "errorUrlInvalid": "Enter a valid URL (must start with https://)",
+      "mediaTypeUpload": "Upload photos / video",
+      "uploadHint": "Max. 3 photos (jpg, png, webp) or 1 video (mp4, mov) · up to 8 MB per file",
+      "uploadDrop": "Drag files here or click to select",
+      "uploadNotConfigured": "File upload is not configured yet."
+    }
+  },
+  "BoulderPost": {
+    "publicationsTitle": "Boulder posts",
+    "publicationsEmpty": "Be the first to share your boulder session.",
+    "registerTitle": "Share your session",
+    "form": {
+      "authorName": "Name",
+      "authorNamePlaceholder": "Your full name",
+      "visitDate": "Visit date",
+      "boulderName": "Boulder / rock name",
+      "boulderNamePlaceholder": "e.g. El Higuerón, La Pared Grande...",
+      "boulderNameHint": "Name of the block or rock formation where you bouldered.",
+      "routeName": "Problem / route name",
+      "routeNamePlaceholder": "e.g. El Primer Paso, La Grieta...",
+      "routeNameHint": "Name of the boulder problem you attempted or completed.",
+      "comment": "Comment",
+      "commentPlaceholder": "Tell us about your session, the problem you worked, tips...",
+      "contactInfo": "Contact info",
+      "contactInfoPlaceholder": "Phone or email address",
+      "contactInfoHint": "Only visible to staff. Will not be published.",
+      "rating": "How was your session?",
+      "submit": "Submit post",
+      "submitting": "Submitting...",
+      "successTitle": "Post submitted!",
+      "successBody": "Your post will be visible soon. Thanks for sharing!",
+      "errorGeneral": "Could not submit. Please try again.",
+      "errorMin2": "Minimum 2 characters",
+      "errorMin5": "Minimum 5 characters",
+      "errorRequired": "Required field",
+      "errorRating": "Please select a rating",
+      "mediaSection": "Multimedia",
+      "mediaTypeSocial": "Add social media link",
+      "socialMediaUrlPlaceholder": "https://instagram.com/p/...",
+      "socialMediaUrlHint": "Supports YouTube, Instagram, Facebook, TikTok and Vimeo",
+      "socialPlatformUnknown": "External link",
+      "errorUrlInvalid": "Enter a valid URL (must start with https://)",
+      "mediaTypeUpload": "Upload photos / video",
+      "uploadHint": "Max. 3 photos (jpg, png, webp) or 1 video (mp4, mov) · up to 8 MB per file",
+      "uploadDrop": "Drag files here or click to select",
+      "uploadNotConfigured": "File upload is not configured yet."
+    }
+  },
   "Evento": {
     "empty": {
       "title": "No events scheduled",
@@ -1438,6 +1526,11 @@
       "noResults": "No posts yet.",
       "contactLabel": "Contact",
       "submittedOn": "Submitted on",
+      "tabs": {
+        "muro": "Wall",
+        "camping": "Camping",
+        "boulder": "Boulder"
+      },
       "status": {
         "pending": "Pending",
         "approved": "Approved",

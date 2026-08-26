@@ -122,10 +122,42 @@ export const reservation = pgTable("reservation", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
+/** Camping experience posts submitted from the camping page. */
+export const campingPost = pgTable("camping_post", {
+  id: text("id").primaryKey(),
+  authorName: text("author_name").notNull(),
+  visitDate: text("visit_date").notNull(),
+  comment: text("comment").notNull(),
+  contactInfo: text("contact_info").notNull(),
+  rating: integer("rating").notNull(),
+  status: text("status").notNull().default("pending"),
+  socialMediaUrl: text("social_media_url"),
+  mediaUrls: text("media_urls").array(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+/** Boulder ascent posts submitted from the boulder page. */
+export const boulderPost = pgTable("boulder_post", {
+  id: text("id").primaryKey(),
+  authorName: text("author_name").notNull(),
+  visitDate: text("visit_date").notNull(),
+  boulderName: text("boulder_name").notNull(),
+  routeName: text("route_name").notNull(),
+  comment: text("comment").notNull(),
+  contactInfo: text("contact_info").notNull(),
+  rating: integer("rating").notNull(),
+  status: text("status").notNull().default("pending"),
+  socialMediaUrl: text("social_media_url"),
+  mediaUrls: text("media_urls").array(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
 export type User = typeof user.$inferSelect
 export type Session = typeof session.$inferSelect
 export type SiteSettings = typeof siteSettings.$inferSelect
 export type ClimbPost = typeof climbPost.$inferSelect
+export type CampingPost = typeof campingPost.$inferSelect
+export type BoulderPost = typeof boulderPost.$inferSelect
 export type ChatSession = typeof chatSession.$inferSelect
 export type ChatMessage = typeof chatMessage.$inferSelect
 export type Reservation = typeof reservation.$inferSelect

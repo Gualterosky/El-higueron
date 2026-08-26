@@ -293,8 +293,13 @@ export default async function EscaladaPage({
             {t('cta.subtitle')}
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            {!hidden.muro ? (
+            {!hidden.reservas ? (
               <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
+                <Link href="/reservas?type=escalada">{t('cta.reserve')}</Link>
+              </Button>
+            ) : null}
+            {!hidden.muro ? (
+              <Button asChild size="lg" className={hidden.reservas ? "bg-orange text-white hover:bg-orange/90" : "bg-forest text-white hover:bg-forest/90"}>
                 <Link href="/muro">{t('cta.primary')}</Link>
               </Button>
             ) : null}

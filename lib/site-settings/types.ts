@@ -6,6 +6,7 @@ export const CONTENT_SECTIONS = [
   "equipos",
   "visita",
   "galeria",
+  "reservas",
 ] as const
 
 export type ContentSection = (typeof CONTENT_SECTIONS)[number]
@@ -25,6 +26,7 @@ export const DEFAULT_HIDDEN_SECTIONS: HiddenSections = {
   equipos: false,
   visita: false,
   galeria: false,
+  reservas: false,
 }
 
 export function isContentSection(value: string): value is ContentSection {

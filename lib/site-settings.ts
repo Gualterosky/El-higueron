@@ -32,6 +32,7 @@ const SECTION_COLUMN: Record<
   | "hideEquipos"
   | "hideVisita"
   | "hideGaleria"
+  | "hideReservas"
 > = {
   escalada: "hideEscalada",
   muro: "hideMuro",
@@ -40,6 +41,7 @@ const SECTION_COLUMN: Record<
   equipos: "hideEquipos",
   visita: "hideVisita",
   galeria: "hideGaleria",
+  reservas: "hideReservas",
 }
 
 function rowToSettings(
@@ -62,6 +64,7 @@ function rowToSettings(
       equipos: Boolean(row.hideEquipos),
       visita: Boolean(row.hideVisita),
       galeria: Boolean(row.hideGaleria),
+      reservas: Boolean(row.hideReservas),
     },
   }
 }

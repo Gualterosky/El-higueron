@@ -13,7 +13,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { submitReservationAction } from "@/lib/reservas/actions"
 
-const PRICE_PER_PERSON = 8000
+const PRICE_ESCALADA = 8000
+const PRICE_CAMPING = 15000
 
 type Props = {
   defaultType?: "camping" | "escalada"
@@ -90,7 +91,8 @@ export function ReservationForm({ defaultType }: Props) {
   }
 
   const nights = type === "camping" ? calcNights() : 1
-  const totalPrice = (numberOfPeople > 0 ? numberOfPeople : 0) * PRICE_PER_PERSON * nights
+  const pricePerPerson = type === "camping" ? PRICE_CAMPING : PRICE_ESCALADA
+  const totalPrice = (numberOfPeople > 0 ? numberOfPeople : 0) * pricePerPerson * nights
 
   const formatPrice = (n: number) =>
     new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(n)
@@ -300,11 +302,11 @@ export function ReservationForm({ defaultType }: Props) {
               ? t("priceBreakdownCamping", {
                   people: numberOfPeople,
                   nights,
-                  price: formatPrice(PRICE_PER_PERSON),
+                  price: formatPrice(pricePerPerson),
                 })
               : t("priceBreakdownEscalada", {
                   people: numberOfPeople,
-                  price: formatPrice(PRICE_PER_PERSON),
+                  price: formatPrice(pricePerPerson),
                 })}
           </p>
           <p className="mt-2 text-xs text-muted-foreground">{t("priceNote")}</p>

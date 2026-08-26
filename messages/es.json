@@ -227,7 +227,8 @@
     },
     "cta": {
       "title": "¿Listo para escalar?",
-      "subtitle": "Explora las rutas disponibles o planifica tu visita al sector de escalada.",
+      "subtitle": "Explora las rutas disponibles o informa tu visita al sector de escalada.",
+      "reserve": "Reservar / Informar visita",
       "primary": "Ver rutas del Muro",
       "secondary": "Planifica tu visita"
     },
@@ -401,7 +402,8 @@
     },
     "cta": {
       "title": "¿Listo para acampar?",
-      "subtitle": "Consulta disponibilidad y planifica tu próxima noche bajo las estrellas.",
+      "subtitle": "Reserva con anticipación y planifica tu próxima noche bajo las estrellas.",
+      "reserve": "Reservar camping",
       "primary": "Consultar disponibilidad",
       "secondary": "Información de visita"
     }
@@ -1400,14 +1402,17 @@
     },
     "reservations": {
       "title": "Gestión de reservas",
-      "description": "Consulta solicitudes de reserva. Confirmar o cancelar se habilitará más adelante.",
+      "description": "Consulta y administra las solicitudes de reserva recibidas.",
       "confirm": "Confirmar",
       "cancel": "Cancelar",
+      "noResults": "Aún no hay reservas registradas.",
+      "notesTitle": "Notas de reservas",
       "columns": {
-        "guest": "Huésped",
+        "guest": "Nombre",
         "dates": "Fechas",
         "type": "Tipo",
         "people": "Personas",
+        "contact": "Contacto",
         "status": "Estado",
         "actions": "Acciones"
       },
@@ -1471,7 +1476,8 @@
         "camping": "Información de camping",
         "equipos": "Equipos",
         "visita": "Planifica tu visita",
-        "galeria": "Galería"
+        "galeria": "Galería",
+        "reservas": "Formulario de reservas"
       },
       "maintenanceTitle": "Modo mantenimiento",
       "maintenanceDescription": "Oculta el sitio público y muestra el aviso de mantenimiento. Solo el login (y el panel admin tras iniciar sesión) permanecen accesibles.",
@@ -1516,6 +1522,61 @@
       "postsBody": "Pronto podrás publicar contenido desde tu cuenta.",
       "reservationsTitle": "Mis reservas",
       "reservationsBody": "Pronto podrás solicitar y seguir tus reservas aquí."
+    }
+  },
+  "Reservas": {
+    "meta": {
+      "title": "Reservas | El Higuerón",
+      "description": "Reserva tu visita a Camping El Higuerón. Escalada opcional, camping con reserva previa mínimo 24 horas."
+    },
+    "hero": {
+      "title": "Reserva tu visita",
+      "subtitle": "Planifica tu experiencia en El Higuerón. El camping requiere reserva previa; la escalada es opcional."
+    },
+    "form": {
+      "heading": "Formulario de reserva",
+      "subheading": "Completa los datos para reservar o informar de tu visita.",
+      "type": "Tipo de actividad",
+      "types": {
+        "camping": "Camping",
+        "escalada": "Escalada"
+      },
+      "typesHint": {
+        "camping": "Reserva obligatoria — mínimo 24 h de anticipación",
+        "escalada": "Reserva opcional — puedes informar tu visita"
+      },
+      "importantTitle": "Importante",
+      "importantText": "Solo se paga el ingreso al lugar ($8.000 COP por persona). Cada persona debe traer sus propios equipos: carpa, sleeping bag, colchoneta, arnés, cuerda y demás elementos necesarios para la actividad.",
+      "campingAdvanceNote": "La reserva de camping debe hacerse con mínimo 24 horas de anticipación. Recibirás confirmación por el medio de contacto que indiques.",
+      "escaladaOptionalNote": "Para escalada no es obligatorio reservar. Puedes dejarnos tus datos para informarnos de tu visita y el número de personas que vienen.",
+      "name": "Nombre completo",
+      "namePlaceholder": "Tu nombre",
+      "arrivalDate": "Fecha de llegada",
+      "departureDate": "Fecha de salida (opcional)",
+      "departureDateHint": "Si aún no tienes fecha de salida definida, puedes dejarlo en blanco.",
+      "mayStayExtra": "Es posible que me quede un día más",
+      "mayStayExtraHint": "Marca esta opción si tienes dudas sobre cuántos días te quedarás. No te compromete a nada.",
+      "numberOfPeople": "Número de personas",
+      "priceEstimate": "Estimado del ingreso",
+      "priceBreakdownCamping": "{people} persona(s) × {nights} noche(s) × {price}/persona",
+      "priceBreakdownEscalada": "{people} persona(s) × {price}/persona",
+      "priceNote": "Este es solo el costo de ingreso al lugar. No incluye equipos ni servicios adicionales.",
+      "notes": "Notas adicionales (opcional)",
+      "notesPlaceholder": "Cuéntanos algo más sobre tu visita, dudas o requerimientos especiales...",
+      "notesHint": "Opcional. Si tienes dudas sobre cuántos días te quedarás, menciónalo aquí.",
+      "contactInfo": "Medio de contacto",
+      "contactInfoPlaceholder": "Correo electrónico o número de teléfono",
+      "contactInfoHint": "Te contactaremos por este medio para confirmar tu reserva.",
+      "submit": "Enviar reserva",
+      "submitting": "Enviando…",
+      "successTitle": "¡Reserva recibida!",
+      "successBody": "Hemos recibido tu solicitud. Nos comunicaremos contigo pronto por el medio de contacto que indicaste.",
+      "errorGeneral": "No se pudo enviar la reserva. Intenta de nuevo.",
+      "errorRequired": "Campo obligatorio",
+      "errorMin2": "Mínimo 2 caracteres",
+      "errorMin1": "Debe ser al menos 1 persona",
+      "errorCampingAdvance": "El camping requiere reserva con mínimo 24 horas de anticipación.",
+      "errorDepartureBeforeArrival": "La fecha de salida no puede ser anterior a la de llegada."
     }
   },
   "Form": {

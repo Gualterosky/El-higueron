@@ -227,7 +227,8 @@
     },
     "cta": {
       "title": "Ready to climb?",
-      "subtitle": "Explore the available routes or plan your visit to the climbing sector.",
+      "subtitle": "Explore the available routes or let us know about your visit.",
+      "reserve": "Reserve / Inform visit",
       "primary": "See Wall routes",
       "secondary": "Plan your visit"
     },
@@ -401,7 +402,8 @@
     },
     "cta": {
       "title": "Ready to camp?",
-      "subtitle": "Check availability and plan your next night under the stars.",
+      "subtitle": "Book in advance and plan your next night under the stars.",
+      "reserve": "Reserve camping",
       "primary": "Check availability",
       "secondary": "Visit information"
     }
@@ -1400,14 +1402,17 @@
     },
     "reservations": {
       "title": "Reservation management",
-      "description": "Browse booking requests. Confirming or cancelling will be enabled later.",
+      "description": "View and manage received booking requests.",
       "confirm": "Confirm",
       "cancel": "Cancel",
+      "noResults": "No reservations recorded yet.",
+      "notesTitle": "Reservation notes",
       "columns": {
-        "guest": "Guest",
+        "guest": "Name",
         "dates": "Dates",
         "type": "Type",
         "people": "People",
+        "contact": "Contact",
         "status": "Status",
         "actions": "Actions"
       },
@@ -1471,7 +1476,8 @@
         "camping": "Camping information",
         "equipos": "Equipment",
         "visita": "Plan your visit",
-        "galeria": "Gallery"
+        "galeria": "Gallery",
+        "reservas": "Booking form"
       },
       "maintenanceTitle": "Maintenance mode",
       "maintenanceDescription": "Hides the public site and shows the maintenance notice. Only login (and the admin panel after signing in) remain accessible.",
@@ -1516,6 +1522,61 @@
       "postsBody": "Soon you will be able to publish content from your account.",
       "reservationsTitle": "My reservations",
       "reservationsBody": "Soon you will be able to request and track reservations here."
+    }
+  },
+  "Reservas": {
+    "meta": {
+      "title": "Reservations | El Higuerón",
+      "description": "Book your visit to Camping El Higuerón. Climbing is optional; camping requires a prior booking at least 24 hours in advance."
+    },
+    "hero": {
+      "title": "Book your visit",
+      "subtitle": "Plan your experience at El Higuerón. Camping requires a prior booking; climbing is optional."
+    },
+    "form": {
+      "heading": "Booking form",
+      "subheading": "Fill in the details to reserve or inform us of your visit.",
+      "type": "Activity type",
+      "types": {
+        "camping": "Camping",
+        "escalada": "Climbing"
+      },
+      "typesHint": {
+        "camping": "Booking required — at least 24 h in advance",
+        "escalada": "Optional booking — you can just let us know you're coming"
+      },
+      "importantTitle": "Important",
+      "importantText": "Only the site entry fee is charged ($8,000 COP per person). Everyone must bring their own equipment: tent, sleeping bag, sleeping pad, harness, rope, and any other items needed for the activity.",
+      "campingAdvanceNote": "Camping bookings must be made at least 24 hours in advance. You will receive confirmation via the contact method you provide.",
+      "escaladaOptionalNote": "A booking is not required for climbing. You can leave your details to let us know you're visiting and how many people are coming.",
+      "name": "Full name",
+      "namePlaceholder": "Your name",
+      "arrivalDate": "Arrival date",
+      "departureDate": "Departure date (optional)",
+      "departureDateHint": "If you don't have a departure date yet, you can leave this blank.",
+      "mayStayExtra": "I might stay an extra day",
+      "mayStayExtraHint": "Check this if you're unsure how many days you'll stay. It doesn't commit you to anything.",
+      "numberOfPeople": "Number of people",
+      "priceEstimate": "Entry fee estimate",
+      "priceBreakdownCamping": "{people} person(s) × {nights} night(s) × {price}/person",
+      "priceBreakdownEscalada": "{people} person(s) × {price}/person",
+      "priceNote": "This is only the site entry cost. It does not include equipment or additional services.",
+      "notes": "Additional notes (optional)",
+      "notesPlaceholder": "Tell us more about your visit, any questions, or special requirements...",
+      "notesHint": "Optional. If you're unsure how many days you'll stay, mention it here.",
+      "contactInfo": "Contact method",
+      "contactInfoPlaceholder": "Email address or phone number",
+      "contactInfoHint": "We'll use this to confirm your booking.",
+      "submit": "Submit booking",
+      "submitting": "Submitting…",
+      "successTitle": "Booking received!",
+      "successBody": "We have received your request. We'll get in touch with you soon via the contact method you provided.",
+      "errorGeneral": "Could not send the booking. Please try again.",
+      "errorRequired": "Required field",
+      "errorMin2": "Minimum 2 characters",
+      "errorMin1": "Must be at least 1 person",
+      "errorCampingAdvance": "Camping requires a booking at least 24 hours in advance.",
+      "errorDepartureBeforeArrival": "The departure date cannot be before the arrival date."
     }
   },
   "Form": {

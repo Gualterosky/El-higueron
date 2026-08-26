@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { assertSectionVisible } from "@/lib/site-settings"
+import { assertSectionVisible, getHiddenSections } from "@/lib/site-settings"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -15,6 +15,7 @@ export default async function CampingPage({ params }: Props) {
   setRequestLocale(locale)
   await assertSectionVisible("camping", locale)
   const t = await getTranslations("Camping")
+  const hidden = await getHiddenSections()
 
   const campingIncludes = [
     {
@@ -355,9 +356,15 @@ export default async function CampingPage({ params }: Props) {
             {t("cta.subtitle")}
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
-              <Link href="/contacto">{t("cta.primary")}</Link>
-            </Button>
+            {!hidden.reservas ? (
+              <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
+                <Link href="/reservas?type=camping">{t("cta.reserve")}</Link>
+              </Button>
+            ) : (
+              <Button asChild size="lg" className="bg-orange text-white hover:bg-orange/90">
+                <Link href="/contacto">{t("cta.primary")}</Link>
+              </Button>
+            )}
             <Button asChild size="lg" variant="outline" className="border-forest text-forest hover:bg-forest hover:text-white">
               <Link href="/visita">{t("cta.secondary")}</Link>
             </Button>

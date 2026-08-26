@@ -68,6 +68,7 @@ export const siteSettings = pgTable("site_settings", {
   hideEquipos: boolean("hide_equipos").notNull().default(false),
   hideVisita: boolean("hide_visita").notNull().default(false),
   hideGaleria: boolean("hide_galeria").notNull().default(false),
+  hideReservas: boolean("hide_reservas").notNull().default(false),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
 
@@ -106,9 +107,25 @@ export const chatMessage = pgTable("chat_message", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
+/** Reservation requests submitted through the booking form. */
+export const reservation = pgTable("reservation", {
+  id: text("id").primaryKey(),
+  type: text("type").notNull(), // "camping" | "escalada"
+  name: text("name").notNull(),
+  contactInfo: text("contact_info").notNull(),
+  numberOfPeople: integer("number_of_people").notNull(),
+  arrivalDate: text("arrival_date").notNull(),
+  departureDate: text("departure_date"),
+  mayStayExtra: boolean("may_stay_extra").notNull().default(false),
+  notes: text("notes"),
+  status: text("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
 export type User = typeof user.$inferSelect
 export type Session = typeof session.$inferSelect
 export type SiteSettings = typeof siteSettings.$inferSelect
 export type ClimbPost = typeof climbPost.$inferSelect
 export type ChatSession = typeof chatSession.$inferSelect
 export type ChatMessage = typeof chatMessage.$inferSelect
+export type Reservation = typeof reservation.$inferSelect

@@ -320,6 +320,12 @@
         "Conoce tus límites y descansa cuando sea necesario"
       ]
     },
+    "posts": {
+      "eyebrow": "Comunidad",
+      "title": "Lo que dice la comunidad",
+      "subtitle": "Publicaciones de boulderers que han estado aquí. Comparte tu sesión.",
+      "formTitle": "Comparte tu sesión de boulder"
+    },
     "cta": {
       "title": "¿Listo para el boulder?",
       "subtitle": "Consulta la disponibilidad de crashpads o planifica tu visita a la zona de boulder.",
@@ -399,6 +405,12 @@
     "place": {
       "title": "El lugar",
       "subtitle": "Espacios, amanecer y entorno del camping en El Higuerón"
+    },
+    "posts": {
+      "eyebrow": "Comunidad",
+      "title": "Lo que dice la comunidad",
+      "subtitle": "Publicaciones de campistas que han vivido la experiencia. Comparte la tuya.",
+      "formTitle": "Comparte tu experiencia"
     },
     "cta": {
       "title": "¿Listo para acampar?",
@@ -1071,6 +1083,82 @@
       ]
     }
   },
+  "CampingPost": {
+    "publicationsTitle": "Publicaciones de campistas",
+    "publicationsEmpty": "Sé el primero en compartir tu experiencia de camping.",
+    "registerTitle": "Comparte tu experiencia",
+    "form": {
+      "authorName": "Nombre",
+      "authorNamePlaceholder": "Tu nombre completo",
+      "visitDate": "Fecha de visita",
+      "comment": "Comentario",
+      "commentPlaceholder": "Cuéntanos cómo fue tu noche acampando, qué te gustó, recomendaciones...",
+      "contactInfo": "Medio de contacto",
+      "contactInfoPlaceholder": "Teléfono o correo electrónico",
+      "contactInfoHint": "Solo visible para el equipo. No se publicará.",
+      "rating": "¿Cómo fue tu experiencia?",
+      "submit": "Enviar publicación",
+      "submitting": "Enviando...",
+      "successTitle": "¡Publicación enviada!",
+      "successBody": "Tu publicación estará visible pronto. ¡Gracias por compartir!",
+      "errorGeneral": "No se pudo enviar. Intenta de nuevo.",
+      "errorMin2": "Mínimo 2 caracteres",
+      "errorMin5": "Mínimo 5 caracteres",
+      "errorRequired": "Campo obligatorio",
+      "errorRating": "Selecciona una calificación",
+      "mediaSection": "Multimedia",
+      "mediaTypeSocial": "Agregar enlace de red social",
+      "socialMediaUrlPlaceholder": "https://instagram.com/p/...",
+      "socialMediaUrlHint": "Compatible con YouTube, Instagram, Facebook, TikTok y Vimeo",
+      "socialPlatformUnknown": "Enlace externo",
+      "errorUrlInvalid": "Ingresa una URL válida (debe empezar con https://)",
+      "mediaTypeUpload": "Subir fotos / video",
+      "uploadHint": "Máx. 3 fotos (jpg, png, webp) o 1 video (mp4, mov) · hasta 8 MB por archivo",
+      "uploadDrop": "Arrastra archivos o haz clic para seleccionar",
+      "uploadNotConfigured": "La subida de archivos no está configurada todavía."
+    }
+  },
+  "BoulderPost": {
+    "publicationsTitle": "Publicaciones de boulder",
+    "publicationsEmpty": "Sé el primero en compartir tu sesión de boulder.",
+    "registerTitle": "Comparte tu sesión",
+    "form": {
+      "authorName": "Nombre",
+      "authorNamePlaceholder": "Tu nombre completo",
+      "visitDate": "Fecha de visita",
+      "boulderName": "Nombre del boulder / roca",
+      "boulderNamePlaceholder": "Ej. El Higuerón, La Pared Grande...",
+      "boulderNameHint": "Nombre del bloque o formación rocosa donde hiciste boulder.",
+      "routeName": "Nombre del problema / ruta",
+      "routeNamePlaceholder": "Ej. El Primer Paso, La Grieta...",
+      "routeNameHint": "Nombre del problema de boulder que intentaste o completaste.",
+      "comment": "Comentario",
+      "commentPlaceholder": "Cuéntanos cómo fue tu sesión, el problema que trabajaste, tips...",
+      "contactInfo": "Medio de contacto",
+      "contactInfoPlaceholder": "Teléfono o correo electrónico",
+      "contactInfoHint": "Solo visible para el equipo. No se publicará.",
+      "rating": "¿Cómo fue tu sesión?",
+      "submit": "Enviar publicación",
+      "submitting": "Enviando...",
+      "successTitle": "¡Publicación enviada!",
+      "successBody": "Tu publicación estará visible pronto. ¡Gracias por compartir!",
+      "errorGeneral": "No se pudo enviar. Intenta de nuevo.",
+      "errorMin2": "Mínimo 2 caracteres",
+      "errorMin5": "Mínimo 5 caracteres",
+      "errorRequired": "Campo obligatorio",
+      "errorRating": "Selecciona una calificación",
+      "mediaSection": "Multimedia",
+      "mediaTypeSocial": "Agregar enlace de red social",
+      "socialMediaUrlPlaceholder": "https://instagram.com/p/...",
+      "socialMediaUrlHint": "Compatible con YouTube, Instagram, Facebook, TikTok y Vimeo",
+      "socialPlatformUnknown": "Enlace externo",
+      "errorUrlInvalid": "Ingresa una URL válida (debe empezar con https://)",
+      "mediaTypeUpload": "Subir fotos / video",
+      "uploadHint": "Máx. 3 fotos (jpg, png, webp) o 1 video (mp4, mov) · hasta 8 MB por archivo",
+      "uploadDrop": "Arrastra archivos o haz clic para seleccionar",
+      "uploadNotConfigured": "La subida de archivos no está configurada todavía."
+    }
+  },
   "Evento": {
     "empty": {
       "title": "No hay eventos programados",
@@ -1438,6 +1526,11 @@
       "noResults": "No hay publicaciones aún.",
       "contactLabel": "Contacto",
       "submittedOn": "Enviado el",
+      "tabs": {
+        "muro": "Muro",
+        "camping": "Camping",
+        "boulder": "Boulder"
+      },
       "status": {
         "pending": "Pendiente",
         "approved": "Aprobada",

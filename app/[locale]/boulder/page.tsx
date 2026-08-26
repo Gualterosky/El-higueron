@@ -2,10 +2,12 @@ import {setRequestLocale} from 'next-intl/server'
 import {getTranslations} from 'next-intl/server'
 import Image from "next/image"
 import { Link } from "@/i18n/navigation"
-import { CircleDot, Shield, Trees, TrendingUp, AlertTriangle, Footprints } from "lucide-react"
+import { CircleDot, Shield, Trees, TrendingUp, AlertTriangle, Footprints, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { assertSectionVisible } from "@/lib/site-settings"
+import { BoulderPublications } from "@/components/boulder/boulder-publications"
+import { BoulderPostForm } from "@/components/boulder/boulder-post-form"
 
 export default async function BoulderPage({
   params,
@@ -322,6 +324,39 @@ export default async function BoulderPage({
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Publications Section */}
+      <section className="py-20 lg:py-28">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mb-12 text-center">
+            <div className="mb-4 flex items-center justify-center gap-2">
+              <MessageSquare className="h-5 w-5 text-forest" />
+              <span className="text-sm font-medium uppercase tracking-wider text-forest">
+                {t('posts.eyebrow')}
+              </span>
+            </div>
+            <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
+              {t('posts.title')}
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground">
+              {t('posts.subtitle')}
+            </p>
+          </div>
+
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <BoulderPublications locale={locale} />
+            </div>
+
+            <div className="rounded-xl bg-white p-6 shadow-sm">
+              <h3 className="mb-6 text-lg font-semibold text-foreground">
+                {t('posts.formTitle')}
+              </h3>
+              <BoulderPostForm />
             </div>
           </div>
         </div>

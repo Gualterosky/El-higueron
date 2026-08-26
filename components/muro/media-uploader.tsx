@@ -26,9 +26,14 @@ type FileEntry = {
 
 type Props = {
   onUrlsChange: (urls: string[]) => void
+  labels?: {
+    notConfigured?: string
+    dropHint?: string
+    fileHint?: string
+  }
 }
 
-export function MediaUploader({ onUrlsChange }: Props) {
+export function MediaUploader({ onUrlsChange, labels }: Props) {
   const t = useTranslations("MuroRoute")
   const [entries, setEntries] = useState<FileEntry[]>([])
   const [dragOver, setDragOver] = useState(false)
@@ -116,7 +121,7 @@ export function MediaUploader({ onUrlsChange }: Props) {
   if (!CLOUD_NAME || !UPLOAD_PRESET) {
     return (
       <p className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
-        {t("ascentForm.uploadNotConfigured")}
+        {labels?.notConfigured ?? t("ascentForm.uploadNotConfigured")}
       </p>
     )
   }
@@ -146,8 +151,8 @@ export function MediaUploader({ onUrlsChange }: Props) {
           )}
         >
           <Upload className="h-6 w-6 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">{t("ascentForm.uploadDrop")}</p>
-          <p className="text-xs text-muted-foreground/70">{t("ascentForm.uploadHint")}</p>
+          <p className="text-sm text-muted-foreground">{labels?.dropHint ?? t("ascentForm.uploadDrop")}</p>
+          <p className="text-xs text-muted-foreground/70">{labels?.fileHint ?? t("ascentForm.uploadHint")}</p>
         </div>
       )}
 

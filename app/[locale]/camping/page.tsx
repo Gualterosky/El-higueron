@@ -1,10 +1,12 @@
 import Image from "next/image"
-import { Tent, Flame, Droplets, Moon, Star, CheckCircle, Backpack, ThermometerSnowflake } from "lucide-react"
+import { Tent, Flame, Droplets, Moon, Star, CheckCircle, Backpack, ThermometerSnowflake, MessageSquare } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { assertSectionVisible, getHiddenSections } from "@/lib/site-settings"
+import { CampingPublications } from "@/components/camping/camping-publications"
+import { CampingPostForm } from "@/components/camping/camping-post-form"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -340,6 +342,39 @@ export default async function CampingPage({ params }: Props) {
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Publications Section */}
+      <section className="py-20 lg:py-28">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mb-12 text-center">
+            <div className="mb-4 flex items-center justify-center gap-2">
+              <MessageSquare className="h-5 w-5 text-forest" />
+              <span className="text-sm font-medium uppercase tracking-wider text-forest">
+                {t("posts.eyebrow")}
+              </span>
+            </div>
+            <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
+              {t("posts.title")}
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground">
+              {t("posts.subtitle")}
+            </p>
+          </div>
+
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <CampingPublications locale={locale} />
+            </div>
+
+            <div className="rounded-xl bg-white p-6 shadow-sm">
+              <h3 className="mb-6 text-lg font-semibold text-foreground">
+                {t("posts.formTitle")}
+              </h3>
+              <CampingPostForm />
             </div>
           </div>
         </div>

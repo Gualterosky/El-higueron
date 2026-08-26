@@ -1418,6 +1418,8 @@
       },
       "types": {
         "camping": "Camping",
+        "muro": "Escalada — Muro",
+        "boulder": "Escalada — Búlder",
         "escalada": "Escalada",
         "visita": "Visita"
       },
@@ -1545,6 +1547,16 @@
         "camping": "Reserva obligatoria — mínimo 24 h de anticipación",
         "escalada": "Reserva opcional — puedes informar tu visita"
       },
+      "modality": "¿Dónde vas a escalar?",
+      "modalities": {
+        "muro": "Muro Bendito Sea",
+        "boulder": "Búlder"
+      },
+      "modalitiesHint": {
+        "muro": "Rutas deportivas en roca natural con chapas instaladas",
+        "boulder": "Escalada en bloque, sin cuerda y a baja altura"
+      },
+      "errorModalityRequired": "Selecciona una modalidad de escalada",
       "importantTitle": "Importante",
       "importantText": "Solo se paga el ingreso al lugar. Camping: $15.000 COP por persona. Escalada: $8.000 COP por persona. Cada persona debe traer sus propios equipos: carpa, sleeping bag, colchoneta, arnés, cuerda y demás elementos necesarios para la actividad.",
       "campingAdvanceNote": "La reserva de camping debe hacerse con mínimo 24 horas de anticipación. Recibirás confirmación por el medio de contacto que indiques.",

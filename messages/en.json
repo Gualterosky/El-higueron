@@ -1418,6 +1418,8 @@
       },
       "types": {
         "camping": "Camping",
+        "muro": "Climbing — Wall",
+        "boulder": "Climbing — Boulder",
         "escalada": "Climbing",
         "visita": "Visit"
       },
@@ -1545,6 +1547,16 @@
         "camping": "Booking required — at least 24 h in advance",
         "escalada": "Optional booking — you can just let us know you're coming"
       },
+      "modality": "Where will you climb?",
+      "modalities": {
+        "muro": "Muro Bendito Sea",
+        "boulder": "Boulder"
+      },
+      "modalitiesHint": {
+        "muro": "Sport routes on natural rock with pre-placed bolts",
+        "boulder": "Low-height bouldering without a rope"
+      },
+      "errorModalityRequired": "Please select a climbing modality",
       "importantTitle": "Important",
       "importantText": "Only the site entry fee is charged. Camping: $15,000 COP per person. Climbing: $8,000 COP per person. Everyone must bring their own equipment: tent, sleeping bag, sleeping pad, harness, rope, and any other items needed for the activity.",
       "campingAdvanceNote": "Camping bookings must be made at least 24 hours in advance. You will receive confirmation via the contact method you provide.",

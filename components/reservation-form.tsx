@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { AlertTriangle, CheckCircle2, CalendarDays, Users, Info } from "lucide-react"
+import { AlertTriangle, CheckCircle2, CalendarDays, Users, Info, Mountain, CircleDot } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -16,6 +16,12 @@ import { submitReservationAction } from "@/lib/reservas/actions"
 const PRICE_ESCALADA = 8000
 const PRICE_CAMPING = 15000
 
+// UI-level category (what the user taps first)
+type ActivityCategory = "camping" | "escalada"
+
+// Actual stored type (resolved after sub-selection for escalada)
+type ReservationType = "camping" | "muro" | "boulder"
+
 type Props = {
   defaultType?: "camping" | "escalada"
 }
@@ -25,6 +31,11 @@ export function ReservationForm({ defaultType }: Props) {
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
 
+  // Top-level category chosen in the UI
+  const [category, setCategory] = useState<ActivityCategory>(
+    defaultType === "escalada" ? "escalada" : "camping",
+  )
+
   // Min date for camping = tomorrow (24h advance)
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
@@ -32,14 +43,10 @@ export function ReservationForm({ defaultType }: Props) {
 
   const schema = z
     .object({
-      type: z.enum(["camping", "escalada"]),
+      type: z.enum(["camping", "muro", "boulder"]),
       name: z.string().min(2, t("errorMin2")).max(100),
       contactInfo: z.string().min(5, t("errorRequired")).max(200),
-      numberOfPeople: z.coerce
-        .number()
-        .int()
-        .min(1, t("errorMin1"))
-        .max(50),
+      numberOfPeople: z.coerce.number().int().min(1, t("errorMin1")).max(50),
       arrivalDate: z.string().min(1, t("errorRequired")),
       departureDate: z.string().optional(),
       mayStayExtra: z.boolean().optional(),
@@ -47,18 +54,15 @@ export function ReservationForm({ defaultType }: Props) {
     })
     .refine(
       (data) => {
-        if (data.type === "camping") {
-          return data.arrivalDate >= minDate
-        }
+        if (data.type === "camping") return data.arrivalDate >= minDate
         return true
       },
       { message: t("errorCampingAdvance"), path: ["arrivalDate"] },
     )
     .refine(
       (data) => {
-        if (data.departureDate && data.arrivalDate) {
+        if (data.departureDate && data.arrivalDate)
           return data.departureDate >= data.arrivalDate
-        }
         return true
       },
       { message: t("errorDepartureBeforeArrival"), path: ["departureDate"] },
@@ -69,33 +73,56 @@ export function ReservationForm({ defaultType }: Props) {
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      type: defaultType ?? "camping",
+      type: defaultType === "escalada" ? undefined : "camping",
       numberOfPeople: 1,
       mayStayExtra: false,
     },
   })
 
-  const type = form.watch("type")
+  const type = form.watch("type") as ReservationType | undefined
   const numberOfPeople = form.watch("numberOfPeople") ?? 1
   const arrivalDate = form.watch("arrivalDate")
   const departureDate = form.watch("departureDate")
 
-  // Calculate number of nights for camping price estimate
+  const isCamping = type === "camping"
+  const isEscalada = type === "muro" || type === "boulder"
+
+  // Nights for camping price estimate
   function calcNights() {
     if (!arrivalDate) return 0
     if (!departureDate) return 1
-    const a = new Date(arrivalDate)
-    const d = new Date(departureDate)
-    const diff = Math.round((d.getTime() - a.getTime()) / (1000 * 60 * 60 * 24))
+    const diff = Math.round(
+      (new Date(departureDate).getTime() - new Date(arrivalDate).getTime()) /
+        (1000 * 60 * 60 * 24),
+    )
     return diff > 0 ? diff : 1
   }
 
-  const nights = type === "camping" ? calcNights() : 1
-  const pricePerPerson = type === "camping" ? PRICE_CAMPING : PRICE_ESCALADA
+  const nights = isCamping ? calcNights() : 1
+  const pricePerPerson = isCamping ? PRICE_CAMPING : PRICE_ESCALADA
   const totalPrice = (numberOfPeople > 0 ? numberOfPeople : 0) * pricePerPerson * nights
 
   const formatPrice = (n: number) =>
-    new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(n)
+    new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      maximumFractionDigits: 0,
+    }).format(n)
+
+  function handleCategoryChange(cat: ActivityCategory) {
+    setCategory(cat)
+    if (cat === "camping") {
+      form.setValue("type", "camping", { shouldValidate: false })
+    } else {
+      // Clear type so user must pick muro or boulder
+      form.setValue("type", undefined as unknown as ReservationType, { shouldValidate: false })
+    }
+    form.clearErrors("type")
+  }
+
+  function handleModalityChange(modality: "muro" | "boulder") {
+    form.setValue("type", modality, { shouldValidate: true })
+  }
 
   async function onSubmit(data: FormValues) {
     setServerError(null)
@@ -132,35 +159,93 @@ export function ReservationForm({ defaultType }: Props) {
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-      {/* Activity type selector */}
+      {/* ── Step 1: Activity category ── */}
       <div className="space-y-2">
-        <Label>{t("type")} <span className="text-destructive">*</span></Label>
+        <Label>
+          {t("type")} <span className="text-destructive">*</span>
+        </Label>
         <div className="grid gap-3 sm:grid-cols-2">
-          {(["camping", "escalada"] as const).map((opt) => (
+          {(["camping", "escalada"] as const).map((cat) => (
             <button
-              key={opt}
+              key={cat}
               type="button"
-              onClick={() => form.setValue("type", opt, { shouldValidate: true })}
+              onClick={() => handleCategoryChange(cat)}
               className={cn(
                 "rounded-xl border-2 p-4 text-left transition-all",
-                type === opt
+                category === cat
                   ? "border-forest bg-forest/5"
-                  : "border-border hover:border-forest/40"
+                  : "border-border hover:border-forest/40",
               )}
             >
-              <span className="block font-semibold text-foreground">{t(`types.${opt}`)}</span>
-              <span className="text-xs text-muted-foreground">{t(`typesHint.${opt}`)}</span>
+              <span className="block font-semibold text-foreground">
+                {t(`types.${cat}`)}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {t(`typesHint.${cat}`)}
+              </span>
             </button>
           ))}
         </div>
-        {form.formState.errors.type && (
-          <p className="text-xs text-destructive" role="alert">
-            {form.formState.errors.type.message}
-          </p>
-        )}
       </div>
 
-      {/* Important note */}
+      {/* ── Step 2: Escalada modality ── */}
+      {category === "escalada" && (
+        <div className="space-y-2">
+          <Label>
+            {t("modality")} <span className="text-destructive">*</span>
+          </Label>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <button
+              type="button"
+              onClick={() => handleModalityChange("muro")}
+              className={cn(
+                "flex items-start gap-3 rounded-xl border-2 p-4 text-left transition-all",
+                type === "muro"
+                  ? "border-orange bg-orange/5"
+                  : "border-border hover:border-orange/40",
+              )}
+            >
+              <Mountain className="mt-0.5 h-5 w-5 shrink-0 text-orange" aria-hidden />
+              <div>
+                <span className="block font-semibold text-foreground">
+                  {t("modalities.muro")}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {t("modalitiesHint.muro")}
+                </span>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleModalityChange("boulder")}
+              className={cn(
+                "flex items-start gap-3 rounded-xl border-2 p-4 text-left transition-all",
+                type === "boulder"
+                  ? "border-orange bg-orange/5"
+                  : "border-border hover:border-orange/40",
+              )}
+            >
+              <CircleDot className="mt-0.5 h-5 w-5 shrink-0 text-orange" aria-hidden />
+              <div>
+                <span className="block font-semibold text-foreground">
+                  {t("modalities.boulder")}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {t("modalitiesHint.boulder")}
+                </span>
+              </div>
+            </button>
+          </div>
+          {form.formState.errors.type && (
+            <p className="text-xs text-destructive" role="alert">
+              {t("errorModalityRequired")}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* ── Important note ── */}
       <div className="flex gap-3 rounded-xl border border-orange/30 bg-orange/10 p-4">
         <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-orange" aria-hidden />
         <div>
@@ -169,23 +254,21 @@ export function ReservationForm({ defaultType }: Props) {
         </div>
       </div>
 
-      {/* Camping advance notice */}
-      {type === "camping" && (
+      {/* ── Contextual notices ── */}
+      {isCamping && (
         <div className="flex gap-3 rounded-xl border border-forest/30 bg-forest/5 p-4">
           <Info className="mt-0.5 h-5 w-5 shrink-0 text-forest" aria-hidden />
           <p className="text-sm text-muted-foreground">{t("campingAdvanceNote")}</p>
         </div>
       )}
-
-      {/* Escalada optional notice */}
-      {type === "escalada" && (
+      {isEscalada && (
         <div className="flex gap-3 rounded-xl border border-forest/30 bg-forest/5 p-4">
           <Info className="mt-0.5 h-5 w-5 shrink-0 text-forest" aria-hidden />
           <p className="text-sm text-muted-foreground">{t("escaladaOptionalNote")}</p>
         </div>
       )}
 
-      {/* Name */}
+      {/* ── Name ── */}
       <div className="space-y-1.5">
         <Label htmlFor="name">
           {t("name")} <span className="text-destructive">*</span>
@@ -203,7 +286,7 @@ export function ReservationForm({ defaultType }: Props) {
         )}
       </div>
 
-      {/* Dates */}
+      {/* ── Dates ── */}
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-1.5">
           <Label htmlFor="arrivalDate">
@@ -215,7 +298,7 @@ export function ReservationForm({ defaultType }: Props) {
           <Input
             id="arrivalDate"
             type="date"
-            min={type === "camping" ? minDate : undefined}
+            min={isCamping ? minDate : undefined}
             suppressHydrationWarning
             {...form.register("arrivalDate")}
           />
@@ -226,7 +309,7 @@ export function ReservationForm({ defaultType }: Props) {
           )}
         </div>
 
-        {type === "camping" && (
+        {isCamping && (
           <div className="space-y-1.5">
             <Label htmlFor="departureDate">
               <span className="flex items-center gap-1.5">
@@ -251,8 +334,8 @@ export function ReservationForm({ defaultType }: Props) {
         )}
       </div>
 
-      {/* May stay extra day (camping only) */}
-      {type === "camping" && (
+      {/* ── May stay extra day (camping only) ── */}
+      {isCamping && (
         <div className="flex items-start gap-3">
           <input
             id="mayStayExtra"
@@ -269,7 +352,7 @@ export function ReservationForm({ defaultType }: Props) {
         </div>
       )}
 
-      {/* Number of people */}
+      {/* ── Number of people ── */}
       <div className="space-y-1.5">
         <Label htmlFor="numberOfPeople">
           <span className="flex items-center gap-1.5">
@@ -292,13 +375,13 @@ export function ReservationForm({ defaultType }: Props) {
         )}
       </div>
 
-      {/* Price estimate */}
-      {numberOfPeople > 0 && arrivalDate && (
+      {/* ── Price estimate (shown once type is fully resolved) ── */}
+      {(isCamping || isEscalada) && numberOfPeople > 0 && arrivalDate && (
         <div className="rounded-xl border border-border bg-muted/30 px-5 py-4">
           <p className="mb-1 text-sm font-medium text-foreground">{t("priceEstimate")}</p>
           <p className="text-2xl font-bold text-forest">{formatPrice(totalPrice)}</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {type === "camping"
+            {isCamping
               ? t("priceBreakdownCamping", {
                   people: numberOfPeople,
                   nights,
@@ -313,7 +396,7 @@ export function ReservationForm({ defaultType }: Props) {
         </div>
       )}
 
-      {/* Notes */}
+      {/* ── Notes ── */}
       <div className="space-y-1.5">
         <Label htmlFor="notes">{t("notes")}</Label>
         <Textarea
@@ -325,7 +408,7 @@ export function ReservationForm({ defaultType }: Props) {
         <p className="text-xs text-muted-foreground">{t("notesHint")}</p>
       </div>
 
-      {/* Contact info */}
+      {/* ── Contact ── */}
       <div className="space-y-1.5">
         <Label htmlFor="contactInfo">
           {t("contactInfo")} <span className="text-destructive">*</span>

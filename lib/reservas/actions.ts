@@ -5,7 +5,7 @@ import { db } from "@/lib/db"
 import { reservation } from "@/lib/db/schema"
 
 export type ReservationInput = {
-  type: "camping" | "escalada"
+  type: "camping" | "muro" | "boulder"
   name: string
   contactInfo: string
   numberOfPeople: number
@@ -28,7 +28,7 @@ export async function submitReservationAction(
     !input.contactInfo?.trim() ||
     !input.arrivalDate?.trim() ||
     input.numberOfPeople < 1 ||
-    !["camping", "escalada"].includes(input.type)
+    !["camping", "muro", "boulder"].includes(input.type)
   ) {
     return { ok: false, error: "validation" }
   }

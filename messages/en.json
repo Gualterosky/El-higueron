@@ -1529,8 +1529,7 @@
       "tabs": {
         "muro": "Wall",
         "camping": "Camping",
-        "boulder": "Boulder",
-        "replies": "Replies"
+        "boulder": "Boulder"
       },
       "status": {
         "pending": "Pending",
@@ -1587,13 +1586,12 @@
       "bannerIdle": "Enable maintenance mode to hide the site and show the notice."
     },
     "replies": {
-      "noResults": "No replies yet.",
+      "count": "{count, plural, one {# reply} other {# replies}}",
+      "noResults": "No replies.",
       "approve": "Mark as reviewed",
       "hide": "Hide",
       "delete": "Delete",
       "contactLabel": "Contact",
-      "submittedOn": "submitted on",
-      "replyTo": "Reply to",
       "status": {
         "pending": "Pending",
         "approved": "Approved",

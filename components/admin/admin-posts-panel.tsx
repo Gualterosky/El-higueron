@@ -3,7 +3,15 @@
 import { useState, useTransition } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
-import { Check, EyeOff, Star, Trash2 } from "lucide-react"
+import {
+  Check,
+  ChevronDown,
+  ChevronUp,
+  EyeOff,
+  MessageSquare,
+  Star,
+  Trash2,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -39,8 +47,10 @@ export function AdminPostsPanel({
   initialReplies,
 }: Props) {
   const t = useTranslations("Panel.posts")
-  const tReply = useTranslations("Panel.replies")
   const router = useRouter()
+
+  // Group all replies by postId so each list can access them per post
+  const repliesByPostId = Object.groupBy(initialReplies, (r) => r.postId)
 
   return (
     <div className="space-y-6">
@@ -60,25 +70,33 @@ export function AdminPostsPanel({
           <TabsTrigger value="boulder">
             {t("tabs.boulder")} ({initialBoulderPosts.length})
           </TabsTrigger>
-          <TabsTrigger value="replies">
-            {t("tabs.replies")} ({initialReplies.length})
-          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="muro" className="mt-4">
-          <MuroPostsList initialPosts={initialPosts} t={t} router={router} />
+          <MuroPostsList
+            initialPosts={initialPosts}
+            repliesByPostId={repliesByPostId}
+            t={t}
+            router={router}
+          />
         </TabsContent>
 
         <TabsContent value="camping" className="mt-4">
-          <CampingPostsList initialPosts={initialCampingPosts} t={t} router={router} />
+          <CampingPostsList
+            initialPosts={initialCampingPosts}
+            repliesByPostId={repliesByPostId}
+            t={t}
+            router={router}
+          />
         </TabsContent>
 
         <TabsContent value="boulder" className="mt-4">
-          <BoulderPostsList initialPosts={initialBoulderPosts} t={t} router={router} />
-        </TabsContent>
-
-        <TabsContent value="replies" className="mt-4">
-          <RepliesList initialReplies={initialReplies} t={tReply} router={router} />
+          <BoulderPostsList
+            initialPosts={initialBoulderPosts}
+            repliesByPostId={repliesByPostId}
+            t={t}
+            router={router}
+          />
         </TabsContent>
       </Tabs>
     </div>
@@ -87,8 +105,10 @@ export function AdminPostsPanel({
 
 // ── Muro posts list ──────────────────────────────────────────────────────────
 
+type RepliesMap = Partial<Record<string, PostReply[]>>
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function MuroPostsList({ initialPosts, t, router }: { initialPosts: ClimbPost[]; t: any; router: any }) {
+function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: ClimbPost[]; repliesByPostId: RepliesMap; t: any; router: any }) {
   const [posts, setPosts] = useState(initialPosts)
   const [, startTransition] = useTransition()
 
@@ -126,44 +146,46 @@ function MuroPostsList({ initialPosts, t, router }: { initialPosts: ClimbPost[];
         <article
           key={post.id}
           className={cn(
-            "flex flex-col gap-4 rounded-xl border p-4 sm:flex-row sm:items-start sm:justify-between sm:p-5",
+            "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
             post.status === "pending"
               ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
               : "border-border/60 bg-beige/20"
           )}
         >
-          <div className="min-w-0 space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-medium text-forest">{post.authorName}</h3>
-              <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="min-w-0 space-y-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="font-medium text-forest">{post.authorName}</h3>
+                <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {post.routeId} · {post.ascentDate} · {t("submittedOn")}{" "}
+                {new Date(post.createdAt).toLocaleDateString()}
+              </p>
+              <StarRating rating={post.rating} />
+              <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
+              {post.socialMediaUrl && (
+                <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
+              )}
+              {post.mediaUrls && post.mediaUrls.length > 0 && (
+                <PostMediaGallery mediaUrls={post.mediaUrls} />
+              )}
+              <p className="text-xs text-muted-foreground">
+                <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
+              </p>
             </div>
-
-            <p className="text-sm text-muted-foreground">
-              {post.routeId} · {post.ascentDate} · {t("submittedOn")}{" "}
-              {new Date(post.createdAt).toLocaleDateString()}
-            </p>
-
-            <StarRating rating={post.rating} />
-            <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
-
-            {post.socialMediaUrl && (
-              <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
-            )}
-            {post.mediaUrls && post.mediaUrls.length > 0 && (
-              <PostMediaGallery mediaUrls={post.mediaUrls} />
-            )}
-
-            <p className="text-xs text-muted-foreground">
-              <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
-            </p>
+            <PostActions
+              status={post.status as "pending" | "approved" | "hidden"}
+              onApprove={() => handleStatus(post.id, "approved")}
+              onHide={() => handleStatus(post.id, "hidden")}
+              onDelete={() => handleDelete(post.id)}
+              t={t}
+            />
           </div>
-
-          <PostActions
-            status={post.status as "pending" | "approved" | "hidden"}
-            onApprove={() => handleStatus(post.id, "approved")}
-            onHide={() => handleStatus(post.id, "hidden")}
-            onDelete={() => handleDelete(post.id)}
-            t={t}
+          <AdminRepliesSection
+            postId={post.id}
+            initialReplies={repliesByPostId[post.id] ?? []}
+            router={router}
           />
         </article>
       ))}
@@ -174,7 +196,7 @@ function MuroPostsList({ initialPosts, t, router }: { initialPosts: ClimbPost[];
 // ── Camping posts list ───────────────────────────────────────────────────────
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function CampingPostsList({ initialPosts, t, router }: { initialPosts: CampingPost[]; t: any; router: any }) {
+function CampingPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: CampingPost[]; repliesByPostId: RepliesMap; t: any; router: any }) {
   const [posts, setPosts] = useState(initialPosts)
   const [, startTransition] = useTransition()
 
@@ -212,44 +234,46 @@ function CampingPostsList({ initialPosts, t, router }: { initialPosts: CampingPo
         <article
           key={post.id}
           className={cn(
-            "flex flex-col gap-4 rounded-xl border p-4 sm:flex-row sm:items-start sm:justify-between sm:p-5",
+            "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
             post.status === "pending"
               ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
               : "border-border/60 bg-beige/20"
           )}
         >
-          <div className="min-w-0 space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-medium text-forest">{post.authorName}</h3>
-              <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="min-w-0 space-y-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="font-medium text-forest">{post.authorName}</h3>
+                <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {post.visitDate} · {t("submittedOn")}{" "}
+                {new Date(post.createdAt).toLocaleDateString()}
+              </p>
+              <StarRating rating={post.rating} />
+              <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
+              {post.socialMediaUrl && (
+                <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
+              )}
+              {post.mediaUrls && post.mediaUrls.length > 0 && (
+                <PostMediaGallery mediaUrls={post.mediaUrls} />
+              )}
+              <p className="text-xs text-muted-foreground">
+                <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
+              </p>
             </div>
-
-            <p className="text-sm text-muted-foreground">
-              {post.visitDate} · {t("submittedOn")}{" "}
-              {new Date(post.createdAt).toLocaleDateString()}
-            </p>
-
-            <StarRating rating={post.rating} />
-            <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
-
-            {post.socialMediaUrl && (
-              <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
-            )}
-            {post.mediaUrls && post.mediaUrls.length > 0 && (
-              <PostMediaGallery mediaUrls={post.mediaUrls} />
-            )}
-
-            <p className="text-xs text-muted-foreground">
-              <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
-            </p>
+            <PostActions
+              status={post.status as "pending" | "approved" | "hidden"}
+              onApprove={() => handleStatus(post.id, "approved")}
+              onHide={() => handleStatus(post.id, "hidden")}
+              onDelete={() => handleDelete(post.id)}
+              t={t}
+            />
           </div>
-
-          <PostActions
-            status={post.status as "pending" | "approved" | "hidden"}
-            onApprove={() => handleStatus(post.id, "approved")}
-            onHide={() => handleStatus(post.id, "hidden")}
-            onDelete={() => handleDelete(post.id)}
-            t={t}
+          <AdminRepliesSection
+            postId={post.id}
+            initialReplies={repliesByPostId[post.id] ?? []}
+            router={router}
           />
         </article>
       ))}
@@ -260,7 +284,7 @@ function CampingPostsList({ initialPosts, t, router }: { initialPosts: CampingPo
 // ── Boulder posts list ───────────────────────────────────────────────────────
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function BoulderPostsList({ initialPosts, t, router }: { initialPosts: BoulderPost[]; t: any; router: any }) {
+function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: BoulderPost[]; repliesByPostId: RepliesMap; t: any; router: any }) {
   const [posts, setPosts] = useState(initialPosts)
   const [, startTransition] = useTransition()
 
@@ -298,47 +322,174 @@ function BoulderPostsList({ initialPosts, t, router }: { initialPosts: BoulderPo
         <article
           key={post.id}
           className={cn(
-            "flex flex-col gap-4 rounded-xl border p-4 sm:flex-row sm:items-start sm:justify-between sm:p-5",
+            "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
             post.status === "pending"
               ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
               : "border-border/60 bg-beige/20"
           )}
         >
-          <div className="min-w-0 space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-medium text-forest">{post.authorName}</h3>
-              <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="min-w-0 space-y-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="font-medium text-forest">{post.authorName}</h3>
+                <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {post.boulderName} · {post.routeName} · {post.visitDate} · {t("submittedOn")}{" "}
+                {new Date(post.createdAt).toLocaleDateString()}
+              </p>
+              <StarRating rating={post.rating} />
+              <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
+              {post.socialMediaUrl && (
+                <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
+              )}
+              {post.mediaUrls && post.mediaUrls.length > 0 && (
+                <PostMediaGallery mediaUrls={post.mediaUrls} />
+              )}
+              <p className="text-xs text-muted-foreground">
+                <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
+              </p>
             </div>
-
-            <p className="text-sm text-muted-foreground">
-              {post.boulderName} · {post.routeName} · {post.visitDate} · {t("submittedOn")}{" "}
-              {new Date(post.createdAt).toLocaleDateString()}
-            </p>
-
-            <StarRating rating={post.rating} />
-            <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
-
-            {post.socialMediaUrl && (
-              <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
-            )}
-            {post.mediaUrls && post.mediaUrls.length > 0 && (
-              <PostMediaGallery mediaUrls={post.mediaUrls} />
-            )}
-
-            <p className="text-xs text-muted-foreground">
-              <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
-            </p>
+            <PostActions
+              status={post.status as "pending" | "approved" | "hidden"}
+              onApprove={() => handleStatus(post.id, "approved")}
+              onHide={() => handleStatus(post.id, "hidden")}
+              onDelete={() => handleDelete(post.id)}
+              t={t}
+            />
           </div>
-
-          <PostActions
-            status={post.status as "pending" | "approved" | "hidden"}
-            onApprove={() => handleStatus(post.id, "approved")}
-            onHide={() => handleStatus(post.id, "hidden")}
-            onDelete={() => handleDelete(post.id)}
-            t={t}
+          <AdminRepliesSection
+            postId={post.id}
+            initialReplies={repliesByPostId[post.id] ?? []}
+            router={router}
           />
         </article>
       ))}
+    </div>
+  )
+}
+
+// ── Inline replies section (inside each post card) ───────────────────────────
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function AdminRepliesSection({ initialReplies, router }: { postId: string; initialReplies: PostReply[]; router: any }) {
+  const t = useTranslations("Panel.replies")
+  const [replies, setReplies] = useState(initialReplies)
+  const [expanded, setExpanded] = useState(false)
+  const [, startTransition] = useTransition()
+
+  function handleStatus(id: string, status: "approved" | "hidden" | "pending") {
+    startTransition(async () => {
+      const result = await updateReplyStatusAction(id, status)
+      if (result.ok) {
+        setReplies((prev) => prev.map((r) => (r.id === id ? { ...r, status } : r)))
+        router.refresh()
+      }
+    })
+  }
+
+  function handleDelete(id: string) {
+    startTransition(async () => {
+      const result = await deleteReplyAction(id)
+      if (result.ok) {
+        setReplies((prev) => prev.filter((r) => r.id !== id))
+        router.refresh()
+      }
+    })
+  }
+
+  return (
+    <div className="border-t border-border/40 pt-2">
+      {replies.length === 0 ? (
+        <p className="text-xs text-muted-foreground/50">{t("noResults")}</p>
+      ) : (
+        <>
+          <button
+            type="button"
+            onClick={() => setExpanded((v) => !v)}
+            className="flex w-full items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <MessageSquare className="h-3.5 w-3.5" />
+            <span>{t("count", { count: replies.length })}</span>
+            {expanded ? (
+              <ChevronUp className="ml-auto h-3.5 w-3.5" />
+            ) : (
+              <ChevronDown className="ml-auto h-3.5 w-3.5" />
+            )}
+          </button>
+
+          {expanded && (
+            <div className="mt-2 space-y-2 border-l-2 border-border/50 pl-3">
+              {replies.map((reply) => (
+                <div
+                  key={reply.id}
+                  className={cn(
+                    "flex items-start justify-between gap-2 rounded-lg bg-background/60 px-2 py-1.5",
+                    reply.status === "hidden" && "opacity-50"
+                  )}
+                >
+                  <div className="min-w-0 space-y-0.5">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="text-xs font-medium text-foreground">
+                        {reply.authorName}
+                      </span>
+                      <StatusBadge
+                        status={reply.status as "pending" | "approved" | "hidden"}
+                        t={t}
+                        small
+                      />
+                      <span className="text-xs text-muted-foreground">
+                        {new Date(reply.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <p className="text-xs leading-relaxed text-muted-foreground">
+                      {reply.comment}
+                    </p>
+                    <p className="text-xs text-muted-foreground/60">
+                      <span className="font-medium">{t("contactLabel")}:</span>{" "}
+                      {reply.contactInfo}
+                    </p>
+                  </div>
+                  <div className="flex shrink-0 gap-0.5">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6"
+                      onClick={() => handleStatus(reply.id, "approved")}
+                      disabled={reply.status === "approved"}
+                      aria-label={t("approve")}
+                    >
+                      <Check className="h-3 w-3" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6"
+                      onClick={() => handleStatus(reply.id, "hidden")}
+                      disabled={reply.status === "hidden"}
+                      aria-label={t("hide")}
+                    >
+                      <EyeOff className="h-3 w-3" />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6 text-destructive"
+                      onClick={() => handleDelete(reply.id)}
+                      aria-label={t("delete")}
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </>
+      )}
     </div>
   )
 }
@@ -362,19 +513,20 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function StatusBadge({ status, t }: { status: "pending" | "approved" | "hidden"; t: any }) {
+function StatusBadge({ status, t, small }: { status: "pending" | "approved" | "hidden"; t: any; small?: boolean }) {
   return (
     <Badge
       variant={
         status === "approved" ? "default" : status === "hidden" ? "secondary" : "outline"
       }
-      className={
+      className={cn(
         status === "approved"
           ? "border-transparent bg-forest text-white"
           : status === "pending"
             ? "border-amber-400 bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300"
-            : undefined
-      }
+            : undefined,
+        small && "px-1.5 py-0 text-[10px]"
+      )}
     >
       {t(`status.${status}`)}
     </Badge>
@@ -423,94 +575,6 @@ function PostActions({ status, onApprove, onHide, onDelete, t }: PostActionsProp
       >
         <Trash2 className="h-4 w-4" />
       </Button>
-    </div>
-  )
-}
-
-// ── Replies list ─────────────────────────────────────────────────────────────
-
-const POST_TYPE_LABELS: Record<string, string> = {
-  muro: "Muro",
-  camping: "Camping",
-  boulder: "Boulder",
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function RepliesList({ initialReplies, t, router }: { initialReplies: PostReply[]; t: any; router: any }) {
-  const [replies, setReplies] = useState(initialReplies)
-  const [, startTransition] = useTransition()
-
-  function handleStatus(id: string, status: "approved" | "hidden" | "pending") {
-    startTransition(async () => {
-      const result = await updateReplyStatusAction(id, status)
-      if (result.ok) {
-        setReplies((prev) => prev.map((r) => (r.id === id ? { ...r, status } : r)))
-        router.refresh()
-      }
-    })
-  }
-
-  function handleDelete(id: string) {
-    startTransition(async () => {
-      const result = await deleteReplyAction(id)
-      if (result.ok) {
-        setReplies((prev) => prev.filter((r) => r.id !== id))
-        router.refresh()
-      }
-    })
-  }
-
-  if (replies.length === 0) {
-    return (
-      <p className="rounded-xl border border-dashed border-border/60 px-4 py-8 text-center text-sm text-muted-foreground">
-        {t("noResults")}
-      </p>
-    )
-  }
-
-  return (
-    <div className="space-y-4">
-      {replies.map((reply) => (
-        <article
-          key={reply.id}
-          className={cn(
-            "flex flex-col gap-4 rounded-xl border p-4 sm:flex-row sm:items-start sm:justify-between sm:p-5",
-            reply.status === "pending"
-              ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
-              : "border-border/60 bg-beige/20"
-          )}
-        >
-          <div className="min-w-0 space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-medium text-forest">{reply.authorName}</h3>
-              <StatusBadge status={reply.status as "pending" | "approved" | "hidden"} t={t} />
-              <span className="rounded-full border border-border/50 px-2 py-0.5 text-xs text-muted-foreground">
-                {POST_TYPE_LABELS[reply.postType] ?? reply.postType}
-              </span>
-            </div>
-
-            <p className="text-sm text-muted-foreground">
-              {t("replyTo")}: <span className="font-mono text-xs">{reply.postId.slice(0, 8)}…</span>
-              {" · "}
-              {t("submittedOn")} {new Date(reply.createdAt).toLocaleDateString()}
-            </p>
-
-            <p className="text-sm leading-relaxed text-foreground">{reply.comment}</p>
-
-            <p className="text-xs text-muted-foreground">
-              <span className="font-medium">{t("contactLabel")}:</span> {reply.contactInfo}
-            </p>
-          </div>
-
-          <PostActions
-            status={reply.status as "pending" | "approved" | "hidden"}
-            onApprove={() => handleStatus(reply.id, "approved")}
-            onHide={() => handleStatus(reply.id, "hidden")}
-            onDelete={() => handleDelete(reply.id)}
-            t={t}
-          />
-        </article>
-      ))}
     </div>
   )
 }

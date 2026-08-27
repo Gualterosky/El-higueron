@@ -30,9 +30,7 @@ No dedicated test framework is currently configured. For now, validate changes w
 
 ## Commit & Pull Request Guidelines
 
-Recent history uses short, imperative or descriptive commit messages, sometimes in Spanish, for example `Update page.tsx` and `Base de datos y pagina de login`. Keep commits focused and describe the visible change.
-
-Pull requests should include a concise summary, relevant screenshots for UI changes, notes about affected routes, and any required environment variables (especially `DATABASE_URL` for Neon). Link issues when applicable and mention the commands run, especially `pnpm lint` and `pnpm build`.
+**Do NOT run any `git` commands** — no `git add`, `git commit`, `git push`, or similar. The developer handles all commits and pushes to GitHub manually. Only write and edit files; leave version control entirely to the user.
 
 ## Security & Configuration Tips
 

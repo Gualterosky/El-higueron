@@ -1529,7 +1529,8 @@
       "tabs": {
         "muro": "Muro",
         "camping": "Camping",
-        "boulder": "Boulder"
+        "boulder": "Boulder",
+        "replies": "Respuestas"
       },
       "status": {
         "pending": "Pendiente",
@@ -1584,6 +1585,20 @@
       "bannerTitle": "Este sitio está en mantenimiento",
       "bannerBody": "Estamos trabajando para mejorar tu experiencia. Vuelve pronto a El Higuerón.",
       "bannerIdle": "Activa el modo mantenimiento para ocultar el sitio y mostrar el aviso."
+    },
+    "replies": {
+      "noResults": "No hay respuestas aún.",
+      "approve": "Marcar como revisada",
+      "hide": "Ocultar",
+      "delete": "Eliminar",
+      "contactLabel": "Contacto",
+      "submittedOn": "enviado el",
+      "replyTo": "En respuesta a",
+      "status": {
+        "pending": "Pendiente",
+        "approved": "Aprobada",
+        "hidden": "Oculta"
+      }
     },
     "placeholders": {
       "usersTitle": "Usuarios",
@@ -1727,6 +1742,28 @@
       "quota": "Has agotado tu cuota de OpenAI. Por favor, revisa tu plan y facturación.",
       "invalidKey": "La API Key de OpenAI no es válida o ha expirado."
     }
+  },
+  "PostReply": {
+    "count": "{count, plural, one {# respuesta} other {# respuestas}}",
+    "noReplies": "Responder",
+    "pendingLabel": "pendiente",
+    "replyButton": "+ Responder",
+    "formTitle": "Tu respuesta",
+    "authorName": "Nombre",
+    "authorNamePlaceholder": "Tu nombre",
+    "comment": "Comentario",
+    "commentPlaceholder": "Escribe tu respuesta…",
+    "contactInfo": "Contacto",
+    "contactInfoPlaceholder": "Correo o teléfono",
+    "contactInfoHint": "Solo visible para el equipo de El Higuerón.",
+    "submit": "Enviar respuesta",
+    "submitting": "Enviando…",
+    "cancel": "Cancelar",
+    "successBody": "¡Gracias! Tu respuesta fue recibida y será revisada pronto.",
+    "errorMin2": "Mínimo 2 caracteres",
+    "errorMin5": "Mínimo 5 caracteres",
+    "errorRequired": "Campo obligatorio",
+    "errorGeneral": "No se pudo enviar la respuesta. Intenta de nuevo."
   },
   "Common": {
     "brand": "El Higuerón",

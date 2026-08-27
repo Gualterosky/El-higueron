@@ -4,8 +4,10 @@ import { getTranslations } from "next-intl/server"
 import { cn } from "@/lib/utils"
 import type { CampingPost } from "@/lib/db/schema"
 import { getApprovedCampingPosts } from "@/lib/camping/post-queries"
+import { getApprovedRepliesByPosts } from "@/lib/replies/reply-queries"
 import { SocialEmbed } from "@/components/muro/social-embed"
 import { PostMediaGallery } from "@/components/muro/post-media-gallery"
+import { PostRepliesSection } from "@/components/posts/post-reply-section"
 
 type Props = {
   locale: string
@@ -17,6 +19,9 @@ export async function CampingPublications({ locale }: Props) {
     getApprovedCampingPosts(),
     getTranslations({ locale, namespace: "CampingPost" }),
   ])
+
+  const replies = await getApprovedRepliesByPosts("camping", posts.map((p) => p.id))
+  const repliesByPost = Object.groupBy(replies, (r) => r.postId)
 
   return (
     <div className="mt-8">
@@ -63,6 +68,11 @@ export async function CampingPublications({ locale }: Props) {
               {post.mediaUrls && post.mediaUrls.length > 0 && (
                 <PostMediaGallery mediaUrls={post.mediaUrls} />
               )}
+              <PostRepliesSection
+                postId={post.id}
+                postType="camping"
+                initialReplies={repliesByPost[post.id] ?? []}
+              />
             </article>
           ))}
         </div>

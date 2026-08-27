@@ -1529,7 +1529,8 @@
       "tabs": {
         "muro": "Wall",
         "camping": "Camping",
-        "boulder": "Boulder"
+        "boulder": "Boulder",
+        "replies": "Replies"
       },
       "status": {
         "pending": "Pending",
@@ -1584,6 +1585,20 @@
       "bannerTitle": "This site is under maintenance",
       "bannerBody": "We are working to improve your experience. Please check back soon at El Higuerón.",
       "bannerIdle": "Enable maintenance mode to hide the site and show the notice."
+    },
+    "replies": {
+      "noResults": "No replies yet.",
+      "approve": "Mark as reviewed",
+      "hide": "Hide",
+      "delete": "Delete",
+      "contactLabel": "Contact",
+      "submittedOn": "submitted on",
+      "replyTo": "Reply to",
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "hidden": "Hidden"
+      }
     },
     "placeholders": {
       "usersTitle": "Users",
@@ -1727,6 +1742,28 @@
       "quota": "You have exhausted your OpenAI quota. Please check your plan and billing.",
       "invalidKey": "The OpenAI API key is invalid or has expired."
     }
+  },
+  "PostReply": {
+    "count": "{count, plural, one {# reply} other {# replies}}",
+    "noReplies": "Reply",
+    "pendingLabel": "pending",
+    "replyButton": "+ Reply",
+    "formTitle": "Your reply",
+    "authorName": "Name",
+    "authorNamePlaceholder": "Your name",
+    "comment": "Comment",
+    "commentPlaceholder": "Write your reply…",
+    "contactInfo": "Contact",
+    "contactInfoPlaceholder": "Email or phone",
+    "contactInfoHint": "Only visible to the El Higuerón team.",
+    "submit": "Send reply",
+    "submitting": "Sending…",
+    "cancel": "Cancel",
+    "successBody": "Thank you! Your reply was received and will be reviewed soon.",
+    "errorMin2": "Minimum 2 characters",
+    "errorMin5": "Minimum 5 characters",
+    "errorRequired": "Required field",
+    "errorGeneral": "Could not send the reply. Please try again."
   },
   "Common": {
     "brand": "El Higuerón",

@@ -152,12 +152,25 @@ export const boulderPost = pgTable("boulder_post", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
+/** Replies to any post type (muro, camping, boulder). No star rating. */
+export const postReply = pgTable("post_reply", {
+  id: text("id").primaryKey(),
+  postType: text("post_type").notNull(), // "muro" | "camping" | "boulder"
+  postId: text("post_id").notNull(),
+  authorName: text("author_name").notNull(),
+  comment: text("comment").notNull(),
+  contactInfo: text("contact_info").notNull(),
+  status: text("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
 export type User = typeof user.$inferSelect
 export type Session = typeof session.$inferSelect
 export type SiteSettings = typeof siteSettings.$inferSelect
 export type ClimbPost = typeof climbPost.$inferSelect
 export type CampingPost = typeof campingPost.$inferSelect
 export type BoulderPost = typeof boulderPost.$inferSelect
+export type PostReply = typeof postReply.$inferSelect
 export type ChatSession = typeof chatSession.$inferSelect
 export type ChatMessage = typeof chatMessage.$inferSelect
 export type Reservation = typeof reservation.$inferSelect

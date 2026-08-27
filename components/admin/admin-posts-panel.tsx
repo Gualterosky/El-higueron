@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
-import type { ClimbPost, CampingPost, BoulderPost } from "@/lib/db/schema"
+import type { ClimbPost, CampingPost, BoulderPost, PostReply } from "@/lib/db/schema"
 import { deletePostAction, updatePostStatusAction } from "@/lib/muro/post-actions"
 import {
   deleteCampingPostAction,
@@ -18,6 +18,10 @@ import {
   deleteBoulderPostAction,
   updateBoulderPostStatusAction,
 } from "@/lib/boulder/post-actions"
+import {
+  deleteReplyAction,
+  updateReplyStatusAction,
+} from "@/lib/replies/reply-actions"
 import { SocialEmbed } from "@/components/muro/social-embed"
 import { PostMediaGallery } from "@/components/muro/post-media-gallery"
 
@@ -25,10 +29,17 @@ type Props = {
   initialPosts: ClimbPost[]
   initialCampingPosts: CampingPost[]
   initialBoulderPosts: BoulderPost[]
+  initialReplies: PostReply[]
 }
 
-export function AdminPostsPanel({ initialPosts, initialCampingPosts, initialBoulderPosts }: Props) {
+export function AdminPostsPanel({
+  initialPosts,
+  initialCampingPosts,
+  initialBoulderPosts,
+  initialReplies,
+}: Props) {
   const t = useTranslations("Panel.posts")
+  const tReply = useTranslations("Panel.replies")
   const router = useRouter()
 
   return (
@@ -49,6 +60,9 @@ export function AdminPostsPanel({ initialPosts, initialCampingPosts, initialBoul
           <TabsTrigger value="boulder">
             {t("tabs.boulder")} ({initialBoulderPosts.length})
           </TabsTrigger>
+          <TabsTrigger value="replies">
+            {t("tabs.replies")} ({initialReplies.length})
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="muro" className="mt-4">
@@ -61,6 +75,10 @@ export function AdminPostsPanel({ initialPosts, initialCampingPosts, initialBoul
 
         <TabsContent value="boulder" className="mt-4">
           <BoulderPostsList initialPosts={initialBoulderPosts} t={t} router={router} />
+        </TabsContent>
+
+        <TabsContent value="replies" className="mt-4">
+          <RepliesList initialReplies={initialReplies} t={tReply} router={router} />
         </TabsContent>
       </Tabs>
     </div>
@@ -405,6 +423,94 @@ function PostActions({ status, onApprove, onHide, onDelete, t }: PostActionsProp
       >
         <Trash2 className="h-4 w-4" />
       </Button>
+    </div>
+  )
+}
+
+// ── Replies list ─────────────────────────────────────────────────────────────
+
+const POST_TYPE_LABELS: Record<string, string> = {
+  muro: "Muro",
+  camping: "Camping",
+  boulder: "Boulder",
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function RepliesList({ initialReplies, t, router }: { initialReplies: PostReply[]; t: any; router: any }) {
+  const [replies, setReplies] = useState(initialReplies)
+  const [, startTransition] = useTransition()
+
+  function handleStatus(id: string, status: "approved" | "hidden" | "pending") {
+    startTransition(async () => {
+      const result = await updateReplyStatusAction(id, status)
+      if (result.ok) {
+        setReplies((prev) => prev.map((r) => (r.id === id ? { ...r, status } : r)))
+        router.refresh()
+      }
+    })
+  }
+
+  function handleDelete(id: string) {
+    startTransition(async () => {
+      const result = await deleteReplyAction(id)
+      if (result.ok) {
+        setReplies((prev) => prev.filter((r) => r.id !== id))
+        router.refresh()
+      }
+    })
+  }
+
+  if (replies.length === 0) {
+    return (
+      <p className="rounded-xl border border-dashed border-border/60 px-4 py-8 text-center text-sm text-muted-foreground">
+        {t("noResults")}
+      </p>
+    )
+  }
+
+  return (
+    <div className="space-y-4">
+      {replies.map((reply) => (
+        <article
+          key={reply.id}
+          className={cn(
+            "flex flex-col gap-4 rounded-xl border p-4 sm:flex-row sm:items-start sm:justify-between sm:p-5",
+            reply.status === "pending"
+              ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
+              : "border-border/60 bg-beige/20"
+          )}
+        >
+          <div className="min-w-0 space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <h3 className="font-medium text-forest">{reply.authorName}</h3>
+              <StatusBadge status={reply.status as "pending" | "approved" | "hidden"} t={t} />
+              <span className="rounded-full border border-border/50 px-2 py-0.5 text-xs text-muted-foreground">
+                {POST_TYPE_LABELS[reply.postType] ?? reply.postType}
+              </span>
+            </div>
+
+            <p className="text-sm text-muted-foreground">
+              {t("replyTo")}: <span className="font-mono text-xs">{reply.postId.slice(0, 8)}…</span>
+              {" · "}
+              {t("submittedOn")} {new Date(reply.createdAt).toLocaleDateString()}
+            </p>
+
+            <p className="text-sm leading-relaxed text-foreground">{reply.comment}</p>
+
+            <p className="text-xs text-muted-foreground">
+              <span className="font-medium">{t("contactLabel")}:</span> {reply.contactInfo}
+            </p>
+          </div>
+
+          <PostActions
+            status={reply.status as "pending" | "approved" | "hidden"}
+            onApprove={() => handleStatus(reply.id, "approved")}
+            onHide={() => handleStatus(reply.id, "hidden")}
+            onDelete={() => handleDelete(reply.id)}
+            t={t}
+          />
+        </article>
+      ))}
     </div>
   )
 }

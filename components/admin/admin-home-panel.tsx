@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl"
 import {
   BotMessageSquare,
   CalendarDays,
-  MessageSquareText,
   Newspaper,
   PanelsTopLeft,
   Users,
@@ -16,11 +15,6 @@ const CATEGORIES = [
     href: "/admin/usuarios",
     labelKey: "users",
     icon: Users,
-  },
-  {
-    href: "/admin/resenas",
-    labelKey: "reviews",
-    icon: MessageSquareText,
   },
   {
     href: "/admin/reservas",

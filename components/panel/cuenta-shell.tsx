@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl"
 import {
   CalendarDays,
   LogOut,
-  MessageSquareText,
   Newspaper,
   UserRound,
 } from "lucide-react"
@@ -15,7 +14,6 @@ import { signOut } from "@/lib/auth-client"
 
 const items = [
   { href: "/cuenta", labelKey: "profile", icon: UserRound },
-  { href: "/cuenta/resenas", labelKey: "reviews", icon: MessageSquareText },
   { href: "/cuenta/publicaciones", labelKey: "posts", icon: Newspaper },
   { href: "/cuenta/reservas", labelKey: "reservations", icon: CalendarDays },
 ] as const

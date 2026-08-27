@@ -5,7 +5,6 @@ import {
   CalendarDays,
   LayoutDashboard,
   LogOut,
-  MessageSquareText,
   Newspaper,
   PanelsTopLeft,
   Users,
@@ -28,12 +27,6 @@ const STAFF_ITEMS: NavItem[] = [
     href: "/staff",
     labelKey: "dashboard",
     icon: LayoutDashboard,
-    roles: ["staff", "administrador"],
-  },
-  {
-    href: "/staff/resenas",
-    labelKey: "reviews",
-    icon: MessageSquareText,
     roles: ["staff", "administrador"],
   },
   {
@@ -61,12 +54,6 @@ const ADMIN_ITEMS: NavItem[] = [
     href: "/admin/usuarios",
     labelKey: "users",
     icon: Users,
-    roles: ["administrador"],
-  },
-  {
-    href: "/admin/resenas",
-    labelKey: "reviews",
-    icon: MessageSquareText,
     roles: ["administrador"],
   },
   {

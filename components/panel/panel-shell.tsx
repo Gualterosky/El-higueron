@@ -41,6 +41,12 @@ const STAFF_ITEMS: NavItem[] = [
     icon: Newspaper,
     roles: ["staff", "administrador"],
   },
+  {
+    href: "/staff/contenido",
+    labelKey: "content",
+    icon: PanelsTopLeft,
+    roles: ["staff", "administrador"],
+  },
 ]
 
 const ADMIN_ITEMS: NavItem[] = [

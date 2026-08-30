@@ -3,7 +3,8 @@
 import { useState, useTransition } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
-import { Loader2, Pencil, Plus, Trash2 } from "lucide-react"
+import { KeyRound, Loader2, Pencil, Plus, Trash2 } from "lucide-react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
@@ -43,9 +44,16 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import {
   createUserAction,
   updateUserAction,
   deleteUserAction,
+  resetUserPasswordAction,
   type UserRow,
   type CreateUserInput,
 } from "@/lib/auth/user-actions"
@@ -60,14 +68,10 @@ export function AdminUsersPanel({ initialUsers }: Props) {
   const router = useRouter()
   const [users, setUsers] = useState(initialUsers)
 
-  // ── Create dialog state ──────────────────────────────────────────────────
   const [createOpen, setCreateOpen] = useState(false)
-
-  // ── Edit dialog state ────────────────────────────────────────────────────
   const [editUser, setEditUser] = useState<UserRow | null>(null)
-
-  // ── Delete dialog state ──────────────────────────────────────────────────
   const [deleteUser, setDeleteUser] = useState<UserRow | null>(null)
+  const [resetUser, setResetUser] = useState<UserRow | null>(null)
 
   function handleCreated(newUser: UserRow) {
     setUsers((prev) => [...prev, newUser])
@@ -109,63 +113,95 @@ export function AdminUsersPanel({ initialUsers }: Props) {
           {t("noResults")}
         </p>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-border/60">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t("columns.name")}</TableHead>
-                <TableHead>{t("columns.email")}</TableHead>
-                <TableHead>{t("columns.role")}</TableHead>
-                <TableHead>{t("columns.status")}</TableHead>
-                <TableHead className="text-right">{t("columns.actions")}</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {users.map((u) => (
-                <TableRow key={u.id}>
-                  <TableCell className="font-medium">{u.name}</TableCell>
-                  <TableCell className="text-muted-foreground">{u.email}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline">{t(`roles.${u.role}`)}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={u.banned ? "destructive" : "default"}
-                      className={u.banned ? undefined : "border-transparent bg-forest text-white"}
-                    >
-                      {u.banned ? t("status.banned") : t("status.active")}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-1">
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setEditUser(u)}
-                        disabled={u.role === "administrador"}
-                        aria-label={t("edit")}
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setDeleteUser(u)}
-                        disabled={u.role === "administrador"}
-                        aria-label={t("delete")}
-                        className="text-destructive"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
+        <TooltipProvider delayDuration={300}>
+          <div className="overflow-x-auto rounded-xl border border-border/60">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t("columns.name")}</TableHead>
+                  <TableHead>{t("columns.email")}</TableHead>
+                  <TableHead>{t("columns.role")}</TableHead>
+                  <TableHead>{t("columns.status")}</TableHead>
+                  <TableHead className="text-right">{t("columns.actions")}</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+              </TableHeader>
+              <TableBody>
+                {users.map((u) => (
+                  <TableRow key={u.id}>
+                    <TableCell className="font-medium">{u.name}</TableCell>
+                    <TableCell className="text-muted-foreground">{u.email}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline">{t(`roles.${u.role}`)}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={u.banned ? "destructive" : "default"}
+                        className={u.banned ? undefined : "border-transparent bg-forest text-white"}
+                      >
+                        {u.banned ? t("status.banned") : t("status.active")}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-1">
+                        {/* Reset password */}
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => setResetUser(u)}
+                              disabled={u.role === "administrador"}
+                              aria-label={t("resetButton")}
+                            >
+                              <KeyRound className="h-4 w-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>{t("resetButton")}</TooltipContent>
+                        </Tooltip>
+
+                        {/* Edit */}
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => setEditUser(u)}
+                              disabled={u.role === "administrador"}
+                              aria-label={t("edit")}
+                            >
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>{t("edit")}</TooltipContent>
+                        </Tooltip>
+
+                        {/* Delete */}
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => setDeleteUser(u)}
+                              disabled={u.role === "administrador"}
+                              aria-label={t("delete")}
+                              className="text-destructive"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent>{t("delete")}</TooltipContent>
+                        </Tooltip>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </TooltipProvider>
       )}
 
       {/* Create dialog */}
@@ -182,6 +218,16 @@ export function AdminUsersPanel({ initialUsers }: Props) {
           open={!!editUser}
           onOpenChange={(open) => { if (!open) setEditUser(null) }}
           onUpdated={handleUpdated}
+        />
+      )}
+
+      {/* Reset password confirmation */}
+      {resetUser && (
+        <ResetPasswordDialog
+          user={resetUser}
+          open={!!resetUser}
+          onOpenChange={(open) => { if (!open) setResetUser(null) }}
+          onReset={() => setResetUser(null)}
         />
       )}
 
@@ -469,6 +515,74 @@ function EditUserDialog({
   )
 }
 
+// ── Reset password dialog ─────────────────────────────────────────────────────
+
+function ResetPasswordDialog({
+  user: targetUser,
+  open,
+  onOpenChange,
+  onReset,
+}: {
+  user: UserRow
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  onReset: () => void
+}) {
+  const t = useTranslations("Panel.users")
+  const [error, setError] = useState<string | null>(null)
+  const [isPending, startTransition] = useTransition()
+
+  function handleReset() {
+    setError(null)
+    startTransition(async () => {
+      const result = await resetUserPasswordAction(targetUser.id)
+      if (!result.ok) {
+        const errKey = (result as { ok: false; error: string }).error
+        setError(t(`resetDialog.errors.${errKey}` as Parameters<typeof t>[0]) ?? t("resetDialog.errors.reset_failed"))
+        return
+      }
+      toast.success(t("resetDialog.successToast"))
+      onReset()
+    })
+  }
+
+  return (
+    <AlertDialog open={open} onOpenChange={(open) => { if (!isPending) { setError(null); onOpenChange(open) } }}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{t("resetDialog.title")}</AlertDialogTitle>
+          <AlertDialogDescription>
+            {t("resetDialog.description", { name: targetUser.name })}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        {error && (
+          <p className="text-sm text-destructive" role="alert">
+            {error}
+          </p>
+        )}
+
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={isPending}>
+            {t("resetDialog.cancel")}
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={(e) => {
+              e.preventDefault()
+              handleReset()
+            }}
+            disabled={isPending}
+            className="bg-forest text-white hover:bg-forest/90"
+          >
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {t("resetDialog.confirm")}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+
 // ── Delete confirmation dialog ────────────────────────────────────────────────
 
 function DeleteUserDialog({
@@ -500,7 +614,7 @@ function DeleteUserDialog({
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={(open) => { if (!isPending) onOpenChange(open) }}>
+    <AlertDialog open={open} onOpenChange={(open) => { if (!isPending) { setError(null); onOpenChange(open) } }}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t("deleteDialog.title")}</AlertDialogTitle>

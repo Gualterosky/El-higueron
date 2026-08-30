@@ -1535,7 +1535,19 @@
           "cannot_delete_admin": "No se puede eliminar al administrador del sistema.",
           "delete_failed": "No se pudo eliminar el usuario. Intenta de nuevo."
         }
-      }
+      },
+      "resetDialog": {
+        "title": "Restablecer contraseña",
+        "description": "Se asignará la contraseña por defecto a {name} según su rol. Al iniciar sesión se le pedirá que la cambie.",
+        "cancel": "Cancelar",
+        "confirm": "Restablecer",
+        "successToast": "Contraseña restablecida. El usuario deberá cambiarla al iniciar sesión.",
+        "errors": {
+          "no_default_password": "No hay contraseña por defecto configurada en el servidor.",
+          "reset_failed": "No se pudo restablecer la contraseña. Intenta de nuevo."
+        }
+      },
+      "resetButton": "Restablecer contraseña"
     },
     "reservations": {
       "title": "Gestión de reservas",

@@ -153,6 +153,50 @@ export async function updateUserAction(
   }
 }
 
+// ── Reset password ────────────────────────────────────────────────────────────
+
+export async function resetUserPasswordAction(id: string): Promise<ActionResult> {
+  try {
+    const requestHeaders = await headers()
+
+    // Fetch the target user to determine which default password to use
+    const rows = await db
+      .select({ role: user.role })
+      .from(user)
+      .where(eq(user.id, id))
+      .limit(1)
+
+    if (!rows.length) return { ok: false, error: "not_found" }
+    if (rows[0].role === "administrador") return { ok: false, error: "cannot_reset_admin" }
+
+    const role = isRole(rows[0].role) ? rows[0].role : "visitante"
+    const defaultPassword =
+      role === "staff"
+        ? process.env.DEFAULT_PASSWORD_STAFF
+        : process.env.DEFAULT_PASSWORD_VISITANTE
+
+    if (!defaultPassword) {
+      return { ok: false, error: "no_default_password" }
+    }
+
+    // admin plugin's setUserPassword changes password without needing the old one
+    await auth.api.setUserPassword({
+      body: { userId: id, newPassword: defaultPassword },
+      headers: requestHeaders,
+    })
+
+    // Force the user to change the password on their next login
+    await db
+      .update(user)
+      .set({ mustChangePassword: true, updatedAt: new Date() })
+      .where(eq(user.id, id))
+
+    return { ok: true }
+  } catch {
+    return { ok: false, error: "reset_failed" }
+  }
+}
+
 // ── Delete ────────────────────────────────────────────────────────────────────
 
 export async function deleteUserAction(id: string): Promise<ActionResult> {

@@ -1535,7 +1535,19 @@
           "cannot_delete_admin": "Cannot delete the system administrator.",
           "delete_failed": "Could not delete the user. Please try again."
         }
-      }
+      },
+      "resetDialog": {
+        "title": "Reset password",
+        "description": "A default password will be assigned to {name} based on their role. They will be required to change it on their next login.",
+        "cancel": "Cancel",
+        "confirm": "Reset",
+        "successToast": "Password reset. The user must change it on their next login.",
+        "errors": {
+          "no_default_password": "No default password is configured on the server.",
+          "reset_failed": "Could not reset the password. Please try again."
+        }
+      },
+      "resetButton": "Reset password"
     },
     "reservations": {
       "title": "Reservation management",

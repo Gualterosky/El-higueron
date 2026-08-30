@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { PanelShell } from "@/components/panel/panel-shell"
+import { Toaster } from "@/components/ui/sonner"
 import { requireRole } from "@/lib/auth/session"
 
 export const dynamic = "force-dynamic"
@@ -31,8 +32,11 @@ export default async function AdminLayout({ children, params }: Props) {
   }
 
   return (
-    <PanelShell role="administrador" userName={session.user.name} translations={translations}>
-      {children}
-    </PanelShell>
+    <>
+      <PanelShell role="administrador" userName={session.user.name} translations={translations}>
+        {children}
+      </PanelShell>
+      <Toaster position="bottom-right" richColors />
+    </>
   )
 }

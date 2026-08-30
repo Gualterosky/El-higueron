@@ -103,9 +103,9 @@ export function AdminContentPanel({
               </div>
               <Switch
                 id={`section-${section}`}
-                checked={hidden[section]}
+                checked={!hidden[section]}
                 disabled={isSectionPending}
-                onCheckedChange={(checked) => onSectionChange(section, checked)}
+                onCheckedChange={(checked) => onSectionChange(section, !checked)}
                 aria-label={t(`sections.${section}`)}
               />
             </li>
@@ -144,9 +144,9 @@ export function AdminContentPanel({
           </div>
           <Switch
             id="maintenance-mode"
-            checked={maintenance}
+            checked={!maintenance}
             disabled={isMaintenancePending}
-            onCheckedChange={onMaintenanceChange}
+            onCheckedChange={(checked) => onMaintenanceChange(!checked)}
             aria-label={t("maintenanceToggle")}
           />
         </div>

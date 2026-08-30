@@ -1542,7 +1542,7 @@
       "title": "Content management",
       "description": "Temporarily hide site sections and enable the maintenance notice.",
       "sectionsTitle": "Site sections",
-      "sectionsDescription": "Turn the switch on to hide a section from the menu, its page, and related links.",
+      "sectionsDescription": "Turn the switch on to show a section in the menu, its page, and related links. Turn it off to hide it.",
       "sectionHidden": "Hidden on the public site",
       "sectionVisible": "Visible",
       "sectionSaving": "Saving…",
@@ -1559,14 +1559,14 @@
       },
       "maintenanceTitle": "Maintenance mode",
       "maintenanceDescription": "Hides the public site and shows the maintenance notice. Only login (and the admin panel after signing in) remain accessible.",
-      "maintenanceToggle": "Enable maintenance",
+      "maintenanceToggle": "Site active",
       "maintenanceOn": "On — the public site is hidden",
       "maintenanceOff": "Off",
       "maintenanceSaving": "Saving…",
       "maintenanceError": "Could not update maintenance mode. Please try again.",
       "bannerTitle": "This site is under maintenance",
       "bannerBody": "We are working to improve your experience. Please check back soon at El Higuerón.",
-      "bannerIdle": "Enable maintenance mode to hide the site and show the notice."
+      "bannerIdle": "Turn the switch off to hide the site and show the maintenance notice."
     },
     "replies": {
       "count": "{count, plural, one {# reply} other {# replies}}",

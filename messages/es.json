@@ -343,7 +343,7 @@
           "maxGrade": "V0"
         },
         {
-          "name": "A ultima hora",
+          "name": "A última hora",
           "problemCount": "2 problemas",
           "maxGrade": "V5"
         },
@@ -1832,7 +1832,7 @@
       ]
     },
     "HIG02": {
-      "name": "A ultima hora",
+      "name": "A última hora",
       "description": "Bloque de nivel intermedio que ofrece dos problemas bien diferenciados: uno tecnico y uno mas potente. El nombre refleja ese momento de la sesion donde quedan las ultimas energias pero aun hay ganas de intentarlo.",
       "tips": [
         "El problema V3 exige lectura y equilibrio sobre agarres de tamaño mediano",
@@ -1841,7 +1841,7 @@
       ],
       "problems": [
         {
-          "name": "A ultima hora",
+          "name": "A última hora",
           "description": "Problema tecnico que exige precision en la colocacion de los pies y buen equilibrio. Ideal para trabajar en la sesion de la tarde cuando el cuerpo ya esta caliente."
         },
         {
@@ -1875,7 +1875,7 @@
       ],
       "problems": [
         {
-          "name": "Capitan planeta",
+          "name": "Capitán planeta",
           "description": "Problema de nivel intermedio-alto (V4) que combina movimientos tecnicos y potentes. Un buen reto para quien ya domina los problemas mas faciles y quiere dar un paso mas en su progresion."
         },
         {
@@ -1883,7 +1883,7 @@
           "description": "Problema avanzado (V6) que demanda tecnica de movimientos laterales y buen equilibrio sobre agarres exigentes. La lectura de la secuencia es fundamental para encontrar la eficiencia."
         },
         {
-          "name": "Salgale",
+          "name": "Sálgale",
           "description": "El problema mas duro de la zona de boulders (V8). Exige potencia explosiva, tecnica fina y una lectura precisa de cada movimiento. Solo para escaladores con experiencia solida en boulder que quieran el maximo desafio del Higueron."
         }
       ]

@@ -331,6 +331,33 @@
       "subtitle": "Check crashpad availability or plan your visit to the boulder area.",
       "primary": "See available gear",
       "secondary": "Contact"
+    },
+    "boulders": {
+      "eyebrow": "The Blocks",
+      "title": "Explore each block",
+      "subtitle": "Four natural rock formations, each with its own character and problems. Click on a block to learn more.",
+      "list": [
+        {
+          "name": "Primer Paso",
+          "problemCount": "2 problems",
+          "maxGrade": "V0"
+        },
+        {
+          "name": "A última hora",
+          "problemCount": "2 problems",
+          "maxGrade": "V5"
+        },
+        {
+          "name": "El portal",
+          "problemCount": "1 problem",
+          "maxGrade": "V6"
+        },
+        {
+          "name": "El dado",
+          "problemCount": "3 problems",
+          "maxGrade": "V8"
+        }
+      ]
     }
   },
   "Camping": {
@@ -1756,5 +1783,110 @@
     "instagram": "Instagram",
     "facebook": "Facebook",
     "copPerPerson": "COP / person"
+  },
+  "BoulderRoute": {
+    "hero": {
+      "subtitle": "Boulder Area El Higueron - Block {n} of {total}"
+    },
+    "back": "Back to boulder area",
+    "details": {
+      "eyebrow": "Block Details"
+    },
+    "labels": {
+      "nivel": "Max grade",
+      "problemas": "Problems"
+    },
+    "descriptionTitle": "Description",
+    "tipsTitle": "Tips for this block",
+    "problemsEyebrow": "Problems",
+    "problemsTitle": "Problems on this block",
+    "communityEyebrow": "Community",
+    "communityTitle": "Sessions on this block",
+    "sessionTitle": "Share your session",
+    "prev": "Previous block",
+    "next": "Next block",
+    "allBoulders": "See all blocks",
+    "cta": {
+      "title": "Need gear for bouldering?",
+      "subtitle": "Check crashpad and gear availability at Camping El Higueron.",
+      "equipos": "See available gear",
+      "visita": "Plan your visit"
+    },
+    "HIG01": {
+      "name": "Primer Paso",
+      "description": "The first block where many climbers make their first moves on natural rock. Its V0 problems make it the ideal starting point for those approaching outdoor bouldering for the first time at El Higueron.",
+      "tips": [
+        "Perfect for warming up at the start of the session",
+        "Ideal for beginners learning basic footwork technique",
+        "Feet are key on both lines: trust the rubber on your climbing shoes"
+      ],
+      "problems": [
+        {
+          "name": "Mi Primer Pegue",
+          "description": "A direct and welcoming line that invites precise footwork and trusting your body weight on the rock. The name says it all: the first problem many climbers complete at El Higueron."
+        },
+        {
+          "name": "Gateo",
+          "description": "A variation with a slightly different reading. Excellent for learning hip movement on rock and understanding balance in bouldering."
+        }
+      ]
+    },
+    "HIG02": {
+      "name": "A última hora",
+      "description": "An intermediate-level block offering two well-differentiated problems: one technical and one more powerful. The name reflects that moment in the session when energy is running low but the motivation is still there.",
+      "tips": [
+        "The V3 problem demands reading and balance on medium-sized holds",
+        "The V5 requires upper-body power",
+        "A great block for building progression between difficulty levels"
+      ],
+      "problems": [
+        {
+          "name": "A última hora",
+          "description": "A technical problem that demands precise footwork and good balance. Best attempted in the afternoon session when your body is fully warmed up."
+        },
+        {
+          "name": "A tierra",
+          "description": "A powerful problem that tests strength and endurance. The sequence requires decisiveness and controlled power to reach the top."
+        }
+      ]
+    },
+    "HIG03": {
+      "name": "El portal",
+      "description": "A single line, direct and demanding. El portal is a singular block offering one of the most technical problems in the area, with moves that require skill across all planes and careful reading of every hold.",
+      "tips": [
+        "Study the full sequence carefully before your first attempt",
+        "The start requires core activation and full body tension",
+        "Advanced level (V6): prior bouldering experience is recommended"
+      ],
+      "problems": [
+        {
+          "name": "El portal",
+          "description": "An advanced-level problem (V6) that challenges technique, strength, and the ability to read moves on rock. The line is direct and does not forgive sequence errors: every hold has a purpose."
+        }
+      ]
+    },
+    "HIG04": {
+      "name": "El dado",
+      "description": "The most varied block in the area. With three problems ranging from V4 to V8, El dado offers something for intermediate and advanced climbers who want to push their limits. It is the most demanding block in the sector and where the most experienced visitors come to work their projects.",
+      "tips": [
+        "Capitan planeta is a good intermediate warm-up before the harder problems",
+        "El cangrejero demands side-pull technique and precision",
+        "Salgale is the hardest problem in the entire boulder area: for experienced boulderers only"
+      ],
+      "problems": [
+        {
+          "name": "Capitán planeta",
+          "description": "An intermediate-to-hard problem (V4) combining technical and powerful moves. A great challenge for those who already have the easier problems dialled and want to progress further."
+        },
+        {
+          "name": "El cangrejero",
+          "description": "An advanced problem (V6) demanding side-pull technique and good balance on exacting holds. Reading the sequence is fundamental to finding efficiency."
+        },
+        {
+          "name": "Sálgale",
+          "description": "The hardest problem in the boulder area (V8). It demands explosive power, fine technique, and precise reading of every move. For experienced boulderers only who want the ultimate challenge at El Higueron."
+        }
+      ]
+    }
   }
 }

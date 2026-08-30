@@ -1477,10 +1477,11 @@
     },
     "users": {
       "title": "User management",
-      "description": "Create, edit, or remove system users. Actions will be enabled later.",
+      "description": "Create, edit, or remove system users.",
       "create": "Create user",
       "edit": "Edit",
       "delete": "Delete",
+      "noResults": "No users found.",
       "columns": {
         "name": "Name",
         "email": "Email",
@@ -1495,7 +1496,45 @@
       },
       "status": {
         "active": "Active",
-        "inactive": "Inactive"
+        "banned": "Blocked"
+      },
+      "createDialog": {
+        "title": "Create user",
+        "description": "Fill in the details to create a new system user.",
+        "name": "Full name",
+        "email": "Email address",
+        "password": "Temporary password",
+        "role": "Role",
+        "mustChangePassword": "Must change password on first login",
+        "cancel": "Cancel",
+        "submit": "Create user",
+        "errors": {
+          "email_taken": "A user with that email already exists.",
+          "create_failed": "Could not create the user. Please try again."
+        }
+      },
+      "editDialog": {
+        "title": "Edit user",
+        "description": "Update the user's role and account status.",
+        "role": "Role",
+        "banned": "Account blocked",
+        "bannedDescription": "The user will not be able to sign in while blocked.",
+        "cancel": "Cancel",
+        "submit": "Save changes",
+        "errors": {
+          "last_admin": "Cannot change the role of the only administrator.",
+          "update_failed": "Could not update the user. Please try again."
+        }
+      },
+      "deleteDialog": {
+        "title": "Delete user",
+        "description": "Are you sure you want to delete {name}? This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Delete",
+        "errors": {
+          "cannot_delete_admin": "Cannot delete the system administrator.",
+          "delete_failed": "Could not delete the user. Please try again."
+        }
       }
     },
     "reservations": {

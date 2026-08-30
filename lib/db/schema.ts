@@ -15,6 +15,7 @@ export const user = pgTable("user", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   role: text("role").notNull().default("visitante"),
   mustChangePassword: boolean("must_change_password").notNull().default(false),
+  banned: boolean("banned").notNull().default(false),
 })
 
 export const session = pgTable("session", {

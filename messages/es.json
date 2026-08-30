@@ -1477,10 +1477,11 @@
     },
     "users": {
       "title": "Gestión de usuarios",
-      "description": "Crea, modifica o elimina usuarios del sistema. Las acciones se activarán más adelante.",
+      "description": "Crea, modifica o elimina usuarios del sistema.",
       "create": "Crear usuario",
       "edit": "Editar",
       "delete": "Eliminar",
+      "noResults": "No hay usuarios registrados.",
       "columns": {
         "name": "Nombre",
         "email": "Correo",
@@ -1495,7 +1496,45 @@
       },
       "status": {
         "active": "Activo",
-        "inactive": "Inactivo"
+        "banned": "Bloqueado"
+      },
+      "createDialog": {
+        "title": "Crear usuario",
+        "description": "Completa los datos para crear un nuevo usuario en el sistema.",
+        "name": "Nombre completo",
+        "email": "Correo electrónico",
+        "password": "Contraseña temporal",
+        "role": "Rol",
+        "mustChangePassword": "Debe cambiar la contraseña al iniciar sesión",
+        "cancel": "Cancelar",
+        "submit": "Crear usuario",
+        "errors": {
+          "email_taken": "Ya existe un usuario con ese correo.",
+          "create_failed": "No se pudo crear el usuario. Intenta de nuevo."
+        }
+      },
+      "editDialog": {
+        "title": "Editar usuario",
+        "description": "Modifica el rol y el estado del usuario.",
+        "role": "Rol",
+        "banned": "Cuenta bloqueada",
+        "bannedDescription": "El usuario no podrá iniciar sesión mientras esté bloqueado.",
+        "cancel": "Cancelar",
+        "submit": "Guardar cambios",
+        "errors": {
+          "last_admin": "No se puede cambiar el rol del único administrador.",
+          "update_failed": "No se pudo actualizar el usuario. Intenta de nuevo."
+        }
+      },
+      "deleteDialog": {
+        "title": "Eliminar usuario",
+        "description": "¿Estás seguro de que quieres eliminar a {name}? Esta acción no se puede deshacer.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar",
+        "errors": {
+          "cannot_delete_admin": "No se puede eliminar al administrador del sistema.",
+          "delete_failed": "No se pudo eliminar el usuario. Intenta de nuevo."
+        }
       }
     },
     "reservations": {

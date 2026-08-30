@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { assertSectionVisible } from "@/lib/site-settings"
 import { BoulderPublications } from "@/components/boulder/boulder-publications"
 import { BoulderPostForm } from "@/components/boulder/boulder-post-form"
+import { BOULDERS } from "@/lib/boulder/boulders"
 
 export default async function BoulderPage({
   params,
@@ -282,6 +283,53 @@ export default async function BoulderPage({
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Boulders Section */}
+      <section className="py-20 lg:py-28">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mb-12 text-center">
+            <div className="mb-4 flex items-center justify-center gap-2">
+              <CircleDot className="h-5 w-5 text-forest" />
+              <span className="text-sm font-medium uppercase tracking-wider text-forest">
+                {t('boulders.eyebrow')}
+              </span>
+            </div>
+            <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
+              {t('boulders.title')}
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground">
+              {t('boulders.subtitle')}
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {BOULDERS.map((boulder) => {
+              const maxLevel = boulder.problems.reduce((max, p) => {
+                const num = parseInt(p.level.replace('V', ''), 10)
+                const maxNum = parseInt(max.replace('V', ''), 10)
+                return num > maxNum ? p.level : max
+              }, 'V0')
+              const boulderListItem = (t.raw('boulders.list') as { name: string; problemCount: string; maxGrade: string }[])[boulder.number - 1]
+              return (
+                <Link key={boulder.id} href={`/boulder/${boulder.id}`}>
+                  <Card className="h-full border-border transition-all hover:border-forest hover:shadow-md">
+                    <CardHeader className="pb-2">
+                      <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-forest text-sm font-bold text-white">
+                        {boulder.number}
+                      </div>
+                      <span className="text-xs font-semibold text-orange">{maxLevel}</span>
+                      <CardTitle className="text-sm leading-tight">{boulderListItem?.name}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-xs text-muted-foreground">{boulderListItem?.problemCount}</p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>

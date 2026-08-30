@@ -28,10 +28,10 @@ const SUGGESTION_ICONS = [Tent, CalendarCheck, Mountain, MapPin]
 
 function getOrCreateSessionId(): string {
   try {
-    const existing = localStorage.getItem(SESSION_STORAGE_KEY)
+    const existing = sessionStorage.getItem(SESSION_STORAGE_KEY)
     if (existing) return existing
     const id = crypto.randomUUID()
-    localStorage.setItem(SESSION_STORAGE_KEY, id)
+    sessionStorage.setItem(SESSION_STORAGE_KEY, id)
     return id
   } catch {
     return crypto.randomUUID()

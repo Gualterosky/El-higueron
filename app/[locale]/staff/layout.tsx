@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { PanelShell } from "@/components/panel/panel-shell"
+import { Toaster } from "@/components/ui/sonner"
 import { requireRole } from "@/lib/auth/session"
 
 export const dynamic = "force-dynamic"
@@ -19,11 +20,10 @@ export default async function StaffLayout({ children, params }: Props) {
 
   const role = session.user.role === "administrador" ? "administrador" : "staff"
   const translations = {
-    title: role === "administrador" ? t("adminTitle") : t("staffTitle"),
+    title: t("staffTitle"),
     signOut: t("signOut"),
     nav: {
       dashboard: t("nav.dashboard"),
-      users: t("nav.users"),
       reservations: t("nav.reservations"),
       posts: t("nav.posts"),
       content: t("nav.content"),
@@ -31,8 +31,11 @@ export default async function StaffLayout({ children, params }: Props) {
   }
 
   return (
-    <PanelShell role={role} userName={session.user.name} translations={translations}>
-      {children}
-    </PanelShell>
+    <>
+      <PanelShell role={role} userName={session.user.name} translations={translations}>
+        {children}
+      </PanelShell>
+      <Toaster position="bottom-right" richColors />
+    </>
   )
 }

@@ -1436,7 +1436,8 @@
     "adminWelcome": "Panel del administrador",
     "adminDescription": "Gestiona usuarios, reservas, publicaciones y el contenido del sitio.",
     "staffWelcome": "Panel del equipo",
-    "staffDescription": "Administra reservas y publicaciones.",
+    "staffDescription": "Administra reservas, publicaciones y el contenido del sitio.",
+    "draftBanner": "Borrador — funcionalidad en desarrollo, próximamente disponible.",
     "signOut": "Cerrar sesión",
     "comingSoon": "Próximamente",
     "errorTitle": "No se pudo cargar el panel",
@@ -1668,18 +1669,93 @@
       "reservationsBody": "Gestión de reservas. Próximamente.",
       "postsTitle": "Publicaciones",
       "postsBody": "Moderación de publicaciones. Próximamente."
+    },
+    "staff": {
+      "home": {
+        "categories": {
+          "reservations": {
+            "title": "Gestión de reservas",
+            "description": "Consulta y administra las solicitudes de reserva recibidas."
+          },
+          "posts": {
+            "title": "Gestión de publicaciones",
+            "description": "Revisa y modera las publicaciones de los visitantes."
+          },
+          "content": {
+            "title": "Gestión de contenido",
+            "description": "Activa o desactiva secciones del sitio y el modo mantenimiento."
+          }
+        }
+      },
+      "reservas": {
+        "title": "Gestión de reservas",
+        "description": "Próximamente podrás consultar y administrar las solicitudes de reserva desde aquí."
+      },
+      "publicaciones": {
+        "title": "Gestión de publicaciones",
+        "description": "Próximamente podrás revisar, aprobar u ocultar las publicaciones de los visitantes."
+      },
+      "contenido": {
+        "title": "Gestión de contenido",
+        "description": "Próximamente podrás activar o desactivar secciones del sitio y el modo mantenimiento."
+      }
     }
   },
   "Cuenta": {
     "title": "Mi cuenta",
     "welcome": "Hola, {name}",
-    "description": "Desde aquí podrás crear publicaciones y gestionar tus reservas.",
+    "description": "Desde aquí podrás ver tus publicaciones, hacer seguimiento a tus reservas y gestionar tu perfil.",
     "signOut": "Cerrar sesión",
     "backHome": "Volver al sitio",
     "nav": {
       "profile": "Perfil",
       "posts": "Mis publicaciones",
       "reservations": "Mis reservas"
+    },
+    "home": {
+      "statsTitle": "Tu actividad",
+      "postsLabel": "Publicaciones",
+      "reservationsLabel": "Reservas",
+      "quickAccess": "Acceso rápido",
+      "categories": {
+        "posts": {
+          "title": "Mis publicaciones",
+          "description": "Revisa el estado de tus reseñas en el muro de escalada, camping y boulder."
+        },
+        "reservations": {
+          "title": "Mis reservas",
+          "description": "Consulta el historial y el estado actual de todas tus reservas."
+        }
+      }
+    },
+    "publicaciones": {
+      "title": "Mis publicaciones",
+      "description": "Aquí aparecerán todas tus reseñas en el muro de escalada, camping y boulder.",
+      "draftNote": "Esta sección está en desarrollo. Próximamente podrás ver y gestionar todas tus publicaciones.",
+      "emptyTitle": "Sin publicaciones aún",
+      "emptyDescription": "Cuando publiques una reseña o experiencia en el sitio, aparecerá aquí con su estado."
+    },
+    "reservas": {
+      "title": "Mis reservas",
+      "description": "Consulta el historial y el estado actual de todas tus reservas en El Higuerón.",
+      "draftNote": "Esta sección está en desarrollo. Próximamente podrás ver el estado de tus reservas en tiempo real.",
+      "emptyTitle": "Sin reservas aún",
+      "emptyDescription": "Cuando realices una reserva, aparecerá aquí con su estado actualizado.",
+      "columns": {
+        "date": "Fecha",
+        "type": "Tipo",
+        "people": "Personas",
+        "status": "Estado"
+      },
+      "types": {
+        "camping": "Camping",
+        "escalada": "Escalada"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "confirmed": "Confirmada",
+        "cancelled": "Cancelada"
+      }
     },
     "placeholders": {
       "postsTitle": "Mis publicaciones",

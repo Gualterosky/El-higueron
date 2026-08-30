@@ -1,5 +1,6 @@
-import { getTranslations, setRequestLocale } from "next-intl/server"
+import { setRequestLocale } from "next-intl/server"
 import { getSession } from "@/lib/auth/session"
+import { CuentaHomePanel } from "@/components/cuenta/cuenta-home-panel"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -8,15 +9,7 @@ type Props = {
 export default async function CuentaPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const t = await getTranslations("Cuenta")
   const session = await getSession()
 
-  return (
-    <div className="space-y-3">
-      <h2 className="text-2xl font-semibold text-forest">
-        {t("welcome", { name: session?.user.name ?? "" })}
-      </h2>
-      <p className="text-muted-foreground">{t("description")}</p>
-    </div>
-  )
+  return <CuentaHomePanel userName={session?.user.name ?? ""} />
 }

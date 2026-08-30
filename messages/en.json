@@ -1436,7 +1436,8 @@
     "adminWelcome": "Administrator panel",
     "adminDescription": "Manage users, reservations, posts, and site content.",
     "staffWelcome": "Team panel",
-    "staffDescription": "Manage reservations and posts.",
+    "staffDescription": "Manage reservations, posts, and site content.",
+    "draftBanner": "Draft — functionality under development, coming soon.",
     "signOut": "Sign out",
     "comingSoon": "Coming soon",
     "errorTitle": "Could not load the panel",
@@ -1668,18 +1669,93 @@
       "reservationsBody": "Reservation management. Coming soon.",
       "postsTitle": "Posts",
       "postsBody": "Post moderation. Coming soon."
+    },
+    "staff": {
+      "home": {
+        "categories": {
+          "reservations": {
+            "title": "Reservation management",
+            "description": "View and manage incoming booking requests."
+          },
+          "posts": {
+            "title": "Post management",
+            "description": "Review and moderate visitor posts."
+          },
+          "content": {
+            "title": "Content management",
+            "description": "Enable or disable site sections and maintenance mode."
+          }
+        }
+      },
+      "reservas": {
+        "title": "Reservation management",
+        "description": "Soon you will be able to view and manage booking requests from here."
+      },
+      "publicaciones": {
+        "title": "Post management",
+        "description": "Soon you will be able to review, approve, or hide visitor posts."
+      },
+      "contenido": {
+        "title": "Content management",
+        "description": "Soon you will be able to enable or disable site sections and maintenance mode."
+      }
     }
   },
   "Cuenta": {
     "title": "My account",
     "welcome": "Hi, {name}",
-    "description": "From here you will be able to create posts and manage your reservations.",
+    "description": "From here you can view your posts, track your reservations, and manage your profile.",
     "signOut": "Sign out",
     "backHome": "Back to site",
     "nav": {
       "profile": "Profile",
       "posts": "My posts",
       "reservations": "My reservations"
+    },
+    "home": {
+      "statsTitle": "Your activity",
+      "postsLabel": "Posts",
+      "reservationsLabel": "Reservations",
+      "quickAccess": "Quick access",
+      "categories": {
+        "posts": {
+          "title": "My posts",
+          "description": "Check the status of your reviews on the climbing wall, camping, and bouldering areas."
+        },
+        "reservations": {
+          "title": "My reservations",
+          "description": "View the history and current status of all your reservations."
+        }
+      }
+    },
+    "publicaciones": {
+      "title": "My posts",
+      "description": "All your reviews on the climbing wall, camping, and bouldering areas will appear here.",
+      "draftNote": "This section is under development. Soon you will be able to view and manage all your posts.",
+      "emptyTitle": "No posts yet",
+      "emptyDescription": "When you publish a review or experience on the site, it will appear here with its status."
+    },
+    "reservas": {
+      "title": "My reservations",
+      "description": "View the history and current status of all your reservations at El Higuerón.",
+      "draftNote": "This section is under development. Soon you will be able to track your reservation status in real time.",
+      "emptyTitle": "No reservations yet",
+      "emptyDescription": "When you make a reservation, it will appear here with its current status.",
+      "columns": {
+        "date": "Date",
+        "type": "Type",
+        "people": "People",
+        "status": "Status"
+      },
+      "types": {
+        "camping": "Camping",
+        "escalada": "Climbing"
+      },
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "cancelled": "Cancelled"
+      }
     },
     "placeholders": {
       "postsTitle": "My posts",

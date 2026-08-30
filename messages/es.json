@@ -331,6 +331,33 @@
       "subtitle": "Consulta la disponibilidad de crashpads o planifica tu visita a la zona de boulder.",
       "primary": "Ver equipos disponibles",
       "secondary": "Contactar"
+    },
+    "boulders": {
+      "eyebrow": "Los Bloques",
+      "title": "Explora cada bloque",
+      "subtitle": "Cuatro formaciones de roca natural, cada una con su caracter y sus propios problemas. Haz clic en un bloque para conocerlo a fondo.",
+      "list": [
+        {
+          "name": "Primer Paso",
+          "problemCount": "2 problemas",
+          "maxGrade": "V0"
+        },
+        {
+          "name": "A ultima hora",
+          "problemCount": "2 problemas",
+          "maxGrade": "V5"
+        },
+        {
+          "name": "El portal",
+          "problemCount": "1 problema",
+          "maxGrade": "V6"
+        },
+        {
+          "name": "El dado",
+          "problemCount": "3 problemas",
+          "maxGrade": "V8"
+        }
+      ]
     }
   },
   "Camping": {
@@ -1542,7 +1569,7 @@
       "title": "Gestión de contenido",
       "description": "Oculta temporalmente secciones del sitio y activa el aviso de mantenimiento.",
       "sectionsTitle": "Secciones del sitio",
-      "sectionsDescription": "Activa el interruptor para ocultar una sección del menú, la página y los enlaces relacionados.",
+      "sectionsDescription": "Activa el interruptor para mostrar una sección del menú, la página y los enlaces relacionados. Desactívalo para ocultarla.",
       "sectionHidden": "Oculta en el sitio público",
       "sectionVisible": "Visible",
       "sectionSaving": "Guardando…",
@@ -1559,14 +1586,14 @@
       },
       "maintenanceTitle": "Modo mantenimiento",
       "maintenanceDescription": "Oculta el sitio público y muestra el aviso de mantenimiento. Solo el login (y el panel admin tras iniciar sesión) permanecen accesibles.",
-      "maintenanceToggle": "Activar mantenimiento",
+      "maintenanceToggle": "Sitio activo",
       "maintenanceOn": "Activo — el sitio público está oculto",
       "maintenanceOff": "Desactivado",
       "maintenanceSaving": "Guardando…",
       "maintenanceError": "No se pudo actualizar el modo mantenimiento. Intenta de nuevo.",
       "bannerTitle": "Este sitio está en mantenimiento",
       "bannerBody": "Estamos trabajando para mejorar tu experiencia. Vuelve pronto a El Higuerón.",
-      "bannerIdle": "Activa el modo mantenimiento para ocultar el sitio y mostrar el aviso."
+      "bannerIdle": "Desactiva el interruptor para ocultar el sitio y mostrar el aviso de mantenimiento."
     },
     "replies": {
       "count": "{count, plural, one {# respuesta} other {# respuestas}}",
@@ -1756,5 +1783,110 @@
     "instagram": "Instagram",
     "facebook": "Facebook",
     "copPerPerson": "COP / persona"
+  },
+  "BoulderRoute": {
+    "hero": {
+      "subtitle": "Zona de Boulder El Higueron - Bloque {n} de {total}"
+    },
+    "back": "Volver a la zona de boulder",
+    "details": {
+      "eyebrow": "Detalles del Bloque"
+    },
+    "labels": {
+      "nivel": "Nivel max.",
+      "problemas": "Problemas"
+    },
+    "descriptionTitle": "Descripcion",
+    "tipsTitle": "Consejos para este bloque",
+    "problemsEyebrow": "Problemas",
+    "problemsTitle": "Problemas en este bloque",
+    "communityEyebrow": "Comunidad",
+    "communityTitle": "Sesiones en este bloque",
+    "sessionTitle": "Comparte tu sesion",
+    "prev": "Bloque anterior",
+    "next": "Bloque siguiente",
+    "allBoulders": "Ver todos los bloques",
+    "cta": {
+      "title": "Necesitas equipo para boulder?",
+      "subtitle": "Consulta la disponibilidad de crashpads y otros equipos en Camping El Higueron.",
+      "equipos": "Ver equipos disponibles",
+      "visita": "Planifica tu visita"
+    },
+    "HIG01": {
+      "name": "Primer Paso",
+      "description": "El primer bloque en el que muchos escaladores hacen sus primeras movidas en roca natural. Sus problemas de nivel V0 lo convierten en el punto de inicio ideal para quienes se acercan por primera vez al boulder al aire libre en El Higueron.",
+      "tips": [
+        "Perfecto para calentar al inicio de la sesion",
+        "Ideal para principiantes y para aprender tecnica basica de pies",
+        "Los pies son clave en las dos lineas: confiar en el agarre de los pies de gato"
+      ],
+      "problems": [
+        {
+          "name": "Mi Primer Pegue",
+          "description": "Linea directa y amable que invita a poner los pies con precision y confiar en el peso del cuerpo sobre la roca. El nombre lo dice todo: el primer problema que muchos logran completar en el Higueron."
+        },
+        {
+          "name": "Gateo",
+          "description": "Variante con una lectura ligeramente diferente. Excelente para aprender a mover las caderas sobre la roca y entender el equilibrio en boulder."
+        }
+      ]
+    },
+    "HIG02": {
+      "name": "A ultima hora",
+      "description": "Bloque de nivel intermedio que ofrece dos problemas bien diferenciados: uno tecnico y uno mas potente. El nombre refleja ese momento de la sesion donde quedan las ultimas energias pero aun hay ganas de intentarlo.",
+      "tips": [
+        "El problema V3 exige lectura y equilibrio sobre agarres de tamaño mediano",
+        "Para V5 se requiere potencia en el tren superior",
+        "Buen bloque para trabajar la progresion entre niveles"
+      ],
+      "problems": [
+        {
+          "name": "A ultima hora",
+          "description": "Problema tecnico que exige precision en la colocacion de los pies y buen equilibrio. Ideal para trabajar en la sesion de la tarde cuando el cuerpo ya esta caliente."
+        },
+        {
+          "name": "A tierra",
+          "description": "Problema potente que pone a prueba la fuerza y la resistencia. La secuencia de movimientos requiere decision y potencia controlada para llegar al tope."
+        }
+      ]
+    },
+    "HIG03": {
+      "name": "El portal",
+      "description": "Una sola linea, directa y exigente. El portal es un bloque singular que ofrece uno de los problemas mas tecnicos de la zona, con movimientos que requieren habilidad en todos los planos y una lectura cuidadosa de cada agarre.",
+      "tips": [
+        "Estudia bien la secuencia completa antes del primer intento",
+        "El inicio requiere activacion del nucleo y tension corporal",
+        "Nivel avanzado (V6): se recomienda tener experiencia previa en boulder"
+      ],
+      "problems": [
+        {
+          "name": "El portal",
+          "description": "Problema de nivel avanzado (V6) que desafia la tecnica, la fuerza y la capacidad de leer movimientos en la roca. La linea es directa y no perdona errores en la secuencia: cada agarre tiene un proposito."
+        }
+      ]
+    },
+    "HIG04": {
+      "name": "El dado",
+      "description": "El bloque mas variado de la zona. Con tres problemas que van desde V4 hasta V8, El dado ofrece algo para escaladores intermedios y avanzados que quieran exigirse al maximo. Es el bloque mas demandante del sector y donde los visitantes mas experimentados vienen a intentar sus proyectos.",
+      "tips": [
+        "Capitan planeta es un buen calentamiento de nivel intermedio antes de los problemas mas duros",
+        "El cangrejero demanda tecnica de movimientos laterales y precision",
+        "Salgale es el problema mas exigente de toda la zona: solo para escaladores con experiencia solida"
+      ],
+      "problems": [
+        {
+          "name": "Capitan planeta",
+          "description": "Problema de nivel intermedio-alto (V4) que combina movimientos tecnicos y potentes. Un buen reto para quien ya domina los problemas mas faciles y quiere dar un paso mas en su progresion."
+        },
+        {
+          "name": "El cangrejero",
+          "description": "Problema avanzado (V6) que demanda tecnica de movimientos laterales y buen equilibrio sobre agarres exigentes. La lectura de la secuencia es fundamental para encontrar la eficiencia."
+        },
+        {
+          "name": "Salgale",
+          "description": "El problema mas duro de la zona de boulders (V8). Exige potencia explosiva, tecnica fina y una lectura precisa de cada movimiento. Solo para escaladores con experiencia solida en boulder que quieran el maximo desafio del Higueron."
+        }
+      ]
+    }
   }
 }

@@ -1,18 +1,29 @@
-import { desc, ne } from "drizzle-orm"
+import { and, desc, eq, inArray, ne } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { postReply } from "@/lib/db/schema"
+import type { PostType } from "@/lib/posts/shared"
 
+/**
+ * Replies for a batch of posts of the same type.
+ * The whole filter runs in SQL (single round-trip, no full-table scan) — callers
+ * pass every post id on the page at once, so this is never an N+1.
+ */
 export async function getApprovedRepliesByPosts(
-  postType: string,
+  postType: PostType,
   postIds: string[]
 ) {
   if (postIds.length === 0) return []
-  const rows = await db
+  return db
     .select()
     .from(postReply)
-    .where(ne(postReply.status, "hidden"))
+    .where(
+      and(
+        eq(postReply.postType, postType),
+        inArray(postReply.postId, postIds),
+        ne(postReply.status, "hidden")
+      )
+    )
     .orderBy(desc(postReply.createdAt))
-  return rows.filter((r) => r.postType === postType && postIds.includes(r.postId))
 }
 
 export async function getAllReplies() {

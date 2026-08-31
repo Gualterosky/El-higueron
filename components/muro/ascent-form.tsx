@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, type UseFormReturn } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Star, CheckCircle2, Link2, CheckCircle, Upload } from "lucide-react"
@@ -25,6 +25,18 @@ import { MediaUploader } from "@/components/muro/media-uploader"
 
 type Props = {
   routeId: string
+}
+
+/** Mirrors the zod schema built inside AscentForm (translated error messages only affect
+ *  validation messages, not the shape), so it can be shared with child components. */
+type AscentFormValues = {
+  authorName: string
+  ascentDate: string
+  routeId: string
+  comment: string
+  contactInfo: string
+  rating: number
+  socialMediaUrl?: string
 }
 
 export function AscentForm({ routeId }: Props) {
@@ -56,8 +68,6 @@ export function AscentForm({ routeId }: Props) {
       })
       .optional(),
   })
-
-  type AscentFormValues = z.infer<typeof schema>
 
   const form = useForm<AscentFormValues>({
     resolver: zodResolver(schema),
@@ -301,10 +311,8 @@ export function AscentForm({ routeId }: Props) {
 }
 
 type SocialUrlFieldProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  form: any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  t: any
+  form: UseFormReturn<AscentFormValues>
+  t: ReturnType<typeof useTranslations>
 }
 
 function SocialUrlField({ form, t }: SocialUrlFieldProps) {

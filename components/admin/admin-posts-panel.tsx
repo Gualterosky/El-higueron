@@ -33,6 +33,9 @@ import {
 import { SocialEmbed } from "@/components/muro/social-embed"
 import { PostMediaGallery } from "@/components/muro/post-media-gallery"
 
+type TFunc = ReturnType<typeof useTranslations>
+type AppRouter = ReturnType<typeof useRouter>
+
 type Props = {
   initialPosts: ClimbPost[]
   initialCampingPosts: CampingPost[]
@@ -107,8 +110,7 @@ export function AdminPostsPanel({
 
 type RepliesMap = Partial<Record<string, PostReply[]>>
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: ClimbPost[]; repliesByPostId: RepliesMap; t: any; router: any }) {
+function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: ClimbPost[]; repliesByPostId: RepliesMap; t: TFunc; router: AppRouter }) {
   const [posts, setPosts] = useState(initialPosts)
   const [, startTransition] = useTransition()
 
@@ -195,8 +197,7 @@ function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPo
 
 // ── Camping posts list ───────────────────────────────────────────────────────
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function CampingPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: CampingPost[]; repliesByPostId: RepliesMap; t: any; router: any }) {
+function CampingPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: CampingPost[]; repliesByPostId: RepliesMap; t: TFunc; router: AppRouter }) {
   const [posts, setPosts] = useState(initialPosts)
   const [, startTransition] = useTransition()
 
@@ -283,8 +284,7 @@ function CampingPostsList({ initialPosts, repliesByPostId, t, router }: { initia
 
 // ── Boulder posts list ───────────────────────────────────────────────────────
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: BoulderPost[]; repliesByPostId: RepliesMap; t: any; router: any }) {
+function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: BoulderPost[]; repliesByPostId: RepliesMap; t: TFunc; router: AppRouter }) {
   const [posts, setPosts] = useState(initialPosts)
   const [, startTransition] = useTransition()
 
@@ -371,8 +371,7 @@ function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initia
 
 // ── Inline replies section (inside each post card) ───────────────────────────
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function AdminRepliesSection({ initialReplies, router }: { postId: string; initialReplies: PostReply[]; router: any }) {
+function AdminRepliesSection({ initialReplies, router }: { postId: string; initialReplies: PostReply[]; router: AppRouter }) {
   const t = useTranslations("Panel.replies")
   const [replies, setReplies] = useState(initialReplies)
   const [expanded, setExpanded] = useState(false)
@@ -512,8 +511,7 @@ function StarRating({ rating }: { rating: number }) {
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function StatusBadge({ status, t, small }: { status: "pending" | "approved" | "hidden"; t: any; small?: boolean }) {
+function StatusBadge({ status, t, small }: { status: "pending" | "approved" | "hidden"; t: TFunc; small?: boolean }) {
   return (
     <Badge
       variant={
@@ -538,8 +536,7 @@ type PostActionsProps = {
   onApprove: () => void
   onHide: () => void
   onDelete: () => void
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  t: any
+    t: TFunc
 }
 
 function PostActions({ status, onApprove, onHide, onDelete, t }: PostActionsProps) {

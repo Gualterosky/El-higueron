@@ -1,5 +1,9 @@
 # Repository Guidelines
 
+> **INSTRUCCIÓN CRÍTICA PARA AGENTES DE IA:**
+> Antes de proponer o ejecutar cualquier cambio arquitectónico, crear nuevas funciones, o modificar el flujo de datos de Usuarios, Reservas o Comentarios, DEBES leer obligatoriamente el archivo `system_architecture.md` para entender el contexto global del sistema.
+> Además, por cada cambio significativo que realices en el código (nuevas entidades, cambio en los flujos, nuevas dependencias), DEBES actualizar `system_architecture.md` para reflejar la realidad del sistema. Nunca dejes que el código y la documentación se desincronicen.
+
 ## Project Structure & Module Organization
 
 This is a Next.js App Router project. Route pages live in `app/`, with feature routes such as `app/muro/`, `app/camping/`, `app/evento/`, and auth under `app/login/` (and future `app/auth/` callbacks). Shared UI lives in `components/`; reusable shadcn/Radix primitives are in `components/ui/`. Shared logic belongs in `lib/`, including the Neon + Drizzle database layer in `lib/db/` and event configuration in `lib/eventos/`. Static images, videos, logos, and route-guide text files are stored under `public/`, especially `public/media/`.

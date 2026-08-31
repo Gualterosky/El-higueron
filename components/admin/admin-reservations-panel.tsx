@@ -13,11 +13,26 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import type { ReservationRow } from "@/lib/reservas/queries"
+import {
+  isReservationStatus,
+  RESERVATION_TYPES,
+  type ReservationStatus,
+} from "@/lib/reservas/types"
 
-function formatDate(date: string) {
+function formatDate(date: string | null | undefined) {
   if (!date) return "—"
   const [year, month, day] = date.split("-")
+  if (!year || !month || !day) return date
   return `${day}/${month}/${year}`
+}
+
+/** `status`/`type` are plain text columns — fall back instead of crashing on unknown values. */
+function safeStatus(status: string): ReservationStatus {
+  return isReservationStatus(status) ? status : "pending"
+}
+
+function isKnownType(type: string): type is (typeof RESERVATION_TYPES)[number] {
+  return (RESERVATION_TYPES as readonly string[]).includes(type)
 }
 
 type Props = {
@@ -26,6 +41,7 @@ type Props = {
 
 export function AdminReservationsPanel({ reservations }: Props) {
   const t = useTranslations("Panel.reservations")
+  const notedReservations = reservations.filter((r) => r.notes)
 
   return (
     <div className="space-y-6">
@@ -51,7 +67,9 @@ export function AdminReservationsPanel({ reservations }: Props) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {reservations.map((reservation) => (
+              {reservations.map((reservation) => {
+                const status = safeStatus(reservation.status)
+                return (
                 <TableRow key={reservation.id}>
                   <TableCell className="font-medium">{reservation.name}</TableCell>
                   <TableCell className="text-muted-foreground">
@@ -63,7 +81,11 @@ export function AdminReservationsPanel({ reservations }: Props) {
                       <span className="ml-1 text-xs text-orange">+1?</span>
                     ) : null}
                   </TableCell>
-                  <TableCell>{t(`types.${reservation.type}`)}</TableCell>
+                  <TableCell>
+                    {isKnownType(reservation.type)
+                      ? t(`types.${reservation.type}`)
+                      : reservation.type}
+                  </TableCell>
                   <TableCell>{reservation.numberOfPeople}</TableCell>
                   <TableCell className="max-w-[160px] truncate text-xs text-muted-foreground">
                     {reservation.contactInfo}
@@ -71,19 +93,19 @@ export function AdminReservationsPanel({ reservations }: Props) {
                   <TableCell>
                     <Badge
                       variant={
-                        reservation.status === "confirmed"
+                        status === "confirmed"
                           ? "default"
-                          : reservation.status === "cancelled"
+                          : status === "cancelled"
                             ? "destructive"
                             : "secondary"
                       }
                       className={
-                        reservation.status === "confirmed"
+                        status === "confirmed"
                           ? "border-transparent bg-forest text-white"
                           : undefined
                       }
                     >
-                      {t(`status.${reservation.status}`)}
+                      {t(`status.${status}`)}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
@@ -110,24 +132,23 @@ export function AdminReservationsPanel({ reservations }: Props) {
                     </div>
                   </TableCell>
                 </TableRow>
-              ))}
+                )
+              })}
             </TableBody>
           </Table>
         </div>
       )}
 
-      {reservations.some((r) => r.notes) && (
+      {notedReservations.length > 0 && (
         <div className="space-y-3">
           <h3 className="text-sm font-medium text-foreground">{t("notesTitle")}</h3>
           <ul className="space-y-2">
-            {reservations
-              .filter((r) => r.notes)
-              .map((r) => (
-                <li key={r.id} className="rounded-lg border border-border/60 bg-muted/30 px-4 py-3 text-sm">
-                  <span className="font-medium text-foreground">{r.name}:</span>{" "}
-                  <span className="text-muted-foreground">{r.notes}</span>
-                </li>
-              ))}
+            {notedReservations.map((r) => (
+              <li key={r.id} className="rounded-lg border border-border/60 bg-muted/30 px-4 py-3 text-sm">
+                <span className="font-medium text-foreground">{r.name}:</span>{" "}
+                <span className="text-muted-foreground">{r.notes}</span>
+              </li>
+            ))}
           </ul>
         </div>
       )}

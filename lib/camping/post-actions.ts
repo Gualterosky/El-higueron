@@ -1,19 +1,26 @@
 "use server"
 
-import { desc, eq, ne } from "drizzle-orm"
+import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
+import { getModeratorSession } from "@/lib/auth/guards"
 import { db } from "@/lib/db"
 import { campingPost } from "@/lib/db/schema"
+import {
+  httpsUrlSchema,
+  mediaUrlsSchema,
+  postStatusSchema,
+  type PostStatus,
+} from "@/lib/posts/shared"
 
 const submitSchema = z.object({
-  authorName: z.string().min(2).max(100),
+  authorName: z.string().trim().min(2).max(100),
   visitDate: z.string().min(1),
-  comment: z.string().min(5).max(2000),
-  contactInfo: z.string().min(3).max(200),
+  comment: z.string().trim().min(5).max(2000),
+  contactInfo: z.string().trim().min(3).max(200),
   rating: z.number().int().min(1).max(5),
-  socialMediaUrl: z.string().optional().nullable(),
-  mediaUrls: z.array(z.string()).optional().nullable(),
+  socialMediaUrl: httpsUrlSchema,
+  mediaUrls: mediaUrlsSchema,
 })
 
 export type CampingPostInput = z.infer<typeof submitSchema>
@@ -42,37 +49,34 @@ export async function submitCampingPostAction(
   }
 }
 
-export async function getApprovedCampingPostsAction() {
-  return db
-    .select()
-    .from(campingPost)
-    .where(ne(campingPost.status, "hidden"))
-    .orderBy(desc(campingPost.createdAt))
-}
-
-export async function getAllCampingPostsAction() {
-  return db.select().from(campingPost).orderBy(desc(campingPost.createdAt))
-}
+// ── Moderation (administrador / staff only) ──────────────────────────────────
 
 export async function updateCampingPostStatusAction(
   id: string,
-  status: "approved" | "hidden" | "pending"
+  status: PostStatus
 ): Promise<{ ok: boolean }> {
+  if (!(await getModeratorSession())) return { ok: false }
+  if (!postStatusSchema.safeParse(status).success) return { ok: false }
+
   try {
     await db.update(campingPost).set({ status }).where(eq(campingPost.id, id))
     revalidatePath("/", "layout")
     return { ok: true }
-  } catch {
+  } catch (error) {
+    console.error("[camping] updateCampingPostStatusAction failed:", error)
     return { ok: false }
   }
 }
 
 export async function deleteCampingPostAction(id: string): Promise<{ ok: boolean }> {
+  if (!(await getModeratorSession())) return { ok: false }
+
   try {
     await db.delete(campingPost).where(eq(campingPost.id, id))
     revalidatePath("/", "layout")
     return { ok: true }
-  } catch {
+  } catch (error) {
+    console.error("[camping] deleteCampingPostAction failed:", error)
     return { ok: false }
   }
 }

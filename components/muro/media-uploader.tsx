@@ -39,7 +39,12 @@ export function MediaUploader({ onUrlsChange, labels }: Props) {
   const [dragOver, setDragOver] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const onUrlsChangeRef = useRef(onUrlsChange)
-  onUrlsChangeRef.current = onUrlsChange
+  const entriesRef = useRef(entries)
+
+  useEffect(() => {
+    onUrlsChangeRef.current = onUrlsChange
+    entriesRef.current = entries
+  }, [onUrlsChange, entries])
 
   useEffect(() => {
     const urls = entries
@@ -47,6 +52,14 @@ export function MediaUploader({ onUrlsChange, labels }: Props) {
       .map((e) => e.cloudUrl!)
     onUrlsChangeRef.current(urls)
   }, [entries])
+
+  // Revoke every remaining object URL when the uploader unmounts (e.g. form submitted
+  // or cancelled) so previews don't leak memory for the rest of the page's lifetime.
+  useEffect(() => {
+    return () => {
+      entriesRef.current.forEach((e) => URL.revokeObjectURL(e.previewUrl))
+    }
+  }, [])
 
   const imageCount = entries.filter((e) => e.kind === "image").length
   const videoCount = entries.filter((e) => e.kind === "video").length

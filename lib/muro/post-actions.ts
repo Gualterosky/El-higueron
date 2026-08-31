@@ -1,20 +1,27 @@
 "use server"
 
-import { and, desc, eq, ne } from "drizzle-orm"
+import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
+import { getModeratorSession } from "@/lib/auth/guards"
 import { db } from "@/lib/db"
 import { climbPost } from "@/lib/db/schema"
+import {
+  httpsUrlSchema,
+  mediaUrlsSchema,
+  postStatusSchema,
+  type PostStatus,
+} from "@/lib/posts/shared"
 
 const submitSchema = z.object({
-  authorName: z.string().min(2).max(100),
+  authorName: z.string().trim().min(2).max(100),
   ascentDate: z.string().min(1),
-  routeId: z.string().min(1),
-  comment: z.string().min(5).max(2000),
-  contactInfo: z.string().min(3).max(200),
+  routeId: z.string().trim().min(1).max(100),
+  comment: z.string().trim().min(5).max(2000),
+  contactInfo: z.string().trim().min(3).max(200),
   rating: z.number().int().min(1).max(5),
-  socialMediaUrl: z.string().optional().nullable(),
-  mediaUrls: z.array(z.string()).optional().nullable(),
+  socialMediaUrl: httpsUrlSchema,
+  mediaUrls: mediaUrlsSchema,
 })
 
 export type ClimbPostInput = z.infer<typeof submitSchema>
@@ -44,37 +51,34 @@ export async function submitClimbPostAction(
   }
 }
 
-export async function getApprovedPostsByRouteAction(routeId: string) {
-  return db
-    .select()
-    .from(climbPost)
-    .where(and(eq(climbPost.routeId, routeId), ne(climbPost.status, "hidden")))
-    .orderBy(desc(climbPost.createdAt))
-}
-
-export async function getAllPostsAction() {
-  return db.select().from(climbPost).orderBy(desc(climbPost.createdAt))
-}
+// ── Moderation (administrador / staff only) ──────────────────────────────────
 
 export async function updatePostStatusAction(
   id: string,
-  status: "approved" | "hidden" | "pending"
+  status: PostStatus
 ): Promise<{ ok: boolean }> {
+  if (!(await getModeratorSession())) return { ok: false }
+  if (!postStatusSchema.safeParse(status).success) return { ok: false }
+
   try {
     await db.update(climbPost).set({ status }).where(eq(climbPost.id, id))
     revalidatePath("/", "layout")
     return { ok: true }
-  } catch {
+  } catch (error) {
+    console.error("[muro] updatePostStatusAction failed:", error)
     return { ok: false }
   }
 }
 
 export async function deletePostAction(id: string): Promise<{ ok: boolean }> {
+  if (!(await getModeratorSession())) return { ok: false }
+
   try {
     await db.delete(climbPost).where(eq(climbPost.id, id))
     revalidatePath("/", "layout")
     return { ok: true }
-  } catch {
+  } catch (error) {
+    console.error("[muro] deletePostAction failed:", error)
     return { ok: false }
   }
 }

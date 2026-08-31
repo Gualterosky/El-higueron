@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
@@ -12,18 +12,18 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { submitReservationAction } from "@/lib/reservas/actions"
+import {
+  ACTIVITY_CATEGORIES,
+  RESERVATION_TYPES,
+  type ActivityCategory,
+  type ReservationType,
+} from "@/lib/reservas/types"
 
 const PRICE_ESCALADA = 8000
 const PRICE_CAMPING = 15000
 
-// UI-level category (what the user taps first)
-type ActivityCategory = "camping" | "escalada"
-
-// Actual stored type (resolved after sub-selection for escalada)
-type ReservationType = "camping" | "muro" | "boulder"
-
 type Props = {
-  defaultType?: "camping" | "escalada"
+  defaultType?: ActivityCategory
 }
 
 export function ReservationForm({ defaultType }: Props) {
@@ -36,37 +36,40 @@ export function ReservationForm({ defaultType }: Props) {
     defaultType === "escalada" ? "escalada" : "camping",
   )
 
-  // Min date for camping = tomorrow (24h advance)
-  const tomorrow = new Date()
-  tomorrow.setDate(tomorrow.getDate() + 1)
-  const minDate = tomorrow.toISOString().split("T")[0]
+  // Min date for camping = tomorrow (24h advance). Computed once per mount so the
+  // schema identity stays stable across renders.
+  const minDate = useMemo(() => {
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    return tomorrow.toISOString().split("T")[0]
+  }, [])
 
-  const schema = z
-    .object({
-      type: z.enum(["camping", "muro", "boulder"]),
-      name: z.string().min(2, t("errorMin2")).max(100),
-      contactInfo: z.string().min(5, t("errorRequired")).max(200),
-      numberOfPeople: z.coerce.number().int().min(1, t("errorMin1")).max(50),
-      arrivalDate: z.string().min(1, t("errorRequired")),
-      departureDate: z.string().optional(),
-      mayStayExtra: z.boolean().optional(),
-      notes: z.string().max(500).optional(),
-    })
-    .refine(
-      (data) => {
-        if (data.type === "camping") return data.arrivalDate >= minDate
-        return true
-      },
-      { message: t("errorCampingAdvance"), path: ["arrivalDate"] },
-    )
-    .refine(
-      (data) => {
-        if (data.departureDate && data.arrivalDate)
-          return data.departureDate >= data.arrivalDate
-        return true
-      },
-      { message: t("errorDepartureBeforeArrival"), path: ["departureDate"] },
-    )
+  const schema = useMemo(
+    () =>
+      z
+        .object({
+          type: z.enum(RESERVATION_TYPES),
+          name: z.string().min(2, t("errorMin2")).max(100),
+          contactInfo: z.string().min(5, t("errorRequired")).max(200),
+          numberOfPeople: z.coerce.number().int().min(1, t("errorMin1")).max(50),
+          arrivalDate: z.string().min(1, t("errorRequired")),
+          departureDate: z.string().optional(),
+          mayStayExtra: z.boolean().optional(),
+          notes: z.string().max(500).optional(),
+        })
+        .refine(
+          (data) => data.type !== "camping" || data.arrivalDate >= minDate,
+          { message: t("errorCampingAdvance"), path: ["arrivalDate"] },
+        )
+        .refine(
+          (data) =>
+            !data.departureDate ||
+            !data.arrivalDate ||
+            data.departureDate >= data.arrivalDate,
+          { message: t("errorDepartureBeforeArrival"), path: ["departureDate"] },
+        ),
+    [t, minDate],
+  )
 
   type FormValues = z.infer<typeof schema>
 
@@ -102,12 +105,17 @@ export function ReservationForm({ defaultType }: Props) {
   const pricePerPerson = isCamping ? PRICE_CAMPING : PRICE_ESCALADA
   const totalPrice = (numberOfPeople > 0 ? numberOfPeople : 0) * pricePerPerson * nights
 
-  const formatPrice = (n: number) =>
-    new Intl.NumberFormat("es-CO", {
-      style: "currency",
-      currency: "COP",
-      maximumFractionDigits: 0,
-    }).format(n)
+  // Intl.NumberFormat is expensive to build; keep a single instance per mount.
+  const priceFormatter = useMemo(
+    () =>
+      new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        maximumFractionDigits: 0,
+      }),
+    [],
+  )
+  const formatPrice = (n: number) => priceFormatter.format(n)
 
   function handleCategoryChange(cat: ActivityCategory) {
     setCategory(cat)
@@ -165,7 +173,7 @@ export function ReservationForm({ defaultType }: Props) {
           {t("type")} <span className="text-destructive">*</span>
         </Label>
         <div className="grid gap-3 sm:grid-cols-2">
-          {(["camping", "escalada"] as const).map((cat) => (
+          {ACTIVITY_CATEGORIES.map((cat) => (
             <button
               key={cat}
               type="button"

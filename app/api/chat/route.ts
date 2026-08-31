@@ -13,7 +13,17 @@ const chatErrors = {
   en: enMessages.Chat.api,
 } as const
 
-function getSystemInstructions(locale: string): string {
+const MAX_MESSAGE_LENGTH = 2000
+const MAX_HISTORY_MESSAGES = 20
+
+// Knowledge base files rarely change at runtime; read them once per server
+// instance instead of hitting the filesystem on every chat request.
+const knowledgeCache = new Map<string, string>()
+
+function loadKnowledge(locale: string): string {
+  const cached = knowledgeCache.get(locale)
+  if (cached !== undefined) return cached
+
   const isEn = locale === "en"
   const preferredPath = path.join(
     process.cwd(),
@@ -32,6 +42,14 @@ function getSystemInstructions(locale: string): string {
     console.error("Error reading memory file:", error)
   }
 
+  knowledgeCache.set(locale, knowledge)
+  return knowledge
+}
+
+function getSystemInstructions(locale: string): string {
+  const isEn = locale === "en"
+  const knowledge = loadKnowledge(locale)
+
   const languageRule = isEn
     ? `Always respond in English, warmly and clearly. If the knowledge base is in Spanish, translate facts into natural English. Keep proper nouns (El Higuerón, Bendito Sea, Choachí) unchanged.`
     : `Responde siempre en español y de manera amable.`
@@ -47,6 +65,19 @@ e invita al usuario a contactar por WhatsApp: +57 3172973537.
   }
 
   return `${languageRule}\n\n${knowledge}`
+}
+
+// Reuse a single OpenAI client across requests instead of constructing one each time.
+let openaiClient: OpenAI | null = null
+
+function getOpenAiClient(): OpenAI | null {
+  if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY.trim() === "") {
+    return null
+  }
+  if (!openaiClient) {
+    openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  }
+  return openaiClient
 }
 
 /** Persist the session (upsert) and save the message pair — errors are swallowed so they never break the chat. */
@@ -96,28 +127,37 @@ async function logChatMessage(opts: {
 }
 
 export async function POST(req: Request) {
+  let locale: "es" | "en" = "es"
+
   try {
-    const { message, history, locale: bodyLocale, sessionId } = await req.json()
-    const locale = bodyLocale === "en" ? "en" : "es"
+    const body = await req.json()
+    const { message, history, locale: bodyLocale, sessionId } = body
+    locale = bodyLocale === "en" ? "en" : "es"
     const errors = chatErrors[locale]
 
-    if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY.trim() === "") {
+    if (typeof message !== "string" || message.trim().length === 0) {
+      return NextResponse.json({ error: errors.missingKey }, { status: 400 })
+    }
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      return NextResponse.json({ error: errors.missingKey }, { status: 413 })
+    }
+
+    const openai = getOpenAiClient()
+    if (!openai) {
       return NextResponse.json({ error: errors.missingKey }, { status: 500 })
     }
 
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    })
-
     const systemPrompt = getSystemInstructions(locale)
 
-    const formattedHistory = (history || []).map((msg: { role?: string; parts?: { text?: string }[]; content?: string }) => {
-      const text = msg.parts?.[0]?.text || msg.content || ""
-      return {
-        role: msg.role === "model" || msg.role === "assistant" ? "assistant" : "user",
-        content: text,
-      }
-    })
+    const formattedHistory = (Array.isArray(history) ? history : [])
+      .slice(-MAX_HISTORY_MESSAGES)
+      .map((msg: { role?: string; parts?: { text?: string }[]; content?: string }) => {
+        const text = msg.parts?.[0]?.text || msg.content || ""
+        return {
+          role: msg.role === "model" || msg.role === "assistant" ? "assistant" : "user",
+          content: String(text).slice(0, MAX_MESSAGE_LENGTH),
+        }
+      })
 
     const messages = [
       { role: "system", content: systemPrompt },
@@ -145,20 +185,13 @@ export async function POST(req: Request) {
       typeof error === "object" && error && "status" in error
         ? Number((error as { status?: number }).status) || 500
         : 500
-    const details =
-      typeof error === "object" && error && "message" in error
-        ? String((error as { message?: string }).message)
-        : String(error)
 
-    const localeHint = "es"
-    const errors = chatErrors[localeHint]
+    const errors = chatErrors[locale]
     let errorMessage = errors.unavailable
     if (status === 429) errorMessage = errors.quota
     else if (status === 401) errorMessage = errors.invalidKey
 
-    return NextResponse.json(
-      { error: `${errorMessage} (Detalles: ${details})` },
-      { status }
-    )
+    // Do not leak internal error details (API messages, stack info) to the client.
+    return NextResponse.json({ error: errorMessage }, { status })
   }
 }

@@ -1,8 +1,9 @@
 import Image from "next/image"
-import { MessageCircle, Mail, MapPin, Instagram, Facebook } from "lucide-react"
+import { MessageCircle, Mail, MapPin, Instagram, Facebook, ShieldCheck } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { LEGAL_INFO } from "@/lib/legal-info"
 
 const whatsappNumber = "573172973537"
 
@@ -126,6 +127,67 @@ export default async function ContactoPage({ params }: Props) {
                 <Facebook className="h-5 w-5" />
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Información legal */}
+      <section className="border-t border-border bg-beige/40 py-16">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="mb-6 flex justify-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-beige">
+                <ShieldCheck className="h-7 w-7 text-forest" />
+              </div>
+            </div>
+            <h2 className="mb-3 text-2xl font-bold text-forest md:text-3xl">
+              {t("legal.title")}
+            </h2>
+            <p className="mx-auto mb-10 max-w-xl text-muted-foreground">
+              {t("legal.subtitle")}
+            </p>
+            <dl className="grid gap-6 text-left sm:grid-cols-2">
+              <div>
+                <dt className="text-sm font-medium text-muted-foreground">
+                  {t("legal.razonSocial")}
+                </dt>
+                <dd className="mt-1 font-semibold text-foreground">
+                  {LEGAL_INFO.razonSocial}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-muted-foreground">
+                  {t("legal.nombreComercial")}
+                </dt>
+                <dd className="mt-1 font-semibold text-foreground">
+                  {LEGAL_INFO.nombreComercial}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-muted-foreground">
+                  {t("legal.nit")}
+                </dt>
+                <dd className="mt-1 font-semibold text-foreground">
+                  {LEGAL_INFO.nit}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-muted-foreground">
+                  {t("legal.rnt")}
+                </dt>
+                <dd className="mt-1 font-semibold text-foreground">
+                  {LEGAL_INFO.rnt}
+                </dd>
+                <a
+                  href={LEGAL_INFO.rntVerificationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 inline-block text-sm text-forest underline underline-offset-2 transition-colors hover:text-forest/80"
+                >
+                  {t("legal.rntVerify")}
+                </a>
+              </div>
+            </dl>
           </div>
         </div>
       </section>

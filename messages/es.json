@@ -54,7 +54,10 @@
       "contacto": "Contacto"
     },
     "whatsapp": "WhatsApp",
-    "copyright": "© {year} Camping El Higuerón. Todos los derechos reservados."
+    "copyright": "© {year} Camping El Higuerón. Todos los derechos reservados.",
+    "legal": {
+      "line": "{razonSocial} · NIT {nit} · RNT {rnt}"
+    }
   },
   "Home": {
     "hero": {
@@ -660,6 +663,15 @@
     },
     "social": {
       "title": "Síguenos en redes"
+    },
+    "legal": {
+      "title": "Información legal",
+      "subtitle": "Prestador de servicios turísticos registrado ante las autoridades competentes",
+      "razonSocial": "Razón social",
+      "nombreComercial": "Nombre comercial",
+      "nit": "NIT",
+      "rnt": "Registro Nacional de Turismo",
+      "rntVerify": "Verificar en el portal RNT"
     },
     "banner": {
       "text": "Te esperamos en la montaña",

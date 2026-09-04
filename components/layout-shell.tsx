@@ -5,7 +5,9 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { MaintenanceScreen } from "@/components/maintenance-screen"
+import { AnnouncementModal } from "@/components/announcement-modal"
 import { usePathname } from "@/i18n/navigation"
+import type { AnnouncementPayload } from "@/lib/announcement/types"
 import type { HiddenSections } from "@/lib/site-settings/types"
 
 const ChatBot = dynamic(() => import("@/components/chat-bot").then((mod) => mod.ChatBot), {
@@ -28,10 +30,12 @@ export function LayoutShell({
   children,
   maintenanceMode = false,
   hiddenSections,
+  announcement = null,
 }: {
   children: React.ReactNode
   maintenanceMode?: boolean
   hiddenSections?: HiddenSections
+  announcement?: AnnouncementPayload | null
 }) {
   const pathname = usePathname()
 
@@ -57,6 +61,7 @@ export function LayoutShell({
       <Footer hiddenSections={hiddenSections} />
       <WhatsAppButton />
       <ChatBot />
+      <AnnouncementModal announcement={announcement} />
     </>
   )
 }

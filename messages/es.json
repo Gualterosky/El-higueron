@@ -1,4 +1,9 @@
 {
+  "Announcement": {
+    "dismiss": "Cerrar",
+    "defaultCta": "Ver más",
+    "fallbackTitle": "Novedad"
+  },
   "Meta": {
     "title": "Camping El Higuerón | Escalada y Camping en la Montaña",
     "description": "Vive la experiencia de Bendito Sea en Camping El Higuerón. Escalada deportiva, boulder y camping en el corazón del bosque alto andino colombiano.",
@@ -1657,7 +1662,63 @@
       "maintenanceError": "No se pudo actualizar el modo mantenimiento. Intenta de nuevo.",
       "bannerTitle": "Este sitio está en mantenimiento",
       "bannerBody": "Estamos trabajando para mejorar tu experiencia. Vuelve pronto a El Higuerón.",
-      "bannerIdle": "Desactiva el interruptor para ocultar el sitio y mostrar el aviso de mantenimiento."
+      "bannerIdle": "Desactiva el interruptor para ocultar el sitio y mostrar el aviso de mantenimiento.",
+      "announcement": {
+        "title": "Pop-up de noticias y novedades",
+        "description": "Muestra una ventana emergente en el sitio público con un anuncio, una imagen y un botón opcional.",
+        "toggle": "Pop-up activo",
+        "enabledOn": "Activo — se mostrará según la programación",
+        "enabledOff": "Desactivado",
+        "saving": "Guardando…",
+        "langEs": "Español",
+        "langEn": "Inglés",
+        "fields": {
+          "title": "Título",
+          "subtitle": "Subtítulo",
+          "body": "Párrafo",
+          "ctaLabel": "Texto del botón",
+          "ctaUrl": "Enlace del botón",
+          "ctaNewTab": "Abrir en una pestaña nueva",
+          "image": "Imagen",
+          "startsAt": "Mostrar desde",
+          "endsAt": "Mostrar hasta",
+          "frequency": "Frecuencia",
+          "delay": "Retraso al abrir (segundos)"
+        },
+        "placeholders": {
+          "title": "Festival de escalada 2026",
+          "subtitle": "Inscripciones abiertas hasta el 30 de marzo",
+          "body": "Cuenta la novedad. Deja una línea en blanco para separar párrafos.",
+          "ctaLabel": "Ver más",
+          "ctaUrl": "/eventos o https://…",
+          "imageAlt": "Descripción de la imagen (accesibilidad)"
+        },
+        "hints": {
+          "ctaUrl": "Usa una ruta interna (/camping) o una URL completa. Déjalo vacío para no mostrar botón.",
+          "image": "Sube un archivo (se guarda en public/media/Novedades) o elige una imagen que ya esté en public/media.",
+          "schedule": "Deja las fechas vacías para mostrarlo indefinidamente mientras el interruptor esté activo."
+        },
+        "frequencies": {
+          "always": "Siempre (en cada carga)",
+          "once": "Una vez por visitante",
+          "daily": "Una vez al día"
+        },
+        "uploadButton": "Subir imagen",
+        "pickExisting": "Elegir de public/media",
+        "noImage": "Sin imagen",
+        "uploadErrors": {
+          "unauthorized": "No tienes permisos para subir imágenes.",
+          "missing_file": "Selecciona un archivo.",
+          "invalid_type": "Formato no admitido. Usa JPG, PNG, WebP, GIF o AVIF.",
+          "too_large": "La imagen supera los 4 MB.",
+          "read_only": "El servidor no permite escribir archivos. Sube la imagen al repositorio en public/media y pega su ruta.",
+          "failed": "No se pudo subir la imagen. Intenta de nuevo."
+        },
+        "save": "Guardar novedad",
+        "saved": "Cambios guardados.",
+        "error": "No se pudo guardar. Intenta de nuevo.",
+        "preview": "Vista previa"
+      }
     },
     "replies": {
       "count": "{count, plural, one {# respuesta} other {# respuestas}}",

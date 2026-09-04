@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { LayoutShell } from "@/components/layout-shell"
 import { routing } from "@/i18n/routing"
 import { getSiteSettings } from "@/lib/site-settings"
+import { getLiveAnnouncement } from "@/lib/announcement/queries"
 import { Inter } from "next/font/google"
 
 const inter = Inter({
@@ -49,9 +50,10 @@ export default async function LocaleLayout({ children, params }: Props) {
   }
 
   setRequestLocale(locale)
-  const [messages, settings] = await Promise.all([
+  const [messages, settings, announcement] = await Promise.all([
     getMessages(),
     getSiteSettings(),
+    getLiveAnnouncement(locale),
   ])
 
   return (
@@ -62,6 +64,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             <LayoutShell
               maintenanceMode={settings.maintenanceMode}
               hiddenSections={settings.hiddenSections}
+              announcement={announcement}
             >
               {children}
             </LayoutShell>

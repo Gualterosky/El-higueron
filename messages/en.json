@@ -1,4 +1,9 @@
 {
+  "Announcement": {
+    "dismiss": "Close",
+    "defaultCta": "Learn more",
+    "fallbackTitle": "News"
+  },
   "Meta": {
     "title": "Camping El Higuerón | Climbing and Camping in the Mountains",
     "description": "Experience Bendito Sea at Camping El Higuerón. Sport climbing, boulder, and camping in the heart of Colombia's high Andean forest.",
@@ -1657,7 +1662,63 @@
       "maintenanceError": "Could not update maintenance mode. Please try again.",
       "bannerTitle": "This site is under maintenance",
       "bannerBody": "We are working to improve your experience. Please check back soon at El Higuerón.",
-      "bannerIdle": "Turn the switch off to hide the site and show the maintenance notice."
+      "bannerIdle": "Turn the switch off to hide the site and show the maintenance notice.",
+      "announcement": {
+        "title": "News pop-up",
+        "description": "Show a modal on the public site with an announcement, an image and an optional button.",
+        "toggle": "Pop-up active",
+        "enabledOn": "Active — it will show according to the schedule",
+        "enabledOff": "Off",
+        "saving": "Saving…",
+        "langEs": "Spanish",
+        "langEn": "English",
+        "fields": {
+          "title": "Title",
+          "subtitle": "Subtitle",
+          "body": "Paragraph",
+          "ctaLabel": "Button label",
+          "ctaUrl": "Button link",
+          "ctaNewTab": "Open in a new tab",
+          "image": "Image",
+          "startsAt": "Show from",
+          "endsAt": "Show until",
+          "frequency": "Frequency",
+          "delay": "Delay before opening (seconds)"
+        },
+        "placeholders": {
+          "title": "Climbing Festival 2026",
+          "subtitle": "Registration open until March 30",
+          "body": "Tell the news. Leave a blank line to separate paragraphs.",
+          "ctaLabel": "Learn more",
+          "ctaUrl": "/events or https://…",
+          "imageAlt": "Image description (accessibility)"
+        },
+        "hints": {
+          "ctaUrl": "Use an internal path (/camping) or a full URL. Leave empty to hide the button.",
+          "image": "Upload a file (stored in public/media/Novedades) or pick an image already in public/media.",
+          "schedule": "Leave the dates empty to show it indefinitely while the switch is on."
+        },
+        "frequencies": {
+          "always": "Always (every page load)",
+          "once": "Once per visitor",
+          "daily": "Once a day"
+        },
+        "uploadButton": "Upload image",
+        "pickExisting": "Pick from public/media",
+        "noImage": "No image",
+        "uploadErrors": {
+          "unauthorized": "You are not allowed to upload images.",
+          "missing_file": "Select a file.",
+          "invalid_type": "Unsupported format. Use JPG, PNG, WebP, GIF or AVIF.",
+          "too_large": "The image is larger than 4 MB.",
+          "read_only": "The server cannot write files. Add the image to the repository under public/media and paste its path.",
+          "failed": "Could not upload the image. Please try again."
+        },
+        "save": "Save announcement",
+        "saved": "Changes saved.",
+        "error": "Could not save. Please try again.",
+        "preview": "Preview"
+      }
     },
     "replies": {
       "count": "{count, plural, one {# reply} other {# replies}}",

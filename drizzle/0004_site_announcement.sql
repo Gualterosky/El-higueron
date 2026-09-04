@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS "site_announcement" (
+	"id" text PRIMARY KEY NOT NULL,
+	"enabled" boolean DEFAULT false NOT NULL,
+	"title_es" text DEFAULT '' NOT NULL,
+	"title_en" text DEFAULT '' NOT NULL,
+	"subtitle_es" text DEFAULT '' NOT NULL,
+	"subtitle_en" text DEFAULT '' NOT NULL,
+	"body_es" text DEFAULT '' NOT NULL,
+	"body_en" text DEFAULT '' NOT NULL,
+	"cta_label_es" text DEFAULT '' NOT NULL,
+	"cta_label_en" text DEFAULT '' NOT NULL,
+	"cta_url" text DEFAULT '' NOT NULL,
+	"cta_new_tab" boolean DEFAULT false NOT NULL,
+	"image_url" text DEFAULT '' NOT NULL,
+	"image_alt" text DEFAULT '' NOT NULL,
+	"starts_at" timestamp,
+	"ends_at" timestamp,
+	"frequency" text DEFAULT 'once' NOT NULL,
+	"delay_seconds" integer DEFAULT 2 NOT NULL,
+	"version" integer DEFAULT 1 NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);

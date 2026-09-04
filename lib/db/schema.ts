@@ -73,6 +73,30 @@ export const siteSettings = pgTable("site_settings", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
 
+/** Singleton news/announcement pop-up shown on the public site (id = "default"). */
+export const siteAnnouncement = pgTable("site_announcement", {
+  id: text("id").primaryKey(),
+  enabled: boolean("enabled").notNull().default(false),
+  titleEs: text("title_es").notNull().default(""),
+  titleEn: text("title_en").notNull().default(""),
+  subtitleEs: text("subtitle_es").notNull().default(""),
+  subtitleEn: text("subtitle_en").notNull().default(""),
+  bodyEs: text("body_es").notNull().default(""),
+  bodyEn: text("body_en").notNull().default(""),
+  ctaLabelEs: text("cta_label_es").notNull().default(""),
+  ctaLabelEn: text("cta_label_en").notNull().default(""),
+  ctaUrl: text("cta_url").notNull().default(""),
+  ctaNewTab: boolean("cta_new_tab").notNull().default(false),
+  imageUrl: text("image_url").notNull().default(""),
+  imageAlt: text("image_alt").notNull().default(""),
+  startsAt: timestamp("starts_at"),
+  endsAt: timestamp("ends_at"),
+  frequency: text("frequency").notNull().default("once"),
+  delaySeconds: integer("delay_seconds").notNull().default(2),
+  version: integer("version").notNull().default(1),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+})
+
 /** Climb ascent posts submitted from individual route pages. */
 export const climbPost = pgTable("climb_post", {
   id: text("id").primaryKey(),
@@ -168,6 +192,7 @@ export const postReply = pgTable("post_reply", {
 export type User = typeof user.$inferSelect
 export type Session = typeof session.$inferSelect
 export type SiteSettings = typeof siteSettings.$inferSelect
+export type SiteAnnouncement = typeof siteAnnouncement.$inferSelect
 export type ClimbPost = typeof climbPost.$inferSelect
 export type CampingPost = typeof campingPost.$inferSelect
 export type BoulderPost = typeof boulderPost.$inferSelect

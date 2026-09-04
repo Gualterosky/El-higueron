@@ -94,6 +94,7 @@ generado con `crypto.randomUUID()`), no hay `serial`.
 | `account` | Credenciales por proveedor (Better Auth) | FK `userId → user.id` (cascade) |
 | `verification` | Tokens de verificación (Better Auth) | — |
 | `siteSettings` | Fila única (`id = "default"`) con `maintenanceMode` y flags `hide*` por sección | — |
+| `siteAnnouncement` | Fila única (`id = "default"`) con el pop-up de noticias: `enabled`, textos es/en (título, subtítulo, cuerpo, CTA), `ctaUrl`/`ctaNewTab`, `imageUrl`/`imageAlt`, ventana `startsAt`/`endsAt`, `frequency`, `delaySeconds`, `version` | `version` se auto-incrementa al cambiar el contenido para volver a mostrar el pop-up a quien ya lo cerró |
 | `climbPost` | Publicación de ascenso en el Muro | `routeId` referencia lógica a `MURO_ROUTES` (no FK real) |
 | `campingPost` | Publicación de experiencia de camping | — |
 | `boulderPost` | Publicación de ascenso en Boulder | `boulderName`/`routeName` referencian `BOULDERS` (no FK real) |
@@ -270,6 +271,35 @@ archivo en vez de redefinir su propio enum de status.
 
 ---
 
+## 7.b Flujo de datos — Pop-up de noticias/novedades
+
+```
+components/admin/admin-announcement-section.tsx (client, dentro de AdminContentPanel)
+  → lib/announcement/actions.ts ("use server", requireAdmin)
+      setAnnouncementEnabledAction / saveAnnouncementAction
+        → lib/announcement/queries.ts (saveAnnouncement)
+            → tabla site_announcement (fila única "default")
+            → updateTag("site-announcement") + revalidatePath("/", "layout")
+      uploadAnnouncementImageAction → escribe en public/media/Novedades/<slug>-<ts>.<ext>
+      listMediaImagesAction → lista imágenes existentes de public/media
+
+app/[locale]/layout.tsx (server)
+  → getLiveAnnouncement(locale)  // enabled + ventana de fechas + contenido mínimo
+      → components/layout-shell.tsx → components/announcement-modal.tsx (solo rutas públicas)
+```
+
+Notas:
+- El texto se guarda duplicado es/en; `toAnnouncementPayload` resuelve el idioma
+  y hace fallback al otro si uno está vacío.
+- La frecuencia (`always` | `once` | `daily`) se aplica en el cliente con
+  `localStorage` bajo la clave `higueron:announcement:v<version>`.
+- La subida escribe en el sistema de archivos: **solo funciona en entornos con
+  disco escribible** (local / servidor propio). En hosting serverless de solo
+  lectura la acción devuelve `read_only` y el admin debe subir la imagen al
+  repositorio en `public/media` y pegar la ruta.
+
+---
+
 ## 8. Flujo del Chatbot (contexto, no forma parte del alcance de Usuarios/Reservas/Comentarios pero comparte infraestructura)
 
 ```
@@ -337,6 +367,7 @@ estos paneles**, solo se documenta su estado:
 | Agregar un nuevo tipo/estado de reserva | `lib/reservas/types.ts` |
 | Agregar un nuevo status/tipo de publicación | `lib/posts/shared.ts` |
 | Cambiar qué secciones del sitio se pueden ocultar / modo mantenimiento | `lib/site-settings/types.ts` (lista) + `lib/site-settings.ts` (lógica) + `lib/site-settings/actions.ts` (Server Actions, solo admin) |
+| Cambiar el pop-up de noticias/novedades | `lib/announcement/types.ts` (forma y reglas de visibilidad) + `lib/announcement/queries.ts` (lectura cacheada y guardado) + `lib/announcement/actions.ts` (Server Actions admin, incluida la subida de imagen) + `components/announcement-modal.tsx` (UI pública) + `components/admin/admin-announcement-section.tsx` (panel) |
 | Cambiar el esquema de la base de datos | `lib/db/schema.ts` → `pnpm db:generate` → `pnpm db:migrate` |
 | Cambiar reglas de acceso a rutas por rol | `lib/auth/roles.ts` (`canAccessPath`, `homePathForRole`) + `proxy.ts` (prefijos protegidos) |
 | Ver todos los textos/traducciones de la UI | `messages/es.json`, `messages/en.json` |

@@ -6,10 +6,15 @@ import { useTranslations } from "next-intl"
 import { Construction } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
+import { AdminAnnouncementSection } from "@/components/admin/admin-announcement-section"
 import {
   setHiddenSectionAction,
   setMaintenanceModeAction,
 } from "@/lib/site-settings/actions"
+import {
+  DEFAULT_ANNOUNCEMENT,
+  type AnnouncementConfig,
+} from "@/lib/announcement/types"
 import {
   CONTENT_SECTIONS,
   DEFAULT_HIDDEN_SECTIONS,
@@ -22,9 +27,11 @@ const DEFAULT_HIDDEN = DEFAULT_HIDDEN_SECTIONS
 export function AdminContentPanel({
   initialMaintenance = false,
   initialHidden = DEFAULT_HIDDEN,
+  initialAnnouncement = DEFAULT_ANNOUNCEMENT,
 }: {
   initialMaintenance?: boolean
   initialHidden?: HiddenSections
+  initialAnnouncement?: AnnouncementConfig
 }) {
   const t = useTranslations("Panel.content")
   const router = useRouter()
@@ -117,6 +124,8 @@ export function AdminContentPanel({
           </p>
         ) : null}
       </section>
+
+      <AdminAnnouncementSection initialConfig={initialAnnouncement} />
 
       <section className="space-y-4">
         <div>

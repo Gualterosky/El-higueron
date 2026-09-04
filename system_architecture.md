@@ -316,6 +316,11 @@ estos paneles**, solo se documenta su estado:
   `getModeratorSession()`/`getAdminSession()` según a quién se le quiera dar
   permiso).
 - `corporate-ai-chatbot/`: sub-proyecto Vite no integrado (ver sección 1).
+- Página de **aviso legal** (`/aviso-legal`): solicitada como **borrador
+  pendiente**. Los datos del prestador ya están centralizados en
+  `lib/legal-info.ts` y exhibidos en el footer (`Footer.legal.line`) y en
+  `/contacto` (`Contacto.legal`); falta crear la página legal y enlazarla
+  desde el footer.
 - `app/[locale]/evento`: el sistema de eventos (`lib/eventos/*`) soporta un
   flag `esBorrador` por evento (`EventoBorradorAviso`) — es una funcionalidad
   completa, no un borrador de código, pero vale la pena saber que un evento
@@ -336,6 +341,7 @@ estos paneles**, solo se documenta su estado:
 | Cambiar reglas de acceso a rutas por rol | `lib/auth/roles.ts` (`canAccessPath`, `homePathForRole`) + `proxy.ts` (prefijos protegidos) |
 | Ver todos los textos/traducciones de la UI | `messages/es.json`, `messages/en.json` |
 | Configurar el evento activo de `/evento` | `lib/eventos/config.ts` (estructura) + `messages/*.json` bajo `Evento.content` (textos) |
+| Cambiar datos legales del prestador (razón social, NIT, RNT) | `lib/legal-info.ts` — fuente única; los textos/etiquetas viven en `messages/*.json` (`Footer.legal`, `Contacto.legal`) |
 
 ---
 

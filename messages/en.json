@@ -54,7 +54,10 @@
       "contacto": "Contact"
     },
     "whatsapp": "WhatsApp",
-    "copyright": "© {year} Camping El Higuerón. All rights reserved."
+    "copyright": "© {year} Camping El Higuerón. All rights reserved.",
+    "legal": {
+      "line": "{razonSocial} · NIT {nit} · RNT {rnt}"
+    }
   },
   "Home": {
     "hero": {
@@ -660,6 +663,15 @@
     },
     "social": {
       "title": "Follow us on social media"
+    },
+    "legal": {
+      "title": "Legal information",
+      "subtitle": "Tourism service provider registered with the competent Colombian authorities",
+      "razonSocial": "Legal name",
+      "nombreComercial": "Trade name",
+      "nit": "NIT (tax ID)",
+      "rnt": "National Tourism Registry (RNT)",
+      "rntVerify": "Verify on the RNT portal"
     },
     "banner": {
       "text": "We'll be waiting for you in the mountains",

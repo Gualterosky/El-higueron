@@ -3,6 +3,7 @@
 import { Mountain, Instagram, Facebook, Mail, Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
+import { LEGAL_INFO } from "@/lib/legal-info"
 import {
   CONTENT_SECTIONS,
   type ContentSection,
@@ -133,6 +134,13 @@ export function Footer({
         <div className="mt-12 border-t border-primary-foreground/20 pt-8 text-center">
           <p className="text-sm text-primary-foreground/60">
             {t("copyright", { year: new Date().getFullYear() })}
+          </p>
+          <p className="mt-2 text-xs text-primary-foreground/50">
+            {t("legal.line", {
+              razonSocial: LEGAL_INFO.razonSocial,
+              nit: LEGAL_INFO.nit,
+              rnt: LEGAL_INFO.rnt,
+            })}
           </p>
         </div>
       </div>

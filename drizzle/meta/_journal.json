@@ -29,6 +29,13 @@
       "when": 1786610000000,
       "tag": "0003_hide_muro_boulder",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1786620000000,
+      "tag": "0004_site_announcement",
+      "breakpoints": true
     }
   ]
 }

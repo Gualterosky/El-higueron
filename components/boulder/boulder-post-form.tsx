@@ -32,7 +32,7 @@ export function BoulderPostForm() {
       visitDate: z.string().min(1, t("form.errorRequired")),
       boulderName: z.string().min(1, t("form.errorRequired")).max(200),
       routeName: z.string().min(1, t("form.errorRequired")).max(200),
-      category: z.enum(["incident", "review", "tip", "question", "suggestion"]),
+      category: z.enum(["incident", "review", "tip", "question"]),
       comment: z.string().min(5, t("form.errorMin5")).max(2000),
       contactInfo: z.string().min(3, t("form.errorRequired")).max(200),
       rating: z.number().int().min(0).max(5),

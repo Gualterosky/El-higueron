@@ -68,7 +68,7 @@ export function AscentForm({ routeId }: Props) {
       authorName: z.string().min(2, t("ascentForm.errorMin2")).max(100),
       ascentDate: z.string().min(1, t("ascentForm.errorRequired")),
       routeId: z.string().min(1, t("ascentForm.errorRequired")),
-      category: z.enum(["incident", "review", "tip", "question", "suggestion"]),
+      category: z.enum(["incident", "review", "tip", "question"]),
       comment: z.string().min(5, t("ascentForm.errorMin5")).max(2000),
       contactInfo: z.string().min(3, t("ascentForm.errorRequired")).max(200),
       rating: z.number().int().min(0).max(5),

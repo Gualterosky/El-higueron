@@ -273,10 +273,25 @@ archivo en vez de redefinir su propio enum de status.
 Las 3 tablas de posts (`climbPost`/`campingPost`/`boulderPost`) tienen además
 `category` (`text`, default `"review"`) y `urgencyLevel` (`text`, nullable).
 `lib/posts/shared.ts` centraliza:
-- `POST_CATEGORIES` = `incident | review | tip | question | suggestion` — se
-  elige en el formulario público (`components/posts/post-category-field.tsx`,
-  reutilizado por `ascent-form.tsx`, `camping-post-form.tsx` y
-  `boulder-post-form.tsx`).
+- `POST_CATEGORIES` = `incident | review | tip | question` — se elige en el
+  formulario público (`components/posts/post-category-field.tsx`, reutilizado
+  por `ascent-form.tsx`, `camping-post-form.tsx` y `boulder-post-form.tsx`).
+  ⚠️ **Cambio 2026-09:** existía una 5ª categoría, `"suggestion"`, con su
+  propio botón en el selector. Se fusionó dentro de `"review"` (reseña y
+  sugerencia son la misma retroalimentación del visitante — el formulario de
+  reseña ahora invita explícitamente a incluir sugerencias de mejora en el
+  comentario) y se eliminó el botón. Como `category` es una columna `text`
+  sin `CHECK` (ver nota de diseño arriba), cualquier fila antigua que ya
+  tenga `category = "suggestion"` sigue en la base de datos; para no
+  romper su renderizado, `lib/posts/shared.ts::normalizePostCategory(value)`
+  es la única forma correcta de leer `category` desde la BD — mapea
+  `"suggestion"` (y cualquier valor inesperado) a `"review"`. Se usa en los
+  4 Server Components de publicaciones (`route-publications.tsx`,
+  `camping-publications.tsx`, `boulder-publications.tsx`,
+  `boulder-block-publications.tsx`) y en `admin-posts-panel.tsx`, en vez del
+  cast `as PostCategory` que había antes. Los formularios y el zod del
+  servidor (`postCategorySchema`) ya no aceptan `"suggestion"` como valor de
+  entrada nuevo.
 - `CATEGORY_REQUIRES_RATING` (`"review"`) y `CATEGORY_REQUIRES_URGENCY`
   (`"incident"`) — solo esas categorías muestran/exigen, respectivamente, el
   selector de estrellas o el selector de urgencia (`UrgencyLevelField`); el

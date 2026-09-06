@@ -1274,7 +1274,7 @@
     },
     "review": {
       "label": "Reseña / Experiencia",
-      "description": "Cuéntanos cómo estuvo tu pegue o estancia: lo bueno, lo malo y el estado general de la zona."
+      "description": "Cuéntanos cómo estuvo tu pegue o estancia: lo bueno, lo malo, tus sugerencias de mejora y el estado general de la zona."
     },
     "tip": {
       "label": "Tip / Consejo técnico",
@@ -1283,10 +1283,6 @@
     "question": {
       "label": "Pregunta / Duda",
       "description": "Haz una pregunta sobre la zona o la ruta para que la comunidad te ayude a resolverla."
-    },
-    "suggestion": {
-      "label": "Sugerencia",
-      "description": "Aporta ideas para mejorar las instalaciones, señalización o mantenimiento."
     }
   },
   "Evento": {

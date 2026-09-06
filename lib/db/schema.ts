@@ -106,7 +106,8 @@ export const climbPost = pgTable("climb_post", {
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
   rating: integer("rating").notNull(),
-  // "incident" | "review" | "tip" | "question" | "suggestion" — see lib/posts/shared.ts
+  // "incident" | "review" | "tip" | "question" (legacy rows may still say "suggestion",
+  // normalized to "review" by lib/posts/shared.ts::normalizePostCategory)
   category: text("category").notNull().default("review"),
   // Only set when category = "incident": "low" | "medium" | "high" | "critical"
   urgencyLevel: text("urgency_level"),
@@ -159,7 +160,8 @@ export const campingPost = pgTable("camping_post", {
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
   rating: integer("rating").notNull(),
-  // "incident" | "review" | "tip" | "question" | "suggestion" — see lib/posts/shared.ts
+  // "incident" | "review" | "tip" | "question" (legacy rows may still say "suggestion",
+  // normalized to "review" by lib/posts/shared.ts::normalizePostCategory)
   category: text("category").notNull().default("review"),
   // Only set when category = "incident": "low" | "medium" | "high" | "critical"
   urgencyLevel: text("urgency_level"),
@@ -179,7 +181,8 @@ export const boulderPost = pgTable("boulder_post", {
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
   rating: integer("rating").notNull(),
-  // "incident" | "review" | "tip" | "question" | "suggestion" — see lib/posts/shared.ts
+  // "incident" | "review" | "tip" | "question" (legacy rows may still say "suggestion",
+  // normalized to "review" by lib/posts/shared.ts::normalizePostCategory)
   category: text("category").notNull().default("review"),
   // Only set when category = "incident": "low" | "medium" | "high" | "critical"
   urgencyLevel: text("urgency_level"),

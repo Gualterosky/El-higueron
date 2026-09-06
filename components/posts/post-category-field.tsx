@@ -1,6 +1,6 @@
 "use client"
 
-import { AlertTriangle, HelpCircle, Lightbulb, MessageSquarePlus, Star } from "lucide-react"
+import { AlertTriangle, HelpCircle, Lightbulb, Star } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
@@ -18,7 +18,6 @@ const CATEGORY_ICONS: Record<PostCategory, typeof Star> = {
   review: Star,
   tip: Lightbulb,
   question: HelpCircle,
-  suggestion: MessageSquarePlus,
 }
 
 type Props = {
@@ -34,7 +33,7 @@ export function PostCategoryField({ value, onChange }: Props) {
   return (
     <div className="space-y-2">
       <Label>{t("categoryLabel")}</Label>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {POST_CATEGORIES.map((category) => {
           const Icon = CATEGORY_ICONS[category]
           const selected = value === category

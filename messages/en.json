@@ -1274,7 +1274,7 @@
     },
     "review": {
       "label": "Review / Experience",
-      "description": "Tell us how your climb or stay went: the good, the bad, and the general state of the area."
+      "description": "Tell us how your climb or stay went: the good, the bad, your suggestions for improvement, and the general state of the area."
     },
     "tip": {
       "label": "Tip / Technical advice",
@@ -1283,10 +1283,6 @@
     "question": {
       "label": "Question",
       "description": "Ask a question about the area or route so the community can help you solve it."
-    },
-    "suggestion": {
-      "label": "Suggestion",
-      "description": "Share ideas to improve facilities, signage, or maintenance."
     }
   },
   "Evento": {

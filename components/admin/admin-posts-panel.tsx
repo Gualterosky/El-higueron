@@ -18,7 +18,7 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
 import type { ClimbPost, CampingPost, BoulderPost, PostReply } from "@/lib/db/schema"
-import { URGENCY_RANK, type PostCategory, type UrgencyLevel } from "@/lib/posts/shared"
+import { URGENCY_RANK, normalizePostCategory, type PostCategory, type UrgencyLevel } from "@/lib/posts/shared"
 import { deletePostAction, updatePostStatusAction } from "@/lib/muro/post-actions"
 import {
   deleteCampingPostAction,
@@ -186,7 +186,7 @@ function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPo
                 <h3 className="font-medium text-forest">{post.authorName}</h3>
                 <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
                 <PostCategoryBadge
-                  category={post.category as PostCategory}
+                  category={normalizePostCategory(post.category)}
                   urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
                 />
               </div>
@@ -279,7 +279,7 @@ function CampingPostsList({ initialPosts, repliesByPostId, t, router }: { initia
                 <h3 className="font-medium text-forest">{post.authorName}</h3>
                 <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
                 <PostCategoryBadge
-                  category={post.category as PostCategory}
+                  category={normalizePostCategory(post.category)}
                   urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
                 />
               </div>
@@ -372,7 +372,7 @@ function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initia
                 <h3 className="font-medium text-forest">{post.authorName}</h3>
                 <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
                 <PostCategoryBadge
-                  category={post.category as PostCategory}
+                  category={normalizePostCategory(post.category)}
                   urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
                 />
               </div>

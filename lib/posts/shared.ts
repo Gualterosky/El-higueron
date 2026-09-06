@@ -22,18 +22,29 @@ export const postTypeSchema = z.enum(POST_TYPES)
  * Category selected by the visitor when filling out a post form. Drives which
  * extra fields are shown/required (rating for "review", urgency for "incident")
  * and how the post is prioritized/filtered in the public feed and admin panel.
+ *
+ * "suggestion" existed as its own category until 2026-09 and was merged into
+ * "review": a visitor's opinion and their suggestions for improvement are the
+ * same kind of feedback, so having two separate buttons in the form was
+ * confusing. `normalizePostCategory` below keeps any already-stored
+ * "suggestion" rows rendering correctly as "review".
  */
-export const POST_CATEGORIES = [
-  "incident",
-  "review",
-  "tip",
-  "question",
-  "suggestion",
-] as const
+export const POST_CATEGORIES = ["incident", "review", "tip", "question"] as const
 
 export type PostCategory = (typeof POST_CATEGORIES)[number]
 
 export const postCategorySchema = z.enum(POST_CATEGORIES)
+
+/**
+ * `category` is stored as a free-text column (see schema.ts note), so any
+ * value read from the DB must be treated as untrusted. This also maps the
+ * retired "suggestion" category to "review" for posts created before the
+ * 2026-09 merge, and falls back to "review" for any other unexpected value.
+ */
+export function normalizePostCategory(value: string): PostCategory {
+  if ((POST_CATEGORIES as readonly string[]).includes(value)) return value as PostCategory
+  return "review"
+}
 
 /** Only "review" posts carry a star rating; the rest store 0 (not applicable). */
 export const CATEGORY_REQUIRES_RATING: PostCategory = "review"

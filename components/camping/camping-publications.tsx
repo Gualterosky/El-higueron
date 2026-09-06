@@ -2,7 +2,7 @@ import { unstable_noStore as noStore } from "next/cache"
 import { getTranslations } from "next-intl/server"
 import { getApprovedCampingPosts } from "@/lib/camping/post-queries"
 import { getApprovedRepliesByPosts } from "@/lib/replies/reply-queries"
-import type { PostCategory, UrgencyLevel } from "@/lib/posts/shared"
+import { normalizePostCategory, type UrgencyLevel } from "@/lib/posts/shared"
 import { SocialEmbed } from "@/components/muro/social-embed"
 import { PostMediaGallery } from "@/components/muro/post-media-gallery"
 import { PostRepliesSection } from "@/components/posts/post-reply-section"
@@ -24,7 +24,7 @@ export async function CampingPublications({ locale }: Props) {
 
   const feedPosts: FeedPost[] = posts.map((post) => ({
     id: post.id,
-    category: post.category as PostCategory,
+    category: normalizePostCategory(post.category),
     urgencyLevel: post.urgencyLevel as UrgencyLevel | null,
     rating: post.rating,
     authorName: post.authorName,

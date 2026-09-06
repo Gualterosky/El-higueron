@@ -5,7 +5,7 @@
 > Usuarios, Reservas o Comentarios/Publicaciones hay que leer este archivo, y
 > después de cualquier cambio significativo hay que actualizarlo.
 
-Última auditoría/refactor: 2026-08-31.
+Última auditoría/refactor: 2026-09-06 (fix de detección de idioma, ver sección 2.1).
 
 ---
 
@@ -79,6 +79,42 @@ messages/                   es.json / en.json — todos los textos de la UI
 drizzle/                    Migraciones SQL generadas + snapshot de metadatos
 proxy.ts                    Middleware: locale routing + guard de cookie de sesión
 ```
+
+---
+
+## 2.1 Detección de idioma (i18n)
+
+Rutas siempre con prefijo (`localePrefix: "always"` en `i18n/routing.ts`): toda
+página vive bajo `/es/...` o `/en/...`.
+
+**Prioridad de resolución de idioma** (implementada en `proxy.ts`, que envuelve
+al middleware de `next-intl`):
+
+1. Prefijo explícito ya presente en la URL (`/es/...`, `/en/...`).
+2. Cookie propia `USER_LOCALE` (constante `USER_LOCALE_COOKIE` en
+   `i18n/routing.ts`) — **solo se escribe cuando el usuario elige manualmente**
+   un idioma con el botón ES/EN (`components/language-switcher.tsx`, función
+   `rememberUserLocale`). Si existe, `proxy.ts` redirige a esa versión antes de
+   invocar el middleware de `next-intl`.
+3. Si no hay prefijo ni cookie propia, el middleware de `next-intl` detecta por
+   el header `Accept-Language` del navegador/SO (`localeDetection: true`,
+   default).
+4. `defaultLocale: "es"` como último recurso.
+
+⚠️ **Importante**: `i18n/routing.ts` tiene `localeCookie: false` a propósito.
+Por defecto, `next-intl` guarda automáticamente una cookie `NEXT_LOCALE` la
+primera vez que resuelve un idioma (aunque sea por detección automática), y esa
+cookie queda fija para siempre en ese navegador, ignorando cambios futuros del
+idioma real del dispositivo. Esto causaba el bug reportado: un usuario
+colombiano con teléfono en español que alguna vez abría un link que caía en
+`/en/...` (link compartido desde un navegador en inglés, resultado de Google
+indexado en `/en`, navegador in-app de WhatsApp/Instagram con
+`Accept-Language` poco confiable, etc.) quedaba con el sitio en inglés para
+siempre, y viceversa con turistas extranjeros. Al desactivar
+`localeCookie` y manejar la persistencia nosotros mismos solo en la elección
+manual, cualquier visita nueva sin idioma en la URL siempre vuelve a confiar en
+el idioma real del sistema operativo/navegador, salvo que el usuario haya
+elegido explícitamente lo contrario.
 
 ---
 

@@ -2,8 +2,17 @@
 
 import { useLocale } from "next-intl"
 import { usePathname, useRouter } from "@/i18n/navigation"
-import { routing, type Locale } from "@/i18n/routing"
+import { routing, USER_LOCALE_COOKIE, type Locale } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
+
+const USER_LOCALE_MAX_AGE = 60 * 60 * 24 * 365 // 1 year
+
+// Remember this as an explicit, user-chosen preference so future visits
+// (without a locale already in the URL) honor it instead of re-detecting
+// from the device's language.
+function rememberUserLocale(next: Locale) {
+  document.cookie = `${USER_LOCALE_COOKIE}=${next}; path=/; max-age=${USER_LOCALE_MAX_AGE}; SameSite=Lax`
+}
 
 export function LanguageSwitcher({ className }: { className?: string }) {
   const locale = useLocale() as Locale
@@ -12,6 +21,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
 
   function switchLocale(next: Locale) {
     if (next === locale) return
+    rememberUserLocale(next)
     router.replace(pathname, { locale: next })
   }
 

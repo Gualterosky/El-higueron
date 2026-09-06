@@ -351,6 +351,23 @@ lógica de orden (`sortPostsByPriority`) y muestra un badge de
 categoría/urgencia junto al badge de estado, para que administración y staff
 vean los reportes urgentes primero.
 
+**Filtro por categoría en el panel de administración (añadido 2026-09):**
+`admin-posts-panel.tsx` reutiliza el mismo vocabulario (`PostCategories` en
+`messages/*.json`) que el feed público para exponer el mismo filtrado en el
+panel de moderación:
+- El hook interno `useCategoryFilter(posts)` calcula conteos por categoría
+  (normalizando con `normalizePostCategory`) y filtra + ordena por prioridad
+  (`sortPostsByPriority`) según la categoría activa. Se usa igual en las 3
+  listas (`MuroPostsList`/`CampingPostsList`/`BoulderPostsList`).
+- `CategoryFilterBar` (chips "Todas/Incidente/Reseña/Tip/Pregunta" con
+  conteo) se renderiza arriba de cada lista, igual que en `PostFeed`.
+- Cada `TabsTrigger` de nivel superior (Muro/Camping/Boulder) muestra además
+  un `IncidentCountBadge` (ícono de alerta + número) cuando esa familia tiene
+  incidentes pendientes de revisar, para que el admin note prioridad sin
+  necesidad de abrir la pestaña.
+- No hubo cambios de esquema ni de Server Actions: es solo UI/filtrado en el
+  cliente sobre datos que ya llegaban con `category`/`urgencyLevel`.
+
 ---
 
 ## 7.b Flujo de datos — Pop-up de noticias/novedades

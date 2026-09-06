@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useMemo, useState, useTransition } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import {
@@ -18,7 +18,13 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
 import type { ClimbPost, CampingPost, BoulderPost, PostReply } from "@/lib/db/schema"
-import { URGENCY_RANK, normalizePostCategory, type PostCategory, type UrgencyLevel } from "@/lib/posts/shared"
+import {
+  POST_CATEGORIES,
+  URGENCY_RANK,
+  normalizePostCategory,
+  type PostCategory,
+  type UrgencyLevel,
+} from "@/lib/posts/shared"
 import { deletePostAction, updatePostStatusAction } from "@/lib/muro/post-actions"
 import {
   deleteCampingPostAction,
@@ -68,12 +74,15 @@ export function AdminPostsPanel({
         <TabsList>
           <TabsTrigger value="muro">
             {t("tabs.muro")} ({initialPosts.length})
+            <IncidentCountBadge count={countIncidents(initialPosts)} />
           </TabsTrigger>
           <TabsTrigger value="camping">
             {t("tabs.camping")} ({initialCampingPosts.length})
+            <IncidentCountBadge count={countIncidents(initialCampingPosts)} />
           </TabsTrigger>
           <TabsTrigger value="boulder">
             {t("tabs.boulder")} ({initialBoulderPosts.length})
+            <IncidentCountBadge count={countIncidents(initialBoulderPosts)} />
           </TabsTrigger>
         </TabsList>
 
@@ -108,6 +117,22 @@ export function AdminPostsPanel({
   )
 }
 
+// ── Incident count badge (shown next to each tab trigger) ────────────────────
+
+function countIncidents(posts: { category?: string | null }[]): number {
+  return posts.filter((post) => normalizePostCategory(post.category ?? "review") === "incident").length
+}
+
+function IncidentCountBadge({ count }: { count: number }) {
+  if (count === 0) return null
+  return (
+    <Badge className="gap-1 border-transparent bg-destructive px-1.5 py-0 text-[10px] text-white">
+      <AlertTriangle className="h-3 w-3" />
+      {count}
+    </Badge>
+  )
+}
+
 // ── Priority sort (incidents first, most urgent first) ───────────────────────
 
 function sortPostsByPriority<T extends { category?: string | null; urgencyLevel?: string | null }>(
@@ -130,6 +155,99 @@ function sortPostsByPriority<T extends { category?: string | null; urgencyLevel?
     .map(({ post }) => post)
 }
 
+// ── Category filter (all / incident / review / tip / question) ──────────────
+
+function useCategoryFilter<T extends { category?: string | null; urgencyLevel?: string | null }>(
+  posts: T[]
+) {
+  const [activeFilter, setActiveFilter] = useState<"all" | PostCategory>("all")
+
+  const counts = useMemo(() => {
+    const map = new Map<PostCategory, number>()
+    for (const post of posts) {
+      const category = normalizePostCategory(post.category ?? "review")
+      map.set(category, (map.get(category) ?? 0) + 1)
+    }
+    return map
+  }, [posts])
+
+  const filteredPosts = useMemo(() => {
+    const base =
+      activeFilter === "all"
+        ? posts
+        : posts.filter((post) => normalizePostCategory(post.category ?? "review") === activeFilter)
+    return sortPostsByPriority(base)
+  }, [posts, activeFilter])
+
+  return { activeFilter, setActiveFilter, counts, filteredPosts }
+}
+
+function CategoryFilterBar({
+  activeFilter,
+  onChange,
+  counts,
+  total,
+}: {
+  activeFilter: "all" | PostCategory
+  onChange: (filter: "all" | PostCategory) => void
+  counts: Map<PostCategory, number>
+  total: number
+}) {
+  const t = useTranslations("PostCategories")
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      <CategoryFilterButton
+        active={activeFilter === "all"}
+        onClick={() => onChange("all")}
+        label={`${t("filterAll")} (${total})`}
+      />
+      {POST_CATEGORIES.map((category) => {
+        const count = counts.get(category) ?? 0
+        if (count === 0) return null
+        return (
+          <CategoryFilterButton
+            key={category}
+            active={activeFilter === category}
+            onClick={() => onChange(category)}
+            label={`${t(`${category}.label`)} (${count})`}
+            destructive={category === "incident"}
+          />
+        )
+      })}
+    </div>
+  )
+}
+
+function CategoryFilterButton({
+  active,
+  onClick,
+  label,
+  destructive,
+}: {
+  active: boolean
+  onClick: () => void
+  label: string
+  destructive?: boolean
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
+        active
+          ? destructive
+            ? "border-destructive bg-destructive text-white"
+            : "border-forest bg-forest text-white"
+          : "border-border text-muted-foreground hover:bg-muted/50"
+      )}
+    >
+      {label}
+    </button>
+  )
+}
+
 // ── Muro posts list ──────────────────────────────────────────────────────────
 
 type RepliesMap = Partial<Record<string, PostReply[]>>
@@ -137,6 +255,7 @@ type RepliesMap = Partial<Record<string, PostReply[]>>
 function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: ClimbPost[]; repliesByPostId: RepliesMap; t: TFunc; router: AppRouter }) {
   const [posts, setPosts] = useState(initialPosts)
   const [, startTransition] = useTransition()
+  const { activeFilter, setActiveFilter, counts, filteredPosts } = useCategoryFilter(posts)
 
   function handleStatus(id: string, status: "approved" | "hidden" | "pending") {
     startTransition(async () => {
@@ -168,59 +287,71 @@ function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPo
 
   return (
     <div className="space-y-4">
-      {sortPostsByPriority(posts).map((post) => (
-        <article
-          key={post.id}
-          className={cn(
-            "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
-            post.category === "incident"
-              ? "border-destructive/60 bg-destructive/5"
-              : post.status === "pending"
-                ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
-                : "border-border/60 bg-beige/20"
-          )}
-        >
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div className="min-w-0 space-y-2">
-              <div className="flex flex-wrap items-center gap-2">
-                <h3 className="font-medium text-forest">{post.authorName}</h3>
-                <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
-                <PostCategoryBadge
-                  category={normalizePostCategory(post.category)}
-                  urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
-                />
+      <CategoryFilterBar
+        activeFilter={activeFilter}
+        onChange={setActiveFilter}
+        counts={counts}
+        total={posts.length}
+      />
+      {filteredPosts.length === 0 ? (
+        <p className="rounded-xl border border-dashed border-border/60 px-4 py-8 text-center text-sm text-muted-foreground">
+          {t("noResults")}
+        </p>
+      ) : (
+        filteredPosts.map((post) => (
+          <article
+            key={post.id}
+            className={cn(
+              "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
+              post.category === "incident"
+                ? "border-destructive/60 bg-destructive/5"
+                : post.status === "pending"
+                  ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
+                  : "border-border/60 bg-beige/20"
+            )}
+          >
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0 space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="font-medium text-forest">{post.authorName}</h3>
+                  <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+                  <PostCategoryBadge
+                    category={normalizePostCategory(post.category)}
+                    urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
+                  />
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {post.routeId} · {post.ascentDate} · {t("submittedOn")}{" "}
+                  {new Date(post.createdAt).toLocaleDateString()}
+                </p>
+                {post.category === "review" && <StarRating rating={post.rating} />}
+                <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
+                {post.socialMediaUrl && (
+                  <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
+                )}
+                {post.mediaUrls && post.mediaUrls.length > 0 && (
+                  <PostMediaGallery mediaUrls={post.mediaUrls} />
+                )}
+                <p className="text-xs text-muted-foreground">
+                  <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground">
-                {post.routeId} · {post.ascentDate} · {t("submittedOn")}{" "}
-                {new Date(post.createdAt).toLocaleDateString()}
-              </p>
-              {post.category === "review" && <StarRating rating={post.rating} />}
-              <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
-              {post.socialMediaUrl && (
-                <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
-              )}
-              {post.mediaUrls && post.mediaUrls.length > 0 && (
-                <PostMediaGallery mediaUrls={post.mediaUrls} />
-              )}
-              <p className="text-xs text-muted-foreground">
-                <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
-              </p>
+              <PostActions
+                status={post.status as "pending" | "approved" | "hidden"}
+                onApprove={() => handleStatus(post.id, "approved")}
+                onHide={() => handleStatus(post.id, "hidden")}
+                onDelete={() => handleDelete(post.id)}
+                t={t}
+              />
             </div>
-            <PostActions
-              status={post.status as "pending" | "approved" | "hidden"}
-              onApprove={() => handleStatus(post.id, "approved")}
-              onHide={() => handleStatus(post.id, "hidden")}
-              onDelete={() => handleDelete(post.id)}
-              t={t}
+            <AdminRepliesSection
+              postId={post.id}
+              initialReplies={repliesByPostId[post.id] ?? []}
+              router={router}
             />
-          </div>
-          <AdminRepliesSection
-            postId={post.id}
-            initialReplies={repliesByPostId[post.id] ?? []}
-            router={router}
-          />
-        </article>
-      ))}
+          </article>
+        ))
+      )}
     </div>
   )
 }
@@ -230,6 +361,7 @@ function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPo
 function CampingPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: CampingPost[]; repliesByPostId: RepliesMap; t: TFunc; router: AppRouter }) {
   const [posts, setPosts] = useState(initialPosts)
   const [, startTransition] = useTransition()
+  const { activeFilter, setActiveFilter, counts, filteredPosts } = useCategoryFilter(posts)
 
   function handleStatus(id: string, status: "approved" | "hidden" | "pending") {
     startTransition(async () => {
@@ -261,59 +393,71 @@ function CampingPostsList({ initialPosts, repliesByPostId, t, router }: { initia
 
   return (
     <div className="space-y-4">
-      {sortPostsByPriority(posts).map((post) => (
-        <article
-          key={post.id}
-          className={cn(
-            "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
-            post.category === "incident"
-              ? "border-destructive/60 bg-destructive/5"
-              : post.status === "pending"
-                ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
-                : "border-border/60 bg-beige/20"
-          )}
-        >
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div className="min-w-0 space-y-2">
-              <div className="flex flex-wrap items-center gap-2">
-                <h3 className="font-medium text-forest">{post.authorName}</h3>
-                <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
-                <PostCategoryBadge
-                  category={normalizePostCategory(post.category)}
-                  urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
-                />
+      <CategoryFilterBar
+        activeFilter={activeFilter}
+        onChange={setActiveFilter}
+        counts={counts}
+        total={posts.length}
+      />
+      {filteredPosts.length === 0 ? (
+        <p className="rounded-xl border border-dashed border-border/60 px-4 py-8 text-center text-sm text-muted-foreground">
+          {t("noResults")}
+        </p>
+      ) : (
+        filteredPosts.map((post) => (
+          <article
+            key={post.id}
+            className={cn(
+              "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
+              post.category === "incident"
+                ? "border-destructive/60 bg-destructive/5"
+                : post.status === "pending"
+                  ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
+                  : "border-border/60 bg-beige/20"
+            )}
+          >
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0 space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="font-medium text-forest">{post.authorName}</h3>
+                  <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+                  <PostCategoryBadge
+                    category={normalizePostCategory(post.category)}
+                    urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
+                  />
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {post.visitDate} · {t("submittedOn")}{" "}
+                  {new Date(post.createdAt).toLocaleDateString()}
+                </p>
+                {post.category === "review" && <StarRating rating={post.rating} />}
+                <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
+                {post.socialMediaUrl && (
+                  <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
+                )}
+                {post.mediaUrls && post.mediaUrls.length > 0 && (
+                  <PostMediaGallery mediaUrls={post.mediaUrls} />
+                )}
+                <p className="text-xs text-muted-foreground">
+                  <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground">
-                {post.visitDate} · {t("submittedOn")}{" "}
-                {new Date(post.createdAt).toLocaleDateString()}
-              </p>
-              {post.category === "review" && <StarRating rating={post.rating} />}
-              <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
-              {post.socialMediaUrl && (
-                <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
-              )}
-              {post.mediaUrls && post.mediaUrls.length > 0 && (
-                <PostMediaGallery mediaUrls={post.mediaUrls} />
-              )}
-              <p className="text-xs text-muted-foreground">
-                <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
-              </p>
+              <PostActions
+                status={post.status as "pending" | "approved" | "hidden"}
+                onApprove={() => handleStatus(post.id, "approved")}
+                onHide={() => handleStatus(post.id, "hidden")}
+                onDelete={() => handleDelete(post.id)}
+                t={t}
+              />
             </div>
-            <PostActions
-              status={post.status as "pending" | "approved" | "hidden"}
-              onApprove={() => handleStatus(post.id, "approved")}
-              onHide={() => handleStatus(post.id, "hidden")}
-              onDelete={() => handleDelete(post.id)}
-              t={t}
+            <AdminRepliesSection
+              postId={post.id}
+              initialReplies={repliesByPostId[post.id] ?? []}
+              router={router}
             />
-          </div>
-          <AdminRepliesSection
-            postId={post.id}
-            initialReplies={repliesByPostId[post.id] ?? []}
-            router={router}
-          />
-        </article>
-      ))}
+          </article>
+        ))
+      )}
     </div>
   )
 }
@@ -323,6 +467,7 @@ function CampingPostsList({ initialPosts, repliesByPostId, t, router }: { initia
 function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: BoulderPost[]; repliesByPostId: RepliesMap; t: TFunc; router: AppRouter }) {
   const [posts, setPosts] = useState(initialPosts)
   const [, startTransition] = useTransition()
+  const { activeFilter, setActiveFilter, counts, filteredPosts } = useCategoryFilter(posts)
 
   function handleStatus(id: string, status: "approved" | "hidden" | "pending") {
     startTransition(async () => {
@@ -354,59 +499,71 @@ function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initia
 
   return (
     <div className="space-y-4">
-      {sortPostsByPriority(posts).map((post) => (
-        <article
-          key={post.id}
-          className={cn(
-            "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
-            post.category === "incident"
-              ? "border-destructive/60 bg-destructive/5"
-              : post.status === "pending"
-                ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
-                : "border-border/60 bg-beige/20"
-          )}
-        >
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div className="min-w-0 space-y-2">
-              <div className="flex flex-wrap items-center gap-2">
-                <h3 className="font-medium text-forest">{post.authorName}</h3>
-                <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
-                <PostCategoryBadge
-                  category={normalizePostCategory(post.category)}
-                  urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
-                />
+      <CategoryFilterBar
+        activeFilter={activeFilter}
+        onChange={setActiveFilter}
+        counts={counts}
+        total={posts.length}
+      />
+      {filteredPosts.length === 0 ? (
+        <p className="rounded-xl border border-dashed border-border/60 px-4 py-8 text-center text-sm text-muted-foreground">
+          {t("noResults")}
+        </p>
+      ) : (
+        filteredPosts.map((post) => (
+          <article
+            key={post.id}
+            className={cn(
+              "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
+              post.category === "incident"
+                ? "border-destructive/60 bg-destructive/5"
+                : post.status === "pending"
+                  ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
+                  : "border-border/60 bg-beige/20"
+            )}
+          >
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0 space-y-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="font-medium text-forest">{post.authorName}</h3>
+                  <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+                  <PostCategoryBadge
+                    category={normalizePostCategory(post.category)}
+                    urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
+                  />
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  {post.boulderName} · {post.routeName} · {post.visitDate} · {t("submittedOn")}{" "}
+                  {new Date(post.createdAt).toLocaleDateString()}
+                </p>
+                {post.category === "review" && <StarRating rating={post.rating} />}
+                <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
+                {post.socialMediaUrl && (
+                  <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
+                )}
+                {post.mediaUrls && post.mediaUrls.length > 0 && (
+                  <PostMediaGallery mediaUrls={post.mediaUrls} />
+                )}
+                <p className="text-xs text-muted-foreground">
+                  <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground">
-                {post.boulderName} · {post.routeName} · {post.visitDate} · {t("submittedOn")}{" "}
-                {new Date(post.createdAt).toLocaleDateString()}
-              </p>
-              {post.category === "review" && <StarRating rating={post.rating} />}
-              <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
-              {post.socialMediaUrl && (
-                <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
-              )}
-              {post.mediaUrls && post.mediaUrls.length > 0 && (
-                <PostMediaGallery mediaUrls={post.mediaUrls} />
-              )}
-              <p className="text-xs text-muted-foreground">
-                <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
-              </p>
+              <PostActions
+                status={post.status as "pending" | "approved" | "hidden"}
+                onApprove={() => handleStatus(post.id, "approved")}
+                onHide={() => handleStatus(post.id, "hidden")}
+                onDelete={() => handleDelete(post.id)}
+                t={t}
+              />
             </div>
-            <PostActions
-              status={post.status as "pending" | "approved" | "hidden"}
-              onApprove={() => handleStatus(post.id, "approved")}
-              onHide={() => handleStatus(post.id, "hidden")}
-              onDelete={() => handleDelete(post.id)}
-              t={t}
+            <AdminRepliesSection
+              postId={post.id}
+              initialReplies={repliesByPostId[post.id] ?? []}
+              router={router}
             />
-          </div>
-          <AdminRepliesSection
-            postId={post.id}
-            initialReplies={repliesByPostId[post.id] ?? []}
-            router={router}
-          />
-        </article>
-      ))}
+          </article>
+        ))
+      )}
     </div>
   )
 }

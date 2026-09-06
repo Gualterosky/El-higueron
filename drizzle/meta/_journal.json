@@ -36,6 +36,13 @@
       "when": 1786620000000,
       "tag": "0004_site_announcement",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1788659927160,
+      "tag": "0005_redundant_proteus",
+      "breakpoints": true
     }
   ]
 }

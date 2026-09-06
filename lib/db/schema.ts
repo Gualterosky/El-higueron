@@ -106,6 +106,10 @@ export const climbPost = pgTable("climb_post", {
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
   rating: integer("rating").notNull(),
+  // "incident" | "review" | "tip" | "question" | "suggestion" — see lib/posts/shared.ts
+  category: text("category").notNull().default("review"),
+  // Only set when category = "incident": "low" | "medium" | "high" | "critical"
+  urgencyLevel: text("urgency_level"),
   status: text("status").notNull().default("pending"),
   socialMediaUrl: text("social_media_url"),
   mediaUrls: text("media_urls").array(),
@@ -155,6 +159,10 @@ export const campingPost = pgTable("camping_post", {
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
   rating: integer("rating").notNull(),
+  // "incident" | "review" | "tip" | "question" | "suggestion" — see lib/posts/shared.ts
+  category: text("category").notNull().default("review"),
+  // Only set when category = "incident": "low" | "medium" | "high" | "critical"
+  urgencyLevel: text("urgency_level"),
   status: text("status").notNull().default("pending"),
   socialMediaUrl: text("social_media_url"),
   mediaUrls: text("media_urls").array(),
@@ -171,6 +179,10 @@ export const boulderPost = pgTable("boulder_post", {
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
   rating: integer("rating").notNull(),
+  // "incident" | "review" | "tip" | "question" | "suggestion" — see lib/posts/shared.ts
+  category: text("category").notNull().default("review"),
+  // Only set when category = "incident": "low" | "medium" | "high" | "critical"
+  urgencyLevel: text("urgency_level"),
   status: text("status").notNull().default("pending"),
   socialMediaUrl: text("social_media_url"),
   mediaUrls: text("media_urls").array(),

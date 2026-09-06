@@ -269,6 +269,37 @@ Neon Postgres → revalidatePath("/", "layout")
 replies. Si se agrega una 4ª familia de contenido moderable, debe usar este
 archivo en vez de redefinir su propio enum de status.
 
+**Categorías de publicación (`category` + `urgencyLevel`, añadido 2026-09):**
+Las 3 tablas de posts (`climbPost`/`campingPost`/`boulderPost`) tienen además
+`category` (`text`, default `"review"`) y `urgencyLevel` (`text`, nullable).
+`lib/posts/shared.ts` centraliza:
+- `POST_CATEGORIES` = `incident | review | tip | question | suggestion` — se
+  elige en el formulario público (`components/posts/post-category-field.tsx`,
+  reutilizado por `ascent-form.tsx`, `camping-post-form.tsx` y
+  `boulder-post-form.tsx`).
+- `CATEGORY_REQUIRES_RATING` (`"review"`) y `CATEGORY_REQUIRES_URGENCY`
+  (`"incident"`) — solo esas categorías muestran/exigen, respectivamente, el
+  selector de estrellas o el selector de urgencia (`UrgencyLevelField`); el
+  resto guarda `rating = 0` y `urgencyLevel = null`. La validación condicional
+  vive tanto en el zod del cliente (cada formulario) como en el zod del
+  servidor (`lib/{muro,camping,boulder}/post-actions.ts`, vía `superRefine`) —
+  nunca confiar solo en el cliente.
+- `URGENCY_LEVELS` (`low | medium | high | critical`) + `URGENCY_RANK` — usado
+  para ordenar los incidentes de mayor a menor urgencia.
+
+**Feed público con prioridad de incidentes:** `components/posts/post-feed.tsx`
+(`PostFeed`, client component) es el listado compartido por
+`route-publications.tsx`, `camping-publications.tsx`, `boulder-publications.tsx`
+y `boulder-block-publications.tsx`. Cada Server Component sigue haciendo el
+fetch (`getApproved*`) y arma un array de `FeedPost` (con `meta`/`media`/
+`replies` ya renderizados como JSX) que le pasa a `PostFeed`. `PostFeed`
+agrega tabs de filtro por categoría y, en la vista "todas", ordena los
+incidentes primero (por `URGENCY_RANK`) manteniendo el resto en el orden que
+ya trae la query (`createdAt desc`). `admin-posts-panel.tsx` aplica la misma
+lógica de orden (`sortPostsByPriority`) y muestra un badge de
+categoría/urgencia junto al badge de estado, para que administración y staff
+vean los reportes urgentes primero.
+
 ---
 
 ## 7.b Flujo de datos — Pop-up de noticias/novedades

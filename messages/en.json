@@ -1256,6 +1256,39 @@
       "uploadNotConfigured": "File upload is not configured yet."
     }
   },
+  "PostCategories": {
+    "categoryLabel": "Post type",
+    "filterAll": "All",
+    "urgencyLabel": "Urgency level",
+    "urgencyPlaceholder": "Select the urgency level",
+    "urgencyHint": "Helps the team prioritize which reports to address first.",
+    "urgency": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    },
+    "incident": {
+      "label": "Incident / Safety alert",
+      "description": "Report technical issues or hazards on the route/area (e.g. loose bolts, loose rock, damaged vegetation)."
+    },
+    "review": {
+      "label": "Review / Experience",
+      "description": "Tell us how your climb or stay went: the good, the bad, and the general state of the area."
+    },
+    "tip": {
+      "label": "Tip / Technical advice",
+      "description": "Share beta or tactical recommendations (e.g. \"For the crux of this route, use right foot instep\")."
+    },
+    "question": {
+      "label": "Question",
+      "description": "Ask a question about the area or route so the community can help you solve it."
+    },
+    "suggestion": {
+      "label": "Suggestion",
+      "description": "Share ideas to improve facilities, signage, or maintenance."
+    }
+  },
   "Evento": {
     "empty": {
       "title": "No events scheduled",

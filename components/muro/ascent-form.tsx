@@ -22,6 +22,13 @@ import { MURO_ROUTES } from "@/lib/muro/routes"
 import { submitClimbPostAction } from "@/lib/muro/post-actions"
 import { detectPlatform } from "@/components/muro/social-embed"
 import { MediaUploader } from "@/components/muro/media-uploader"
+import { PostCategoryField, UrgencyLevelField } from "@/components/posts/post-category-field"
+import {
+  CATEGORY_REQUIRES_RATING,
+  CATEGORY_REQUIRES_URGENCY,
+  type PostCategory,
+  type UrgencyLevel,
+} from "@/lib/posts/shared"
 
 type Props = {
   routeId: string
@@ -33,9 +40,11 @@ type AscentFormValues = {
   authorName: string
   ascentDate: string
   routeId: string
+  category: PostCategory
   comment: string
   contactInfo: string
   rating: number
+  urgencyLevel?: UrgencyLevel
   socialMediaUrl?: string
 }
 
@@ -54,30 +63,51 @@ export function AscentForm({ routeId }: Props) {
       ? `${routeId}-${currentRoute.subLevels[0]}`
       : routeId
 
-  const schema = z.object({
-    authorName: z.string().min(2, t("ascentForm.errorMin2")).max(100),
-    ascentDate: z.string().min(1, t("ascentForm.errorRequired")),
-    routeId: z.string().min(1, t("ascentForm.errorRequired")),
-    comment: z.string().min(5, t("ascentForm.errorMin5")).max(2000),
-    contactInfo: z.string().min(3, t("ascentForm.errorRequired")).max(200),
-    rating: z.number().int().min(1, t("ascentForm.errorRating")).max(5),
-    socialMediaUrl: z
-      .string()
-      .refine((v) => !v || v.startsWith("https://"), {
-        message: t("ascentForm.errorUrlInvalid"),
-      })
-      .optional(),
-  })
+  const schema = z
+    .object({
+      authorName: z.string().min(2, t("ascentForm.errorMin2")).max(100),
+      ascentDate: z.string().min(1, t("ascentForm.errorRequired")),
+      routeId: z.string().min(1, t("ascentForm.errorRequired")),
+      category: z.enum(["incident", "review", "tip", "question", "suggestion"]),
+      comment: z.string().min(5, t("ascentForm.errorMin5")).max(2000),
+      contactInfo: z.string().min(3, t("ascentForm.errorRequired")).max(200),
+      rating: z.number().int().min(0).max(5),
+      urgencyLevel: z.enum(["low", "medium", "high", "critical"]).optional(),
+      socialMediaUrl: z
+        .string()
+        .refine((v) => !v || v.startsWith("https://"), {
+          message: t("ascentForm.errorUrlInvalid"),
+        })
+        .optional(),
+    })
+    .superRefine((data, ctx) => {
+      if (data.category === CATEGORY_REQUIRES_RATING && (data.rating < 1 || data.rating > 5)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["rating"],
+          message: t("ascentForm.errorRating"),
+        })
+      }
+      if (data.category === CATEGORY_REQUIRES_URGENCY && !data.urgencyLevel) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["urgencyLevel"],
+          message: t("ascentForm.errorRequired"),
+        })
+      }
+    })
 
   const form = useForm<AscentFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       routeId: defaultRouteValue,
+      category: "review",
       rating: 0,
     },
   })
 
   const rating = form.watch("rating")
+  const category = form.watch("category")
 
   async function onSubmit(data: AscentFormValues) {
     setServerError(null)
@@ -108,6 +138,11 @@ export function AscentForm({ routeId }: Props) {
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+      <PostCategoryField
+        value={category}
+        onChange={(v) => form.setValue("category", v, { shouldValidate: true })}
+      />
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-1.5">
           <Label htmlFor="authorName">
@@ -198,38 +233,48 @@ export function AscentForm({ routeId }: Props) {
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label>
-          {t("ascentForm.rating")} <span className="text-destructive">*</span>
-        </Label>
-        <div className="flex gap-1">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              onClick={() => form.setValue("rating", star, { shouldValidate: true })}
-              onMouseEnter={() => setHovered(star)}
-              onMouseLeave={() => setHovered(0)}
-              aria-label={`${star} de 5 estrellas`}
-              className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <Star
-                className={cn(
-                  "h-8 w-8 transition-colors",
-                  (hovered || rating) >= star
-                    ? "fill-orange text-orange"
-                    : "text-muted-foreground/40"
-                )}
-              />
-            </button>
-          ))}
+      {category === CATEGORY_REQUIRES_RATING && (
+        <div className="space-y-2">
+          <Label>
+            {t("ascentForm.rating")} <span className="text-destructive">*</span>
+          </Label>
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                onClick={() => form.setValue("rating", star, { shouldValidate: true })}
+                onMouseEnter={() => setHovered(star)}
+                onMouseLeave={() => setHovered(0)}
+                aria-label={`${star} de 5 estrellas`}
+                className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <Star
+                  className={cn(
+                    "h-8 w-8 transition-colors",
+                    (hovered || rating) >= star
+                      ? "fill-orange text-orange"
+                      : "text-muted-foreground/40"
+                  )}
+                />
+              </button>
+            ))}
+          </div>
+          {form.formState.errors.rating && (
+            <p className="text-xs text-destructive" role="alert">
+              {form.formState.errors.rating.message}
+            </p>
+          )}
         </div>
-        {form.formState.errors.rating && (
-          <p className="text-xs text-destructive" role="alert">
-            {form.formState.errors.rating.message}
-          </p>
-        )}
-      </div>
+      )}
+
+      {category === CATEGORY_REQUIRES_URGENCY && (
+        <UrgencyLevelField
+          value={form.watch("urgencyLevel")}
+          onChange={(v) => form.setValue("urgencyLevel", v, { shouldValidate: true })}
+          error={form.formState.errors.urgencyLevel?.message}
+        />
+      )}
 
       <div className="space-y-1.5">
         <Label htmlFor="contactInfo">

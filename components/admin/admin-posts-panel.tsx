@@ -4,6 +4,7 @@ import { useState, useTransition } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import {
+  AlertTriangle,
   Check,
   ChevronDown,
   ChevronUp,
@@ -17,6 +18,7 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
 import type { ClimbPost, CampingPost, BoulderPost, PostReply } from "@/lib/db/schema"
+import { URGENCY_RANK, type PostCategory, type UrgencyLevel } from "@/lib/posts/shared"
 import { deletePostAction, updatePostStatusAction } from "@/lib/muro/post-actions"
 import {
   deleteCampingPostAction,
@@ -106,6 +108,28 @@ export function AdminPostsPanel({
   )
 }
 
+// ── Priority sort (incidents first, most urgent first) ───────────────────────
+
+function sortPostsByPriority<T extends { category?: string | null; urgencyLevel?: string | null }>(
+  posts: T[]
+): T[] {
+  return posts
+    .map((post, index) => ({ post, index }))
+    .sort((a, b) => {
+      const priorityA =
+        a.post.category === "incident"
+          ? 100 + (URGENCY_RANK[(a.post.urgencyLevel as UrgencyLevel) ?? "low"] ?? 0)
+          : 0
+      const priorityB =
+        b.post.category === "incident"
+          ? 100 + (URGENCY_RANK[(b.post.urgencyLevel as UrgencyLevel) ?? "low"] ?? 0)
+          : 0
+      if (priorityA !== priorityB) return priorityB - priorityA
+      return a.index - b.index
+    })
+    .map(({ post }) => post)
+}
+
 // ── Muro posts list ──────────────────────────────────────────────────────────
 
 type RepliesMap = Partial<Record<string, PostReply[]>>
@@ -144,14 +168,16 @@ function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPo
 
   return (
     <div className="space-y-4">
-      {posts.map((post) => (
+      {sortPostsByPriority(posts).map((post) => (
         <article
           key={post.id}
           className={cn(
             "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
-            post.status === "pending"
-              ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
-              : "border-border/60 bg-beige/20"
+            post.category === "incident"
+              ? "border-destructive/60 bg-destructive/5"
+              : post.status === "pending"
+                ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
+                : "border-border/60 bg-beige/20"
           )}
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -159,12 +185,16 @@ function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPo
               <div className="flex flex-wrap items-center gap-2">
                 <h3 className="font-medium text-forest">{post.authorName}</h3>
                 <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+                <PostCategoryBadge
+                  category={post.category as PostCategory}
+                  urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
+                />
               </div>
               <p className="text-sm text-muted-foreground">
                 {post.routeId} · {post.ascentDate} · {t("submittedOn")}{" "}
                 {new Date(post.createdAt).toLocaleDateString()}
               </p>
-              <StarRating rating={post.rating} />
+              {post.category === "review" && <StarRating rating={post.rating} />}
               <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
               {post.socialMediaUrl && (
                 <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
@@ -231,14 +261,16 @@ function CampingPostsList({ initialPosts, repliesByPostId, t, router }: { initia
 
   return (
     <div className="space-y-4">
-      {posts.map((post) => (
+      {sortPostsByPriority(posts).map((post) => (
         <article
           key={post.id}
           className={cn(
             "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
-            post.status === "pending"
-              ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
-              : "border-border/60 bg-beige/20"
+            post.category === "incident"
+              ? "border-destructive/60 bg-destructive/5"
+              : post.status === "pending"
+                ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
+                : "border-border/60 bg-beige/20"
           )}
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -246,12 +278,16 @@ function CampingPostsList({ initialPosts, repliesByPostId, t, router }: { initia
               <div className="flex flex-wrap items-center gap-2">
                 <h3 className="font-medium text-forest">{post.authorName}</h3>
                 <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+                <PostCategoryBadge
+                  category={post.category as PostCategory}
+                  urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
+                />
               </div>
               <p className="text-sm text-muted-foreground">
                 {post.visitDate} · {t("submittedOn")}{" "}
                 {new Date(post.createdAt).toLocaleDateString()}
               </p>
-              <StarRating rating={post.rating} />
+              {post.category === "review" && <StarRating rating={post.rating} />}
               <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
               {post.socialMediaUrl && (
                 <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
@@ -318,14 +354,16 @@ function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initia
 
   return (
     <div className="space-y-4">
-      {posts.map((post) => (
+      {sortPostsByPriority(posts).map((post) => (
         <article
           key={post.id}
           className={cn(
             "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
-            post.status === "pending"
-              ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
-              : "border-border/60 bg-beige/20"
+            post.category === "incident"
+              ? "border-destructive/60 bg-destructive/5"
+              : post.status === "pending"
+                ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
+                : "border-border/60 bg-beige/20"
           )}
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -333,12 +371,16 @@ function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initia
               <div className="flex flex-wrap items-center gap-2">
                 <h3 className="font-medium text-forest">{post.authorName}</h3>
                 <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+                <PostCategoryBadge
+                  category={post.category as PostCategory}
+                  urgencyLevel={post.urgencyLevel as UrgencyLevel | null}
+                />
               </div>
               <p className="text-sm text-muted-foreground">
                 {post.boulderName} · {post.routeName} · {post.visitDate} · {t("submittedOn")}{" "}
                 {new Date(post.createdAt).toLocaleDateString()}
               </p>
-              <StarRating rating={post.rating} />
+              {post.category === "review" && <StarRating rating={post.rating} />}
               <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
               {post.socialMediaUrl && (
                 <SocialEmbed url={post.socialMediaUrl} className="mt-1" />
@@ -527,6 +569,33 @@ function StatusBadge({ status, t, small }: { status: "pending" | "approved" | "h
       )}
     >
       {t(`status.${status}`)}
+    </Badge>
+  )
+}
+
+function PostCategoryBadge({
+  category,
+  urgencyLevel,
+}: {
+  category: PostCategory
+  urgencyLevel: UrgencyLevel | null
+}) {
+  const t = useTranslations("PostCategories")
+  if (!category || category === "review") return null
+
+  if (category === "incident") {
+    return (
+      <Badge className="gap-1 border-transparent bg-destructive text-white">
+        <AlertTriangle className="h-3 w-3" />
+        {t("incident.label")}
+        {urgencyLevel && ` · ${t(`urgency.${urgencyLevel}`)}`}
+      </Badge>
+    )
+  }
+
+  return (
+    <Badge variant="outline" className="border-forest/40 text-forest">
+      {t(`${category}.label`)}
     </Badge>
   )
 }

@@ -14,6 +14,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { submitBoulderPostAction } from "@/lib/boulder/post-actions"
 import { detectPlatform } from "@/components/muro/social-embed"
 import { MediaUploader } from "@/components/muro/media-uploader"
+import { PostCategoryField, UrgencyLevelField } from "@/components/posts/post-category-field"
+import { CATEGORY_REQUIRES_RATING, CATEGORY_REQUIRES_URGENCY } from "@/lib/posts/shared"
 
 export function BoulderPostForm() {
   const t = useTranslations("BoulderPost")
@@ -24,32 +26,45 @@ export function BoulderPostForm() {
   const [showUploadInput, setShowUploadInput] = useState(false)
   const [uploadedUrls, setUploadedUrls] = useState<string[]>([])
 
-  const schema = z.object({
-    authorName: z.string().min(2, t("form.errorMin2")).max(100),
-    visitDate: z.string().min(1, t("form.errorRequired")),
-    boulderName: z.string().min(1, t("form.errorRequired")).max(200),
-    routeName: z.string().min(1, t("form.errorRequired")).max(200),
-    comment: z.string().min(5, t("form.errorMin5")).max(2000),
-    contactInfo: z.string().min(3, t("form.errorRequired")).max(200),
-    rating: z.number().int().min(1, t("form.errorRating")).max(5),
-    socialMediaUrl: z
-      .string()
-      .refine((v) => !v || v.startsWith("https://"), {
-        message: t("form.errorUrlInvalid"),
-      })
-      .optional(),
-  })
+  const schema = z
+    .object({
+      authorName: z.string().min(2, t("form.errorMin2")).max(100),
+      visitDate: z.string().min(1, t("form.errorRequired")),
+      boulderName: z.string().min(1, t("form.errorRequired")).max(200),
+      routeName: z.string().min(1, t("form.errorRequired")).max(200),
+      category: z.enum(["incident", "review", "tip", "question", "suggestion"]),
+      comment: z.string().min(5, t("form.errorMin5")).max(2000),
+      contactInfo: z.string().min(3, t("form.errorRequired")).max(200),
+      rating: z.number().int().min(0).max(5),
+      urgencyLevel: z.enum(["low", "medium", "high", "critical"]).optional(),
+      socialMediaUrl: z
+        .string()
+        .refine((v) => !v || v.startsWith("https://"), {
+          message: t("form.errorUrlInvalid"),
+        })
+        .optional(),
+    })
+    .superRefine((data, ctx) => {
+      if (data.category === CATEGORY_REQUIRES_RATING && (data.rating < 1 || data.rating > 5)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["rating"], message: t("form.errorRating") })
+      }
+      if (data.category === CATEGORY_REQUIRES_URGENCY && !data.urgencyLevel) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["urgencyLevel"], message: t("form.errorRequired") })
+      }
+    })
 
   type FormValues = z.infer<typeof schema>
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
+      category: "review",
       rating: 0,
     },
   })
 
   const rating = form.watch("rating")
+  const category = form.watch("category")
 
   async function onSubmit(data: FormValues) {
     setServerError(null)
@@ -80,6 +95,11 @@ export function BoulderPostForm() {
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+      <PostCategoryField
+        value={category}
+        onChange={(v) => form.setValue("category", v, { shouldValidate: true })}
+      />
+
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-1.5">
           <Label htmlFor="boulderAuthorName">
@@ -172,38 +192,48 @@ export function BoulderPostForm() {
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label>
-          {t("form.rating")} <span className="text-destructive">*</span>
-        </Label>
-        <div className="flex gap-1">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              onClick={() => form.setValue("rating", star, { shouldValidate: true })}
-              onMouseEnter={() => setHovered(star)}
-              onMouseLeave={() => setHovered(0)}
-              aria-label={`${star} de 5 estrellas`}
-              className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <Star
-                className={cn(
-                  "h-8 w-8 transition-colors",
-                  (hovered || rating) >= star
-                    ? "fill-orange text-orange"
-                    : "text-muted-foreground/40"
-                )}
-              />
-            </button>
-          ))}
+      {category === CATEGORY_REQUIRES_RATING && (
+        <div className="space-y-2">
+          <Label>
+            {t("form.rating")} <span className="text-destructive">*</span>
+          </Label>
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                onClick={() => form.setValue("rating", star, { shouldValidate: true })}
+                onMouseEnter={() => setHovered(star)}
+                onMouseLeave={() => setHovered(0)}
+                aria-label={`${star} de 5 estrellas`}
+                className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <Star
+                  className={cn(
+                    "h-8 w-8 transition-colors",
+                    (hovered || rating) >= star
+                      ? "fill-orange text-orange"
+                      : "text-muted-foreground/40"
+                  )}
+                />
+              </button>
+            ))}
+          </div>
+          {form.formState.errors.rating && (
+            <p className="text-xs text-destructive" role="alert">
+              {form.formState.errors.rating.message}
+            </p>
+          )}
         </div>
-        {form.formState.errors.rating && (
-          <p className="text-xs text-destructive" role="alert">
-            {form.formState.errors.rating.message}
-          </p>
-        )}
-      </div>
+      )}
+
+      {category === CATEGORY_REQUIRES_URGENCY && (
+        <UrgencyLevelField
+          value={form.watch("urgencyLevel")}
+          onChange={(v) => form.setValue("urgencyLevel", v, { shouldValidate: true })}
+          error={form.formState.errors.urgencyLevel?.message}
+        />
+      )}
 
       <div className="space-y-1.5">
         <Label htmlFor="boulderContactInfo">

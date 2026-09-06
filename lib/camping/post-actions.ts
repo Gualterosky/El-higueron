@@ -9,19 +9,34 @@ import { campingPost } from "@/lib/db/schema"
 import {
   httpsUrlSchema,
   mediaUrlsSchema,
+  postCategorySchema,
   postStatusSchema,
+  urgencyLevelSchema,
+  CATEGORY_REQUIRES_RATING,
+  CATEGORY_REQUIRES_URGENCY,
   type PostStatus,
 } from "@/lib/posts/shared"
 
-const submitSchema = z.object({
-  authorName: z.string().trim().min(2).max(100),
-  visitDate: z.string().min(1),
-  comment: z.string().trim().min(5).max(2000),
-  contactInfo: z.string().trim().min(3).max(200),
-  rating: z.number().int().min(1).max(5),
-  socialMediaUrl: httpsUrlSchema,
-  mediaUrls: mediaUrlsSchema,
-})
+const submitSchema = z
+  .object({
+    authorName: z.string().trim().min(2).max(100),
+    visitDate: z.string().min(1),
+    category: postCategorySchema,
+    comment: z.string().trim().min(5).max(2000),
+    contactInfo: z.string().trim().min(3).max(200),
+    rating: z.number().int().min(0).max(5),
+    urgencyLevel: urgencyLevelSchema.optional().nullable(),
+    socialMediaUrl: httpsUrlSchema,
+    mediaUrls: mediaUrlsSchema,
+  })
+  .superRefine((data, ctx) => {
+    if (data.category === CATEGORY_REQUIRES_RATING && (data.rating < 1 || data.rating > 5)) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["rating"], message: "invalid_rating" })
+    }
+    if (data.category === CATEGORY_REQUIRES_URGENCY && !data.urgencyLevel) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["urgencyLevel"], message: "invalid_urgency" })
+    }
+  })
 
 export type CampingPostInput = z.infer<typeof submitSchema>
 
@@ -31,14 +46,19 @@ export async function submitCampingPostAction(
   const parsed = submitSchema.safeParse(data)
   if (!parsed.success) return { ok: false, error: "Datos inválidos" }
 
+  const isReview = parsed.data.category === CATEGORY_REQUIRES_RATING
+  const isIncident = parsed.data.category === CATEGORY_REQUIRES_URGENCY
+
   try {
     await db.insert(campingPost).values({
       id: crypto.randomUUID(),
       authorName: parsed.data.authorName,
       visitDate: parsed.data.visitDate,
+      category: parsed.data.category,
       comment: parsed.data.comment,
       contactInfo: parsed.data.contactInfo,
-      rating: parsed.data.rating,
+      rating: isReview ? parsed.data.rating : 0,
+      urgencyLevel: isIncident ? parsed.data.urgencyLevel ?? null : null,
       socialMediaUrl: parsed.data.socialMediaUrl?.trim() || null,
       mediaUrls: parsed.data.mediaUrls?.length ? parsed.data.mediaUrls : null,
       status: "pending",

@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { Trees, Bird, Flower2, Mountain, Wind, Droplets } from "lucide-react"
+import { Trees, Bird, Flower2, Mountain, Wind, Droplets, Landmark } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
@@ -163,6 +163,40 @@ export default async function ElLugarPage({ params }: Props) {
                 <p className="text-muted-foreground">{item.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* History teaser */}
+      <section className="bg-beige py-20 lg:py-28">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image
+                src="/media/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
+                alt={t("history.imageAlt")}
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div>
+              <div className="mb-4 flex items-center gap-2">
+                <Landmark className="h-5 w-5 text-forest" />
+                <span className="text-sm font-medium uppercase tracking-wider text-forest">
+                  {t("history.eyebrow")}
+                </span>
+              </div>
+              <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
+                {t("history.title")}
+              </h2>
+              <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
+                {t("history.description")}
+              </p>
+              <Button asChild className="bg-forest text-white hover:bg-forest/90">
+                <Link href="/historia">{t("history.cta")}</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>

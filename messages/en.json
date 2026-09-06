@@ -729,12 +729,65 @@
         "description": "Siete cueros, gaques, higuerones, and other species that form a dense, humid ecosystem"
       }
     },
+    "history": {
+      "eyebrow": "Our memory",
+      "title": "More than 70 years of history",
+      "description": "Behind this landscape is more than 70 years of history that we're gathering together with the Choachí community. Discover what we already know, plus the most recent festivals El Higuerón has held.",
+      "cta": "Discover our history",
+      "imageAlt": "Mountain landscape at El Higuerón"
+    },
     "connection": {
       "title": "Connection with the surroundings",
       "p1": "At El Higuerón there is no rush. Time changes pace and the experience becomes simpler: walking, climbing, observing, or simply being.",
       "p2": "Whether climbing, walking the trails, or simply sitting by the campfire, you'll feel how the mountain recharges you with energy and calm.",
       "cta": "Plan your visit",
       "imageAlt": "Sunset in the mountains"
+    }
+  },
+  "Historia": {
+    "hero": {
+      "title": "History of El Higuerón",
+      "subtitle": "More than 70 years of history that we're gathering to tell you",
+      "imageAlt": "Mountain landscape at Camping El Higuerón"
+    },
+    "notice": {
+      "title": "Page under construction",
+      "body": "El Higuerón has more than 70 years of history, but we're still gathering and verifying that memory with the community and founding families. For now we're leaving this space reserved and only publishing the information we have confirmed: the most recent festivals. Soon we'll expand this page with the origins of the place and archival photos."
+    },
+    "origins": {
+      "eyebrow": "Our origins",
+      "title": "A place with more than 70 years of history",
+      "p1": "El Higuerón is a place with a long history in the Choachí region, with more than 70 years behind its name. We're still piecing together that memory: dates, stories, and photographs from those who have been part of this place over the decades.",
+      "p2": "This section will be filled in little by little with that history. If you have photographs, stories, or documents about the origins of El Higuerón and want to help us preserve them, write to us through our contact form.",
+      "imagePlaceholder": "Space reserved for historical photographs of the place"
+    },
+    "timeline": {
+      "eyebrow": "Recent milestones",
+      "title": "Festivals and events",
+      "subtitle": "What we can tell you with certainty: the festivals El Higuerón has held in recent years",
+      "items": [
+        {
+          "date": "September 14, 2024",
+          "title": "Choachí Flash Festival",
+          "description": "Opening of the Bendito Sea climbing wall. 82 climbers and 23 sponsors took part, opening 12 new routes with more than 150 bolts."
+        },
+        {
+          "date": "June 20, 2025",
+          "title": "Choachí Boulder Festival",
+          "description": "Opening of the boulder park with 12 blocks of different levels. This event gave rise to the printed boulder guide, which includes local biodiversity fact sheets."
+        }
+      ],
+      "note": "This timeline will keep extending further back as we document more of the place's history."
+    },
+    "gallery": {
+      "title": "Historical gallery",
+      "subtitle": "Space reserved for the archival photographs we'll be adding soon",
+      "placeholder": "Image coming soon"
+    },
+    "cta": {
+      "title": "Want to be part of this history?",
+      "subtitle": "Come visit El Higuerón and experience firsthand the place we're documenting.",
+      "button": "Plan your visit"
     }
   },
   "Muro": {

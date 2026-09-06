@@ -9,5 +9,5 @@ export const LEGAL_INFO = {
   nombreComercial: "CAMPING EL HIGUERON",
   nit: "902095612",
   rnt: "298927",
-  rntVerificationUrl: "https://rnt.confecamaras.co",
+  rntVerificationUrl: "https://rnt.confecamaras.co/establecimientos",
 } as const

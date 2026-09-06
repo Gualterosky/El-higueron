@@ -729,12 +729,65 @@
         "description": "Siete cueros, gaques, higuerones y otras especies que forman un ecosistema denso y húmedo"
       }
     },
+    "history": {
+      "eyebrow": "Nuestra memoria",
+      "title": "Más de 70 años de historia",
+      "description": "Detrás de este paisaje hay una historia de más de 70 años que estamos recopilando junto a la comunidad de Choachí. Conoce lo que ya sabemos y los festivales más recientes que ha vivido El Higuerón.",
+      "cta": "Conoce nuestra historia",
+      "imageAlt": "Paisaje de montaña en El Higuerón"
+    },
     "connection": {
       "title": "Conexión con el entorno",
       "p1": "En El Higuerón no hay prisa. El tiempo cambia de ritmo y la experiencia se vuelve más simple: caminar, escalar, observar o simplemente estar.",
       "p2": "Ya sea escalando, caminando por los senderos o simplemente sentado junto a la fogata, sentirás cómo la montaña te recarga de energía y tranquilidad.",
       "cta": "Planifica tu visita",
       "imageAlt": "Atardecer en la montaña"
+    }
+  },
+  "Historia": {
+    "hero": {
+      "title": "Historia de El Higuerón",
+      "subtitle": "Más de 70 años de historia que estamos recopilando para contarte",
+      "imageAlt": "Paisaje de montaña en Camping El Higuerón"
+    },
+    "notice": {
+      "title": "Página en construcción",
+      "body": "El Higuerón tiene más de 70 años de historia, pero todavía estamos recopilando y verificando esa memoria con la comunidad y las familias fundadoras. Por ahora dejamos este espacio reservado y solo publicamos la información que tenemos confirmada: los festivales más recientes. Pronto ampliaremos esta página con los orígenes del lugar y material fotográfico de archivo."
+    },
+    "origins": {
+      "eyebrow": "Nuestros orígenes",
+      "title": "Un lugar con más de 70 años de historia",
+      "p1": "El Higuerón es un lugar con una larga trayectoria en la región de Choachí, con más de 70 años de historia detrás de su nombre. Todavía estamos reconstruyendo esa memoria: fechas, relatos y fotografías de quienes han sido parte de este lugar a lo largo de las décadas.",
+      "p2": "Esta sección se irá completando poco a poco con esa historia. Si tienes fotografías, relatos o documentos sobre los orígenes de El Higuerón y quieres ayudarnos a preservarlos, escríbenos a través de nuestro formulario de contacto.",
+      "imagePlaceholder": "Espacio reservado para fotografías históricas del lugar"
+    },
+    "timeline": {
+      "eyebrow": "Hitos recientes",
+      "title": "Festivales y eventos",
+      "subtitle": "Lo que sí podemos contarte con certeza: los festivales que ha vivido El Higuerón en los últimos años",
+      "items": [
+        {
+          "date": "14 de septiembre de 2024",
+          "title": "Choachí Flash Festival",
+          "description": "Inauguración del muro de escalada Bendito Sea. Participaron 82 escaladores y 23 patrocinadores, abriendo 12 rutas nuevas con más de 150 chapas."
+        },
+        {
+          "date": "20 de junio de 2025",
+          "title": "Choachí Boulder Festival",
+          "description": "Inauguración del parque de boulders con 12 bloques de distintos niveles. De este evento nació la guía física de boulders, que incluye fichas de biodiversidad local."
+        }
+      ],
+      "note": "Esta línea de tiempo se irá extendiendo hacia atrás en el tiempo a medida que documentemos más de la historia del lugar."
+    },
+    "gallery": {
+      "title": "Galería histórica",
+      "subtitle": "Espacio reservado para las fotografías de archivo que iremos incorporando próximamente",
+      "placeholder": "Imagen próximamente"
+    },
+    "cta": {
+      "title": "¿Quieres ser parte de esta historia?",
+      "subtitle": "Ven a conocer El Higuerón y vive de primera mano el lugar que estamos documentando.",
+      "button": "Planifica tu visita"
     }
   },
   "Muro": {

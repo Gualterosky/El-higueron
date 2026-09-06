@@ -351,6 +351,19 @@ estos paneles**, solo se documenta su estado:
   `lib/legal-info.ts` y exhibidos en el footer (`Footer.legal.line`) y en
   `/contacto` (`Contacto.legal`); falta crear la página legal y enlazarla
   desde el footer.
+- Página de **historia** (`app/[locale]/historia/page.tsx`, namespace
+  `Historia` en `messages/*.json`): **borrador/en construcción a propósito**.
+  El Higuerón tiene más de 70 años de historia que todavía no está
+  documentada/verificada; por eso la página solo muestra: un aviso
+  "página en construcción", un placeholder de imagen para la futura historia
+  de origen, los dos festivales recientes que sí están confirmados (Choachí
+  Flash Festival 2024, Choachí Boulder Festival 2025 — mismos datos que
+  `public/Memoria_Camping_El_Higueron.md`) y un grid de placeholders para
+  fotos de archivo. **No tiene entrada en el navbar ni en el footer a
+  propósito** — solo se llega desde el botón "Conoce nuestra historia" en la
+  nueva sección `history` de `app/[locale]/el-lugar/page.tsx`. Pendiente:
+  reemplazar los placeholders cuando se recopile la historia de origen y las
+  fotos de archivo.
 - `app/[locale]/evento`: el sistema de eventos (`lib/eventos/*`) soporta un
   flag `esBorrador` por evento (`EventoBorradorAviso`) — es una funcionalidad
   completa, no un borrador de código, pero vale la pena saber que un evento

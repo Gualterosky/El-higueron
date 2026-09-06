@@ -43,6 +43,13 @@
       "when": 1788659927160,
       "tag": "0005_redundant_proteus",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1788702978027,
+      "tag": "0006_clever_morbius",
+      "breakpoints": true
     }
   ]
 }

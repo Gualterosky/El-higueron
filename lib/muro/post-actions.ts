@@ -21,7 +21,9 @@ const submitSchema = z
   .object({
     authorName: z.string().trim().min(2).max(100),
     ascentDate: z.string().min(1),
-    routeId: z.string().trim().min(1).max(100),
+    // 0..n routes the visitor tagged. Optional: the aggregated /muro form lets
+    // visitors leave it empty, or pick several if they climbed multiple routes.
+    routeIds: z.array(z.string().trim().min(1).max(100)).max(20).default([]),
     category: postCategorySchema,
     comment: z.string().trim().min(5).max(2000),
     contactInfo: z.string().trim().min(3).max(200),
@@ -55,7 +57,10 @@ export async function submitClimbPostAction(
       id: crypto.randomUUID(),
       authorName: parsed.data.authorName,
       ascentDate: parsed.data.ascentDate,
-      routeId: parsed.data.routeId,
+      // routeId kept for backward compatibility (see schema.ts note): mirrors
+      // the first tagged route, or "" when none was selected.
+      routeId: parsed.data.routeIds[0] ?? "",
+      routeIds: parsed.data.routeIds.length ? parsed.data.routeIds : null,
       category: parsed.data.category,
       comment: parsed.data.comment,
       contactInfo: parsed.data.contactInfo,

@@ -117,6 +117,13 @@ export function AdminPostsPanel({
   )
 }
 
+// ── Muro route label (post can be tagged with 0..n routes) ───────────────────
+
+function formatPostRoutes(post: { routeId: string; routeIds?: string[] | null }, t: TFunc): string {
+  const routes = post.routeIds?.length ? post.routeIds : post.routeId ? [post.routeId] : []
+  return routes.length ? routes.join(", ") : t("noRoute")
+}
+
 // ── Incident count badge (shown next to each tab trigger) ────────────────────
 
 function countIncidents(posts: { category?: string | null }[]): number {
@@ -321,7 +328,7 @@ function MuroPostsList({ initialPosts, repliesByPostId, t, router }: { initialPo
                   />
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  {post.routeId} · {post.ascentDate} · {t("submittedOn")}{" "}
+                  {formatPostRoutes(post, t)} · {post.ascentDate} · {t("submittedOn")}{" "}
                   {new Date(post.createdAt).toLocaleDateString()}
                 </p>
                 {post.category === "review" && <StarRating rating={post.rating} />}

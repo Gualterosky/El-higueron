@@ -1,0 +1,1 @@
+ALTER TABLE "climb_post" ADD COLUMN "route_ids" text[];

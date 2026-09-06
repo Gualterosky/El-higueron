@@ -936,6 +936,16 @@
       "subtitle": "Consulta la disponibilidad de equipos o planifica tu visita al muro de escalada.",
       "primary": "Ver equipos disponibles",
       "secondary": "Planifica tu visita"
+    },
+    "posts": {
+      "eyebrow": "Comunidad",
+      "title": "Lo que dice la comunidad",
+      "subtitle": "Publicaciones de escaladores de las 15 rutas del muro. Filtra por tipo o por ruta, y comparte tu propia experiencia.",
+      "formTitle": "Comparte tu experiencia en el muro",
+      "empty": "Aún no hay publicaciones. ¡Sé el primero en compartir tu experiencia!",
+      "routeFilterLabel": "Filtrar por ruta",
+      "routeFilterPlaceholder": "Todas las rutas",
+      "noRoute": "Comentario general"
     }
   },
   "MuroRoute": {
@@ -962,8 +972,10 @@
       "authorName": "Nombre",
       "authorNamePlaceholder": "Tu nombre completo",
       "ascentDate": "Fecha del ascenso",
-      "routeId": "Ruta escalada",
-      "routeSelectPlaceholder": "Selecciona una ruta",
+      "routeIds": "Rutas escaladas",
+      "routeIdsHint": "Selecciona una o varias rutas si tu comentario aplica a rutas específicas. Puedes dejarlo vacío si es un comentario general.",
+      "routeSelectPlaceholder": "Selecciona una o varias rutas",
+      "routeSelectedCount": "{count, plural, one {1 ruta seleccionada} other {# rutas seleccionadas}}",
       "comment": "Comentario",
       "commentPlaceholder": "Comparte tu experiencia, consejos o recomendaciones...",
       "contactInfo": "Medio de contacto",
@@ -1259,6 +1271,7 @@
   "PostCategories": {
     "categoryLabel": "Tipo de publicación",
     "filterAll": "Todas",
+    "routeFilterSelectedCount": "{count, plural, one {1 ruta seleccionada} other {# rutas seleccionadas}}",
     "urgencyLabel": "Nivel de urgencia",
     "urgencyPlaceholder": "Selecciona el nivel de urgencia",
     "urgencyHint": "Ayuda al equipo a priorizar qué reportes atender primero.",
@@ -1687,6 +1700,7 @@
       "noResults": "No hay publicaciones aún.",
       "contactLabel": "Contacto",
       "submittedOn": "Enviado el",
+      "noRoute": "Sin ruta específica",
       "tabs": {
         "muro": "Muro",
         "camping": "Camping",

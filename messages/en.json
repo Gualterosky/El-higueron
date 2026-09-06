@@ -936,6 +936,16 @@
       "subtitle": "Check gear availability or plan your visit to the climbing wall.",
       "primary": "See available gear",
       "secondary": "Plan your visit"
+    },
+    "posts": {
+      "eyebrow": "Community",
+      "title": "What the community says",
+      "subtitle": "Posts from climbers across all 15 wall routes. Filter by type or by route, and share your own experience.",
+      "formTitle": "Share your experience on the wall",
+      "empty": "No posts yet. Be the first to share your experience!",
+      "routeFilterLabel": "Filter by route",
+      "routeFilterPlaceholder": "All routes",
+      "noRoute": "General comment"
     }
   },
   "MuroRoute": {
@@ -962,8 +972,10 @@
       "authorName": "Name",
       "authorNamePlaceholder": "Your full name",
       "ascentDate": "Ascent date",
-      "routeId": "Route climbed",
-      "routeSelectPlaceholder": "Select a route",
+      "routeIds": "Route(s) climbed",
+      "routeIdsHint": "Select one or several routes if your comment applies to specific routes. You can leave it empty for a general comment.",
+      "routeSelectPlaceholder": "Select one or more routes",
+      "routeSelectedCount": "{count, plural, one {1 route selected} other {# routes selected}}",
       "comment": "Comment",
       "commentPlaceholder": "Share your experience, tips or recommendations...",
       "contactInfo": "Contact info",
@@ -1259,6 +1271,7 @@
   "PostCategories": {
     "categoryLabel": "Post type",
     "filterAll": "All",
+    "routeFilterSelectedCount": "{count, plural, one {1 route selected} other {# routes selected}}",
     "urgencyLabel": "Urgency level",
     "urgencyPlaceholder": "Select the urgency level",
     "urgencyHint": "Helps the team prioritize which reports to address first.",
@@ -1687,6 +1700,7 @@
       "noResults": "No posts yet.",
       "contactLabel": "Contact",
       "submittedOn": "Submitted on",
+      "noRoute": "No specific route",
       "tabs": {
         "muro": "Wall",
         "camping": "Camping",

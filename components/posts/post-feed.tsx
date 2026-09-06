@@ -5,6 +5,7 @@ import { AlertTriangle, Star } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
+import { MultiSelectPopover } from "@/components/posts/multi-select-popover"
 import { POST_CATEGORIES, URGENCY_RANK, type PostCategory, type UrgencyLevel } from "@/lib/posts/shared"
 
 export type FeedPost = {
@@ -20,11 +21,24 @@ export type FeedPost = {
   media: ReactNode
   /** Pre-rendered <PostRepliesSection />. */
   replies: ReactNode
+  /** Ids (e.g. route/boulder ids) this post is tagged with. Only used when
+   *  `routeFilters` is passed to <PostFeed>, to power the extra route filter
+   *  row (aggregated views spanning several routes/boulders). */
+  routeIds?: string[]
 }
+
+type RouteFilterOption = { id: string; label: string }
 
 type Props = {
   posts: FeedPost[]
   emptyLabel: string
+  /** Optional second filter row (multi-select dropdown) shown above the
+   *  category tabs, used by aggregated views (e.g. /muro) that span several
+   *  routes. Posts without a matching id in `routeIds` are treated as
+   *  "untagged" and only match when no route filter is active. */
+  routeFilters?: RouteFilterOption[]
+  routeFilterLabel?: string
+  routeFilterPlaceholder?: string
 }
 
 const URGENCY_BORDER: Record<UrgencyLevel, string> = {
@@ -35,23 +49,37 @@ const URGENCY_BORDER: Record<UrgencyLevel, string> = {
 }
 
 /** Public feed of posts (muro/camping/boulder) with category filter tabs and
- *  incidents prioritized (sorted by urgency) at the top of the "all" view. */
-export function PostFeed({ posts, emptyLabel }: Props) {
+ *  incidents prioritized (sorted by urgency) at the top of the "all" view.
+ *  Optionally adds a second, multi-select filter row by route/boulder id. */
+export function PostFeed({
+  posts,
+  emptyLabel,
+  routeFilters,
+  routeFilterLabel,
+  routeFilterPlaceholder,
+}: Props) {
   const t = useTranslations("PostCategories")
   const [activeFilter, setActiveFilter] = useState<"all" | PostCategory>("all")
+  const [activeRoutes, setActiveRoutes] = useState<string[]>([])
+
+  const routeFilteredPosts = useMemo(() => {
+    if (!routeFilters || activeRoutes.length === 0) return posts
+    const activeSet = new Set(activeRoutes)
+    return posts.filter((post) => post.routeIds?.some((id) => activeSet.has(id)))
+  }, [posts, routeFilters, activeRoutes])
 
   const counts = useMemo(() => {
     const map = new Map<PostCategory, number>()
-    for (const post of posts) map.set(post.category, (map.get(post.category) ?? 0) + 1)
+    for (const post of routeFilteredPosts) map.set(post.category, (map.get(post.category) ?? 0) + 1)
     return map
-  }, [posts])
+  }, [routeFilteredPosts])
 
   const visiblePosts = useMemo(() => {
-    if (activeFilter !== "all") return posts.filter((p) => p.category === activeFilter)
+    if (activeFilter !== "all") return routeFilteredPosts.filter((p) => p.category === activeFilter)
 
     // Default order: incidents first (most urgent first), then the rest in their
     // original order (already sorted by createdAt desc by the query).
-    return posts
+    return routeFilteredPosts
       .map((post, index) => ({ post, index }))
       .sort((a, b) => {
         const priorityA = a.post.category === "incident" ? 100 + URGENCY_RANK[a.post.urgencyLevel ?? "low"] : 0
@@ -60,15 +88,30 @@ export function PostFeed({ posts, emptyLabel }: Props) {
         return a.index - b.index
       })
       .map(({ post }) => post)
-  }, [posts, activeFilter])
+  }, [routeFilteredPosts, activeFilter])
 
   return (
     <div className="space-y-4">
+      {routeFilters && routeFilters.length > 0 && (
+        <div className="max-w-sm space-y-1.5">
+          {routeFilterLabel && (
+            <p className="text-xs font-medium text-muted-foreground">{routeFilterLabel}</p>
+          )}
+          <MultiSelectPopover
+            options={routeFilters.map((route) => ({ value: route.id, label: route.label }))}
+            selected={activeRoutes}
+            onChange={setActiveRoutes}
+            placeholder={routeFilterPlaceholder ?? routeFilterLabel ?? ""}
+            selectedLabel={(count) => t("routeFilterSelectedCount", { count })}
+          />
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-2">
         <FilterButton
           active={activeFilter === "all"}
           onClick={() => setActiveFilter("all")}
-          label={`${t("filterAll")} (${posts.length})`}
+          label={`${t("filterAll")} (${routeFilteredPosts.length})`}
         />
         {POST_CATEGORIES.map((category) => {
           const count = counts.get(category) ?? 0

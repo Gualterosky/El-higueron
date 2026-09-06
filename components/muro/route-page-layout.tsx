@@ -187,7 +187,11 @@ export async function RoutePageLayout({ routeId, locale }: Props) {
                 <h3 className="mb-6 text-lg font-semibold text-foreground">
                   {t("registerTitle")}
                 </h3>
-                <AscentForm routeId={routeId} />
+                <AscentForm
+                  defaultRouteIds={[
+                    route.subLevels?.length ? `${routeId}-${route.subLevels[0]}` : routeId,
+                  ]}
+                />
               </div>
             </div>
           </div>

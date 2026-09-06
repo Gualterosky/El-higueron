@@ -1,9 +1,11 @@
 import Image from "next/image"
-import { Mountain, Shield, AlertTriangle, MapPin, Anchor, Route } from "lucide-react"
+import { Mountain, Shield, AlertTriangle, MapPin, Anchor, Route, MessageSquare } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Link } from "@/i18n/navigation"
+import { AscentForm } from "@/components/muro/ascent-form"
+import { AllRoutesPublications } from "@/components/muro/all-routes-publications"
 import RouteGuideSection from "./RouteGuideSection"
 
 type RouteItem = {
@@ -158,6 +160,39 @@ export default async function MuroPage({ params }: Props) {
                 </Card>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Publications Section (aggregated across all 15 routes) */}
+      <section className="bg-beige py-20 lg:py-28">
+        <div className="container mx-auto px-4 lg:px-8">
+          <div className="mb-12 text-center">
+            <div className="mb-4 flex items-center justify-center gap-2">
+              <MessageSquare className="h-5 w-5 text-forest" />
+              <span className="text-sm font-medium uppercase tracking-wider text-forest">
+                {t("posts.eyebrow")}
+              </span>
+            </div>
+            <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
+              {t("posts.title")}
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground">
+              {t("posts.subtitle")}
+            </p>
+          </div>
+
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <AllRoutesPublications locale={locale} />
+            </div>
+
+            <div className="rounded-xl bg-white p-6 shadow-sm">
+              <h3 className="mb-6 text-lg font-semibold text-foreground">
+                {t("posts.formTitle")}
+              </h3>
+              <AscentForm />
+            </div>
           </div>
         </div>
       </section>

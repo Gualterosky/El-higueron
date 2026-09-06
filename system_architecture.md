@@ -368,6 +368,79 @@ panel de moderación:
 - No hubo cambios de esquema ni de Server Actions: es solo UI/filtrado en el
   cliente sobre datos que ya llegaban con `category`/`urgencyLevel`.
 
+**Vista agregada de publicaciones del muro + selector multi-ruta (añadido
+2026-09):** hasta ahora cada publicación de `climbPost` estaba atada a
+exactamente una ruta (`routeId`, `NOT NULL`), y la única forma de ver
+publicaciones era entrar a la página de esa ruta específica
+(`/muro/[routeId]`). Se agregó una vista agregada en la página principal
+`/muro` que muestra **todas** las publicaciones de las 15 rutas en un solo
+lugar, con filtro por tipo (igual que en cada ruta) y además filtro por
+ruta, e indica en cada publicación a qué ruta(s) pertenece (con link directo
+a esa ruta). Esto requirió permitir que una publicación pueda etiquetar
+0, 1 o varias rutas a la vez:
+
+- **Esquema:** `climbPost` ganó una columna nueva `routeIds` (`text[]`,
+  nullable). La columna `routeId` (legacy, `NOT NULL`) se conserva por
+  compatibilidad: sigue guardando la primera ruta seleccionada (o `""` si
+  el visitante no marcó ninguna), pero **ya no es la fuente de verdad** — es
+  `routeIds` quien guarda el conjunto completo. Cualquier código nuevo que
+  necesite saber a qué rutas pertenece un post debe usar `routeIds` con
+  fallback a `[routeId]` si `routeIds` es null (ver
+  `getApprovedPostsByRoute`/`AllRoutesPublications` para el patrón). Los
+  valores son ids de `MURO_ROUTES`, opcionalmente con sufijo `-<subLevel>`
+  (ej. `"MBS14-5.9"`) para las rutas con niveles (`MBS14`, `MBS15`).
+  - ⚠️ La migración se generó con `pnpm db:generate` pero `pnpm db:migrate`
+    falló en este entorno porque el migrador de `drizzle-kit` usa un driver
+    por websocket que requiere el paquete `ws` (no instalado). Se aplicó con
+    `pnpm db:push` en su lugar (mismo resultado para este cambio aditivo de
+    una sola columna). Si se necesita `db:migrate` en el futuro, instalar
+    `ws` como dependencia de desarrollo.
+- **Formulario (`components/muro/ascent-form.tsx`):** el campo de ruta pasó
+  de un `<Select>` de una sola ruta obligatoria a un multi-select opcional
+  (`routeIds: string[]`, puede quedar vacío = "comentario general"). La UI es
+  un dropdown (`components/posts/multi-select-popover.tsx`, Popover + Command
+  con checkboxes) donde el visitante puede marcar varias rutas sin que la
+  lista se cierre en cada clic; al cerrarla, las rutas elegidas quedan como
+  chips removibles debajo. Este mismo componente se reutiliza para el filtro
+  por ruta en la vista agregada.
+  - Cuando el formulario se usa dentro de una página de ruta específica
+    (`RoutePageLayout` → `/muro/[routeId]`), se le pasa
+    `defaultRouteIds={[routeId]}` para preseleccionar esa ruta (el visitante
+    puede añadir más o quitarla). En la página agregada `/muro` se usa sin
+    `defaultRouteIds` (arranca vacío).
+  - `lib/muro/routes.ts::getMuroRouteOptions()` centraliza la lista de
+    valores seleccionables (una entrada por ruta, o por sub-nivel en
+    `MBS14`/`MBS15`); `getRouteBaseId`/`getRouteSubLevel` separan el id base
+    del sufijo de sub-nivel para volver a armar links/traducciones.
+- **Validación (`lib/muro/post-actions.ts`):** `submitSchema.routeIds` es un
+  array opcional (`.default([])`, máx. 20). Al insertar, `routeId` (legacy)
+  se rellena con `routeIds[0] ?? ""` y `routeIds` se guarda completo (o
+  `null` si el array quedó vacío).
+- **Queries (`lib/muro/post-queries.ts`):** `getApprovedPostsByRoute(routeId)`
+  ahora hace `EXISTS (SELECT 1 FROM unnest(route_ids) ...)` además del match
+  legacy sobre `route_id`, para que una ruta específica siga mostrando tanto
+  posts viejos (un solo `routeId`) como nuevos (con varias `routeIds`). Se
+  agregó `getApprovedPosts()` (sin filtrar por ruta) para la vista agregada.
+- **Vista agregada (`components/muro/all-routes-publications.tsx` +
+  `app/[locale]/muro/page.tsx`):** sigue el mismo patrón que ya usaban
+  `/boulder` y `/camping` (sección con `<PostFeed>` a la izquierda y el
+  formulario a la derecha), pero es la primera en pasarle a `<PostFeed>` las
+  nuevas props opcionales `routeFilters`/`routeFilterLabel`/
+  `routeFilterPlaceholder` y en poblar `FeedPost.routeIds`. Cada publicación
+  muestra un link (`next-intl` `<Link>`) por cada ruta etiquetada hacia
+  `/muro/<baseId>`; si no tiene ninguna, muestra la etiqueta
+  "Comentario general" (`Muro.posts.noRoute`).
+  - `components/posts/post-feed.tsx` (compartido por muro/camping/boulder)
+    ganó ese segundo filtro de forma **opt-in**: si el caller no pasa
+    `routeFilters`, el comportamiento es idéntico al de antes (camping y
+    boulder no lo usan). Cuando sí se pasa, se renderiza el mismo
+    `MultiSelectPopover` arriba de los tabs de categoría, y el filtrado es
+    por intersección de conjuntos (`post.routeIds` ∩ rutas activas).
+- **Panel de administración:** `admin-posts-panel.tsx` muestra ahora todas
+  las rutas etiquetadas de un post de muro (`formatPostRoutes`, con fallback
+  a `routeId` legacy y a "Sin ruta específica" si no hay ninguna), en vez de
+  solo `post.routeId`.
+
 ---
 
 ## 7.b Flujo de datos — Pop-up de noticias/novedades

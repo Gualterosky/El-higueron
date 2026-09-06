@@ -97,12 +97,19 @@ export const siteAnnouncement = pgTable("site_announcement", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
 
-/** Climb ascent posts submitted from individual route pages. */
+/** Climb ascent posts submitted from individual route pages (or from the
+ *  aggregated /muro form, which can tag zero or several routes at once). */
 export const climbPost = pgTable("climb_post", {
   id: text("id").primaryKey(),
   authorName: text("author_name").notNull(),
   ascentDate: text("ascent_date").notNull(),
+  // Legacy single-route field, kept for backward compatibility with rows created
+  // before the multi-route selector (2026-09): mirrors routeIds[0], or "" when
+  // the post was submitted from /muro without picking any route.
   routeId: text("route_id").notNull(),
+  // Full set of routes the visitor tagged (0..n). Ids match MURO_ROUTES, with an
+  // optional "-<subLevel>" suffix (e.g. "MBS14-5.9"). Null/empty = no route tagged.
+  routeIds: text("route_ids").array(),
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
   rating: integer("rating").notNull(),

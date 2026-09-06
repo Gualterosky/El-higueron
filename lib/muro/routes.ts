@@ -174,3 +174,34 @@ export function getMuroRoute(id: string): MuroRouteMeta | undefined {
 export function padRouteId(number: number): string {
   return `MBS${String(number).padStart(2, "0")}`
 }
+
+/** Every selectable route value, including one entry per sub-level (e.g.
+ *  "MBS14-5.9" and "MBS14-5.11b" for route MBS14). Shared by the route
+ *  selector in AscentForm and by the route filter in the /muro aggregated
+ *  publications view, so both stay in sync with MURO_ROUTES. */
+export function getMuroRouteOptions(): { value: string; baseId: MuroRouteMeta["id"]; subLevel?: string }[] {
+  return MURO_ROUTES.flatMap((route) => {
+    if (route.subLevels?.length) {
+      return route.subLevels.map((subLevel) => ({
+        value: `${route.id}-${subLevel}`,
+        baseId: route.id,
+        subLevel: subLevel as string | undefined,
+      }))
+    }
+    return [{ value: route.id, baseId: route.id, subLevel: undefined as string | undefined }]
+  })
+}
+
+/** Strips the "-<subLevel>" suffix from a stored route value, e.g.
+ *  "MBS14-5.9" → "MBS14". Used to link back to the route's page and to look
+ *  up its metadata/translations, which are keyed by the base route id. */
+export function getRouteBaseId(value: string): string {
+  const dashIdx = value.indexOf("-")
+  return dashIdx === -1 ? value : value.slice(0, dashIdx)
+}
+
+/** The sub-level part of a stored route value, if any, e.g. "MBS14-5.9" → "5.9". */
+export function getRouteSubLevel(value: string): string | null {
+  const dashIdx = value.indexOf("-")
+  return dashIdx === -1 ? null : value.slice(dashIdx + 1)
+}

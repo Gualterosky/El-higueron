@@ -11,15 +11,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { MURO_ROUTES } from "@/lib/muro/routes"
+import { getMuroRouteOptions } from "@/lib/muro/routes"
 import { submitClimbPostAction } from "@/lib/muro/post-actions"
+import { MultiSelectPopover } from "@/components/posts/multi-select-popover"
 import { detectPlatform } from "@/components/muro/social-embed"
 import { MediaUploader } from "@/components/muro/media-uploader"
 import { PostCategoryField, UrgencyLevelField } from "@/components/posts/post-category-field"
@@ -31,7 +25,10 @@ import {
 } from "@/lib/posts/shared"
 
 type Props = {
-  routeId: string
+  /** Route(s) preselected when this form is embedded in a specific route page.
+   *  Left empty (or omitted) on the aggregated /muro form, where tagging a
+   *  route is optional and the visitor can pick several. */
+  defaultRouteIds?: string[]
 }
 
 /** Mirrors the zod schema built inside AscentForm (translated error messages only affect
@@ -39,7 +36,7 @@ type Props = {
 type AscentFormValues = {
   authorName: string
   ascentDate: string
-  routeId: string
+  routeIds: string[]
   category: PostCategory
   comment: string
   contactInfo: string
@@ -48,7 +45,7 @@ type AscentFormValues = {
   socialMediaUrl?: string
 }
 
-export function AscentForm({ routeId }: Props) {
+export function AscentForm({ defaultRouteIds = [] }: Props) {
   const t = useTranslations("MuroRoute")
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
@@ -56,18 +53,15 @@ export function AscentForm({ routeId }: Props) {
   const [showSocialInput, setShowSocialInput] = useState(false)
   const [showUploadInput, setShowUploadInput] = useState(false)
   const [uploadedUrls, setUploadedUrls] = useState<string[]>([])
+  const [selectedRoutes, setSelectedRoutes] = useState<string[]>(defaultRouteIds)
 
-  const currentRoute = MURO_ROUTES.find((r) => r.id === routeId)
-  const defaultRouteValue =
-    currentRoute?.subLevels?.length
-      ? `${routeId}-${currentRoute.subLevels[0]}`
-      : routeId
+  const routeOptions = getMuroRouteOptions()
 
   const schema = z
     .object({
       authorName: z.string().min(2, t("ascentForm.errorMin2")).max(100),
       ascentDate: z.string().min(1, t("ascentForm.errorRequired")),
-      routeId: z.string().min(1, t("ascentForm.errorRequired")),
+      routeIds: z.array(z.string()).max(20),
       category: z.enum(["incident", "review", "tip", "question"]),
       comment: z.string().min(5, t("ascentForm.errorMin5")).max(2000),
       contactInfo: z.string().min(3, t("ascentForm.errorRequired")).max(200),
@@ -100,7 +94,7 @@ export function AscentForm({ routeId }: Props) {
   const form = useForm<AscentFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      routeId: defaultRouteValue,
+      routeIds: defaultRouteIds,
       category: "review",
       rating: 0,
     },
@@ -108,6 +102,11 @@ export function AscentForm({ routeId }: Props) {
 
   const rating = form.watch("rating")
   const category = form.watch("category")
+
+  function handleRoutesChange(next: string[]) {
+    setSelectedRoutes(next)
+    form.setValue("routeIds", next, { shouldValidate: true })
+  }
 
   async function onSubmit(data: AscentFormValues) {
     setServerError(null)
@@ -181,37 +180,21 @@ export function AscentForm({ routeId }: Props) {
       </div>
 
       <div className="space-y-1.5">
-        <Label>
-          {t("ascentForm.routeId")} <span className="text-destructive">*</span>
-        </Label>
-        <Select
-          defaultValue={defaultRouteValue}
-          onValueChange={(v) => form.setValue("routeId", v, { shouldValidate: true })}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder={t("ascentForm.routeSelectPlaceholder")} />
-          </SelectTrigger>
-          <SelectContent>
-            {MURO_ROUTES.flatMap((route) => {
-              const name = t(`${route.id}.routeName` as Parameters<typeof t>[0])
-              if (route.subLevels?.length) {
-                return route.subLevels.map((lvl) => (
-                  <SelectItem key={`${route.id}-${lvl}`} value={`${route.id}-${lvl}`}>
-                    {name} {lvl}
-                  </SelectItem>
-                ))
-              }
-              return [
-                <SelectItem key={route.id} value={route.id}>
-                  {name} {route.level}
-                </SelectItem>,
-              ]
-            })}
-          </SelectContent>
-        </Select>
-        {form.formState.errors.routeId && (
+        <Label>{t("ascentForm.routeIds")}</Label>
+        <p className="text-xs text-muted-foreground">{t("ascentForm.routeIdsHint")}</p>
+        <MultiSelectPopover
+          options={routeOptions.map((option) => ({
+            value: option.value,
+            label: `${t(`${option.baseId}.routeName` as Parameters<typeof t>[0])}${option.subLevel ? ` ${option.subLevel}` : ""}`,
+          }))}
+          selected={selectedRoutes}
+          onChange={handleRoutesChange}
+          placeholder={t("ascentForm.routeSelectPlaceholder")}
+          selectedLabel={(count) => t("ascentForm.routeSelectedCount", { count })}
+        />
+        {form.formState.errors.routeIds && (
           <p className="text-xs text-destructive" role="alert">
-            {form.formState.errors.routeId.message}
+            {form.formState.errors.routeIds.message}
           </p>
         )}
       </div>

@@ -1256,6 +1256,39 @@
       "uploadNotConfigured": "La subida de archivos no está configurada todavía."
     }
   },
+  "PostCategories": {
+    "categoryLabel": "Tipo de publicación",
+    "filterAll": "Todas",
+    "urgencyLabel": "Nivel de urgencia",
+    "urgencyPlaceholder": "Selecciona el nivel de urgencia",
+    "urgencyHint": "Ayuda al equipo a priorizar qué reportes atender primero.",
+    "urgency": {
+      "low": "Baja",
+      "medium": "Media",
+      "high": "Alta",
+      "critical": "Crítica"
+    },
+    "incident": {
+      "label": "Incidente / Alerta de seguridad",
+      "description": "Reporta fallas técnicas o peligros en la ruta/zona (ej. chapas flojas, roca suelta, vegetación dañada)."
+    },
+    "review": {
+      "label": "Reseña / Experiencia",
+      "description": "Cuéntanos cómo estuvo tu pegue o estancia: lo bueno, lo malo y el estado general de la zona."
+    },
+    "tip": {
+      "label": "Tip / Consejo técnico",
+      "description": "Comparte betas o recomendaciones tácticas (ej. \"Para el crux de esta ruta, usa empeine derecho\")."
+    },
+    "question": {
+      "label": "Pregunta / Duda",
+      "description": "Haz una pregunta sobre la zona o la ruta para que la comunidad te ayude a resolverla."
+    },
+    "suggestion": {
+      "label": "Sugerencia",
+      "description": "Aporta ideas para mejorar las instalaciones, señalización o mantenimiento."
+    }
+  },
   "Evento": {
     "empty": {
       "title": "No hay eventos programados",

@@ -18,6 +18,43 @@ export type PostType = (typeof POST_TYPES)[number]
 
 export const postTypeSchema = z.enum(POST_TYPES)
 
+/**
+ * Category selected by the visitor when filling out a post form. Drives which
+ * extra fields are shown/required (rating for "review", urgency for "incident")
+ * and how the post is prioritized/filtered in the public feed and admin panel.
+ */
+export const POST_CATEGORIES = [
+  "incident",
+  "review",
+  "tip",
+  "question",
+  "suggestion",
+] as const
+
+export type PostCategory = (typeof POST_CATEGORIES)[number]
+
+export const postCategorySchema = z.enum(POST_CATEGORIES)
+
+/** Only "review" posts carry a star rating; the rest store 0 (not applicable). */
+export const CATEGORY_REQUIRES_RATING: PostCategory = "review"
+
+/** Only "incident" posts carry an urgency level. */
+export const CATEGORY_REQUIRES_URGENCY: PostCategory = "incident"
+
+export const URGENCY_LEVELS = ["low", "medium", "high", "critical"] as const
+
+export type UrgencyLevel = (typeof URGENCY_LEVELS)[number]
+
+export const urgencyLevelSchema = z.enum(URGENCY_LEVELS)
+
+/** Higher rank sorts first when prioritizing incidents. */
+export const URGENCY_RANK: Record<UrgencyLevel, number> = {
+  critical: 4,
+  high: 3,
+  medium: 2,
+  low: 1,
+}
+
 /** Ids are generated with crypto.randomUUID(); reject anything that is not one. */
 export const postIdSchema = z.string().uuid()
 

@@ -124,6 +124,20 @@ function formatPostRoutes(post: { routeId: string; routeIds?: string[] | null },
   return routes.length ? routes.join(", ") : t("noRoute")
 }
 
+// ── Boulder problem label (post can be tagged with 0..n problems) ────────────
+
+function formatPostProblems(
+  post: { boulderName: string; routeName: string; problemIds?: string[] | null },
+  t: TFunc
+): string {
+  const problems = post.problemIds?.length
+    ? post.problemIds
+    : post.boulderName
+      ? [post.routeName ? `${post.boulderName}-${post.routeName}` : post.boulderName]
+      : []
+  return problems.length ? problems.join(", ") : t("noRoute")
+}
+
 // ── Incident count badge (shown next to each tab trigger) ────────────────────
 
 function countIncidents(posts: { category?: string | null }[]): number {
@@ -540,7 +554,7 @@ function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initia
                   />
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  {post.boulderName} · {post.routeName} · {post.visitDate} · {t("submittedOn")}{" "}
+                  {formatPostProblems(post, t)} · {post.visitDate} · {t("submittedOn")}{" "}
                   {new Date(post.createdAt).toLocaleDateString()}
                 </p>
                 {post.category === "review" && <StarRating rating={post.rating} />}

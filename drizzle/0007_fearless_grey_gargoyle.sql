@@ -1,0 +1,1 @@
+ALTER TABLE "boulder_post" ADD COLUMN "problem_ids" text[];

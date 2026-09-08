@@ -12,26 +12,38 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { submitBoulderPostAction } from "@/lib/boulder/post-actions"
+import { getBoulderProblemOptions } from "@/lib/boulder/boulders"
 import { detectPlatform } from "@/components/muro/social-embed"
 import { MediaUploader } from "@/components/muro/media-uploader"
+import { MultiSelectPopover } from "@/components/posts/multi-select-popover"
 import { PostCategoryField, UrgencyLevelField } from "@/components/posts/post-category-field"
 import { CATEGORY_REQUIRES_RATING, CATEGORY_REQUIRES_URGENCY } from "@/lib/posts/shared"
 
-export function BoulderPostForm() {
+type Props = {
+  /** Problem(s) preselected when this form is embedded in a specific boulder
+   *  page. Left empty on the aggregated /boulder form, where tagging a
+   *  problem is optional and the visitor can pick several. */
+  defaultProblemIds?: string[]
+}
+
+export function BoulderPostForm({ defaultProblemIds = [] }: Props) {
   const t = useTranslations("BoulderPost")
+  const tRoute = useTranslations("BoulderRoute")
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
   const [hovered, setHovered] = useState(0)
   const [showSocialInput, setShowSocialInput] = useState(false)
   const [showUploadInput, setShowUploadInput] = useState(false)
   const [uploadedUrls, setUploadedUrls] = useState<string[]>([])
+  const [selectedProblems, setSelectedProblems] = useState<string[]>(defaultProblemIds)
+
+  const problemOptions = getBoulderProblemOptions()
 
   const schema = z
     .object({
       authorName: z.string().min(2, t("form.errorMin2")).max(100),
       visitDate: z.string().min(1, t("form.errorRequired")),
-      boulderName: z.string().min(1, t("form.errorRequired")).max(200),
-      routeName: z.string().min(1, t("form.errorRequired")).max(200),
+      problemIds: z.array(z.string()).max(20),
       category: z.enum(["incident", "review", "tip", "question"]),
       comment: z.string().min(5, t("form.errorMin5")).max(2000),
       contactInfo: z.string().min(3, t("form.errorRequired")).max(200),
@@ -58,6 +70,7 @@ export function BoulderPostForm() {
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
+      problemIds: defaultProblemIds,
       category: "review",
       rating: 0,
     },
@@ -65,6 +78,11 @@ export function BoulderPostForm() {
 
   const rating = form.watch("rating")
   const category = form.watch("category")
+
+  function handleProblemsChange(next: string[]) {
+    setSelectedProblems(next)
+    form.setValue("problemIds", next, { shouldValidate: true })
+  }
 
   async function onSubmit(data: FormValues) {
     setServerError(null)
@@ -137,42 +155,28 @@ export function BoulderPostForm() {
         </div>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div className="space-y-1.5">
-          <Label htmlFor="boulderName">
-            {t("form.boulderName")} <span className="text-destructive">*</span>
-          </Label>
-          <Input
-            id="boulderName"
-            placeholder={t("form.boulderNamePlaceholder")}
-            suppressHydrationWarning
-            {...form.register("boulderName")}
-          />
-          <p className="text-xs text-muted-foreground">{t("form.boulderNameHint")}</p>
-          {form.formState.errors.boulderName && (
-            <p className="text-xs text-destructive" role="alert">
-              {form.formState.errors.boulderName.message}
-            </p>
-          )}
-        </div>
-
-        <div className="space-y-1.5">
-          <Label htmlFor="routeName">
-            {t("form.routeName")} <span className="text-destructive">*</span>
-          </Label>
-          <Input
-            id="routeName"
-            placeholder={t("form.routeNamePlaceholder")}
-            suppressHydrationWarning
-            {...form.register("routeName")}
-          />
-          <p className="text-xs text-muted-foreground">{t("form.routeNameHint")}</p>
-          {form.formState.errors.routeName && (
-            <p className="text-xs text-destructive" role="alert">
-              {form.formState.errors.routeName.message}
-            </p>
-          )}
-        </div>
+      <div className="space-y-1.5">
+        <Label>{t("form.problemIds")}</Label>
+        <p className="text-xs text-muted-foreground">{t("form.problemIdsHint")}</p>
+        <MultiSelectPopover
+          options={problemOptions.map((option) => ({
+            value: option.value,
+            label: `${tRoute(`${option.baseId}.name` as Parameters<typeof tRoute>[0])} · ${
+              (tRoute.raw(`${option.baseId}.problems` as Parameters<typeof tRoute>[0]) as { name: string }[])[
+                option.problemIndex
+              ]?.name ?? option.problemId
+            }`,
+          }))}
+          selected={selectedProblems}
+          onChange={handleProblemsChange}
+          placeholder={t("form.problemSelectPlaceholder")}
+          selectedLabel={(count) => t("form.problemSelectedCount", { count })}
+        />
+        {form.formState.errors.problemIds && (
+          <p className="text-xs text-destructive" role="alert">
+            {form.formState.errors.problemIds.message}
+          </p>
+        )}
       </div>
 
       <div className="space-y-1.5">

@@ -332,7 +332,10 @@
       "eyebrow": "Comunidad",
       "title": "Lo que dice la comunidad",
       "subtitle": "Publicaciones de boulderers que han estado aquí. Comparte tu sesión.",
-      "formTitle": "Comparte tu sesión de boulder"
+      "formTitle": "Comparte tu sesión de boulder",
+      "routeFilterLabel": "Filtrar por bloque",
+      "routeFilterPlaceholder": "Todos los bloques",
+      "noBoulder": "Comentario general"
     },
     "cta": {
       "title": "¿Listo para el boulder?",
@@ -1235,12 +1238,10 @@
       "authorName": "Nombre",
       "authorNamePlaceholder": "Tu nombre completo",
       "visitDate": "Fecha de visita",
-      "boulderName": "Nombre del boulder / roca",
-      "boulderNamePlaceholder": "Ej. El Higuerón, La Pared Grande...",
-      "boulderNameHint": "Nombre del bloque o formación rocosa donde hiciste boulder.",
-      "routeName": "Nombre del problema / ruta",
-      "routeNamePlaceholder": "Ej. El Primer Paso, La Grieta...",
-      "routeNameHint": "Nombre del problema de boulder que intentaste o completaste.",
+      "problemIds": "Problema(s) / bloque(s) (opcional)",
+      "problemIdsHint": "Selecciona uno o varios problemas si tu comentario aplica a bloques específicos. Puedes dejarlo vacío si es un comentario general.",
+      "problemSelectPlaceholder": "Selecciona uno o más problemas",
+      "problemSelectedCount": "{count, plural, one {1 problema seleccionado} other {# problemas seleccionados}}",
       "comment": "Comentario",
       "commentPlaceholder": "Cuéntanos cómo fue tu sesión, el problema que trabajaste, tips...",
       "contactInfo": "Medio de contacto",
@@ -2108,7 +2109,7 @@
       "equipos": "Ver equipos disponibles",
       "visita": "Planifica tu visita"
     },
-    "HIG01": {
+    "BLDR01": {
       "name": "Primer Paso",
       "description": "El primer bloque en el que muchos escaladores hacen sus primeras movidas en roca natural. Sus problemas de nivel V0 lo convierten en el punto de inicio ideal para quienes se acercan por primera vez al boulder al aire libre en El Higueron.",
       "tips": [
@@ -2127,7 +2128,7 @@
         }
       ]
     },
-    "HIG02": {
+    "BLDR02": {
       "name": "A última hora",
       "description": "Bloque de nivel intermedio que ofrece dos problemas bien diferenciados: uno tecnico y uno mas potente. El nombre refleja ese momento de la sesion donde quedan las ultimas energias pero aun hay ganas de intentarlo.",
       "tips": [
@@ -2146,7 +2147,7 @@
         }
       ]
     },
-    "HIG03": {
+    "BLDR03": {
       "name": "El portal",
       "description": "Una sola linea, directa y exigente. El portal es un bloque singular que ofrece uno de los problemas mas tecnicos de la zona, con movimientos que requieren habilidad en todos los planos y una lectura cuidadosa de cada agarre.",
       "tips": [
@@ -2161,7 +2162,7 @@
         }
       ]
     },
-    "HIG04": {
+    "BLDR04": {
       "name": "El dado",
       "description": "El bloque mas variado de la zona. Con tres problemas que van desde V4 hasta V8, El dado ofrece algo para escaladores intermedios y avanzados que quieran exigirse al maximo. Es el bloque mas demandante del sector y donde los visitantes mas experimentados vienen a intentar sus proyectos.",
       "tips": [

@@ -2,7 +2,7 @@ import { BoulderPageLayout } from "@/components/boulder/boulder-page-layout"
 
 type Props = { params: Promise<{ locale: string }> }
 
-export default async function BoulderHIG02Page({ params }: Props) {
+export default async function BoulderBLDR04Page({ params }: Props) {
   const { locale } = await params
-  return <BoulderPageLayout boulderId="HIG02" locale={locale} />
+  return <BoulderPageLayout boulderId="BLDR04" locale={locale} />
 }

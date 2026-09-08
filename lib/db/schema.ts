@@ -178,13 +178,23 @@ export const campingPost = pgTable("camping_post", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
-/** Boulder ascent posts submitted from the boulder page. */
+/** Boulder ascent posts submitted from the boulder page (or from the
+ *  aggregated /boulder form, which can tag zero or several problems at once). */
 export const boulderPost = pgTable("boulder_post", {
   id: text("id").primaryKey(),
   authorName: text("author_name").notNull(),
   visitDate: text("visit_date").notNull(),
+  // Legacy single-problem fields, kept for backward compatibility with rows
+  // created before the multi-select selector (2026-09). Before that change
+  // these were free-text (visitor-typed), so old rows can't reliably be
+  // mapped back to a BOULDERS id — see system_architecture.md. New rows
+  // mirror problemIds[0]'s base boulder id / problem id, or "" when the post
+  // was submitted from /boulder without tagging any problem.
   boulderName: text("boulder_name").notNull(),
   routeName: text("route_name").notNull(),
+  // Full set of problems the visitor tagged (0..n). Ids look like
+  // "BLDR01-PP01" (boulderId-problemId). Null/empty = no problem tagged.
+  problemIds: text("problem_ids").array(),
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
   rating: integer("rating").notNull(),

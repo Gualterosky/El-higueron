@@ -235,7 +235,7 @@ export async function BoulderPageLayout({ boulderId, locale }: Props) {
 
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <BoulderBlockPublications boulderName={boulderName} locale={locale} />
+              <BoulderBlockPublications boulderId={boulderId} locale={locale} />
             </div>
             <div className="rounded-xl bg-white p-6 shadow-sm">
               <h3 className="mb-6 text-lg font-semibold text-foreground">

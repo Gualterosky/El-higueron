@@ -7,7 +7,7 @@ export type BoulderProblemMeta = {
 }
 
 export type BoulderMeta = {
-  id: `HIG${string}`
+  id: `BLDR${string}`
   number: number
   image: string
   problems: BoulderProblemMeta[]
@@ -15,7 +15,7 @@ export type BoulderMeta = {
 
 export const BOULDERS: BoulderMeta[] = [
   {
-    id: "HIG01",
+    id: "BLDR01",
     number: 1,
     image: "/media/Boulders/Boulder1.jpg",
     problems: [
@@ -34,7 +34,7 @@ export const BOULDERS: BoulderMeta[] = [
     ],
   },
   {
-    id: "HIG02",
+    id: "BLDR02",
     number: 2,
     image: "/media/Boulders/Img17.jpg",
     problems: [
@@ -53,7 +53,7 @@ export const BOULDERS: BoulderMeta[] = [
     ],
   },
   {
-    id: "HIG03",
+    id: "BLDR03",
     number: 3,
     image: "/media/Boulders/Img18.jpg",
     problems: [
@@ -66,7 +66,7 @@ export const BOULDERS: BoulderMeta[] = [
     ],
   },
   {
-    id: "HIG04",
+    id: "BLDR04",
     number: 4,
     image: "/media/Boulders/Boulder2.jpg",
     problems: [
@@ -97,5 +97,42 @@ export function getBoulder(id: string): BoulderMeta | undefined {
 }
 
 export function padBoulderId(number: number): string {
-  return `HIG${String(number).padStart(2, "0")}`
+  return `BLDR${String(number).padStart(2, "0")}`
+}
+
+/** Every selectable problem value (e.g. "BLDR01-PP01"), one per problem across
+ *  all 4 boulders. `problemIndex` is the position within that boulder's
+ *  `problems` array, needed to look up the matching translated name (the
+ *  translations store problem names as an array, not keyed by problem id —
+ *  see `BoulderRoute.<boulderId>.problems`). Shared by the problem selector
+ *  in BoulderPostForm and by the boulder filter in the aggregated /boulder
+ *  publications view. */
+export function getBoulderProblemOptions(): {
+  value: string
+  baseId: BoulderMeta["id"]
+  problemId: string
+  problemIndex: number
+}[] {
+  return BOULDERS.flatMap((boulder) =>
+    boulder.problems.map((problem, problemIndex) => ({
+      value: `${boulder.id}-${problem.id}`,
+      baseId: boulder.id,
+      problemId: problem.id,
+      problemIndex,
+    }))
+  )
+}
+
+/** Strips the "-<problemId>" suffix from a stored problem value, e.g.
+ *  "BLDR01-PP01" → "BLDR01". Used to link back to the boulder's page and to
+ *  look up its metadata/translations, which are keyed by the boulder id. */
+export function getBoulderBaseId(value: string): string {
+  const dashIdx = value.indexOf("-")
+  return dashIdx === -1 ? value : value.slice(0, dashIdx)
+}
+
+/** The problem id part of a stored value, e.g. "BLDR01-PP01" → "PP01". */
+export function getBoulderProblemId(value: string): string | null {
+  const dashIdx = value.indexOf("-")
+  return dashIdx === -1 ? null : value.slice(dashIdx + 1)
 }

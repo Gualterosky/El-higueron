@@ -133,7 +133,7 @@ generado con `crypto.randomUUID()`), no hay `serial`.
 | `siteAnnouncement` | Fila única (`id = "default"`) con el pop-up de noticias: `enabled`, textos es/en (título, subtítulo, cuerpo, CTA), `ctaUrl`/`ctaNewTab`, `imageUrl`/`imageAlt`, ventana `startsAt`/`endsAt`, `frequency`, `delaySeconds`, `version` | `version` se auto-incrementa al cambiar el contenido para volver a mostrar el pop-up a quien ya lo cerró |
 | `climbPost` | Publicación de ascenso en el Muro | `routeId` referencia lógica a `MURO_ROUTES` (no FK real) |
 | `campingPost` | Publicación de experiencia de camping | — |
-| `boulderPost` | Publicación de ascenso en Boulder | `boulderName`/`routeName` referencian `BOULDERS` (no FK real) |
+| `boulderPost` | Publicación de ascenso en Boulder | `problemIds` (array) es la fuente de verdad desde 2026-09; `boulderName`/`routeName` son legacy (texto libre en filas viejas, ids crudos en filas nuevas) — ver sección 7 |
 | `postReply` | Comentario/respuesta a **cualquier** publicación | `postType` (`muro`\|`camping`\|`boulder`) + `postId` — clave lógica compuesta, sin FK real (las publicaciones viven en 3 tablas distintas) |
 | `reservation` | Solicitud de reserva (camping/muro/boulder) | `type`, `status` (`pending`\|`confirmed`\|`cancelled`) |
 | `chatSession` / `chatMessage` | Historial del chatbot público | FK `chatMessage.sessionId → chatSession.id` (cascade) |
@@ -432,14 +432,86 @@ a esa ruta). Esto requirió permitir que una publicación pueda etiquetar
   "Comentario general" (`Muro.posts.noRoute`).
   - `components/posts/post-feed.tsx` (compartido por muro/camping/boulder)
     ganó ese segundo filtro de forma **opt-in**: si el caller no pasa
-    `routeFilters`, el comportamiento es idéntico al de antes (camping y
-    boulder no lo usan). Cuando sí se pasa, se renderiza el mismo
-    `MultiSelectPopover` arriba de los tabs de categoría, y el filtrado es
-    por intersección de conjuntos (`post.routeIds` ∩ rutas activas).
+    `routeFilters`, el comportamiento es idéntico al de antes (camping no lo
+    usa). Cuando sí se pasa, se renderiza el mismo `MultiSelectPopover`
+    arriba de los tabs de categoría, y el filtrado es por intersección de
+    conjuntos (`post.routeIds` ∩ rutas activas). Boulder reutiliza este mismo
+    mecanismo (ver más abajo).
 - **Panel de administración:** `admin-posts-panel.tsx` muestra ahora todas
   las rutas etiquetadas de un post de muro (`formatPostRoutes`, con fallback
   a `routeId` legacy y a "Sin ruta específica" si no hay ninguna), en vez de
   solo `post.routeId`.
+
+**Lo mismo para boulder — vista agregada en /boulder + selector multi-problema
+(añadido 2026-09):** aplica el mismo patrón que en muro, con una diferencia
+importante de punto de partida: `boulderPost` **nunca tuvo una lista fija**
+de bloques/problemas — `boulderName`/`routeName` siempre fueron campos de
+texto libre que el visitante escribía a mano (a diferencia de `climbPost`,
+que siempre tuvo `routeId` como id válido de `MURO_ROUTES`). Por eso este
+cambio no es 100% sin pérdida hacia atrás:
+
+- **Esquema:** `boulderPost` ganó `problemIds` (`text[]`, nullable), con
+  valores tipo `"BLDR01-PP01"` (`boulderId-problemId`, ids de `BOULDERS` en
+  `lib/boulder/boulders.ts`). `boulderName`/`routeName` (legacy, `NOT NULL`)
+  se conservan: para filas nuevas ahora guardan los ids crudos del primer
+  problema etiquetado (`"BLDR01"` / `"PP01"`, no el texto libre de antes), o
+  `""` si no se etiquetó ninguno. **Las filas anteriores a este cambio siguen
+  con texto libre** (ej. `boulderName = "El Higuerón"`) que no necesariamente
+  coincide con ningún id real de `BOULDERS` — esas filas antiguas no se
+  pueden filtrar/enlazar por bloque de forma confiable, pero **sí siguen
+  apareciendo** en la vista agregada (como comentario sin bloque enlazable,
+  mostrando su texto libre original tal cual).
+- **Formulario (`components/boulder/boulder-post-form.tsx`):** los dos
+  `Input` de texto libre (`boulderName`, `routeName`) fueron reemplazados por
+  un único `MultiSelectPopover` (`problemIds: string[]`, opcional) con todas
+  las combinaciones bloque+problema (`lib/boulder/boulders.ts::
+  getBoulderProblemOptions()`). Las etiquetas se resuelven con
+  `useTranslations("BoulderRoute")` (`${boulderId}.name` +
+  `${boulderId}.problems[index].name`, igual que ya hacía
+  `boulder-page-layout.tsx`). `getBoulderBaseId`/`getBoulderProblemId`
+  separan el id de bloque del id de problema.
+  - En la página de un bloque específico (`BoulderPageLayout` →
+    `/boulder/[boulderId]`) el formulario **no preselecciona nada**
+    (a diferencia de muro): un bloque puede tener varios problemas y no hay
+    un default obvio, así que se deja vacío y el visitante elige libremente
+    de la lista completa (puede etiquetar problemas de otros bloques
+    también). El prop `defaultProblemIds` existe para paridad de API con
+    `AscentForm` pero hoy ningún caller lo usa.
+- **Validación (`lib/boulder/post-actions.ts`):** `submitSchema.problemIds`
+  es un array opcional (`.default([])`, máx. 20); `boulderName`/`routeName`
+  se derivan de `problemIds[0]` vía `getBoulderBaseId`/`getBoulderProblemId`.
+- **Queries (`lib/boulder/post-queries.ts`):**
+  `getApprovedBoulderPostsByBoulderId(boulderId)` (antes
+  `getApprovedBoulderPostsByBoulderName`, que comparaba por el nombre
+  *traducido* — un bug latente: un post creado con el sitio en inglés nunca
+  aparecía en la versión en español del bloque) hace match por
+  `boulderName = boulderId` (filas nuevas) o `EXISTS (SELECT 1 FROM
+  unnest(problem_ids) ...)`. `getApprovedBoulderPosts()` (sin filtrar) sigue
+  igual, usada por la vista agregada.
+- **Vistas:**
+  - `boulder-block-publications.tsx` (página de un bloque) y
+    `boulder-publications.tsx` (vista agregada en `/boulder`, ahora con
+    `routeFilters` por bloque + link a `/boulder/<boulderId>` por cada
+    problema etiquetado) resuelven las etiquetas vía `BoulderRoute` y
+    solo enlazan bloques que existen en `BOULDERS`; cualquier valor que no
+    matchee (texto libre antiguo) se muestra como texto plano no enlazable.
+  - `BoulderPageLayout`/`BoulderBlockPublications` pasan `boulderId` en vez
+    de `boulderName` (el nombre traducido ya no se usa como parámetro de
+    query, solo para mostrar el hero de la página).
+- **Panel de administración:** `admin-posts-panel.tsx` gana
+  `formatPostProblems`, mismo patrón que `formatPostRoutes` en muro.
+
+**Renombre de ids de bloque `HIG0X` → `BLDR0X` (añadido 2026-09):** los 4
+bloques de boulder cambiaron de id, ej. `/boulder/HIG01` → `/boulder/BLDR01`.
+Cambió: las carpetas de ruta (`app/[locale]/boulder/HIG0X` →
+`.../BLDR0X`, con su `page.tsx` pasando `boulderId="BLDR0X"`), los ids en
+`BOULDERS` (`lib/boulder/boulders.ts`, incluyendo el tipo `` `BLDR${string}` ``
+y `padBoulderId`), y las claves de traducción `BoulderRoute.HIG0X` →
+`BoulderRoute.BLDR0X` en `messages/es.json`/`en.json`. La tabla `boulder_post`
+estaba vacía al hacer este cambio, así que no hubo que migrar datos; si en el
+futuro ya existen filas con `problemIds`/`boulderName` en formato `"HIG0X"`,
+habría que actualizarlas a mano (`UPDATE boulder_post SET ...`) para que
+sigan enlazando correctamente.
 
 ---
 

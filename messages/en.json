@@ -332,7 +332,10 @@
       "eyebrow": "Community",
       "title": "What the community says",
       "subtitle": "Posts from boulderers who have been here. Share your session.",
-      "formTitle": "Share your boulder session"
+      "formTitle": "Share your boulder session",
+      "routeFilterLabel": "Filter by boulder",
+      "routeFilterPlaceholder": "All boulders",
+      "noBoulder": "General comment"
     },
     "cta": {
       "title": "Ready for boulder?",
@@ -1235,12 +1238,10 @@
       "authorName": "Name",
       "authorNamePlaceholder": "Your full name",
       "visitDate": "Visit date",
-      "boulderName": "Boulder / rock name",
-      "boulderNamePlaceholder": "e.g. El Higuerón, La Pared Grande...",
-      "boulderNameHint": "Name of the block or rock formation where you bouldered.",
-      "routeName": "Problem / route name",
-      "routeNamePlaceholder": "e.g. El Primer Paso, La Grieta...",
-      "routeNameHint": "Name of the boulder problem you attempted or completed.",
+      "problemIds": "Problem(s) / boulder(s) (optional)",
+      "problemIdsHint": "Select one or several problems if your comment applies to specific blocks. You can leave it empty for a general comment.",
+      "problemSelectPlaceholder": "Select one or more problems",
+      "problemSelectedCount": "{count, plural, one {1 problem selected} other {# problems selected}}",
       "comment": "Comment",
       "commentPlaceholder": "Tell us about your session, the problem you worked, tips...",
       "contactInfo": "Contact info",
@@ -2108,7 +2109,7 @@
       "equipos": "See available gear",
       "visita": "Plan your visit"
     },
-    "HIG01": {
+    "BLDR01": {
       "name": "Primer Paso",
       "description": "The first block where many climbers make their first moves on natural rock. Its V0 problems make it the ideal starting point for those approaching outdoor bouldering for the first time at El Higueron.",
       "tips": [
@@ -2127,7 +2128,7 @@
         }
       ]
     },
-    "HIG02": {
+    "BLDR02": {
       "name": "A última hora",
       "description": "An intermediate-level block offering two well-differentiated problems: one technical and one more powerful. The name reflects that moment in the session when energy is running low but the motivation is still there.",
       "tips": [
@@ -2146,7 +2147,7 @@
         }
       ]
     },
-    "HIG03": {
+    "BLDR03": {
       "name": "El portal",
       "description": "A single line, direct and demanding. El portal is a singular block offering one of the most technical problems in the area, with moves that require skill across all planes and careful reading of every hold.",
       "tips": [
@@ -2161,7 +2162,7 @@
         }
       ]
     },
-    "HIG04": {
+    "BLDR04": {
       "name": "El dado",
       "description": "The most varied block in the area. With three problems ranging from V4 to V8, El dado offers something for intermediate and advanced climbers who want to push their limits. It is the most demanding block in the sector and where the most experienced visitors come to work their projects.",
       "tips": [

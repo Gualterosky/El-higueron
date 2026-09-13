@@ -11,8 +11,8 @@ export type PostStatus = (typeof POST_STATUSES)[number]
 
 export const postStatusSchema = z.enum(POST_STATUSES)
 
-/** The three post families a reply can be attached to. */
-export const POST_TYPES = ["muro", "camping", "boulder"] as const
+/** The post families a reply can be attached to. */
+export const POST_TYPES = ["muro", "camping", "boulder", "equipos"] as const
 
 export type PostType = (typeof POST_TYPES)[number]
 

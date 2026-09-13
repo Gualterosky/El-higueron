@@ -71,6 +71,13 @@
       "when": 1789330120918,
       "tag": "0009_mean_vengeance",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1789332032600,
+      "tag": "0010_flashy_saracen",
+      "breakpoints": true
     }
   ]
 }

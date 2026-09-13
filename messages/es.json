@@ -477,6 +477,12 @@
     "empty": "Aún no hay equipos registrados en el inventario.",
     "pricePerDay": "{price} / día",
     "availableCount": "{count} disponibles",
+    "posts": {
+      "eyebrow": "Comunidad",
+      "title": "Lo que dice la comunidad",
+      "subtitle": "Comentarios de visitantes que han rentado equipos con nosotros. Comparte tu experiencia.",
+      "formTitle": "Comparte tu experiencia"
+    },
     "categories": {
       "escalada": "Escalada",
       "boulder": "Boulder",
@@ -1278,6 +1284,29 @@
       "uploadNotConfigured": "La subida de archivos no está configurada todavía."
     }
   },
+  "EquipmentPost": {
+    "publicationsTitle": "Comentarios sobre los equipos",
+    "publicationsEmpty": "Sé el primero en comentar sobre la renta de equipos.",
+    "form": {
+      "authorName": "Nombre",
+      "authorNamePlaceholder": "Tu nombre completo",
+      "comment": "Comentario",
+      "commentPlaceholder": "Cuéntanos cómo fue tu experiencia rentando equipos, el estado del material, recomendaciones...",
+      "contactInfo": "Medio de contacto",
+      "contactInfoPlaceholder": "Teléfono o correo electrónico",
+      "contactInfoHint": "Solo visible para el equipo. No se publicará.",
+      "rating": "¿Cómo calificas el equipo?",
+      "submit": "Enviar comentario",
+      "submitting": "Enviando...",
+      "successTitle": "¡Comentario enviado!",
+      "successBody": "Tu comentario estará visible pronto. ¡Gracias por compartir!",
+      "errorGeneral": "No se pudo enviar. Intenta de nuevo.",
+      "errorMin2": "Mínimo 2 caracteres",
+      "errorMin5": "Mínimo 5 caracteres",
+      "errorRequired": "Campo obligatorio",
+      "errorRating": "Selecciona una calificación"
+    }
+  },
   "PostCategories": {
     "categoryLabel": "Tipo de publicación",
     "filterAll": "Todas",
@@ -1727,7 +1756,8 @@
       "tabs": {
         "muro": "Muro",
         "camping": "Camping",
-        "boulder": "Boulder"
+        "boulder": "Boulder",
+        "equipos": "Equipos"
       },
       "status": {
         "pending": "Pendiente",

@@ -10,12 +10,46 @@ export const user = pgTable("user", {
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").notNull().default(false),
+  phoneNumber: text("phone_number").unique(),
+  phoneNumberVerified: boolean("phone_number_verified").notNull().default(false),
   image: text("image"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   role: text("role").notNull().default("visitante"),
   mustChangePassword: boolean("must_change_password").notNull().default(false),
   banned: boolean("banned").notNull().default(false),
+})
+
+/** Unified contact/lead identity. One row per canonical email or phone;
+ *  rows are merged when the same person is identified through both channels. */
+export const contact = pgTable("contact", {
+  id: text("id").primaryKey(),
+  email: text("email").unique(),
+  phone: text("phone").unique(),
+  name: text("name"),
+  emailVerified: boolean("email_verified").notNull().default(false),
+  phoneVerified: boolean("phone_verified").notNull().default(false),
+  userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
+  source: text("source").notNull().default("unknown"),
+  firstSeenAt: timestamp("first_seen_at").notNull().defaultNow(),
+  lastSeenAt: timestamp("last_seen_at").notNull().defaultNow(),
+  submissionCount: integer("submission_count").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+})
+
+/** Verification tokens for claiming a contact (email or WhatsApp/SMS OTP).
+ *  Active once the project has a mail/SMS provider configured. */
+export const contactVerification = pgTable("contact_verification", {
+  id: text("id").primaryKey(),
+  contactId: text("contact_id")
+    .notNull()
+    .references(() => contact.id, { onDelete: "cascade" }),
+  channel: text("channel").notNull(), // "email" | "phone"
+  tokenHash: text("token_hash").notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  usedAt: timestamp("used_at"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
 export const session = pgTable("session", {
@@ -112,6 +146,7 @@ export const climbPost = pgTable("climb_post", {
   routeIds: text("route_ids").array(),
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
+  contactId: text("contact_id").references(() => contact.id, { onDelete: "set null" }),
   rating: integer("rating").notNull(),
   // "incident" | "review" | "tip" | "question" (legacy rows may still say "suggestion",
   // normalized to "review" by lib/posts/shared.ts::normalizePostCategory)
@@ -150,6 +185,7 @@ export const reservation = pgTable("reservation", {
   type: text("type").notNull(), // "camping" | "escalada"
   name: text("name").notNull(),
   contactInfo: text("contact_info").notNull(),
+  contactId: text("contact_id").references(() => contact.id, { onDelete: "set null" }),
   numberOfPeople: integer("number_of_people").notNull(),
   arrivalDate: text("arrival_date").notNull(),
   departureDate: text("departure_date"),
@@ -166,6 +202,7 @@ export const campingPost = pgTable("camping_post", {
   visitDate: text("visit_date").notNull(),
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
+  contactId: text("contact_id").references(() => contact.id, { onDelete: "set null" }),
   rating: integer("rating").notNull(),
   // "incident" | "review" | "tip" | "question" (legacy rows may still say "suggestion",
   // normalized to "review" by lib/posts/shared.ts::normalizePostCategory)
@@ -197,6 +234,7 @@ export const boulderPost = pgTable("boulder_post", {
   problemIds: text("problem_ids").array(),
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
+  contactId: text("contact_id").references(() => contact.id, { onDelete: "set null" }),
   rating: integer("rating").notNull(),
   // "incident" | "review" | "tip" | "question" (legacy rows may still say "suggestion",
   // normalized to "review" by lib/posts/shared.ts::normalizePostCategory)
@@ -209,19 +247,93 @@ export const boulderPost = pgTable("boulder_post", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
-/** Replies to any post type (muro, camping, boulder). No star rating. */
+/** Replies to any post type (muro, camping, boulder, equipos). No star rating. */
 export const postReply = pgTable("post_reply", {
   id: text("id").primaryKey(),
-  postType: text("post_type").notNull(), // "muro" | "camping" | "boulder"
+  postType: text("post_type").notNull(), // "muro" | "camping" | "boulder" | "equipos"
   postId: text("post_id").notNull(),
   authorName: text("author_name").notNull(),
   comment: text("comment").notNull(),
   contactInfo: text("contact_info").notNull(),
+  contactId: text("contact_id").references(() => contact.id, { onDelete: "set null" }),
   status: text("status").notNull().default("pending"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
+/** Comments/reviews about the equipment rental section as a whole (not tied to
+ *  a single catalog item). Simplified compared to climbPost/campingPost/
+ *  boulderPost: no visit date, category, urgency or media — just a name,
+ *  star rating and comment, same as a plain review. */
+export const equipmentPost = pgTable("equipment_post", {
+  id: text("id").primaryKey(),
+  authorName: text("author_name").notNull(),
+  comment: text("comment").notNull(),
+  contactInfo: text("contact_info").notNull(),
+  contactId: text("contact_id").references(() => contact.id, { onDelete: "set null" }),
+  rating: integer("rating").notNull(),
+  status: text("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+/** Rentable equipment catalog item (e.g. "Casco", "Pies de gato", "Carpa"). */
+export const equipment = pgTable("equipment", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  category: text("category").notNull().default("otro"), // "escalada" | "boulder" | "camping" | "otro"
+  description: text("description").notNull().default(""),
+  // COP per day, nullable = price not defined yet.
+  pricePerDay: integer("price_per_day"),
+  // Square (1:1) image. Nullable = show placeholder until real photos are uploaded.
+  imageUrl: text("image_url"),
+  active: boolean("active").notNull().default(true),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+})
+
+/** Rentable variant/size of an equipment item (e.g. talla "M", or "Única" when
+ *  the item has no real sizes). Availability is always computed as
+ *  totalQuantity - sum(quantity) of "activa" rentals for this variant — never
+ *  stored directly, to avoid it drifting out of sync. */
+export const equipmentVariant = pgTable("equipment_variant", {
+  id: text("id").primaryKey(),
+  equipmentId: text("equipment_id")
+    .notNull()
+    .references(() => equipment.id, { onDelete: "cascade" }),
+  label: text("label").notNull().default("Única"),
+  totalQuantity: integer("total_quantity").notNull().default(0),
+  active: boolean("active").notNull().default(true),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+/** A single rental movement registered by staff/admin from the equipment panel. */
+export const equipmentRental = pgTable("equipment_rental", {
+  id: text("id").primaryKey(),
+  equipmentId: text("equipment_id")
+    .notNull()
+    .references(() => equipment.id, { onDelete: "cascade" }),
+  variantId: text("variant_id")
+    .notNull()
+    .references(() => equipmentVariant.id, { onDelete: "cascade" }),
+  // Free-text customer info — walk-in visitors don't need a site account.
+  renterName: text("renter_name").notNull(),
+  renterContact: text("renter_contact"),
+  contactId: text("contact_id").references(() => contact.id, { onDelete: "set null" }),
+  quantity: integer("quantity").notNull().default(1),
+  rentedAt: text("rented_at").notNull(), // ISO date (YYYY-MM-DD)
+  expectedReturnAt: text("expected_return_at"), // ISO date (YYYY-MM-DD), nullable
+  returnedAt: timestamp("returned_at"),
+  status: text("status").notNull().default("activa"), // "activa" | "devuelta" | "cancelada"
+  registeredByUserId: text("registered_by_user_id").references(() => user.id),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
 export type User = typeof user.$inferSelect
+export type Contact = typeof contact.$inferSelect
+export type ContactVerification = typeof contactVerification.$inferSelect
 export type Session = typeof session.$inferSelect
 export type SiteSettings = typeof siteSettings.$inferSelect
 export type SiteAnnouncement = typeof siteAnnouncement.$inferSelect
@@ -229,6 +341,10 @@ export type ClimbPost = typeof climbPost.$inferSelect
 export type CampingPost = typeof campingPost.$inferSelect
 export type BoulderPost = typeof boulderPost.$inferSelect
 export type PostReply = typeof postReply.$inferSelect
+export type EquipmentPost = typeof equipmentPost.$inferSelect
 export type ChatSession = typeof chatSession.$inferSelect
 export type ChatMessage = typeof chatMessage.$inferSelect
 export type Reservation = typeof reservation.$inferSelect
+export type Equipment = typeof equipment.$inferSelect
+export type EquipmentVariant = typeof equipmentVariant.$inferSelect
+export type EquipmentRental = typeof equipmentRental.$inferSelect

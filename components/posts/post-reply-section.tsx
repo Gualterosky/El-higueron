@@ -14,10 +14,11 @@ import { Textarea } from "@/components/ui/textarea"
 import { ContactField } from "@/components/contact-field"
 import { submitReplyAction } from "@/lib/replies/reply-actions"
 import type { PostReply } from "@/lib/db/schema"
+import type { PostType } from "@/lib/posts/shared"
 
 type Props = {
   postId: string
-  postType: "muro" | "camping" | "boulder"
+  postType: PostType
   initialReplies: PostReply[]
 }
 
@@ -116,7 +117,7 @@ export function PostRepliesSection({ postId, postType, initialReplies }: Props) 
 
 type ReplyFormProps = {
   postId: string
-  postType: "muro" | "camping" | "boulder"
+  postType: PostType
   onCancel: () => void
   onSuccess: (reply: PostReply) => void
 }

@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
-import type { ClimbPost, CampingPost, BoulderPost, PostReply } from "@/lib/db/schema"
+import type { ClimbPost, CampingPost, BoulderPost, EquipmentPost, PostReply } from "@/lib/db/schema"
 import {
   POST_CATEGORIES,
   URGENCY_RANK,
@@ -35,6 +35,10 @@ import {
   updateBoulderPostStatusAction,
 } from "@/lib/boulder/post-actions"
 import {
+  deleteEquipmentPostAction,
+  updateEquipmentPostStatusAction,
+} from "@/lib/equipos/post-actions"
+import {
   deleteReplyAction,
   updateReplyStatusAction,
 } from "@/lib/replies/reply-actions"
@@ -48,6 +52,7 @@ type Props = {
   initialPosts: ClimbPost[]
   initialCampingPosts: CampingPost[]
   initialBoulderPosts: BoulderPost[]
+  initialEquipmentPosts: EquipmentPost[]
   initialReplies: PostReply[]
 }
 
@@ -55,6 +60,7 @@ export function AdminPostsPanel({
   initialPosts,
   initialCampingPosts,
   initialBoulderPosts,
+  initialEquipmentPosts,
   initialReplies,
 }: Props) {
   const t = useTranslations("Panel.posts")
@@ -84,6 +90,9 @@ export function AdminPostsPanel({
             {t("tabs.boulder")} ({initialBoulderPosts.length})
             <IncidentCountBadge count={countIncidents(initialBoulderPosts)} />
           </TabsTrigger>
+          <TabsTrigger value="equipos">
+            {t("tabs.equipos")} ({initialEquipmentPosts.length})
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="muro" className="mt-4">
@@ -107,6 +116,15 @@ export function AdminPostsPanel({
         <TabsContent value="boulder" className="mt-4">
           <BoulderPostsList
             initialPosts={initialBoulderPosts}
+            repliesByPostId={repliesByPostId}
+            t={t}
+            router={router}
+          />
+        </TabsContent>
+
+        <TabsContent value="equipos" className="mt-4">
+          <EquipmentPostsList
+            initialPosts={initialEquipmentPosts}
             repliesByPostId={repliesByPostId}
             t={t}
             router={router}
@@ -585,6 +603,86 @@ function BoulderPostsList({ initialPosts, repliesByPostId, t, router }: { initia
           </article>
         ))
       )}
+    </div>
+  )
+}
+
+// ── Equipment posts list (simplified: no category/urgency, always a review) ──
+
+function EquipmentPostsList({ initialPosts, repliesByPostId, t, router }: { initialPosts: EquipmentPost[]; repliesByPostId: RepliesMap; t: TFunc; router: AppRouter }) {
+  const [posts, setPosts] = useState(initialPosts)
+  const [, startTransition] = useTransition()
+
+  function handleStatus(id: string, status: "approved" | "hidden" | "pending") {
+    startTransition(async () => {
+      const result = await updateEquipmentPostStatusAction(id, status)
+      if (result.ok) {
+        setPosts((prev) => prev.map((p) => (p.id === id ? { ...p, status } : p)))
+        router.refresh()
+      }
+    })
+  }
+
+  function handleDelete(id: string) {
+    startTransition(async () => {
+      const result = await deleteEquipmentPostAction(id)
+      if (result.ok) {
+        setPosts((prev) => prev.filter((p) => p.id !== id))
+        router.refresh()
+      }
+    })
+  }
+
+  if (posts.length === 0) {
+    return (
+      <p className="rounded-xl border border-dashed border-border/60 px-4 py-8 text-center text-sm text-muted-foreground">
+        {t("noResults")}
+      </p>
+    )
+  }
+
+  return (
+    <div className="space-y-4">
+      {posts.map((post) => (
+        <article
+          key={post.id}
+          className={cn(
+            "flex flex-col gap-4 rounded-xl border p-4 sm:p-5",
+            post.status === "pending"
+              ? "border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/10"
+              : "border-border/60 bg-beige/20"
+          )}
+        >
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="min-w-0 space-y-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="font-medium text-forest">{post.authorName}</h3>
+                <StatusBadge status={post.status as "pending" | "approved" | "hidden"} t={t} />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {t("submittedOn")} {new Date(post.createdAt).toLocaleDateString()}
+              </p>
+              <StarRating rating={post.rating} />
+              <p className="text-sm leading-relaxed text-foreground">{post.comment}</p>
+              <p className="text-xs text-muted-foreground">
+                <span className="font-medium">{t("contactLabel")}:</span> {post.contactInfo}
+              </p>
+            </div>
+            <PostActions
+              status={post.status as "pending" | "approved" | "hidden"}
+              onApprove={() => handleStatus(post.id, "approved")}
+              onHide={() => handleStatus(post.id, "hidden")}
+              onDelete={() => handleDelete(post.id)}
+              t={t}
+            />
+          </div>
+          <AdminRepliesSection
+            postId={post.id}
+            initialReplies={repliesByPostId[post.id] ?? []}
+            router={router}
+          />
+        </article>
+      ))}
     </div>
   )
 }

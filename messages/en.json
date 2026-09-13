@@ -477,6 +477,12 @@
     "empty": "There is no gear registered in the inventory yet.",
     "pricePerDay": "{price} / day",
     "availableCount": "{count} available",
+    "posts": {
+      "eyebrow": "Community",
+      "title": "What the community says",
+      "subtitle": "Comments from visitors who have rented gear with us. Share your experience.",
+      "formTitle": "Share your experience"
+    },
     "categories": {
       "escalada": "Climbing",
       "boulder": "Boulder",
@@ -1278,6 +1284,29 @@
       "uploadNotConfigured": "File upload is not configured yet."
     }
   },
+  "EquipmentPost": {
+    "publicationsTitle": "Comments about the gear",
+    "publicationsEmpty": "Be the first to comment on gear rentals.",
+    "form": {
+      "authorName": "Name",
+      "authorNamePlaceholder": "Your full name",
+      "comment": "Comment",
+      "commentPlaceholder": "Tell us about your experience renting gear, the condition of the equipment, recommendations...",
+      "contactInfo": "Contact method",
+      "contactInfoPlaceholder": "Phone or email",
+      "contactInfoHint": "Only visible to the team. Won't be published.",
+      "rating": "How do you rate the gear?",
+      "submit": "Send comment",
+      "submitting": "Sending...",
+      "successTitle": "Comment sent!",
+      "successBody": "Your comment will be visible soon. Thanks for sharing!",
+      "errorGeneral": "Couldn't send it. Please try again.",
+      "errorMin2": "Minimum 2 characters",
+      "errorMin5": "Minimum 5 characters",
+      "errorRequired": "Required field",
+      "errorRating": "Select a rating"
+    }
+  },
   "PostCategories": {
     "categoryLabel": "Post type",
     "filterAll": "All",
@@ -1727,7 +1756,8 @@
       "tabs": {
         "muro": "Wall",
         "camping": "Camping",
-        "boulder": "Boulder"
+        "boulder": "Boulder",
+        "equipos": "Gear"
       },
       "status": {
         "pending": "Pending",

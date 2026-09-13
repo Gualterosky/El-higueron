@@ -2274,6 +2274,18 @@
     "communityEyebrow": "Comunidad",
     "communityTitle": "Sesiones en este bloque",
     "sessionTitle": "Comparte tu sesion",
+    "recommendations": {
+      "title": "Sigue explorando el boulder",
+      "similar": {
+        "title": "Bloques de nivel similar"
+      },
+      "progression": {
+        "title": "Sube de nivel"
+      },
+      "relax": {
+        "title": "Para descansar"
+      }
+    },
     "prev": "Bloque anterior",
     "next": "Bloque siguiente",
     "allBoulders": "Ver todos los bloques",

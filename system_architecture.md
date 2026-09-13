@@ -368,6 +368,51 @@ panel de moderación:
 - No hubo cambios de esquema ni de Server Actions: es solo UI/filtrado en el
   cliente sobre datos que ya llegaban con `category`/`urgencyLevel`.
 
+**Recomendaciones de rutas/bloques por dificultad (añadido 2026-09):** cada
+página de detalle de una ruta del Muro (`/muro/[routeId]`) y de un bloque de
+Boulder (`/boulder/[boulderId]`) muestra, **debajo de las publicaciones y
+antes del formulario de registro**, un bloque de hasta 3 categorías de
+sugerencias — "nivel similar", "sube de nivel" (progresión) y "para
+descansar" (relax) — calculadas en el servidor a partir del grado de
+dificultad, sin ningún dato de usuario:
+
+- **Muro** (`lib/muro/route-recommendations.ts` +
+  `components/muro/route-recommendations.tsx`): parsea el grado YDS de cada
+  `MuroRouteMeta.level` (`parseGradeRank`, letra a/b/c/d como fracción del
+  tier) y agrupa por tier entero. Rutas con `subLevels` (`MBS14`, `MBS15`)
+  usan el más fácil de sus sub-niveles para compararse (`getEffectiveRank`).
+  Las rutas `level: "Proyecto"` (`MBS03`, `MBS06`) no tienen grado numérico:
+  se tratan como el tier más difícil pero indefinido — solo hacen match
+  "similar" entre sí, y son la sugerencia de "progresión" para quien esté en
+  la ruta numerada más difícil (`5.13a`). `getRouteRecommendations(routeId)`
+  se llama desde `RoutePageLayout` (`RouteRecommendations` justo después de
+  `RoutePublications`).
+- **Boulder** (`lib/boulder/boulder-recommendations.ts` +
+  `components/boulder/boulder-recommendations.tsx`): a diferencia de una
+  ruta del Muro, un bloque de boulder (`BoulderMeta`) agrupa varios
+  problemas que pueden tener grados V distintos (ej. `BLDR04` tiene
+  V4/V6/V8), así que no hay un solo grado por bloque sino un **rango**
+  (`getBoulderGradeRange` = mín/máx de los V-grades parseables de sus
+  `problems`, vía `parseVGrade`). "Similar" = otros bloques cuyo rango se
+  solapa con el actual; "progresión" = bloques cuyo mínimo está por encima
+  del máximo actual (el más cercano primero); "relax" = bloques cuyo máximo
+  está por debajo del mínimo actual. Se llama desde `BoulderPageLayout`
+  (`BoulderRecommendations` dentro de la misma columna que
+  `BoulderBlockPublications`, justo debajo).
+- **Sin historial de usuario:** no existe ninguna tabla que vincule un
+  usuario/sesión con ascensos completados (las publicaciones son anónimas,
+  ver sección 7). Ambas funciones (`getRouteRecommendations`/
+  `getBoulderRecommendations`) aceptan un parámetro opcional
+  `completedRouteIds`/`completedBoulderIds` que, si se pasa, empuja esos ids
+  al final de cada categoría en vez de excluirlos — la firma queda lista
+  para una futura función de historial, pero **ningún caller la usa hoy**.
+  Implementar esa personalización real requeriría relacionar `user`/sesión
+  con ascensos, lo cual es un cambio de flujo de Usuarios/Reservas que debe
+  decidirse explícitamente antes de tocarlo (ver directiva en `AGENTS.md`).
+- Sin cambios de esquema ni de Server Actions: toda la lógica es derivada en
+  memoria de `MURO_ROUTES`/`BOULDERS` (datos estáticos en `lib/`), no de la
+  base de datos.
+
 **Vista agregada de publicaciones del muro + selector multi-ruta (añadido
 2026-09):** hasta ahora cada publicación de `climbPost` estaba atada a
 exactamente una ruta (`routeId`, `NOT NULL`), y la única forma de ver
@@ -709,6 +754,7 @@ estos paneles**, solo se documenta su estado:
 | Cambiar el esquema de la base de datos | `lib/db/schema.ts` → `pnpm db:generate` → `pnpm db:migrate` |
 | Cambiar catálogo/stock de equipos rentables o su disponibilidad | `lib/equipos/types.ts` (vocabulario) + `lib/equipos/actions.ts` (mutaciones, solo admin+staff) + `lib/equipos/queries.ts` (cálculo de disponibilidad) |
 | Ver/modificar contactos acumulados y su vínculo con cuentas | `lib/contacts/*` (normalización, upsert, link, queries) + `components/admin/admin-contacts-panel.tsx` + `scripts/backfill-contacts.ts` |
+| Cambiar el algoritmo de recomendaciones por dificultad (Muro/Boulder) | `lib/muro/route-recommendations.ts` / `lib/boulder/boulder-recommendations.ts` |
 | Cambiar reglas de acceso a rutas por rol | `lib/auth/roles.ts` (`canAccessPath`, `homePathForRole`) + `proxy.ts` (prefijos protegidos) |
 | Ver todos los textos/traducciones de la UI | `messages/es.json`, `messages/en.json` |
 | Configurar el evento activo de `/evento` | `lib/eventos/config.ts` (estructura) + `messages/*.json` bajo `Evento.content` (textos) |

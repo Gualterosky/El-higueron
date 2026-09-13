@@ -2274,6 +2274,18 @@
     "communityEyebrow": "Community",
     "communityTitle": "Sessions on this block",
     "sessionTitle": "Share your session",
+    "recommendations": {
+      "title": "Keep exploring the boulder area",
+      "similar": {
+        "title": "Blocks of a similar grade"
+      },
+      "progression": {
+        "title": "Level up"
+      },
+      "relax": {
+        "title": "Recovery blocks"
+      }
+    },
     "prev": "Previous block",
     "next": "Next block",
     "allBoulders": "See all blocks",

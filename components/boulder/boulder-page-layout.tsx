@@ -8,6 +8,7 @@ import {
 } from "lucide-react"
 import { BoulderBlockPublications } from "@/components/boulder/boulder-block-publications"
 import { BoulderPostForm } from "@/components/boulder/boulder-post-form"
+import { BoulderRecommendations } from "@/components/boulder/boulder-recommendations"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -236,6 +237,7 @@ export async function BoulderPageLayout({ boulderId, locale }: Props) {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
               <BoulderBlockPublications boulderId={boulderId} locale={locale} />
+              <BoulderRecommendations currentBoulderId={boulderId} locale={locale} />
             </div>
             <div className="rounded-xl bg-white p-6 shadow-sm">
               <h3 className="mb-6 text-lg font-semibold text-foreground">

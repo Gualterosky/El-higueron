@@ -986,6 +986,18 @@
     "registerTitle": "Log your ascent",
     "publicationsTitle": "Posts",
     "publicationsEmpty": "Be the first to log your ascent on this route.",
+    "recommendations": {
+      "title": "Keep exploring the wall",
+      "similar": {
+        "title": "Routes of a similar grade"
+      },
+      "progression": {
+        "title": "Level up"
+      },
+      "relax": {
+        "title": "Recovery routes"
+      }
+    },
     "ascentForm": {
       "authorName": "Name",
       "authorNamePlaceholder": "Your full name",

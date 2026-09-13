@@ -9,6 +9,7 @@ import {
   User,
 } from "lucide-react"
 import { AscentForm } from "@/components/muro/ascent-form"
+import { RouteRecommendations } from "@/components/muro/route-recommendations"
 import { RoutePublications } from "@/components/muro/route-publications"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Button } from "@/components/ui/button"
@@ -182,6 +183,8 @@ export async function RoutePageLayout({ routeId, locale }: Props) {
               </div>
 
               <RoutePublications routeId={routeId} locale={locale} />
+
+              <RouteRecommendations currentRouteId={routeId} locale={locale} />
 
               <div className="mt-8 rounded-xl bg-white p-6 shadow-sm">
                 <h3 className="mb-6 text-lg font-semibold text-foreground">

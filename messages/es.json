@@ -986,6 +986,18 @@
     "registerTitle": "Registra tu ascenso",
     "publicationsTitle": "Publicaciones",
     "publicationsEmpty": "Sé el primero en registrar tu ascenso en esta ruta.",
+    "recommendations": {
+      "title": "Sigue explorando el muro",
+      "similar": {
+        "title": "Rutas de nivel similar"
+      },
+      "progression": {
+        "title": "Sube de nivel"
+      },
+      "relax": {
+        "title": "Para descansar"
+      }
+    },
     "ascentForm": {
       "authorName": "Nombre",
       "authorNamePlaceholder": "Tu nombre completo",

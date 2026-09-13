@@ -474,6 +474,15 @@
       "subtitle": "Quality equipment for your safety and comfort"
     },
     "unavailable": "Unavailable",
+    "empty": "There is no gear registered in the inventory yet.",
+    "pricePerDay": "{price} / day",
+    "availableCount": "{count} available",
+    "categories": {
+      "escalada": "Climbing",
+      "boulder": "Boulder",
+      "camping": "Camping",
+      "otro": "Other"
+    },
     "items": {
       "casco": {
         "name": "Helmet",
@@ -1496,14 +1505,15 @@
   "Login": {
     "brand": "El Higuerón",
     "title": "Sign in",
-    "email": "Email",
+    "identifier": "Email or WhatsApp",
+    "identifierPlaceholder": "email@example.com or 3001234567",
     "password": "Password",
     "submit": "Sign in",
     "restricted": "Visitors can create an account. Staff and admin use assigned credentials.",
     "noAccount": "Don't have an account?",
     "registerLink": "Register",
     "errors": {
-      "invalid": "Incorrect email or password."
+      "invalid": "Incorrect email, phone number, or password."
     }
   },
   "Maintenance": {
@@ -1515,7 +1525,8 @@
     "brand": "El Higuerón",
     "title": "Create account",
     "name": "Name",
-    "email": "Email",
+    "identifier": "Email or WhatsApp",
+    "identifierPlaceholder": "email@example.com or 3001234567",
     "password": "Password",
     "confirm": "Confirm password",
     "submit": "Create account",
@@ -1524,7 +1535,8 @@
     "errors": {
       "mismatch": "Passwords do not match.",
       "tooShort": "Password must be at least 8 characters.",
-      "failed": "Could not create the account. Try another email."
+      "taken": "That email or phone number is already registered.",
+      "failed": "Could not create the account. Please try again."
     }
   },
   "ChangePassword": {
@@ -1559,10 +1571,12 @@
     "nav": {
       "dashboard": "Home",
       "users": "Users",
+      "contacts": "Contacts",
       "settings": "Settings",
       "content": "Content",
       "reservations": "Reservations",
       "posts": "Posts",
+      "equipment": "Equipment",
       "chatbot": "Chatbot"
     },
     "home": {
@@ -1570,6 +1584,10 @@
         "users": {
           "title": "User management",
           "description": "Create, edit, or remove users."
+        },
+        "contacts": {
+          "title": "Contact directory",
+          "description": "Review accumulated contacts and their account links."
         },
         "reservations": {
           "title": "Reservation management",
@@ -1582,6 +1600,10 @@
         "content": {
           "title": "Content management",
           "description": "Hide site sections and enable maintenance mode."
+        },
+        "equipment": {
+          "title": "Equipment inventory",
+          "description": "Manage the equipment catalog and register rentals."
         },
         "chatbot": {
           "title": "Chatbot conversations",
@@ -1711,6 +1733,96 @@
         "pending": "Pending",
         "approved": "Approved",
         "hidden": "Hidden"
+      }
+    },
+    "equipment": {
+      "title": "Equipment inventory and rentals",
+      "description": "Manage the available equipment catalog and register active rentals.",
+      "tabs": {
+        "inventory": "Inventory",
+        "rentals": "Rentals"
+      },
+      "createEquipment": "Add equipment",
+      "editEquipment": "Edit equipment",
+      "deleteEquipment": "Delete equipment",
+      "deleteEquipmentConfirm": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
+      "noEquipment": "There is no equipment in the inventory yet.",
+      "inactive": "Inactive",
+      "addVariant": "Add size",
+      "editVariant": "Edit size",
+      "stockCount": "{available}/{total} available",
+      "formDescription": "Changes are reflected immediately on the public equipment page.",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "createSuccess": "Equipment created successfully.",
+      "updateSuccess": "Equipment updated successfully.",
+      "registerRental": "Register rental",
+      "registerRentalDescription": "Register the checkout of an equipment item. Availability updates instantly.",
+      "registerSuccess": "Rental registered successfully.",
+      "returnSuccess": "Equipment marked as returned.",
+      "activeRentals": "Active rentals",
+      "noActiveRentals": "There are no active rentals right now.",
+      "history": "History",
+      "noHistory": "No rental movements yet.",
+      "markReturned": "Mark as returned",
+      "cancelRental": "Cancel rental",
+      "categories": {
+        "escalada": "Climbing",
+        "boulder": "Boulder",
+        "camping": "Camping",
+        "otro": "Other"
+      },
+      "columns": {
+        "date": "Date",
+        "renter": "Customer",
+        "equipment": "Equipment",
+        "variant": "Size",
+        "quantity": "Quantity",
+        "expectedReturn": "Expected return",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "activa": "Active",
+        "devuelta": "Returned",
+        "cancelada": "Cancelled"
+      },
+      "form": {
+        "name": "Name",
+        "category": "Category",
+        "description": "Description",
+        "pricePerDay": "Price per day (COP)",
+        "pricePlaceholder": "Not set",
+        "image": "Photo (square 1:1)",
+        "imageHint": "Upload a square image. If you don't upload one, a placeholder icon is shown.",
+        "active": "Visible on the public page",
+        "variantLabel": "Size / variant",
+        "totalQuantity": "Total quantity",
+        "currentlyInUse": "{count} currently in use",
+        "equipment": "Equipment",
+        "variant": "Size",
+        "renterName": "Customer name",
+        "renterContact": "Contact (phone or email)",
+        "quantity": "Quantity",
+        "rentedAt": "Checkout date",
+        "expectedReturnAt": "Expected return",
+        "notes": "Notes"
+      },
+      "errors": {
+        "unauthorized": "You do not have permission to perform this action.",
+        "validation": "Please review the entered data.",
+        "not_found": "Record not found.",
+        "insufficient_stock": "Not enough availability for that quantity.",
+        "failed": "Something went wrong. Please try again."
+      },
+      "uploadErrors": {
+        "unauthorized": "You do not have permission to upload images.",
+        "missing_file": "Select a file.",
+        "invalid_type": "Unsupported image format.",
+        "too_large": "The image is too large (max 4MB).",
+        "read_only": "Images can't be uploaded in this environment. Upload the file directly to the repository under public/media/Equipos.",
+        "failed": "Could not upload the image. Please try again."
       }
     },
     "chatbot": {
@@ -1854,6 +1966,10 @@
           "content": {
             "title": "Content management",
             "description": "Enable or disable site sections and maintenance mode."
+          },
+          "equipment": {
+            "title": "Equipment inventory",
+            "description": "Manage the equipment catalog and register rentals."
           }
         }
       },
@@ -1901,9 +2017,25 @@
     "publicaciones": {
       "title": "My posts",
       "description": "All your reviews on the climbing wall, camping, and bouldering areas will appear here.",
-      "draftNote": "This section is under development. Soon you will be able to view and manage all your posts.",
       "emptyTitle": "No posts yet",
-      "emptyDescription": "When you publish a review or experience on the site, it will appear here with its status."
+      "emptyDescription": "When you publish a review or experience on the site, it will appear here with its status.",
+      "columns": {
+        "date": "Date",
+        "type": "Type",
+        "content": "Content",
+        "status": "Status"
+      },
+      "kinds": {
+        "muro": "Wall",
+        "camping": "Camping",
+        "boulder": "Boulder",
+        "reply": "Reply"
+      },
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "hidden": "Hidden"
+      }
     },
     "reservas": {
       "title": "My reservations",
@@ -2185,5 +2317,23 @@
         }
       ]
     }
+  },
+  "Contacts": {
+    "title": "Contact directory",
+    "description": "Contacts accumulated from public forms, with or without an account.",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "WhatsApp",
+      "lastSeen": "Last activity",
+      "submissions": "Interactions",
+      "account": "Account"
+    },
+    "noResults": "No contacts recorded yet.",
+    "hasAccount": "Yes",
+    "noAccount": "No",
+    "merge": "Merge",
+    "anonymize": "Anonymize",
+    "actions": "Actions"
   }
 }

@@ -474,6 +474,15 @@
       "subtitle": "Material de calidad para tu seguridad y comodidad"
     },
     "unavailable": "No disponible",
+    "empty": "Aún no hay equipos registrados en el inventario.",
+    "pricePerDay": "{price} / día",
+    "availableCount": "{count} disponibles",
+    "categories": {
+      "escalada": "Escalada",
+      "boulder": "Boulder",
+      "camping": "Camping",
+      "otro": "Otro"
+    },
     "items": {
       "casco": {
         "name": "Casco",
@@ -1496,14 +1505,15 @@
   "Login": {
     "brand": "El Higuerón",
     "title": "Iniciar sesión",
-    "email": "Correo electrónico",
+    "identifier": "Correo o WhatsApp",
+    "identifierPlaceholder": "correo@ejemplo.com o 3001234567",
     "password": "Contraseña",
     "submit": "Iniciar sesión",
     "restricted": "Visitantes pueden crear cuenta. Staff y administrador usan las credenciales asignadas.",
     "noAccount": "¿No tienes cuenta?",
     "registerLink": "Regístrate",
     "errors": {
-      "invalid": "Correo o contraseña incorrectos."
+      "invalid": "Correo, teléfono o contraseña incorrectos."
     }
   },
   "Maintenance": {
@@ -1515,7 +1525,8 @@
     "brand": "El Higuerón",
     "title": "Crear cuenta",
     "name": "Nombre",
-    "email": "Correo electrónico",
+    "identifier": "Correo o WhatsApp",
+    "identifierPlaceholder": "correo@ejemplo.com o 3001234567",
     "password": "Contraseña",
     "confirm": "Confirmar contraseña",
     "submit": "Crear cuenta",
@@ -1524,7 +1535,8 @@
     "errors": {
       "mismatch": "Las contraseñas no coinciden.",
       "tooShort": "La contraseña debe tener al menos 8 caracteres.",
-      "failed": "No se pudo crear la cuenta. Intenta con otro correo."
+      "taken": "Ese correo o número ya está registrado.",
+      "failed": "No se pudo crear la cuenta. Intenta de nuevo."
     }
   },
   "ChangePassword": {
@@ -1559,10 +1571,12 @@
     "nav": {
       "dashboard": "Inicio",
       "users": "Usuarios",
+      "contacts": "Contactos",
       "settings": "Configuración",
       "content": "Contenido",
       "reservations": "Reservas",
       "posts": "Publicaciones",
+      "equipment": "Equipos",
       "chatbot": "Chatbot"
     },
     "home": {
@@ -1570,6 +1584,10 @@
         "users": {
           "title": "Gestión de usuarios",
           "description": "Crear, modificar o eliminar usuarios."
+        },
+        "contacts": {
+          "title": "Directorio de contactos",
+          "description": "Revisa los contactos acumulados y su vínculo con cuentas."
         },
         "reservations": {
           "title": "Gestión de reservas",
@@ -1582,6 +1600,10 @@
         "content": {
           "title": "Gestión de contenido",
           "description": "Ocultar secciones del sitio y modo mantenimiento."
+        },
+        "equipment": {
+          "title": "Inventario de equipos",
+          "description": "Gestiona el catálogo de equipos y registra rentas."
         },
         "chatbot": {
           "title": "Conversaciones del chatbot",
@@ -1711,6 +1733,96 @@
         "pending": "Pendiente",
         "approved": "Aprobada",
         "hidden": "Oculta"
+      }
+    },
+    "equipment": {
+      "title": "Inventario y rentas de equipos",
+      "description": "Gestiona el catálogo de equipos disponibles y registra las rentas activas.",
+      "tabs": {
+        "inventory": "Inventario",
+        "rentals": "Movimientos"
+      },
+      "createEquipment": "Agregar equipo",
+      "editEquipment": "Editar equipo",
+      "deleteEquipment": "Eliminar equipo",
+      "deleteEquipmentConfirm": "¿Estás seguro de que quieres eliminar \"{name}\"? Esta acción no se puede deshacer.",
+      "noEquipment": "Aún no hay equipos en el inventario.",
+      "inactive": "Inactivo",
+      "addVariant": "Agregar talla",
+      "editVariant": "Editar talla",
+      "stockCount": "{available}/{total} disponibles",
+      "formDescription": "Los cambios se reflejan de inmediato en la página pública de equipos.",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "delete": "Eliminar",
+      "createSuccess": "Equipo creado correctamente.",
+      "updateSuccess": "Equipo actualizado correctamente.",
+      "registerRental": "Registrar renta",
+      "registerRentalDescription": "Registra la salida de un equipo. La disponibilidad se actualiza al instante.",
+      "registerSuccess": "Renta registrada correctamente.",
+      "returnSuccess": "Equipo marcado como devuelto.",
+      "activeRentals": "Rentas activas",
+      "noActiveRentals": "No hay rentas activas en este momento.",
+      "history": "Historial",
+      "noHistory": "Aún no hay movimientos registrados.",
+      "markReturned": "Marcar como devuelto",
+      "cancelRental": "Cancelar renta",
+      "categories": {
+        "escalada": "Escalada",
+        "boulder": "Boulder",
+        "camping": "Camping",
+        "otro": "Otro"
+      },
+      "columns": {
+        "date": "Fecha",
+        "renter": "Cliente",
+        "equipment": "Equipo",
+        "variant": "Talla",
+        "quantity": "Cantidad",
+        "expectedReturn": "Regreso estimado",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "status": {
+        "activa": "Activa",
+        "devuelta": "Devuelta",
+        "cancelada": "Cancelada"
+      },
+      "form": {
+        "name": "Nombre",
+        "category": "Categoría",
+        "description": "Descripción",
+        "pricePerDay": "Precio por día (COP)",
+        "pricePlaceholder": "Sin definir",
+        "image": "Foto (cuadrada 1:1)",
+        "imageHint": "Sube una imagen cuadrada. Si no subes una, se muestra un ícono de referencia.",
+        "active": "Visible en la página pública",
+        "variantLabel": "Talla / variante",
+        "totalQuantity": "Cantidad total",
+        "currentlyInUse": "{count} en uso actualmente",
+        "equipment": "Equipo",
+        "variant": "Talla",
+        "renterName": "Nombre del cliente",
+        "renterContact": "Contacto (teléfono o correo)",
+        "quantity": "Cantidad",
+        "rentedAt": "Fecha de salida",
+        "expectedReturnAt": "Regreso estimado",
+        "notes": "Notas"
+      },
+      "errors": {
+        "unauthorized": "No tienes permisos para realizar esta acción.",
+        "validation": "Revisa los datos ingresados.",
+        "not_found": "No se encontró el registro.",
+        "insufficient_stock": "No hay suficiente disponibilidad para esta cantidad.",
+        "failed": "Ocurrió un error. Intenta de nuevo."
+      },
+      "uploadErrors": {
+        "unauthorized": "No tienes permisos para subir imágenes.",
+        "missing_file": "Selecciona un archivo.",
+        "invalid_type": "Formato de imagen no soportado.",
+        "too_large": "La imagen es demasiado grande (máx. 4MB).",
+        "read_only": "No se puede subir la imagen en este entorno. Sube el archivo directamente al repositorio en public/media/Equipos.",
+        "failed": "No se pudo subir la imagen. Intenta de nuevo."
       }
     },
     "chatbot": {
@@ -1854,6 +1966,10 @@
           "content": {
             "title": "Gestión de contenido",
             "description": "Activa o desactiva secciones del sitio y el modo mantenimiento."
+          },
+          "equipment": {
+            "title": "Inventario de equipos",
+            "description": "Gestiona el catálogo de equipos y registra rentas."
           }
         }
       },
@@ -1901,9 +2017,25 @@
     "publicaciones": {
       "title": "Mis publicaciones",
       "description": "Aquí aparecerán todas tus reseñas en el muro de escalada, camping y boulder.",
-      "draftNote": "Esta sección está en desarrollo. Próximamente podrás ver y gestionar todas tus publicaciones.",
       "emptyTitle": "Sin publicaciones aún",
-      "emptyDescription": "Cuando publiques una reseña o experiencia en el sitio, aparecerá aquí con su estado."
+      "emptyDescription": "Cuando publiques una reseña o experiencia en el sitio, aparecerá aquí con su estado.",
+      "columns": {
+        "date": "Fecha",
+        "type": "Tipo",
+        "content": "Contenido",
+        "status": "Estado"
+      },
+      "kinds": {
+        "muro": "Muro",
+        "camping": "Camping",
+        "boulder": "Boulder",
+        "reply": "Comentario"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "approved": "Aprobada",
+        "hidden": "Oculta"
+      }
     },
     "reservas": {
       "title": "Mis reservas",
@@ -2185,5 +2317,23 @@
         }
       ]
     }
+  },
+  "Contacts": {
+    "title": "Directorio de contactos",
+    "description": "Contactos acumulados desde formularios públicos, con o sin cuenta.",
+    "columns": {
+      "name": "Nombre",
+      "email": "Correo",
+      "phone": "WhatsApp",
+      "lastSeen": "Última actividad",
+      "submissions": "Interacciones",
+      "account": "Cuenta"
+    },
+    "noResults": "No se han registrado contactos aún.",
+    "hasAccount": "Sí",
+    "noAccount": "No",
+    "merge": "Fusionar",
+    "anonymize": "Anonimizar",
+    "actions": "Acciones"
   }
 }

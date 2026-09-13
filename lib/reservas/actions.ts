@@ -4,6 +4,7 @@ import { randomUUID } from "crypto"
 import { z } from "zod"
 import { db } from "@/lib/db"
 import { reservation } from "@/lib/db/schema"
+import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
 import { RESERVATION_TYPES, type ReservationType } from "@/lib/reservas/types"
 
 /** ISO calendar date (YYYY-MM-DD) that the browser <input type="date"> produces. */
@@ -70,11 +71,18 @@ export async function submitReservationAction(
 
   try {
     const id = randomUUID()
+    const contactId = await upsertContactFromSubmission({
+      raw: data.contactInfo,
+      name: data.name,
+      source: "reserva",
+    })
+
     await db.insert(reservation).values({
       id,
       type: data.type,
       name: data.name,
       contactInfo: data.contactInfo,
+      contactId,
       numberOfPeople: data.numberOfPeople,
       arrivalDate: data.arrivalDate,
       // Departure only applies to camping stays.

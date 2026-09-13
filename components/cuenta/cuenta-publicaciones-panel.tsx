@@ -1,51 +1,90 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import { Construction, Newspaper } from "lucide-react"
+import { Newspaper } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import type { MyPublication } from "@/lib/cuenta/queries"
 
-export function CuentaPublicacionesPanel() {
+type Props = {
+  publications: MyPublication[]
+}
+
+function statusVariant(status: string) {
+  if (status === "approved") return "default"
+  if (status === "hidden") return "destructive"
+  return "secondary"
+}
+
+function publicationLabel(p: MyPublication, t: (key: string) => string) {
+  if (p.kind === "reply") {
+    return `${t("publicaciones.kinds.reply")} · ${p.targetType}`
+  }
+  return t(`publicaciones.kinds.${p.kind}`)
+}
+
+export function CuentaPublicacionesPanel({ publications }: Props) {
   const t = useTranslations("Cuenta")
-  const tPanel = useTranslations("Panel")
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="space-y-1">
-        <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-2xl font-semibold text-forest">
-            {t("publicaciones.title")}
-          </h2>
-          <Badge variant="secondary">{tPanel("comingSoon")}</Badge>
-        </div>
+        <h2 className="text-2xl font-semibold text-forest">{t("publicaciones.title")}</h2>
         <p className="max-w-2xl text-muted-foreground">{t("publicaciones.description")}</p>
       </div>
 
-      {/* Draft banner */}
-      <div className="flex items-start gap-3 rounded-xl border border-amber-300/60 bg-amber-50/60 px-4 py-3">
-        <Construction className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" aria-hidden />
-        <p className="text-sm text-amber-800">{t("publicaciones.draftNote")}</p>
-      </div>
-
-      {/* Empty state */}
-      <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-border/60 bg-beige/10 px-6 py-14 text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-forest/10 text-forest">
-          <Newspaper className="h-7 w-7" />
-        </span>
-        <div className="space-y-1">
-          <p className="font-semibold text-foreground">{t("publicaciones.emptyTitle")}</p>
-          <p className="max-w-xs text-sm text-muted-foreground">
-            {t("publicaciones.emptyDescription")}
-          </p>
-        </div>
-        <Button
-          disabled
-          variant="outline"
-          className="mt-1 cursor-not-allowed opacity-50"
-        >
-          {tPanel("comingSoon")}
-        </Button>
+      <div className="overflow-x-auto rounded-xl border border-border/60">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>{t("publicaciones.columns.date")}</TableHead>
+              <TableHead>{t("publicaciones.columns.type")}</TableHead>
+              <TableHead>{t("publicaciones.columns.content")}</TableHead>
+              <TableHead>{t("publicaciones.columns.status")}</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {publications.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className="py-12 text-center">
+                  <div className="flex flex-col items-center gap-3">
+                    <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-forest/10 text-forest">
+                      <Newspaper className="h-7 w-7" />
+                    </span>
+                    <div className="space-y-1">
+                      <p className="font-semibold text-foreground">{t("publicaciones.emptyTitle")}</p>
+                      <p className="max-w-xs text-sm text-muted-foreground">
+                        {t("publicaciones.emptyDescription")}
+                      </p>
+                    </div>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : (
+              publications.map((p) => (
+                <TableRow key={p.id}>
+                  <TableCell className="whitespace-nowrap">
+                    {p.kind === "reply" ? p.createdAt.toLocaleDateString() : p.date}
+                  </TableCell>
+                  <TableCell>{publicationLabel(p, t)}</TableCell>
+                  <TableCell>
+                    <p className="max-w-xs truncate text-sm">{p.content}</p>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={statusVariant(p.status)}>{t(`publicaciones.status.${p.status}` as any)}</Badge>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
       </div>
     </div>
   )

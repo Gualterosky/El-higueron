@@ -11,7 +11,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "db:seed-admin": "tsx --env-file=.env.local scripts/seed-admin.ts"
+    "db:backfill-contacts": "tsx --env-file=.env.local scripts/backfill-contacts.ts",
+    "db:seed-admin": "tsx --env-file=.env.local scripts/seed-admin.ts",
+    "db:seed-equipment": "tsx --env-file=.env.local scripts/seed-equipment.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

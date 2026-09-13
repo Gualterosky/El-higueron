@@ -3,9 +3,11 @@
 import {
   BotMessageSquare,
   CalendarDays,
+  Contact,
   LayoutDashboard,
   LogOut,
   Newspaper,
+  Package,
   PanelsTopLeft,
   Users,
 } from "lucide-react"
@@ -42,6 +44,12 @@ const STAFF_ITEMS: NavItem[] = [
     roles: ["staff", "administrador"],
   },
   {
+    href: "/staff/equipos",
+    labelKey: "equipment",
+    icon: Package,
+    roles: ["staff", "administrador"],
+  },
+  {
     href: "/staff/contenido",
     labelKey: "content",
     icon: PanelsTopLeft,
@@ -63,6 +71,12 @@ const ADMIN_ITEMS: NavItem[] = [
     roles: ["administrador"],
   },
   {
+    href: "/admin/contactos",
+    labelKey: "contacts",
+    icon: Contact,
+    roles: ["administrador"],
+  },
+  {
     href: "/admin/reservas",
     labelKey: "reservations",
     icon: CalendarDays,
@@ -72,6 +86,12 @@ const ADMIN_ITEMS: NavItem[] = [
     href: "/admin/publicaciones",
     labelKey: "posts",
     icon: Newspaper,
+    roles: ["administrador"],
+  },
+  {
+    href: "/admin/equipos",
+    labelKey: "equipment",
+    icon: Package,
     roles: ["administrador"],
   },
   {

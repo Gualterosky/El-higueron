@@ -6,6 +6,7 @@ import { z } from "zod"
 import { getModeratorSession } from "@/lib/auth/guards"
 import { db } from "@/lib/db"
 import { boulderPost } from "@/lib/db/schema"
+import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
 import { getBoulderBaseId, getBoulderProblemId } from "@/lib/boulder/boulders"
 import {
   httpsUrlSchema,
@@ -56,6 +57,12 @@ export async function submitBoulderPostAction(
   const firstProblem = parsed.data.problemIds[0]
 
   try {
+    const contactId = await upsertContactFromSubmission({
+      raw: parsed.data.contactInfo,
+      name: parsed.data.authorName,
+      source: "boulder",
+    })
+
     await db.insert(boulderPost).values({
       id: crypto.randomUUID(),
       authorName: parsed.data.authorName,
@@ -68,6 +75,7 @@ export async function submitBoulderPostAction(
       category: parsed.data.category,
       comment: parsed.data.comment,
       contactInfo: parsed.data.contactInfo,
+      contactId,
       rating: isReview ? parsed.data.rating : 0,
       urgencyLevel: isIncident ? parsed.data.urgencyLevel ?? null : null,
       socialMediaUrl: parsed.data.socialMediaUrl?.trim() || null,

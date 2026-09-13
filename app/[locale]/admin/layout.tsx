@@ -24,8 +24,10 @@ export default async function AdminLayout({ children, params }: Props) {
     nav: {
       dashboard: t("nav.dashboard"),
       users: t("nav.users"),
+      contacts: t("nav.contacts"),
       reservations: t("nav.reservations"),
       posts: t("nav.posts"),
+      equipment: t("nav.equipment"),
       content: t("nav.content"),
       chatbot: t("nav.chatbot"),
     },

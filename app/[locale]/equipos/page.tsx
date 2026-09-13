@@ -1,71 +1,31 @@
 import Image from "next/image"
-import { Wrench, Shield, HardHat, Footprints, CircleDot, MessageCircle, Tent } from "lucide-react"
+import { Package, Wrench, MessageCircle } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { assertSectionVisible } from "@/lib/site-settings"
+import { getEquipmentCatalog } from "@/lib/equipos/queries"
+import { isEquipmentCategory } from "@/lib/equipos/types"
 
 type Props = {
   params: Promise<{ locale: string }>
 }
 
+const CURRENCY_FORMATTER = new Intl.NumberFormat("es-CO", {
+  style: "currency",
+  currency: "COP",
+  maximumFractionDigits: 0,
+})
+
 export default async function EquiposPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
   await assertSectionVisible("equipos", locale)
-  const t = await getTranslations("Equipos")
-
-  const equipment = [
-    {
-      icon: HardHat,
-      name: t("items.casco.name"),
-      description: t("items.casco.description"),
-      forActivity: t("items.casco.forActivity"),
-      available: true,
-      image: "/media/Equipos/Casco 1.png",
-    },
-    {
-      icon: Footprints,
-      name: t("items.gatos.name"),
-      description: t("items.gatos.description"),
-      forActivity: t("items.gatos.forActivity"),
-      available: true,
-      image: "/media/Equipos/gatos A.jpg",
-    },
-    {
-      icon: Shield,
-      name: t("items.arnes.name"),
-      description: t("items.arnes.description"),
-      forActivity: t("items.arnes.forActivity"),
-      available: true,
-      image: "/media/Equipos/Arnes 2.png",
-    },
-    {
-      icon: CircleDot,
-      name: t("items.crashpads.name"),
-      description: t("items.crashpads.description"),
-      forActivity: t("items.crashpads.forActivity"),
-      available: true,
-      image: "/media/Equipos/Crashpad 1a.png",
-    },
-    {
-      icon: Footprints,
-      name: t("items.botas.name"),
-      description: t("items.botas.description"),
-      forActivity: t("items.botas.forActivity"),
-      available: false,
-      image: "https://passos.com.co/wp-content/uploads/2021/06/1821.png",
-    },
-    {
-      icon: Tent,
-      name: t("items.carpas.name"),
-      description: t("items.carpas.description"),
-      forActivity: t("items.carpas.forActivity"),
-      available: false,
-      image: "/media/Camping/IMG_20260117_080602542_HDR.jpg",
-    },
-  ]
+  const [t, equipmentList] = await Promise.all([
+    getTranslations("Equipos"),
+    getEquipmentCatalog(),
+  ])
 
   const importantNotes = t.raw("notes.items") as string[]
 
@@ -126,45 +86,90 @@ export default async function EquiposPage({ params }: Props) {
             </p>
           </div>
           
-          <div className="grid gap-8 md:grid-cols-2">
-            {equipment.map((item) => (
-              <Card key={item.name} className={`overflow-hidden border-none shadow-sm transition-all hover:shadow-md ${item.available ? "bg-white" : "bg-white/60 opacity-60"}`}>
-                <div className="relative aspect-[16/9] overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    fill
-                    className="object-cover"
-                  />
-                  {!item.available && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                      <span className="rounded-full bg-white px-4 py-2 text-sm font-medium text-muted-foreground">
-                        {t("unavailable")}
-                      </span>
+          {equipmentList.length === 0 ? (
+            <p className="text-center text-muted-foreground">{t("empty")}</p>
+          ) : (
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {equipmentList.map((item) => {
+                const totalAvailable = item.variants.reduce(
+                  (sum, variant) => sum + variant.availableQuantity,
+                  0,
+                )
+                const hasStock = totalAvailable > 0
+                const categoryLabel = isEquipmentCategory(item.category)
+                  ? t(`categories.${item.category}`)
+                  : item.category
+
+                return (
+                  <Card
+                    key={item.id}
+                    className={`overflow-hidden border-none shadow-sm transition-all hover:shadow-md ${hasStock ? "bg-white" : "bg-white/60"}`}
+                  >
+                    <div className="relative aspect-square overflow-hidden bg-muted">
+                      {item.imageUrl ? (
+                        <Image
+                          src={item.imageUrl}
+                          alt={item.name}
+                          fill
+                          className={`object-cover ${hasStock ? "" : "opacity-60"}`}
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-beige/40">
+                          <Package className="h-16 w-16 text-forest/40" aria-hidden />
+                        </div>
+                      )}
+                      {!hasStock && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                          <span className="rounded-full bg-white px-4 py-2 text-sm font-medium text-muted-foreground">
+                            {t("unavailable")}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <CardHeader className="pb-2">
-                  <div className="flex items-start gap-4">
-                    <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${item.available ? "bg-forest" : "bg-muted"}`}>
-                      <item.icon className="h-7 w-7 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="mb-1 flex items-center gap-2">
-                        <CardTitle className="text-xl">{item.name}</CardTitle>
+                    <CardHeader className="pb-2">
+                      <div className="flex items-start gap-4">
+                        <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${hasStock ? "bg-forest" : "bg-muted"}`}>
+                          <Package className="h-7 w-7 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <CardTitle className="text-xl">{item.name}</CardTitle>
+                          <span className="mt-1 inline-block rounded-full bg-beige px-3 py-1 text-xs font-medium text-forest">
+                            {categoryLabel}
+                          </span>
+                        </div>
                       </div>
-                      <span className="inline-block rounded-full bg-beige px-3 py-1 text-xs font-medium text-forest">
-                        {item.forActivity}
-                      </span>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{item.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {item.description ? (
+                        <p className="text-muted-foreground">{item.description}</p>
+                      ) : null}
+
+                      {item.pricePerDay != null ? (
+                        <p className="text-sm font-medium text-forest">
+                          {t("pricePerDay", { price: CURRENCY_FORMATTER.format(item.pricePerDay) })}
+                        </p>
+                      ) : null}
+
+                      <div className="flex flex-wrap gap-2">
+                        {item.variants.map((variant) => (
+                          <span
+                            key={variant.id}
+                            className={`rounded-full px-3 py-1 text-xs font-medium ${
+                              variant.availableQuantity > 0
+                                ? "bg-forest/10 text-forest"
+                                : "bg-muted text-muted-foreground"
+                            }`}
+                          >
+                            {variant.label}: {t("availableCount", { count: variant.availableQuantity })}
+                          </span>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )
+              })}
+            </div>
+          )}
         </div>
       </section>
 

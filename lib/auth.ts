@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth"
 import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import { nextCookies } from "better-auth/next-js"
-import { admin } from "better-auth/plugins"
+import { admin, phoneNumber } from "better-auth/plugins"
 import { db } from "@/lib/db"
 import * as schema from "@/lib/db/schema"
 
@@ -48,7 +48,19 @@ export const auth = betterAuth({
       },
     },
   },
-  plugins: [admin(), nextCookies()],
+  plugins: [
+    admin(),
+    phoneNumber({
+      // Verification/SMS provider is not configured yet. The plugin is enabled
+      // so users can sign in with phone+password once their phone number is set.
+      // TODO: replace this stub with a real SMS/WhatsApp provider.
+      sendOTP: async ({ phoneNumber, code }) => {
+        console.warn("[phoneNumber] OTP not sent (no provider configured):", { phoneNumber, code })
+      },
+      phoneNumberValidator: async (phoneNumber) => /^\+\d{7,15}$/.test(phoneNumber),
+    }),
+    nextCookies(),
+  ],
 })
 
 export type Session = typeof auth.$Infer.Session

@@ -6,6 +6,7 @@ import { z } from "zod"
 import { getModeratorSession } from "@/lib/auth/guards"
 import { db } from "@/lib/db"
 import { postReply } from "@/lib/db/schema"
+import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
 import { postStatusSchema, postTypeSchema, type PostStatus } from "@/lib/posts/shared"
 
 const submitSchema = z.object({
@@ -25,6 +26,12 @@ export async function submitReplyAction(
   if (!parsed.success) return { ok: false, error: "Datos inválidos" }
 
   try {
+    const contactId = await upsertContactFromSubmission({
+      raw: parsed.data.contactInfo,
+      name: parsed.data.authorName,
+      source: "reply",
+    })
+
     await db.insert(postReply).values({
       id: crypto.randomUUID(),
       postType: parsed.data.postType,
@@ -32,6 +39,7 @@ export async function submitReplyAction(
       authorName: parsed.data.authorName,
       comment: parsed.data.comment,
       contactInfo: parsed.data.contactInfo,
+      contactId,
       status: "pending",
     })
     return { ok: true }

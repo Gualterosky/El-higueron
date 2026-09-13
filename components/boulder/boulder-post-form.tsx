@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { ContactField } from "@/components/contact-field"
 import { submitBoulderPostAction } from "@/lib/boulder/post-actions"
 import { getBoulderProblemOptions } from "@/lib/boulder/boulders"
 import { detectPlatform } from "@/components/muro/social-embed"
@@ -239,24 +240,13 @@ export function BoulderPostForm({ defaultProblemIds = [] }: Props) {
         />
       )}
 
-      <div className="space-y-1.5">
-        <Label htmlFor="boulderContactInfo">
-          {t("form.contactInfo")} <span className="text-destructive">*</span>
-        </Label>
-        <Input
-          id="boulderContactInfo"
-          placeholder={t("form.contactInfoPlaceholder")}
-          suppressHydrationWarning
-          autoComplete="off"
-          {...form.register("contactInfo")}
-        />
-        <p className="text-xs text-muted-foreground">{t("form.contactInfoHint")}</p>
-        {form.formState.errors.contactInfo && (
-          <p className="text-xs text-destructive" role="alert">
-            {form.formState.errors.contactInfo.message}
-          </p>
-        )}
-      </div>
+      <ContactField
+        control={form.control}
+        name="contactInfo"
+        label={`${t("form.contactInfo")} *`}
+        placeholder={t("form.contactInfoPlaceholder")}
+        hint={t("form.contactInfoHint")}
+      />
 
       {/* ── Multimedia ── */}
       <div className="space-y-2">

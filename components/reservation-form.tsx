@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { ContactField } from "@/components/contact-field"
 import { submitReservationAction } from "@/lib/reservas/actions"
 import {
   ACTIVITY_CATEGORIES,
@@ -417,24 +418,13 @@ export function ReservationForm({ defaultType }: Props) {
       </div>
 
       {/* ── Contact ── */}
-      <div className="space-y-1.5">
-        <Label htmlFor="contactInfo">
-          {t("contactInfo")} <span className="text-destructive">*</span>
-        </Label>
-        <Input
-          id="contactInfo"
-          placeholder={t("contactInfoPlaceholder")}
-          suppressHydrationWarning
-          autoComplete="off"
-          {...form.register("contactInfo")}
-        />
-        <p className="text-xs text-muted-foreground">{t("contactInfoHint")}</p>
-        {form.formState.errors.contactInfo && (
-          <p className="text-xs text-destructive" role="alert">
-            {form.formState.errors.contactInfo.message}
-          </p>
-        )}
-      </div>
+      <ContactField
+        control={form.control}
+        name="contactInfo"
+        label={`${t("contactInfo")} *`}
+        placeholder={t("contactInfoPlaceholder")}
+        hint={t("contactInfoHint")}
+      />
 
       {serverError && (
         <p className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive" role="alert">

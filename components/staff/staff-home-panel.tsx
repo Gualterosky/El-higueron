@@ -1,7 +1,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import { CalendarDays, Newspaper, PanelsTopLeft } from "lucide-react"
+import { CalendarDays, Newspaper, Package, PanelsTopLeft } from "lucide-react"
 import { Link } from "@/i18n/navigation"
 
 const CATEGORIES = [
@@ -14,6 +14,11 @@ const CATEGORIES = [
     href: "/staff/publicaciones",
     labelKey: "posts",
     icon: Newspaper,
+  },
+  {
+    href: "/staff/equipos",
+    labelKey: "equipment",
+    icon: Package,
   },
   {
     href: "/staff/contenido",

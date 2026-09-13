@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { ContactField } from "@/components/contact-field"
 import { submitReplyAction } from "@/lib/replies/reply-actions"
 import type { PostReply } from "@/lib/db/schema"
 
@@ -151,6 +152,7 @@ function ReplyForm({ postId, postType, onCancel, onSuccess }: ReplyFormProps) {
           authorName: data.authorName,
           comment: data.comment,
           contactInfo: data.contactInfo,
+          contactId: null,
           status: "pending",
           createdAt: new Date(),
         }
@@ -198,25 +200,13 @@ function ReplyForm({ postId, postType, onCancel, onSuccess }: ReplyFormProps) {
           )}
         </div>
 
-        <div className="space-y-1">
-          <Label htmlFor={`reply-contact-${postId}`} className="text-xs">
-            {t("contactInfo")} <span className="text-destructive">*</span>
-          </Label>
-          <Input
-            id={`reply-contact-${postId}`}
-            placeholder={t("contactInfoPlaceholder")}
-            className="h-8 text-sm"
-            suppressHydrationWarning
-            autoComplete="off"
-            {...form.register("contactInfo")}
-          />
-          <p className="text-xs text-muted-foreground">{t("contactInfoHint")}</p>
-          {form.formState.errors.contactInfo && (
-            <p className="text-xs text-destructive">
-              {form.formState.errors.contactInfo.message}
-            </p>
-          )}
-        </div>
+        <ContactField
+          control={form.control}
+          name="contactInfo"
+          label={`${t("contactInfo")} *`}
+          placeholder={t("contactInfoPlaceholder")}
+          hint={t("contactInfoHint")}
+        />
       </div>
 
       <div className="space-y-1">

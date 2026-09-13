@@ -515,6 +515,87 @@ sigan enlazando correctamente.
 
 ---
 
+## 6.b Flujo de datos — Inventario y rentas de equipos (añadido 2026-09)
+
+Sistema de inventario para equipo rentable (cascos, arneses, crash pads, pies
+de gato, botas, carpas...), con página pública de catálogo y panel de
+administración/staff para gestionar stock y registrar movimientos de renta.
+
+**Esquema (`lib/db/schema.ts`):**
+- `equipment`: catálogo de tipos de equipo (`name`, `slug` único, `category`
+  — `escalada`\|`boulder`\|`camping`\|`otro`, `description`, `pricePerDay`
+  nullable en COP, `imageUrl` nullable — imagen cuadrada 1:1, `active`).
+- `equipmentVariant`: variante/talla rentable de un equipo (`label`,
+  `totalQuantity`). **Todo equipo tiene al menos una variante**, incluso si no
+  maneja tallas reales (se crea con `label = "Única"` al crear el equipo) —
+  esto mantiene uniforme la lógica de disponibilidad y de registro de rentas,
+  sin casos especiales.
+- `equipmentRental`: movimiento de renta (`equipmentId`, `variantId`,
+  `renterName`/`renterContact` — **texto libre, no requiere cuenta de
+  usuario**, decisión de diseño explícita: los clientes de renta de equipo son
+  mayormente visitantes sin cuenta), `quantity`, `rentedAt`/`expectedReturnAt`
+  (fechas ISO `YYYY-MM-DD`, mismo formato que `reservation`), `status`
+  (`activa`\|`devuelta`\|`cancelada`, columna `text` sin `CHECK` — mismo
+  patrón de diseño que `reservation.status`, ver nota de la sección 3),
+  `registeredByUserId` (FK `user`, quién de staff/admin la registró).
+
+**Disponibilidad — regla central:** nunca se guarda un contador de stock
+disponible. Siempre se calcula como
+`totalQuantity - SUM(quantity) de equipmentRental con status = "activa"` para
+esa variante (`lib/equipos/queries.ts::getActiveQuantitiesByVariant`). Esto
+evita que el número se desincronice si una renta se cancela, se marca como
+devuelta, o se edita el stock total manualmente.
+
+```
+components/admin/admin-equipment-panel.tsx (client, usado en /admin/equipos y /staff/equipos)
+   │ Tab "Inventario": crear/editar/eliminar equipment + equipmentVariant,
+   │   subir imagen cuadrada (uploadEquipmentImageAction)
+   │ Tab "Movimientos": createRentalAction (valida stock disponible antes de
+   │   insertar), markRentalReturnedAction, cancelRentalAction
+   ▼
+lib/equipos/actions.ts ("use server")
+   │ TODAS las acciones verifican getModeratorSession() (admin + staff, igual
+   │ que moderación de contenido — ver sección 4). uploadEquipmentImageAction
+   │ sigue el mismo patrón que uploadAnnouncementImageAction (sección 7.b):
+   │ escribe en public/media/Equipos/, devuelve error "read_only" en hosting
+   │ de solo lectura.
+   ▼
+Neon Postgres: equipment / equipment_variant / equipment_rental
+   ▲
+   │ lib/equipos/queries.ts::getEquipmentCatalog() — solo equipo/variantes
+   │   activos, para /equipos (público)
+   │ lib/equipos/queries.ts::getAllEquipmentForAdmin() / getAllRentals() —
+   │   incluye inactivos + historial completo, para el panel
+   ▼
+app/[locale]/equipos/page.tsx (público)
+   muestra imagen cuadrada (o ícono placeholder si `imageUrl` es null — las
+   fotos reales se suben después desde el panel), precio si está definido, y
+   un chip de disponibilidad EXACTA por variante ("M: 3 disponibles") — es
+   decisión explícita mostrar el número exacto, no solo disponible/no
+   disponible.
+```
+
+- Rutas duplicadas admin/staff (`app/[locale]/admin/equipos/page.tsx` y
+  `app/[locale]/staff/equipos/page.tsx`) reutilizan el mismo
+  `AdminEquipmentPanel`, mismo patrón que reservas/publicaciones/contenido
+  (sección 2). Ítem de navegación "Equipos" agregado en
+  `components/panel/panel-shell.tsx` (`ADMIN_ITEMS`/`STAFF_ITEMS`) y en los
+  home panels (`admin-home-panel.tsx`/`staff-home-panel.tsx`).
+- El flag existente `siteSettings.hideEquipos` sigue controlando la
+  visibilidad de la sección pública (`assertSectionVisible("equipos", locale)`
+  en `app/[locale]/equipos/page.tsx`), sin cambios.
+- Después de cualquier mutación se llama `revalidatePath("/", "layout")` para
+  que la página pública refleje el nuevo stock de inmediato.
+- Seed inicial de inventario: `scripts/seed-equipment.ts` (`pnpm
+  db:seed-equipment`), idempotente (omite equipos cuyo `slug` ya existe).
+  Carga los datos reales que dio el propietario: Casco (2), Arnés (2),
+  Crashpad (3 totales, 2 marcados "en uso" con una renta activa de arranque),
+  Pies de gato (15, variante "Única" — el propietario decidió empezar sin
+  desglose por talla y ajustarlo después desde el panel), Botas (0), Carpas
+  de camping (0).
+
+---
+
 ## 7.b Flujo de datos — Pop-up de noticias/novedades
 
 ```
@@ -626,6 +707,8 @@ estos paneles**, solo se documenta su estado:
 | Cambiar qué secciones del sitio se pueden ocultar / modo mantenimiento | `lib/site-settings/types.ts` (lista) + `lib/site-settings.ts` (lógica) + `lib/site-settings/actions.ts` (Server Actions, solo admin) |
 | Cambiar el pop-up de noticias/novedades | `lib/announcement/types.ts` (forma y reglas de visibilidad) + `lib/announcement/queries.ts` (lectura cacheada y guardado) + `lib/announcement/actions.ts` (Server Actions admin, incluida la subida de imagen) + `components/announcement-modal.tsx` (UI pública) + `components/admin/admin-announcement-section.tsx` (panel) |
 | Cambiar el esquema de la base de datos | `lib/db/schema.ts` → `pnpm db:generate` → `pnpm db:migrate` |
+| Cambiar catálogo/stock de equipos rentables o su disponibilidad | `lib/equipos/types.ts` (vocabulario) + `lib/equipos/actions.ts` (mutaciones, solo admin+staff) + `lib/equipos/queries.ts` (cálculo de disponibilidad) |
+| Ver/modificar contactos acumulados y su vínculo con cuentas | `lib/contacts/*` (normalización, upsert, link, queries) + `components/admin/admin-contacts-panel.tsx` + `scripts/backfill-contacts.ts` |
 | Cambiar reglas de acceso a rutas por rol | `lib/auth/roles.ts` (`canAccessPath`, `homePathForRole`) + `proxy.ts` (prefijos protegidos) |
 | Ver todos los textos/traducciones de la UI | `messages/es.json`, `messages/en.json` |
 | Configurar el evento activo de `/evento` | `lib/eventos/config.ts` (estructura) + `messages/*.json` bajo `Evento.content` (textos) |
@@ -636,11 +719,87 @@ estos paneles**, solo se documenta su estado:
 ## 11. Comandos de verificación
 
 ```
-pnpm lint    # ESLint (eslint-config-next 16, flat config en eslint.config.mjs)
-pnpm build   # Next build — falla si hay errores de compilación/páginas
+pnpm lint             # ESLint (eslint-config-next 16, flat config en eslint.config.mjs)
+pnpm build            # Next build — falla si hay errores de compilación/páginas
+pnpm db:generate      # Genera migración SQL desde lib/db/schema.ts
+pnpm db:migrate       # Aplica migraciones en Neon
+pnpm db:push          # Sincroniza schema directamente (uso limitado en prototipos)
+pnpm db:backfill-contacts # Vincula contactos históricos (idempotente)
+pnpm db:seed-equipment # Seed idempotente del inventario inicial de equipos (sección 6.b)
 ```
 
 `next.config.mjs` tiene `typescript.ignoreBuildErrors: true`: **el build NO
 falla por errores de tipos**, solo por errores de compilación/bundling. Es
 deuda técnica pre-existente; para atraparlos hay que correr `tsc --noEmit`
 manualmente (no hay script `pnpm typecheck` todavía — considerar añadirlo).
+
+---
+
+## 12. Contactos e identidad progresiva
+
+### 12.1 Modelo de datos
+
+- `contact` es una tabla independiente de `user`. Representa a una persona
+  identificable (por correo o teléfono) con o sin cuenta de autenticación.
+- Las tablas `climbPost`, `campingPost`, `boulderPost`, `postReply`,
+  `reservation` y `equipmentRental` conservan su campo de contacto original
+  (`contactInfo` / `renterContact`) y ahora tienen una FK nullable `contactId`
+  que apunta a `contact`.
+- `contact.userId` se llena al crear una cuenta, vinculando datos anónimos
+  previos con el usuario de Better Auth.
+
+### 12.2 Normalización y autodetección
+
+- `lib/contacts/normalize.ts` detecta si una cadena es un correo válido o un
+  número de teléfono (WhatsApp), normaliza el correo a minúsculas y el
+  teléfono a formato E.164 (+573...).
+- `components/contact-field.tsx` es el campo único reutilizable en todos los
+  formularios públicos; muestra un indicador de correo o teléfono mientras el
+  usuario escribe.
+- `lib/contacts/upsert.ts` busca o crea el registro `contact` y actualiza
+  `lastSeenAt` y `submissionCount`. Falla de forma silenciosa: nunca bloquea
+  el envío original.
+
+### 12.3 Flujo de registro
+
+- El login (`components/auth/login-form.tsx`) acepta un solo campo
+  "Correo o WhatsApp" y llama a `signIn.email` o `signIn.phoneNumber` de
+  Better Auth según la detección.
+- El registro (`lib/auth/actions.ts::registerWithEmailOrPhone`) permite crear
+  cuenta con correo o teléfono. Para teléfono se genera un correo técnico
+  placeholder (`phone-<digitos>@phone.elhigueron.xyz`) porque Better Auth aún
+  requiere un email en el registro base; el `phoneNumber` del usuario se
+  escribe después en la fila `user`.
+- Tras crear el usuario, `lib/contacts/link.ts` asocia los contactos
+  existentes que coincidan por correo o teléfono.
+
+### 12.4 Verificación (PENDIENTE)
+
+- La arquitectura está preparada para verificación obligatoria de correo y
+  teléfono, pero **no se activó envío real de OTP/WhatsApp** porque aún no se
+  cuenta con proveedor de email/SMS/WhatsApp.
+- `contactVerification` (`lib/db/schema.ts`) guarda tokens de reclamación
+  cuando se implemente el envío.
+- El plugin `phoneNumber` de Better Auth está habilitado (`lib/auth.ts` y
+  `lib/auth-client.ts`) con `sendOTP` documentado como pendiente.
+
+### 12.5 Paneles y backfill
+
+- `/cuenta/publicaciones` y `/cuenta/reservas` consultan a través de
+  `contact.userId` y muestran datos reales del visitante autenticado
+  (`lib/cuenta/queries.ts`).
+- `/admin/contactos` es un directorio de contactos con conteo de
+  interacciones y estado de vinculación a cuenta.
+- `pnpm db:backfill-contacts` (`scripts/backfill-contacts.ts`) recorre los
+  datos históricos de las 6 fuentes, normaliza contactos y llena las FK
+  `contactId` de forma idempotente (salta filas ya vinculadas).
+
+### 12.6 Privacidad
+
+- Los contactos son PII. El backfill y los formularios públicos preservan el
+  texto original sin revelar si un contacto ya existe.
+- Solo los administradores pueden ver el directorio de contactos; el panel
+  `/cuenta` solo expone las interacciones del usuario autenticado.
+- El contacto puede eliminarse desde `/admin/contactos`; las filas
+  relacionadas (posts, reservas, rentas) mantienen su campo de contacto
+  original como histórico, pero la FK `contactId` se pone en `NULL`.

@@ -57,6 +57,20 @@
       "when": 1788719524231,
       "tag": "0007_fearless_grey_gargoyle",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1789095042022,
+      "tag": "0008_melted_victor_mancha",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1789330120918,
+      "tag": "0009_mean_vengeance",
+      "breakpoints": true
     }
   ]
 }

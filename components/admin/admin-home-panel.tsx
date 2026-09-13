@@ -4,7 +4,9 @@ import { useTranslations } from "next-intl"
 import {
   BotMessageSquare,
   CalendarDays,
+  Contact,
   Newspaper,
+  Package,
   PanelsTopLeft,
   Users,
 } from "lucide-react"
@@ -17,6 +19,11 @@ const CATEGORIES = [
     icon: Users,
   },
   {
+    href: "/admin/contactos",
+    labelKey: "contacts",
+    icon: Contact,
+  },
+  {
     href: "/admin/reservas",
     labelKey: "reservations",
     icon: CalendarDays,
@@ -25,6 +32,11 @@ const CATEGORIES = [
     href: "/admin/publicaciones",
     labelKey: "posts",
     icon: Newspaper,
+  },
+  {
+    href: "/admin/equipos",
+    labelKey: "equipment",
+    icon: Package,
   },
   {
     href: "/admin/contenido",

@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { ContactField } from "@/components/contact-field"
 import { getMuroRouteOptions } from "@/lib/muro/routes"
 import { submitClimbPostAction } from "@/lib/muro/post-actions"
 import { MultiSelectPopover } from "@/components/posts/multi-select-popover"
@@ -259,24 +260,13 @@ export function AscentForm({ defaultRouteIds = [] }: Props) {
         />
       )}
 
-      <div className="space-y-1.5">
-        <Label htmlFor="contactInfo">
-          {t("ascentForm.contactInfo")} <span className="text-destructive">*</span>
-        </Label>
-        <Input
-          id="contactInfo"
-          placeholder={t("ascentForm.contactInfoPlaceholder")}
-          suppressHydrationWarning
-          autoComplete="off"
-          {...form.register("contactInfo")}
-        />
-        <p className="text-xs text-muted-foreground">{t("ascentForm.contactInfoHint")}</p>
-        {form.formState.errors.contactInfo && (
-          <p className="text-xs text-destructive" role="alert">
-            {form.formState.errors.contactInfo.message}
-          </p>
-        )}
-      </div>
+      <ContactField
+        control={form.control}
+        name="contactInfo"
+        label={`${t("ascentForm.contactInfo")} *`}
+        placeholder={t("ascentForm.contactInfoPlaceholder")}
+        hint={t("ascentForm.contactInfoHint")}
+      />
 
       {/* ── Multimedia ── */}
       <div className="space-y-2">

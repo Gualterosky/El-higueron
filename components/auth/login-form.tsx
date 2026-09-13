@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/navigation"
 import { signIn } from "@/lib/auth-client"
 import { homePathForRole, isRole } from "@/lib/auth/roles"
+import { normalizeContact } from "@/lib/contacts/normalize"
 
 export function LoginForm() {
   const t = useTranslations("Login")
@@ -17,8 +18,6 @@ export function LoginForm() {
   const [isPending, startTransition] = useTransition()
 
   function navigateAfterAuth(path: string) {
-    // Full navigation so the new session cookie is always sent to the server.
-    // Soft router.push after sign-in can leave /admin blank in production.
     window.location.assign(`/${locale}${path}`)
   }
 
@@ -27,14 +26,29 @@ export function LoginForm() {
     setError(null)
 
     const form = new FormData(event.currentTarget)
-    const email = String(form.get("email") ?? "")
+    const identifier = String(form.get("identifier") ?? "").trim()
     const password = String(form.get("password") ?? "")
 
+    const contact = normalizeContact(identifier)
+
     startTransition(async () => {
-      const { data, error: signInError } = await signIn.email({
-        email,
-        password,
-      })
+      let result
+      if (contact?.kind === "email") {
+        result = await signIn.email({
+          email: contact.value,
+          password,
+        })
+      } else if (contact?.kind === "phone") {
+        result = await signIn.phoneNumber({
+          phoneNumber: contact.value,
+          password,
+        })
+      } else {
+        setError(t("errors.invalid"))
+        return
+      }
+
+      const { data, error: signInError } = result
 
       if (signInError || !data?.user) {
         setError(t("errors.invalid"))
@@ -59,15 +73,15 @@ export function LoginForm() {
   return (
     <form className="flex flex-col gap-5" onSubmit={onSubmit}>
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="email" className="text-sm font-medium text-foreground">
-          {t("email")}
+        <Label htmlFor="identifier" className="text-sm font-medium text-foreground">
+          {t("identifier")}
         </Label>
         <Input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="correo@ejemplo.com"
-          autoComplete="email"
+          id="identifier"
+          name="identifier"
+          type="text"
+          placeholder={t("identifierPlaceholder")}
+          autoComplete="username"
           required
           className="h-10 border-border bg-beige/50 focus-visible:ring-forest"
         />

@@ -1,19 +1,26 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { Loader2, UserPlus } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Link, useRouter } from "@/i18n/navigation"
-import { signUp } from "@/lib/auth-client"
+import { signIn } from "@/lib/auth-client"
+import { registerWithEmailOrPhone } from "@/lib/auth/actions"
+import { homePathForRole, isRole } from "@/lib/auth/roles"
 
 export function RegisterForm() {
   const t = useTranslations("Register")
+  const locale = useLocale()
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+
+  function navigateAfterAuth(path: string) {
+    window.location.assign(`/${locale}${path}`)
+  }
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -21,7 +28,7 @@ export function RegisterForm() {
 
     const form = new FormData(event.currentTarget)
     const name = String(form.get("name") ?? "").trim()
-    const email = String(form.get("email") ?? "")
+    const identifier = String(form.get("identifier") ?? "").trim()
     const password = String(form.get("password") ?? "")
     const confirm = String(form.get("confirm") ?? "")
 
@@ -36,19 +43,39 @@ export function RegisterForm() {
     }
 
     startTransition(async () => {
-      const { error: signUpError } = await signUp.email({
+      const registerResult = await registerWithEmailOrPhone({
         name,
-        email,
+        identifier,
         password,
       })
 
-      if (signUpError) {
+      if (!registerResult.ok) {
+        setError(t(registerResult.error === "taken" ? "errors.taken" : "errors.failed"))
+        return
+      }
+
+      const signInResult =
+        registerResult.method === "email"
+          ? await signIn.email({ email: registerResult.identifier, password })
+          : await signIn.phoneNumber({ phoneNumber: registerResult.identifier, password })
+
+      if (signInResult.error || !signInResult.data?.user) {
         setError(t("errors.failed"))
         return
       }
 
-      router.push("/cuenta")
-      router.refresh()
+      const user = signInResult.data.user as {
+        role?: string
+        mustChangePassword?: boolean
+      }
+
+      if (user.mustChangePassword) {
+        navigateAfterAuth("/cambiar-contrasena")
+        return
+      }
+
+      const role = isRole(user.role) ? user.role : "visitante"
+      navigateAfterAuth(homePathForRole(role))
     })
   }
 
@@ -67,12 +94,13 @@ export function RegisterForm() {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="email">{t("email")}</Label>
+        <Label htmlFor="identifier">{t("identifier")}</Label>
         <Input
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
+          id="identifier"
+          name="identifier"
+          type="text"
+          placeholder={t("identifierPlaceholder")}
+          autoComplete="username"
           required
           className="h-10 border-border bg-beige/50 focus-visible:ring-forest"
         />

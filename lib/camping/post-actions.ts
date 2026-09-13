@@ -6,6 +6,7 @@ import { z } from "zod"
 import { getModeratorSession } from "@/lib/auth/guards"
 import { db } from "@/lib/db"
 import { campingPost } from "@/lib/db/schema"
+import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
 import {
   httpsUrlSchema,
   mediaUrlsSchema,
@@ -50,6 +51,12 @@ export async function submitCampingPostAction(
   const isIncident = parsed.data.category === CATEGORY_REQUIRES_URGENCY
 
   try {
+    const contactId = await upsertContactFromSubmission({
+      raw: parsed.data.contactInfo,
+      name: parsed.data.authorName,
+      source: "camping",
+    })
+
     await db.insert(campingPost).values({
       id: crypto.randomUUID(),
       authorName: parsed.data.authorName,
@@ -57,6 +64,7 @@ export async function submitCampingPostAction(
       category: parsed.data.category,
       comment: parsed.data.comment,
       contactInfo: parsed.data.contactInfo,
+      contactId,
       rating: isReview ? parsed.data.rating : 0,
       urgencyLevel: isIncident ? parsed.data.urgencyLevel ?? null : null,
       socialMediaUrl: parsed.data.socialMediaUrl?.trim() || null,

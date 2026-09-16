@@ -2398,6 +2398,7 @@
       "cancelledNotice": "This plan was cancelled."
     },
     "form": {
+      "title": "Publish your plan",
       "authorName": "Your name",
       "authorNamePlaceholder": "Full name",
       "activity": "Activity",

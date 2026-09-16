@@ -40,6 +40,34 @@ No dedicated test framework is currently configured. For now, validate changes w
 
 Do not commit secrets or local environment files. Copy `.env.example` to `.env.local` and set `DATABASE_URL` (Neon Postgres URI) and other keys there. Database access lives in `lib/db/` and is server-only — use it from Server Components, Server Actions, or Route Handlers, never from client components. Store public assets in `public/`, but avoid adding oversized media unless it is required by a page.
 
+## Corrección de bugs reportados por el usuario
+
+Cuando el usuario reporte un bug puntual (un error de consola, un comportamiento
+roto en una página específica, etc.), no te limites a arreglar únicamente el
+caso exacto que reportó. Además:
+
+1. Identifica **qué tipo de bug es** y si pertenece a una categoría que las
+   herramientas automáticas del proyecto (`pnpm lint`, `tsc --noEmit`,
+   `pnpm build`) **no detectan** — por ejemplo: keys de traducción faltantes
+   en `messages/es.json`/`messages/en.json` (`next-intl` las resuelve en
+   runtime, no en build time), datos hardcodeados que se desincronizan de la
+   base de datos, validaciones que solo existen en el cliente, etc.
+2. Si el bug pertenece a una de esas categorías "invisibles" para las
+   herramientas estáticas, revisa si hay más casos similares en el resto del
+   código antes de dar por cerrada la tarea (por ejemplo: si faltaba una key
+   de traducción, revisa si hay otras keys usadas en el código que tampoco
+   existan en los JSON de mensajes). Usa scripts ad-hoc de una sola vez si
+   hace falta (bórralos después, no los dejes commiteados) o subagentes de
+   búsqueda para acelerar la revisión.
+3. Deja constancia en tu respuesta al usuario de qué revisaste además del bug
+   puntual y qué encontraste (aunque sea "no encontré más casos"), para que
+   quede claro el alcance real de la verificación.
+4. Si el hallazgo es significativo (una categoría de bug no cubierta hasta
+   ahora, o varios casos encontrados), documenta el patrón en
+   `system_architecture.md` (sección de auditoría correspondiente) para que
+   quede como conocimiento del proyecto, igual que exige la instrucción
+   crítica al inicio de este archivo.
+
 ## Comando `/optimizacion`
 
 Cuando el usuario escriba en el chat exactamente `/optimizacion`, trátalo como si hubiera enviado el siguiente prompt completo y ejecútalo:

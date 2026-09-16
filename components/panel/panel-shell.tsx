@@ -9,6 +9,7 @@ import {
   Newspaper,
   Package,
   PanelsTopLeft,
+  Star,
   Users,
   Users2,
 } from "lucide-react"

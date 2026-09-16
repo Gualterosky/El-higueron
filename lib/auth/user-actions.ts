@@ -82,7 +82,12 @@ export async function createUserAction(
         name: input.name,
         email: input.email,
         password: input.password,
-        role: input.role,
+        // The admin plugin's own `role` type is "user" | "admin" (its default
+        // permission statements), but this app overrides the `role` column via
+        // `user.additionalFields.role` in lib/auth.ts with its own union
+        // ("administrador" | "staff" | "visitante"). The plugin just writes
+        // whatever string it's given to that column, so this cast is safe.
+        role: input.role as "user" | "admin",
         data: {
           mustChangePassword: input.mustChangePassword,
           emailVerified: true,

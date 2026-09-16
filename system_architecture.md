@@ -5,7 +5,8 @@
 > Usuarios, Reservas o Comentarios/Publicaciones hay que leer este archivo, y
 > después de cualquier cambio significativo hay que actualizarlo.
 
-Última auditoría/refactor: 2026-09-06 (fix de detección de idioma, ver sección 2.1).
+Última auditoría/refactor: 2026-09-15 (limpieza de errores de tipos reales, ver sección 13).
+Auditoría anterior: 2026-09-06 (fix de detección de idioma, ver sección 2.1).
 
 ---
 
@@ -896,3 +897,84 @@ Notas:
 - El contacto puede eliminarse desde `/admin/contactos`; las filas
   relacionadas (posts, reservas, rentas) mantienen su campo de contacto
   original como histórico, pero la FK `contactId` se pone en `NULL`.
+
+---
+
+## 13. Auditoría 2026-09-15
+
+Pasada de auditoría enfocada en verificación con herramientas (no solo lectura
+manual): se corrió `pnpm lint`, `npx tsc --noEmit` y `pnpm build` sobre todo el
+repo, algo que no estaba documentado como hecho en las auditorías anteriores.
+El código de negocio de Usuarios/Reservas/Comentarios ya estaba en buen estado
+(validación server-side con zod, guardas de autorización, sin N+1 evidentes en
+`lib/reservas/*`, `lib/replies/*`, `lib/{muro,camping,boulder,comunidad}/post-actions.ts`
+— confirmado leyendo cada uno). Se encontraron y corrigieron 3 problemas reales:
+
+1. **Bug real (rompía el panel admin/staff):**
+   `components/panel/panel-shell.tsx` usaba el ícono `Star` (item de nav
+   "Reseñas", agregado en la sección 11.b) sin importarlo de `lucide-react` —
+   `tsc` lo marcaba como `Cannot find name 'Star'`. Como
+   `next.config.mjs` tiene `typescript.ignoreBuildErrors: true`, esto no
+   rompía `pnpm build`, pero sí habría roto el render en producción
+   (`ReferenceError: Star is not defined`) apenas alguien con rol
+   administrador abriera el panel. Corregido agregando el import.
+2. **Deuda de tipos en `lib/auth/user-actions.ts::createUserAction`:** el
+   `role` que pasa esta app a `auth.api.createUser` (`"administrador" |
+   "staff" | "visitante"`, definido en `lib/auth.ts` vía
+   `user.additionalFields.role`) no coincide con el tipo `"user" | "admin"`
+   que espera el plugin `admin()` de Better Auth para su propio concepto de
+   rol (no usado por esta app). Funcionaba en runtime porque el plugin solo
+   escribe el string recibido en la columna `role`, pero rompía `tsc
+   --noEmit`. Se documentó con un comentario y un cast explícito en vez de
+   `any`.
+3. **`tsconfig.json` no excluía `corporate-ai-chatbot/`** (sub-proyecto Vite
+   independiente, ver sección 1), así que `tsc --noEmit` sobre la raíz fallaba
+   con un error de ese sub-proyecto (`allowImportingTsExtensions`) que no
+   tiene nada que ver con la app principal. Se agregó `corporate-ai-chatbot`
+   al `exclude`.
+
+Después de estos 3 cambios: `pnpm lint` → 0 errores (23 warnings, todas del
+React Compiler sobre patrones de `react-hook-form`/`useRef`/componentes
+`ui/*` de shadcn preexistentes, no relacionadas con Usuarios/Reservas/
+Comentarios); `npx tsc --noEmit` → 0 errores; `pnpm build` → compila y
+genera las 118 páginas correctamente.
+
+**Pendiente identificado, no aplicado (requiere acceso a la base de datos de
+producción y ventana de mantenimiento, ver nota de rendimiento en la sección
+3):** los índices recomendados en `postReply(post_type, post_id)`,
+`climbPost(route_id)`, `boulderPost(boulder_name)` y las columnas `status` de
+las tablas de posts/reservas siguen sin aplicarse. Es una operación de
+esquema sobre Neon en producción — no se ejecutó `pnpm db:generate` /
+`pnpm db:migrate` en esta pasada por no tener autorización explícita para
+tocar la base de datos real; queda igual de priorizada que antes.
+
+**Actualización 2026-09-15 (2):** un usuario reportó en runtime
+`MISSING_MESSAGE: Could not resolve 'Comunidad.form.title'` al abrir
+`/comunidad`. Causa: `app/[locale]/comunidad/page.tsx` llama a
+`t("form.title")` pero el objeto `Comunidad.form` en `messages/es.json` y
+`messages/en.json` nunca tuvo una key `title` (sí tenía todos los demás
+campos del formulario). Corregido agregando `"title"` a `Comunidad.form` en
+ambos idiomas ("Publica tu plan" / "Publish your plan").
+
+Este tipo de bug (key de traducción faltante) **no lo detectan** `tsc`,
+`eslint` ni `pnpm build` — `next-intl` resuelve las keys en runtime, no en
+build time. Se corrió un script ad-hoc de una sola vez (no se dejó en el
+repo) que compara, para archivos con un único `useTranslations`/
+`getTranslations(<string literal>)` sin ambigüedad de scope, cada `t("...")`
+contra `es.json`/`en.json`: no encontró más keys faltantes bajo ese criterio.
+No cubre llamadas con namespace dinámico/objeto (`getTranslations({ locale,
+namespace })`) ni archivos con varios `t` en distintos scopes — para esos
+casos no hay una forma barata y confiable de verificar estáticamente; si se
+quiere blindar esto a futuro, la opción real es tipar los mensajes con
+`next-intl` (`declare module 'next-intl' { interface AppConfig { Messages:
+... } }`) para que `tsc` sí marque las keys faltantes como error de tipos.
+
+**Observación menor, no bloqueante:** `pnpm build` (Turbopack) emite una
+advertencia de "Encountered unexpected file in NFT list" con traza hacia
+`lib/equipos/actions.ts` (por `path.join(process.cwd(), ...)` en
+`uploadEquipmentImageAction`, mismo patrón ya usado en
+`lib/announcement/actions.ts`). Es solo una advertencia de tracing de
+Turbopack, no falla el build ni afecta el resultado; si se quiere eliminar el
+ruido, se podría marcar esa línea con `/* turbopackIgnore: true */`, pero no
+se tocó en esta pasada para no arriesgar el comportamiento de subida de
+imágenes en producción sin poder probarlo contra un hosting real.

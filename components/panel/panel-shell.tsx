@@ -10,6 +10,7 @@ import {
   Package,
   PanelsTopLeft,
   Users,
+  Users2,
 } from "lucide-react"
 import { Link, usePathname, useRouter } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
@@ -47,6 +48,12 @@ const STAFF_ITEMS: NavItem[] = [
     href: "/staff/equipos",
     labelKey: "equipment",
     icon: Package,
+    roles: ["staff", "administrador"],
+  },
+  {
+    href: "/staff/comunidad",
+    labelKey: "comunidad",
+    icon: Users2,
     roles: ["staff", "administrador"],
   },
   {
@@ -92,6 +99,12 @@ const ADMIN_ITEMS: NavItem[] = [
     href: "/admin/equipos",
     labelKey: "equipment",
     icon: Package,
+    roles: ["administrador"],
+  },
+  {
+    href: "/admin/comunidad",
+    labelKey: "comunidad",
+    icon: Users2,
     roles: ["administrador"],
   },
   {

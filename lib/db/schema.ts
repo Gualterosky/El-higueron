@@ -104,6 +104,7 @@ export const siteSettings = pgTable("site_settings", {
   hideVisita: boolean("hide_visita").notNull().default(false),
   hideGaleria: boolean("hide_galeria").notNull().default(false),
   hideReservas: boolean("hide_reservas").notNull().default(false),
+  hideComunidad: boolean("hide_comunidad").notNull().default(false),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
 
@@ -331,6 +332,42 @@ export const equipmentRental = pgTable("equipment_rental", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
+/** Community matchmaking post: a visitor announces a future plan (climbing,
+ *  bouldering, hiking, camping...) so others can find them and coordinate.
+ *  Unlike climbPost/campingPost/boulderPost (reviews of a past visit), this is
+ *  a single unified table across activities (see system_architecture.md) —
+ *  the plan is always in the future, not a review of something already done.
+ *  Replies use the existing `postReply` table with postType = "comunidad". */
+export const communityPost = pgTable("community_post", {
+  id: text("id").primaryKey(),
+  authorName: text("author_name").notNull(),
+  // Shown publicly (unlike other post families) so other visitors can
+  // coordinate directly — see system_architecture.md for the privacy trade-off.
+  // Blanked out once the plan is cancelled or its date has passed.
+  contactInfo: text("contact_info").notNull(),
+  contactId: text("contact_id").references(() => contact.id, { onDelete: "set null" }),
+  // "escalada_deportiva" | "boulder" | "senderismo" | "camping" | "otro"
+  activity: text("activity").notNull(),
+  // ISO date (YYYY-MM-DD), required: the day this plan happens. The post is
+  // treated as "expired" (display-only, never stored) the day after this date.
+  eventDate: text("event_date").notNull(),
+  locationText: text("location_text").notNull().default(""),
+  // "principiante" | "intermedio" | "avanzado" | "cualquiera"
+  level: text("level"),
+  // Free-text grade range (e.g. "5.10-5.12", "V3-V5") — scales differ per discipline.
+  gradeDetail: text("grade_detail"),
+  // Dynamic per-activity logistics indicators (see lib/comunidad/shared.ts
+  // ACTIVITY_LOGISTICS_TAGS), e.g. "tengo_cuerda", "busco_transporte".
+  logisticsTags: text("logistics_tags").array(),
+  maxParticipants: integer("max_participants"),
+  notes: text("notes"),
+  status: text("status").notNull().default("pending"), // moderation: "pending" | "approved" | "hidden"
+  // "open" | "cancelled" — manually set; "expired" is derived from eventDate,
+  // never stored (see lib/comunidad/shared.ts::getCommunityDisplayStatus).
+  eventStatus: text("event_status").notNull().default("open"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
 export type User = typeof user.$inferSelect
 export type Contact = typeof contact.$inferSelect
 export type ContactVerification = typeof contactVerification.$inferSelect
@@ -341,6 +378,7 @@ export type ClimbPost = typeof climbPost.$inferSelect
 export type CampingPost = typeof campingPost.$inferSelect
 export type BoulderPost = typeof boulderPost.$inferSelect
 export type PostReply = typeof postReply.$inferSelect
+export type CommunityPost = typeof communityPost.$inferSelect
 export type EquipmentPost = typeof equipmentPost.$inferSelect
 export type ChatSession = typeof chatSession.$inferSelect
 export type ChatMessage = typeof chatMessage.$inferSelect

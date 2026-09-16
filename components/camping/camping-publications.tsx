@@ -7,6 +7,7 @@ import { SocialEmbed } from "@/components/muro/social-embed"
 import { PostMediaGallery } from "@/components/muro/post-media-gallery"
 import { PostRepliesSection } from "@/components/posts/post-reply-section"
 import { PostFeed, type FeedPost } from "@/components/posts/post-feed"
+import { CommunityCtaBanner } from "@/components/comunidad/community-cta-banner"
 
 type Props = {
   locale: string
@@ -53,6 +54,7 @@ export async function CampingPublications({ locale }: Props) {
         {t("publicationsTitle")}
       </h3>
       <PostFeed posts={feedPosts} emptyLabel={t("publicationsEmpty")} />
+      <CommunityCtaBanner locale={locale} activity="camping" />
     </div>
   )
 }

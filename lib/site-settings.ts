@@ -33,6 +33,7 @@ const SECTION_COLUMN: Record<
   | "hideVisita"
   | "hideGaleria"
   | "hideReservas"
+  | "hideComunidad"
 > = {
   escalada: "hideEscalada",
   muro: "hideMuro",
@@ -42,6 +43,7 @@ const SECTION_COLUMN: Record<
   visita: "hideVisita",
   galeria: "hideGaleria",
   reservas: "hideReservas",
+  comunidad: "hideComunidad",
 }
 
 function rowToSettings(
@@ -65,6 +67,7 @@ function rowToSettings(
       visita: Boolean(row.hideVisita),
       galeria: Boolean(row.hideGaleria),
       reservas: Boolean(row.hideReservas),
+      comunidad: Boolean(row.hideComunidad),
     },
   }
 }

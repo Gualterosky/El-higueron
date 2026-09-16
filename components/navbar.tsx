@@ -19,6 +19,7 @@ import {
 const navHrefs = [
   { href: "/escalada" as const, key: "escalada" as const },
   { href: "/camping" as const, key: "camping" as const },
+  { href: "/comunidad" as const, key: "comunidad" as const },
   { href: "/equipos" as const, key: "equipos" as const },
   { href: "/visita" as const, key: "visita" as const },
   { href: "/galeria" as const, key: "galeria" as const },

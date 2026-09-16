@@ -9,6 +9,7 @@ import { SocialEmbed } from "@/components/muro/social-embed"
 import { PostMediaGallery } from "@/components/muro/post-media-gallery"
 import { PostRepliesSection } from "@/components/posts/post-reply-section"
 import { PostFeed, type FeedPost } from "@/components/posts/post-feed"
+import { CommunityCtaBanner } from "@/components/comunidad/community-cta-banner"
 
 type Props = {
   locale: string
@@ -99,12 +100,15 @@ export async function AllRoutesPublications({ locale }: Props) {
   })
 
   return (
-    <PostFeed
-      posts={feedPosts}
-      emptyLabel={tMuro("posts.empty")}
-      routeFilters={routeFilters}
-      routeFilterLabel={tMuro("posts.routeFilterLabel")}
-      routeFilterPlaceholder={tMuro("posts.routeFilterPlaceholder")}
-    />
+    <div>
+      <PostFeed
+        posts={feedPosts}
+        emptyLabel={tMuro("posts.empty")}
+        routeFilters={routeFilters}
+        routeFilterLabel={tMuro("posts.routeFilterLabel")}
+        routeFilterPlaceholder={tMuro("posts.routeFilterPlaceholder")}
+      />
+      <CommunityCtaBanner locale={locale} activity="escalada_deportiva" />
+    </div>
   )
 }

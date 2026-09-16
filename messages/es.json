@@ -24,6 +24,7 @@
     "links": {
       "escalada": "Escalada",
       "camping": "Camping",
+      "comunidad": "Comunidad",
       "equipos": "Renta de equipos",
       "visita": "Visita",
       "galeria": "Galería",
@@ -53,6 +54,7 @@
       "muro": "Muro",
       "boulder": "Boulder",
       "camping": "Camping",
+      "comunidad": "Comunidad",
       "equipos": "Equipos",
       "visita": "Visita",
       "galeria": "Galería",
@@ -1618,6 +1620,7 @@
       "reservations": "Reservas",
       "posts": "Publicaciones",
       "equipment": "Equipos",
+      "comunidad": "Comunidad",
       "chatbot": "Chatbot"
     },
     "home": {
@@ -1645,6 +1648,10 @@
         "equipment": {
           "title": "Inventario de equipos",
           "description": "Gestiona el catálogo de equipos y registra rentas."
+        },
+        "comunidad": {
+          "title": "Comunidad / Matchmaking",
+          "description": "Revisa los planes publicados por visitantes para coordinar actividades."
         },
         "chatbot": {
           "title": "Conversaciones del chatbot",
@@ -1777,6 +1784,35 @@
         "hidden": "Oculta"
       }
     },
+    "comunidad": {
+      "title": "Gestión de comunidad",
+      "description": "Revisa y modera los planes publicados por la comunidad para coordinar actividades al aire libre.",
+      "noResults": "No hay planes publicados aún.",
+      "filterAll": "Todas",
+      "approve": "Marcar como revisado",
+      "hide": "Ocultar",
+      "delete": "Eliminar",
+      "cancelEvent": "Cancelar plan",
+      "reopenEvent": "Reabrir plan",
+      "contactLabel": "Contacto",
+      "authorLabel": "Publicado por",
+      "submittedOn": "Enviado el",
+      "dateLabel": "Fecha del plan",
+      "locationLabel": "Ubicación",
+      "levelLabel": "Nivel",
+      "gradeDetailLabel": "Grado",
+      "maxParticipantsLabel": "Cupos",
+      "status": {
+        "pending": "Pendiente",
+        "approved": "Aprobada",
+        "hidden": "Oculta"
+      },
+      "eventStatus": {
+        "open": "Abierto",
+        "cancelled": "Cancelado",
+        "expired": "Finalizado"
+      }
+    },
     "equipment": {
       "title": "Inventario y rentas de equipos",
       "description": "Gestiona el catálogo de equipos disponibles y registra las rentas activas.",
@@ -1902,7 +1938,8 @@
         "equipos": "Equipos",
         "visita": "Planifica tu visita",
         "galeria": "Galería",
-        "reservas": "Formulario de reservas"
+        "reservas": "Formulario de reservas",
+        "comunidad": "Comunidad / Matchmaking"
       },
       "maintenanceTitle": "Modo mantenimiento",
       "maintenanceDescription": "Oculta el sitio público y muestra el aviso de mantenimiento. Solo el login (y el panel admin tras iniciar sesión) permanecen accesibles.",
@@ -2238,6 +2275,96 @@
     "errorMin5": "Mínimo 5 caracteres",
     "errorRequired": "Campo obligatorio",
     "errorGeneral": "No se pudo enviar la respuesta. Intenta de nuevo."
+  },
+  "Comunidad": {
+    "hero": {
+      "title": "Comunidad",
+      "subtitle": "Encuentra compañeros para escalar, hacer boulder, senderismo o camping en El Higuerón."
+    },
+    "intro": {
+      "title": "Publica tu plan y coordina con otros visitantes",
+      "body": "Comparte la actividad, la fecha y el nivel que buscas, y deja que otros visitantes te contacten para coordinar juntos."
+    },
+    "activities": {
+      "escalada_deportiva": "Escalada deportiva",
+      "boulder": "Boulder",
+      "senderismo": "Senderismo",
+      "camping": "Camping",
+      "otro": "Otro"
+    },
+    "levels": {
+      "principiante": "Principiante",
+      "intermedio": "Intermedio",
+      "avanzado": "Avanzado",
+      "cualquiera": "Cualquier nivel"
+    },
+    "eventStatus": {
+      "open": "Abierto",
+      "cancelled": "Cancelado",
+      "expired": "Finalizado"
+    },
+    "logisticsTags": {
+      "tengo_cuerda": "Tengo cuerda",
+      "busco_cuerda": "Busco cuerda",
+      "tengo_cintas_seguro": "Tengo cintas de seguro",
+      "busco_companero_asegurar": "Busco compañero para asegurar",
+      "tengo_crashpad": "Tengo crashpad",
+      "busco_crashpad": "Busco crashpad",
+      "tengo_pies_gato_extra": "Tengo pies de gato extra",
+      "tengo_vehiculo": "Tengo vehículo",
+      "busco_transporte": "Busco transporte",
+      "conozco_la_ruta": "Conozco la ruta",
+      "tengo_carpa": "Tengo carpa",
+      "aporto_comida": "Aporto comida",
+      "aporto_lena": "Aporto leña",
+      "busco_compartir_carpa": "Busco compartir carpa"
+    },
+    "feed": {
+      "title": "Planes de la comunidad",
+      "empty": "Aún no hay planes publicados. ¡Sé el primero!",
+      "filterAll": "Todas",
+      "levelLabel": "Nivel",
+      "noLocation": "Ubicación por definir",
+      "maxParticipantsLabel": "{count, plural, one {# persona más} other {# personas más}}",
+      "contactButton": "Contactar",
+      "expiredNotice": "Este plan ya pasó.",
+      "cancelledNotice": "Este plan fue cancelado."
+    },
+    "form": {
+      "authorName": "Tu nombre",
+      "authorNamePlaceholder": "Nombre completo",
+      "activity": "Actividad",
+      "activityPlaceholder": "Selecciona una actividad",
+      "eventDate": "Fecha del plan",
+      "locationText": "Ubicación / zona",
+      "locationPlaceholder": "Ej. Muro Bendito Sea, sector Boulder 2, sendero X...",
+      "level": "Nivel de experiencia",
+      "levelPlaceholder": "Selecciona un nivel",
+      "gradeDetail": "Grado específico (opcional)",
+      "gradeDetailPlaceholder": "Ej. 5.10-5.12, V3-V5",
+      "logisticsTags": "Logística",
+      "logisticsTagsHint": "Marca lo que aplique para coordinar mejor con otros participantes.",
+      "maxParticipants": "Cupos disponibles (opcional)",
+      "maxParticipantsPlaceholder": "Ej. 2",
+      "notes": "Notas adicionales",
+      "notesPlaceholder": "Cualquier detalle adicional para coordinar el plan...",
+      "contactInfo": "Medio de contacto",
+      "contactInfoPlaceholder": "Teléfono o correo electrónico",
+      "contactInfoHint": "Se mostrará públicamente para que otros visitantes puedan contactarte.",
+      "submit": "Publicar plan",
+      "submitting": "Publicando...",
+      "successTitle": "¡Plan publicado!",
+      "successBody": "Tu plan ya está visible para la comunidad.",
+      "errorGeneral": "No se pudo publicar. Intenta de nuevo.",
+      "errorMin2": "Mínimo 2 caracteres",
+      "errorRequired": "Campo obligatorio",
+      "errorDatePast": "La fecha debe ser hoy o en el futuro"
+    },
+    "ctaBanner": {
+      "title": "¿Buscas compañero para esta actividad?",
+      "body": "Publica tu plan en Comunidad y encuentra a alguien con quien coordinar.",
+      "cta": "Ir a Comunidad"
+    }
   },
   "Common": {
     "brand": "El Higuerón",

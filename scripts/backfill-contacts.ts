@@ -7,13 +7,21 @@ import {
   postReply,
   reservation,
   equipmentRental,
+  communityPost,
 } from "../lib/db/schema"
 import { upsertContactFromSubmission } from "../lib/contacts/upsert"
 
 type SourceTable = {
   name: string
   tableName: string
-  table: typeof climbPost | typeof campingPost | typeof boulderPost | typeof postReply | typeof reservation | typeof equipmentRental
+  table:
+    | typeof climbPost
+    | typeof campingPost
+    | typeof boulderPost
+    | typeof postReply
+    | typeof reservation
+    | typeof equipmentRental
+    | typeof communityPost
   nameField: string
   contactField: string
 }
@@ -22,6 +30,7 @@ const sources: SourceTable[] = [
   { name: "muro", tableName: "climb_post", table: climbPost, nameField: "author_name", contactField: "contact_info" },
   { name: "camping", tableName: "camping_post", table: campingPost, nameField: "author_name", contactField: "contact_info" },
   { name: "boulder", tableName: "boulder_post", table: boulderPost, nameField: "author_name", contactField: "contact_info" },
+  { name: "comunidad", tableName: "community_post", table: communityPost, nameField: "author_name", contactField: "contact_info" },
   { name: "reply", tableName: "post_reply", table: postReply, nameField: "author_name", contactField: "contact_info" },
   { name: "reserva", tableName: "reservation", table: reservation, nameField: "name", contactField: "contact_info" },
   { name: "renta", tableName: "equipment_rental", table: equipmentRental, nameField: "renter_name", contactField: "renter_contact" },

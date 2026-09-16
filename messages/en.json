@@ -24,6 +24,7 @@
     "links": {
       "escalada": "Climbing",
       "camping": "Camping",
+      "comunidad": "Community",
       "equipos": "Gear rental",
       "visita": "Visit",
       "galeria": "Gallery",
@@ -53,6 +54,7 @@
       "muro": "Wall",
       "boulder": "Boulder",
       "camping": "Camping",
+      "comunidad": "Community",
       "equipos": "Gear",
       "visita": "Visit",
       "galeria": "Gallery",
@@ -1618,6 +1620,7 @@
       "reservations": "Reservations",
       "posts": "Posts",
       "equipment": "Equipment",
+      "comunidad": "Community",
       "chatbot": "Chatbot"
     },
     "home": {
@@ -1645,6 +1648,10 @@
         "equipment": {
           "title": "Equipment inventory",
           "description": "Manage the equipment catalog and register rentals."
+        },
+        "comunidad": {
+          "title": "Community / Matchmaking",
+          "description": "Review the plans visitors publish to coordinate activities."
         },
         "chatbot": {
           "title": "Chatbot conversations",
@@ -1777,6 +1784,35 @@
         "hidden": "Hidden"
       }
     },
+    "comunidad": {
+      "title": "Community management",
+      "description": "Review and moderate the plans the community publishes to coordinate outdoor activities.",
+      "noResults": "No plans published yet.",
+      "filterAll": "All",
+      "approve": "Mark as reviewed",
+      "hide": "Hide",
+      "delete": "Delete",
+      "cancelEvent": "Cancel plan",
+      "reopenEvent": "Reopen plan",
+      "contactLabel": "Contact",
+      "authorLabel": "Posted by",
+      "submittedOn": "Submitted on",
+      "dateLabel": "Plan date",
+      "locationLabel": "Location",
+      "levelLabel": "Level",
+      "gradeDetailLabel": "Grade",
+      "maxParticipantsLabel": "Spots",
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "hidden": "Hidden"
+      },
+      "eventStatus": {
+        "open": "Open",
+        "cancelled": "Cancelled",
+        "expired": "Finished"
+      }
+    },
     "equipment": {
       "title": "Equipment inventory and rentals",
       "description": "Manage the available equipment catalog and register active rentals.",
@@ -1902,7 +1938,8 @@
         "equipos": "Equipment",
         "visita": "Plan your visit",
         "galeria": "Gallery",
-        "reservas": "Booking form"
+        "reservas": "Booking form",
+        "comunidad": "Community / Matchmaking"
       },
       "maintenanceTitle": "Maintenance mode",
       "maintenanceDescription": "Hides the public site and shows the maintenance notice. Only login (and the admin panel after signing in) remain accessible.",
@@ -2238,6 +2275,96 @@
     "errorMin5": "Minimum 5 characters",
     "errorRequired": "Required field",
     "errorGeneral": "Could not send the reply. Please try again."
+  },
+  "Comunidad": {
+    "hero": {
+      "title": "Community",
+      "subtitle": "Find climbing, bouldering, hiking or camping partners at El Higuerón."
+    },
+    "intro": {
+      "title": "Publish your plan and coordinate with other visitors",
+      "body": "Share the activity, date and level you're looking for, and let other visitors reach out to coordinate together."
+    },
+    "activities": {
+      "escalada_deportiva": "Sport climbing",
+      "boulder": "Boulder",
+      "senderismo": "Hiking",
+      "camping": "Camping",
+      "otro": "Other"
+    },
+    "levels": {
+      "principiante": "Beginner",
+      "intermedio": "Intermediate",
+      "avanzado": "Advanced",
+      "cualquiera": "Any level"
+    },
+    "eventStatus": {
+      "open": "Open",
+      "cancelled": "Cancelled",
+      "expired": "Finished"
+    },
+    "logisticsTags": {
+      "tengo_cuerda": "I have a rope",
+      "busco_cuerda": "Looking for a rope",
+      "tengo_cintas_seguro": "I have quickdraws/slings",
+      "busco_companero_asegurar": "Looking for a belay partner",
+      "tengo_crashpad": "I have a crashpad",
+      "busco_crashpad": "Looking for a crashpad",
+      "tengo_pies_gato_extra": "I have spare climbing shoes",
+      "tengo_vehiculo": "I have a vehicle",
+      "busco_transporte": "Looking for a ride",
+      "conozco_la_ruta": "I know the trail",
+      "tengo_carpa": "I have a tent",
+      "aporto_comida": "I'll bring food",
+      "aporto_lena": "I'll bring firewood",
+      "busco_compartir_carpa": "Looking to share a tent"
+    },
+    "feed": {
+      "title": "Community plans",
+      "empty": "No plans published yet. Be the first!",
+      "filterAll": "All",
+      "levelLabel": "Level",
+      "noLocation": "Location to be defined",
+      "maxParticipantsLabel": "{count, plural, one {# more person} other {# more people}}",
+      "contactButton": "Contact",
+      "expiredNotice": "This plan already happened.",
+      "cancelledNotice": "This plan was cancelled."
+    },
+    "form": {
+      "authorName": "Your name",
+      "authorNamePlaceholder": "Full name",
+      "activity": "Activity",
+      "activityPlaceholder": "Select an activity",
+      "eventDate": "Plan date",
+      "locationText": "Location / area",
+      "locationPlaceholder": "E.g. Bendito Sea Wall, Boulder sector 2, trail X...",
+      "level": "Experience level",
+      "levelPlaceholder": "Select a level",
+      "gradeDetail": "Specific grade (optional)",
+      "gradeDetailPlaceholder": "E.g. 5.10-5.12, V3-V5",
+      "logisticsTags": "Logistics",
+      "logisticsTagsHint": "Check what applies to coordinate better with other participants.",
+      "maxParticipants": "Available spots (optional)",
+      "maxParticipantsPlaceholder": "E.g. 2",
+      "notes": "Additional notes",
+      "notesPlaceholder": "Any extra detail to coordinate the plan...",
+      "contactInfo": "Contact method",
+      "contactInfoPlaceholder": "Phone or email",
+      "contactInfoHint": "Shown publicly so other visitors can reach out.",
+      "submit": "Publish plan",
+      "submitting": "Publishing...",
+      "successTitle": "Plan published!",
+      "successBody": "Your plan is now visible to the community.",
+      "errorGeneral": "Could not publish. Please try again.",
+      "errorMin2": "Minimum 2 characters",
+      "errorRequired": "Required field",
+      "errorDatePast": "The date must be today or in the future"
+    },
+    "ctaBanner": {
+      "title": "Looking for a partner for this activity?",
+      "body": "Publish your plan in Community and find someone to coordinate with.",
+      "cta": "Go to Community"
+    }
   },
   "Common": {
     "brand": "El Higuerón",

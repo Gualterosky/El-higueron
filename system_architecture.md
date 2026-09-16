@@ -759,6 +759,7 @@ estos paneles**, solo se documenta su estado:
 | Ver todos los textos/traducciones de la UI | `messages/es.json`, `messages/en.json` |
 | Configurar el evento activo de `/evento` | `lib/eventos/config.ts` (estructura) + `messages/*.json` bajo `Evento.content` (textos) |
 | Cambiar datos legales del prestador (razón social, NIT, RNT) | `lib/legal-info.ts` — fuente única; los textos/etiquetas viven en `messages/*.json` (`Footer.legal`, `Contacto.legal`) |
+| Cambiar el agregador de reseñas (dashboard admin y sección pública en home) | `lib/reviews/types.ts` (vocabulario) + `lib/reviews/aggregate.ts` (une las 4 tablas de posts en memoria, nunca las muta) — ver sección 11.b |
 
 ---
 
@@ -778,6 +779,52 @@ pnpm db:seed-equipment # Seed idempotente del inventario inicial de equipos (sec
 falla por errores de tipos**, solo por errores de compilación/bundling. Es
 deuda técnica pre-existente; para atraparlos hay que correr `tsc --noEmit`
 manualmente (no hay script `pnpm typecheck` todavía — considerar añadirlo).
+
+---
+
+## 11.b Flujo de datos — Reseñas unificadas (Muro, Camping, Boulder, Equipos)
+
+No existe una tabla `review` nueva. Las 4 tablas de posts ya existentes
+(`climbPost`, `campingPost`, `boulderPost`, `equipmentPost`) siguen siendo la
+fuente de verdad; cada una mantiene su propio flujo de moderación
+(`lib/{muro,camping,boulder,equipos}/post-actions.ts`) sin cambios. Solo se
+agregó una capa de lectura que las une en memoria para mostrar analítica y una
+vista pública consolidada.
+
+```
+lib/reviews/types.ts       — vocabulario (ReviewSource, UnifiedReview, ReviewStats)
+lib/reviews/aggregate.ts
+   │ getAllReviewsUnified(filters?) — 4 selects (uno por tabla), normaliza a
+   │   UnifiedReview, filtra category="review" (climbPost/campingPost/
+   │   boulderPost) — equipmentPost no tiene columna category, así que sus
+   │   filas siempre cuentan como reseña.
+   │ getPublicReviews(filters?) — igual, pero solo status "pending"|"approved"
+   │   (nunca "hidden"), mismo criterio que getApproved*() de cada fuente.
+   │ getReviewStats(filters?) — promedio general, promedio por servicio,
+   │   distribución 1-5, tendencia mensual, alerta de reseñas <= 2 estrellas.
+   ▼
+components/admin/admin-reviews-panel.tsx (client) — app/[locale]/admin/resenas/page.tsx
+   dashboard con recharts (components/ui/chart.tsx) + tabla filtrable.
+   Solo lectura: para aprobar/ocultar/borrar una reseña se usa la acción de
+   su tabla de origen desde /admin/publicaciones — no se duplica lógica de
+   mutación aquí.
+   ▼
+components/reviews/public-reviews-section.tsx (server) +
+components/reviews/public-reviews-client.tsx (client, filtros/orden/"ver más")
+   Montado en app/[locale]/page.tsx (home), después de la Galería y antes del
+   CTA final. Usa getPublicReviews(); si no hay ninguna reseña, la sección no
+   se renderiza (return null).
+```
+
+Notas:
+- Sin paginación en BD (mismo patrón que el resto del proyecto, ver sección 3):
+  el filtrado/orden se hace en memoria sobre el resultado ya traído.
+- Ítem de navegación "Reseñas" agregado en `components/panel/panel-shell.tsx`
+  (`ADMIN_ITEMS`, solo admin) y en `app/[locale]/admin/layout.tsx` (traducción
+  de nav). No se agregó a `STAFF_ITEMS` — es una vista analítica pensada para
+  administración, no para moderación diaria de staff.
+- Textos en `messages/{es,en}.json` bajo `Panel.reviews` (panel admin) y
+  `Home.reviews` (sección pública).
 
 ---
 

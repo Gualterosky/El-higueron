@@ -6,6 +6,7 @@ import { Mountain, Tent, CircleDot, Trees, Flame, MapPin, Star, Footprints, Spar
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { getHiddenSections } from "@/lib/site-settings"
+import { PublicReviewsSection } from "@/components/reviews/public-reviews-section"
 
 export default async function HomePage({
   params,
@@ -346,6 +347,8 @@ export default async function HomePage({
           </div>
         </section>
       ) : null}
+
+      <PublicReviewsSection />
 
       {/* CTA Section */}
       <section className="relative overflow-hidden bg-beige py-20 lg:py-28">

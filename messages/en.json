@@ -161,6 +161,28 @@
       "description": "We're here to help you plan your next mountain adventure. Contact us and we'll answer all your questions.",
       "primary": "Contact now",
       "secondary": "More information"
+    },
+    "reviews": {
+      "eyebrow": "Reviews",
+      "title": "What people who've visited are saying",
+      "subtitle": "Real reviews from climbers, campers, and visitors who've rented gear with us.",
+      "basedOn": "Based on {count} reviews",
+      "sortLabel": "Sort by",
+      "sort": {
+        "recent": "Most recent",
+        "highest": "Highest rated",
+        "lowest": "Lowest rated"
+      },
+      "filterLabel": "Service",
+      "filterAll": "All",
+      "sources": {
+        "muro": "Wall",
+        "camping": "Camping",
+        "boulder": "Boulder",
+        "equipos": "Gear"
+      },
+      "empty": "No reviews to show yet.",
+      "showMore": "Show more reviews"
     }
   },
   "Escalada": {
@@ -1618,7 +1640,8 @@
       "settings": "Settings",
       "content": "Content",
       "reservations": "Reservations",
-      "posts": "Posts",
+      "posts": "Publications",
+      "reviews": "Reviews",
       "equipment": "Equipment",
       "comunidad": "Community",
       "chatbot": "Chatbot"
@@ -1777,6 +1800,50 @@
         "camping": "Camping",
         "boulder": "Boulder",
         "equipos": "Gear"
+      },
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "hidden": "Hidden"
+      }
+    },
+    "reviews": {
+      "title": "Reviews and ratings",
+      "description": "Unified view of Wall, Camping, Boulder, and Gear reviews, with satisfaction statistics.",
+      "noResults": "No reviews match these filters.",
+      "sources": {
+        "muro": "Wall",
+        "camping": "Camping",
+        "boulder": "Boulder",
+        "equipos": "Gear"
+      },
+      "stats": {
+        "average": "Overall average",
+        "totalCount": "{count} reviews"
+      },
+      "charts": {
+        "trendTitle": "Satisfaction trend",
+        "bySourceTitle": "Average by service",
+        "averageRating": "Average rating"
+      },
+      "alerts": {
+        "title": "Recent negative feedback (2★ or less)"
+      },
+      "filters": {
+        "source": "Service",
+        "allSources": "All services",
+        "rating": "Rating",
+        "allRatings": "All",
+        "dateFrom": "From",
+        "dateTo": "To"
+      },
+      "columns": {
+        "source": "Service",
+        "author": "Author",
+        "rating": "Rating",
+        "comment": "Comment",
+        "status": "Status",
+        "date": "Date"
       },
       "status": {
         "pending": "Pending",

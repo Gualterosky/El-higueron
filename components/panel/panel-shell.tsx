@@ -96,6 +96,12 @@ const ADMIN_ITEMS: NavItem[] = [
     roles: ["administrador"],
   },
   {
+    href: "/admin/resenas",
+    labelKey: "reviews",
+    icon: Star,
+    roles: ["administrador"],
+  },
+  {
     href: "/admin/equipos",
     labelKey: "equipment",
     icon: Package,

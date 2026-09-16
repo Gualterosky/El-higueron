@@ -161,6 +161,28 @@
       "description": "Estamos aquí para ayudarte a planificar tu próxima aventura en la montaña. Contáctanos y resolveremos todas tus dudas.",
       "primary": "Contactar ahora",
       "secondary": "Más información"
+    },
+    "reviews": {
+      "eyebrow": "Opiniones",
+      "title": "Lo que dicen quienes ya vinieron",
+      "subtitle": "Reseñas reales de escaladores, campistas y visitantes que han rentado equipos con nosotros.",
+      "basedOn": "Basado en {count} reseñas",
+      "sortLabel": "Ordenar por",
+      "sort": {
+        "recent": "Más recientes",
+        "highest": "Mejor calificadas",
+        "lowest": "Menor calificadas"
+      },
+      "filterLabel": "Servicio",
+      "filterAll": "Todos",
+      "sources": {
+        "muro": "Muro",
+        "camping": "Camping",
+        "boulder": "Boulder",
+        "equipos": "Equipos"
+      },
+      "empty": "Aún no hay reseñas para mostrar.",
+      "showMore": "Ver más reseñas"
     }
   },
   "Escalada": {
@@ -1619,6 +1641,7 @@
       "content": "Contenido",
       "reservations": "Reservas",
       "posts": "Publicaciones",
+      "reviews": "Reseñas",
       "equipment": "Equipos",
       "comunidad": "Comunidad",
       "chatbot": "Chatbot"
@@ -1777,6 +1800,50 @@
         "camping": "Camping",
         "boulder": "Boulder",
         "equipos": "Equipos"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "approved": "Aprobada",
+        "hidden": "Oculta"
+      }
+    },
+    "reviews": {
+      "title": "Reseñas y calificaciones",
+      "description": "Vista unificada de las reseñas de Muro, Camping, Boulder y Equipos, con estadísticas de satisfacción.",
+      "noResults": "No hay reseñas con estos filtros.",
+      "sources": {
+        "muro": "Muro",
+        "camping": "Camping",
+        "boulder": "Boulder",
+        "equipos": "Equipos"
+      },
+      "stats": {
+        "average": "Promedio general",
+        "totalCount": "{count} reseñas"
+      },
+      "charts": {
+        "trendTitle": "Tendencia de satisfacción",
+        "bySourceTitle": "Promedio por servicio",
+        "averageRating": "Calificación promedio"
+      },
+      "alerts": {
+        "title": "Opiniones negativas recientes (2★ o menos)"
+      },
+      "filters": {
+        "source": "Servicio",
+        "allSources": "Todos los servicios",
+        "rating": "Calificación",
+        "allRatings": "Todas",
+        "dateFrom": "Desde",
+        "dateTo": "Hasta"
+      },
+      "columns": {
+        "source": "Servicio",
+        "author": "Autor",
+        "rating": "Calificación",
+        "comment": "Comentario",
+        "status": "Estado",
+        "date": "Fecha"
       },
       "status": {
         "pending": "Pendiente",

@@ -30,17 +30,15 @@ Drizzle ORM (lib/db/index.ts) ── HTTP ──▶ Neon Postgres (DATABASE_URL)
       sobre las mismas tablas Drizzle (drizzleAdapter)
 ```
 
-Dos servidores completamente separados conviven en el repo:
-- **App principal** (raíz del repo): todo lo descrito en este documento.
-- **`corporate-ai-chatbot/`**: sub-proyecto Vite/React independiente, con su
-  propio `package.json`/`package-lock.json`/`vite.config.ts`. **No se importa
-  desde ninguna parte de la app principal** (verificado por búsqueda de
-  `corporate-ai-chatbot` en `app/`, `components/`, `lib/`: 0 resultados).
-  ⚠️ **Observación / borrador sin terminar**: parece una prueba de concepto de
-  chatbot corporativo, no integrada. No se ha borrado en esta pasada de
-  limpieza porque eliminar un subproyecto completo con su propio historial es
-  una operación destructiva que requiere confirmación explícita del equipo.
-  Queda pendiente decidir si se integra, se archiva o se borra.
+Solo hay **un** servidor/app en el repo (raíz): todo lo descrito en este
+documento.
+
+~~**`corporate-ai-chatbot/`**~~ — eliminado el 2026-09-15 (ver sección 13).
+Era un sub-proyecto Vite/React de un prototipo de chatbot exportado de Google
+AI Studio, con su propio `package.json`/servidor Express, nunca importado
+desde la app principal (0 referencias en `app/`, `components/`, `lib/`). El
+chatbot real que ven los visitantes es `components/chat-bot.tsx` +
+`app/api/chat/route.ts` (ver sección 8), sin relación con ese subproyecto.
 
 ---
 
@@ -716,7 +714,7 @@ estos paneles**, solo se documenta su estado:
   patrón de guardas que `lib/replies/reply-actions.ts` (verificar
   `getModeratorSession()`/`getAdminSession()` según a quién se le quiera dar
   permiso).
-- `corporate-ai-chatbot/`: sub-proyecto Vite no integrado (ver sección 1).
+- ~~`corporate-ai-chatbot/`~~: eliminado el 2026-09-15 (ver secciones 1 y 13).
 - Página de **aviso legal** (`/aviso-legal`): solicitada como **borrador
   pendiente**. Los datos del prestador ya están centralizados en
   `lib/legal-info.ts` y exhibidos en el footer (`Footer.legal.line`) y en
@@ -968,6 +966,24 @@ casos no hay una forma barata y confiable de verificar estáticamente; si se
 quiere blindar esto a futuro, la opción real es tipar los mensajes con
 `next-intl` (`declare module 'next-intl' { interface AppConfig { Messages:
 ... } }`) para que `tsc` sí marque las keys faltantes como error de tipos.
+
+**Actualización 2026-09-15 (3):** el usuario confirmó explícitamente eliminar
+`corporate-ai-chatbot/` (era la única operación destructiva pendiente de
+confirmación de las auditorías anteriores). Antes de borrar se verificó de
+nuevo, con el repo ya sin esa carpeta:
+- 0 referencias a `corporate-ai-chatbot` en `app/`, `components/`, `lib/` o
+  `package.json` de la raíz (ya se sabía, pero se re-confirmó justo antes de
+  borrar).
+- El chatbot real (`components/chat-bot.tsx`, montado desde
+  `components/layout-shell.tsx`, y su endpoint `app/api/chat/route.ts`) no
+  vive dentro de esa carpeta ni depende de ella en absoluto.
+- Se limpiaron las 2 referencias de configuración que solo existían para
+  *excluir* esa carpeta del tooling de la app principal:
+  `tsconfig.json` (`exclude`) y `eslint.config.mjs` (`ignores`) — ya no hacen
+  falta.
+- Después de borrar: `npx tsc --noEmit` → 0 errores, `pnpm lint` → 0 errores,
+  `pnpm build` → compila y genera las 118 páginas, incluida `/api/chat`
+  (el endpoint del chatbot real) sin cambios.
 
 **Observación menor, no bloqueante:** `pnpm build` (Turbopack) emite una
 advertencia de "Encountered unexpected file in NFT list" con traza hacia

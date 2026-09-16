@@ -3,7 +3,7 @@ import nextConfig from "eslint-config-next"
 const eslintConfig = [
   ...nextConfig,
   {
-    ignores: ["corporate-ai-chatbot/**", "drizzle/**"],
+    ignores: ["drizzle/**"],
   },
   {
     // eslint-config-next 16 enables the experimental React Compiler diagnostics as

@@ -5,7 +5,8 @@
 > Usuarios, Reservas o Comentarios/Publicaciones hay que leer este archivo, y
 > después de cualquier cambio significativo hay que actualizarlo.
 
-Última auditoría/refactor: 2026-09-15 (limpieza de errores de tipos reales, ver sección 13).
+Última auditoría/refactor: 2026-09-18 (índices de BD aplicados a nivel de esquema, ver sección 14).
+Auditoría anterior: 2026-09-15 (limpieza de errores de tipos reales, ver sección 13).
 Auditoría anterior: 2026-09-06 (fix de detección de idioma, ver sección 2.1).
 
 ---
@@ -147,16 +148,18 @@ confiable y usar los type guards (`isReservationStatus`, `postStatusSchema`,
 etc.) antes de usarlas como si fueran el union type — así se evita que un valor
 inesperado en BD rompa el render (ver `admin-reservations-panel.tsx`).
 
-**Pendiente de rendimiento (no aplicado en esta pasada, requiere decisión sobre
-ventana de mantenimiento):** ninguna tabla tiene índices explícitos más allá de
-la PK. Candidatos priorizados:
-- `postReply(post_type, post_id)` — es el filtro principal de `getApprovedRepliesByPosts`.
-- `climbPost(route_id)`, `boulderPost(boulder_name)` — filtro principal de las páginas públicas.
-- `climbPost(status)`, `campingPost(status)`, `boulderPost(status)`, `postReply(status)`, `reservation(status)` — usados en casi toda query pública (`ne(status, "hidden")`).
-- `chatMessage(session_id)`, `session(user_id)` — ya cubiertos parcialmente por el uso como FK pero sin índice explícito en Postgres (las FK no crean índice automáticamente).
+**Índices aplicados (2026-09-18, ver sección 14):** `schema.ts` ahora declara
+explícitamente, vía el 3er argumento de `pgTable`, los índices que antes eran
+solo una recomendación:
+- `postReply(post_type, post_id)` + `postReply(status)`.
+- `climbPost(route_id)` + `climbPost(status)`.
+- `boulderPost(boulder_name)` + `boulderPost(status)`.
+- `campingPost(status)`, `reservation(status)`.
+- `chatMessage(session_id)`, `session(user_id)`.
 
-Para aplicarlos: añadir `.index()`/`index()` en `schema.ts`, luego
-`pnpm db:generate` y `pnpm db:migrate`.
+Migración generada en `drizzle/0012_cultured_cardiac.sql` (solo `CREATE INDEX`,
+no destructiva, no reescribe datos) y **ya aplicada a Neon** con `pnpm db:push`
+(autorizado explícitamente por el usuario el 2026-09-18).
 
 ---
 
@@ -994,3 +997,143 @@ Turbopack, no falla el build ni afecta el resultado; si se quiere eliminar el
 ruido, se podría marcar esa línea con `/* turbopackIgnore: true */`, pero no
 se tocó en esta pasada para no arriesgar el comportamiento de subida de
 imágenes en producción sin poder probarlo contra un hosting real.
+
+---
+
+## 14. Auditoría 2026-09-15 (2ª) → 2026-09-18 (índices de BD)
+
+Re-auditoría completa siguiendo el mismo criterio de la sección 13 (verificación
+con herramientas, no solo lectura manual):
+
+- `pnpm lint` → **0 errores** (mismos 23 warnings ya documentados en la sección
+  13: patrones `react-hook-form`/`useRef`/`Math.random`/`setState` en efecto de
+  componentes `ui/*` de shadcn y hooks preexistentes — ninguno nuevo, ninguno en
+  el flujo de Usuarios/Reservas/Comentarios).
+- `npx tsc --noEmit` → **0 errores**, antes y después del cambio de esquema.
+- Revisión manual dirigida (sin cambios, ya cumplían buenas prácticas):
+  - `lib/reservas/actions.ts` — validación zod server-side completa (fechas ISO,
+    llegada no pasada, salida ≥ llegada, límites de longitud), no confía en el
+    cliente. Sin hallazgos.
+  - `lib/replies/reply-actions.ts` — guardas de moderador presentes en las 2
+    Server Actions de mutación, validación zod en el submit público. Sin
+    hallazgos.
+  - `lib/cuenta/queries.ts::getMyPublications` — 4 selects vía `Promise.all`
+    (no secuenciales), cada uno con `inArray(contactId, contactIds)`: no es N+1.
+  - `lib/equipos/queries.ts::buildCatalog` — 3 queries en paralelo
+    (`Promise.all`) + un solo `GROUP BY` para la disponibilidad agregada, unión
+    en memoria con `Map`: no es N+1.
+  - `lib/reviews/aggregate.ts::fetchAllRawReviews` — 4 selects en paralelo, sin
+    loops con queries dentro. Sin hallazgos.
+  - `lib/contacts/upsert.ts` — 1 select + 1 update/insert por submission (no
+    hay loop), falla silenciosamente sin bloquear el submit original. Sin
+    hallazgos.
+  - `lib/replies/reply-queries.ts::getApprovedRepliesByPosts` — ya documentado
+    como "no es N+1" en su propio comentario (una sola query con `inArray`
+    sobre todos los ids de la página); confirmado.
+
+**Cambio aplicado — índices de base de datos (el único pendiente de rendimiento
+que quedaba abierto desde la sección 3/13):**
+
+- `lib/db/schema.ts`: se agregó el 3er argumento de `pgTable` (array de
+  `index()`) a `session`, `climbPost`, `chatMessage`, `reservation`,
+  `campingPost`, `boulderPost` y `postReply`, cubriendo exactamente los
+  candidatos que ya estaban priorizados (ver sección 3 actualizada).
+- `pnpm db:generate` generó `drizzle/0012_cultured_cardiac.sql` — 10
+  `CREATE INDEX`, ninguna otra operación. Es aditivo y no destructivo (no
+  reescribe filas, no cambia tipos, no puede romper una query existente).
+- El usuario autorizó explícitamente aplicarlo contra Neon: se corrió
+  `pnpm db:push`, que confirmó `[✓] Pulling schema from database...` /
+  `[✓] Changes applied` sin errores. Los 10 índices ya existen en la base de
+  datos real de producción.
+
+**No se encontró deuda técnica nueva** de las categorías pedidas (código
+muerto, validaciones faltantes en reservas/comentarios, fugas de memoria,
+renderizados excesivos): el código de negocio de Usuarios/Reservas/Comentarios
+ya estaba, y sigue estando, en buen estado tras las auditorías de las secciones
+2.1, 4 y 13. Los borradores de la sección 9 (`staff-reservas-panel`,
+`cuenta-reservas-panel`, `cuenta-publicaciones-panel`,
+`admin-reservations-panel` sin `updateReservationStatusAction`, `/aviso-legal`,
+`/historia`) siguen intactos y sin tocar, como exige la regla de ejecución del
+usuario de no completar borradores sin confirmación.
+
+---
+
+## 15. Auditoría 2026-09-20 — Almacenamiento de imágenes/media (diagnóstico, migración a Cloudflare R2 en curso)
+
+Auditoría solicitada por el usuario sobre rendimiento de carga de imágenes.
+**Solo diagnóstico en esta pasada** — la migración de código todavía no se
+ha implementado, queda como el próximo paso una vez se confirme el alcance
+exacto con el usuario.
+
+### 15.1 Estado encontrado
+
+- **`next.config.mjs` tiene `images: { unoptimized: true }`**: la
+  optimización de imágenes de Next.js (`next/image`) está completamente
+  desactivada en todo el sitio. Cada `<Image>` se sirve en su resolución y
+  formato original, sin redimensionar ni convertir a WebP/AVIF ni cachear vía
+  el Image Optimizer de Vercel. Es la causa principal del problema de
+  rendimiento reportado.
+- **`public/media/` pesa ~143 MB en 238 archivos** (JPG en su mayoría,
+  promedio ~626 KB/archivo, picos de ~2.4 MB), commiteados directamente al
+  repo. Esto ya infló `.git` a **~1.4 GB**, lo que hace más lentos los
+  clones/checkouts y cada build/deploy en Vercel que empaqueta `public/`.
+- **Rutas hardcodeadas a `/media/...`** en al menos 13 archivos:
+  `app/[locale]/galeria/page.tsx` (232 entradas hardcodeadas, es la fuente
+  principal), `boulder/page.tsx`, `camping/page.tsx`, `el-lugar/page.tsx`,
+  `visita/page.tsx`, `escalada/page.tsx`, `equipos/page.tsx`, `historia/page.tsx`,
+  `contacto/page.tsx`, `[locale]/page.tsx` (home), `muro/page.tsx` +
+  `RouteGuideSection.tsx`, y en `lib/`: `lib/boulder/boulders.ts`,
+  `lib/eventos/{config,plantillas}.ts`, `lib/equipos/actions.ts`,
+  `lib/announcement/actions.ts`, `components/navbar.tsx`,
+  `components/admin/admin-announcement-section.tsx`.
+- **El Muro (contenido generado por visitantes) ya usa Cloudinary**
+  (`components/muro/media-uploader.tsx`, subida sin firmar desde el
+  navegador vía `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`/`UPLOAD_PRESET`) — es la
+  única parte del sitio que ya resolvió correctamente el problema de
+  almacenamiento externo, pero no se extendió al resto.
+- **Confirmación de una limitación ya documentada (secciones 6.b y 7.b):**
+  `uploadEquipmentImageAction` (`lib/equipos/actions.ts`) y
+  `uploadAnnouncementImageAction` (`lib/announcement/actions.ts`) escriben
+  con `fs.writeFile` directamente en `public/media/Equipos/` y
+  `public/media/Novedades/` respectivamente. Ya estaba documentado que esto
+  "solo funciona en entornos con disco escribible" y que en hosting
+  serverless de solo lectura (Vercel) devuelve el error `read_only` — esta
+  auditoría lo confirma como un problema activo (no solo teórico) que se
+  resuelve de raíz con la misma migración de almacenamiento externo.
+
+### 15.2 Decisión del usuario — Cloudflare R2
+
+El usuario decidió **Cloudflare R2** como almacenamiento de objetos para las
+imágenes estáticas del sitio (galería y demás secciones), manteniendo **todo
+el código en Vercel** (no se migra el hosting de la app). Pendiente de
+confirmar con el usuario antes de implementar:
+
+- Si ya existe un bucket de R2 aprovisionado (credenciales
+  `R2_ACCOUNT_ID`/`R2_ACCESS_KEY_ID`/`R2_SECRET_ACCESS_KEY`/nombre de bucket)
+  o si hay que guiar su creación, y si el bucket se expondrá con un dominio
+  público propio (`R2.dev` subdomain o dominio custom vía Cloudflare) para
+  poder referenciar las imágenes por URL.
+- Si `uploadEquipmentImageAction`/`uploadAnnouncementImageAction` migran
+  también a R2 (recomendado: resuelve el bug de `read_only` de raíz) o si
+  esas dos quedan para otra pasada.
+- Si el Muro se queda en Cloudinary (ya funcional) o también se estandariza a
+  R2 por consistencia — no es urgente, ya funciona hoy.
+- Qué hacer con las 143 MB ya commiteadas en `public/media/` y el historial
+  de `.git` (1.4 GB): subir las imágenes actuales a R2 y borrarlas de
+  `public/media` es no destructivo para el sitio, pero **reescribir el
+  historial de git para reducir el peso del repo (`git filter-repo`/BFG) es
+  una operación destructiva e irreversible** (fuerza a todos los
+  colaboradores a re-clonar) que requiere confirmación explícita aparte —
+  no se hará sin que el usuario la apruebe puntualmente.
+- Si la galería sigue como array hardcodeado en `galeria/page.tsx` (solo se
+  reemplazan las 232 rutas locales por URLs de R2) o si se mueve a una tabla
+  en Neon para que el admin pueda gestionar fotos sin redeploy — decisión
+  pendiente de confirmar con el usuario.
+
+Una vez confirmado el alcance, esta sección se debe actualizar con: el
+mecanismo real de subida (script de migración de una sola vez para las 238
+imágenes existentes + flujo de subida nueva desde el panel admin), el cambio
+en `next.config.mjs` (`images.remotePatterns` apuntando al dominio de R2, y
+si se reactiva `unoptimized: false` para que Vercel optimice también las
+imágenes de R2), y el nuevo glosario de "dónde está la lógica de negocio" de
+media (sección 10).

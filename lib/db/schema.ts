@@ -1,4 +1,4 @@
-import { boolean, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core"
+import { boolean, index, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core"
 
 /**
  * Better Auth core tables + app roles.
@@ -63,7 +63,9 @@ export const session = pgTable("session", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-})
+}, (table) => [
+  index("session_user_id_idx").on(table.userId),
+])
 
 export const account = pgTable("account", {
   id: text("id").primaryKey(),
@@ -158,7 +160,10 @@ export const climbPost = pgTable("climb_post", {
   socialMediaUrl: text("social_media_url"),
   mediaUrls: text("media_urls").array(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-})
+}, (table) => [
+  index("climb_post_route_id_idx").on(table.routeId),
+  index("climb_post_status_idx").on(table.status),
+])
 
 /** Anonymous chatbot conversation sessions (one per browser). */
 export const chatSession = pgTable("chat_session", {
@@ -178,7 +183,9 @@ export const chatMessage = pgTable("chat_message", {
   userMessage: text("user_message").notNull(),
   botResponse: text("bot_response").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-})
+}, (table) => [
+  index("chat_message_session_id_idx").on(table.sessionId),
+])
 
 /** Reservation requests submitted through the booking form. */
 export const reservation = pgTable("reservation", {
@@ -194,7 +201,9 @@ export const reservation = pgTable("reservation", {
   notes: text("notes"),
   status: text("status").notNull().default("pending"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-})
+}, (table) => [
+  index("reservation_status_idx").on(table.status),
+])
 
 /** Camping experience posts submitted from the camping page. */
 export const campingPost = pgTable("camping_post", {
@@ -214,7 +223,9 @@ export const campingPost = pgTable("camping_post", {
   socialMediaUrl: text("social_media_url"),
   mediaUrls: text("media_urls").array(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-})
+}, (table) => [
+  index("camping_post_status_idx").on(table.status),
+])
 
 /** Boulder ascent posts submitted from the boulder page (or from the
  *  aggregated /boulder form, which can tag zero or several problems at once). */
@@ -246,7 +257,10 @@ export const boulderPost = pgTable("boulder_post", {
   socialMediaUrl: text("social_media_url"),
   mediaUrls: text("media_urls").array(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-})
+}, (table) => [
+  index("boulder_post_boulder_name_idx").on(table.boulderName),
+  index("boulder_post_status_idx").on(table.status),
+])
 
 /** Replies to any post type (muro, camping, boulder, equipos). No star rating. */
 export const postReply = pgTable("post_reply", {
@@ -259,7 +273,10 @@ export const postReply = pgTable("post_reply", {
   contactId: text("contact_id").references(() => contact.id, { onDelete: "set null" }),
   status: text("status").notNull().default("pending"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-})
+}, (table) => [
+  index("post_reply_post_type_post_id_idx").on(table.postType, table.postId),
+  index("post_reply_status_idx").on(table.status),
+])
 
 /** Comments/reviews about the equipment rental section as a whole (not tied to
  *  a single catalog item). Simplified compared to climbPost/campingPost/

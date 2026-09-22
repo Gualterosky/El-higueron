@@ -40,6 +40,7 @@ export default async function EquiposPage({ params }: Props) {
             src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img09.jpg"
             alt={t("hero.imageAlt")}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -113,6 +114,7 @@ export default async function EquiposPage({ params }: Props) {
                           src={item.imageUrl}
                           alt={item.name}
                           fill
+                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                           className={`object-cover ${hasStock ? "" : "opacity-60"}`}
                         />
                       ) : (
@@ -217,6 +219,7 @@ export default async function EquiposPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Equipos/crashpad%202c.png"
                 alt={t("notes.imageAlt")}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>

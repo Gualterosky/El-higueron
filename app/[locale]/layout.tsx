@@ -56,9 +56,18 @@ export default async function LocaleLayout({ children, params }: Props) {
     getLiveAnnouncement(locale),
   ])
 
+  // Preconecta con los orígenes de imágenes externos (R2 para el sitio,
+  // Cloudinary para las publicaciones) para adelantar el handshake TLS antes
+  // de que el navegador pida la primera imagen.
+  const r2Origin = process.env.R2_PUBLIC_URL
+    ? new URL(process.env.R2_PUBLIC_URL).origin
+    : null
+
   return (
     <html lang={locale} className={inter.variable} data-scroll-behavior="smooth">
       <body className="min-h-screen font-sans antialiased">
+        {r2Origin ? <link rel="preconnect" href={r2Origin} crossOrigin="anonymous" /> : null}
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <NextIntlClientProvider messages={messages}>
           <div className="flex min-h-screen flex-col">
             <LayoutShell

@@ -99,6 +99,7 @@ export default async function HomePage({
             src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
             alt={t('hero.imageAlt')}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -184,6 +185,7 @@ export default async function HomePage({
                         src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img06.jpg"
                         alt={t('adventures.escalada.imageAlt')}
                         fill
+                        sizes="(min-width: 768px) 50vw, 100vw"
                         className="object-cover"
                       />
                     </div>
@@ -205,6 +207,7 @@ export default async function HomePage({
                         src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134602260_HDR.jpg"
                         alt={t('adventures.camping.imageAlt')}
                         fill
+                        sizes="(min-width: 768px) 50vw, 100vw"
                         className="object-cover"
                       />
                     </div>
@@ -231,6 +234,7 @@ export default async function HomePage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250225_140002347_MFNR.jpg"
                 alt={t('about.imageAlt')}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -332,6 +336,7 @@ export default async function HomePage({
                     src={image.src}
                     alt={image.alt}
                     fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-forest/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />

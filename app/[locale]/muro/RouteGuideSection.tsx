@@ -39,6 +39,7 @@ export default function RouteGuideSection() {
                   src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Rutas%20bendito%20sea.png"
                   alt={t("imageAlt")}
                   fill
+                  sizes="(min-width: 768px) 768px, 100vw"
                   className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-forest/0 transition-colors duration-300 group-hover:bg-forest/10">

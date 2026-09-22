@@ -60,6 +60,7 @@ export async function BoulderPageLayout({ boulderId, locale }: Props) {
             src={boulder.image}
             alt={`${boulderName} - Zona de Boulder El Higuerón`}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -102,6 +103,7 @@ export async function BoulderPageLayout({ boulderId, locale }: Props) {
                 src={boulder.image}
                 alt={boulderName}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -193,6 +195,7 @@ export async function BoulderPageLayout({ boulderId, locale }: Props) {
                       src={problem.image}
                       alt={problemData?.name ?? problem.id}
                       fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                       className="object-cover transition-transform duration-300 hover:scale-105"
                     />
                     <div className="absolute left-3 top-3 rounded-full bg-orange px-3 py-1">

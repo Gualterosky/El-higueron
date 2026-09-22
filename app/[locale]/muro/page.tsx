@@ -44,6 +44,7 @@ export default async function MuroPage({ params }: Props) {
             src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img02.jpg"
             alt={t("hero.imageAlt")}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -87,6 +88,7 @@ export default async function MuroPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img03.jpg"
                 alt={t("intro.imageAlt")}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -209,6 +211,7 @@ export default async function MuroPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/IMG_20250111_141453567_SR.jpg"
                 alt={t("location.imageAlt")}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -267,6 +270,7 @@ export default async function MuroPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img04.jpg"
                 alt={t("safety.imageAlt")}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>

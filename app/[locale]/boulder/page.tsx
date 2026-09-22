@@ -56,6 +56,7 @@ export default async function BoulderPage({
             src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_092321682_HDR.jpg"
             alt={t('hero.imageAlt')}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -79,6 +80,7 @@ export default async function BoulderPage({
             src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_162115607_MFNR.jpg"
             alt={t('banner.imageAlt')}
             fill
+            sizes="100vw"
             className="object-cover object-center"
             priority
           />
@@ -118,6 +120,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img17.jpg"
                 alt={t('intro.imageAlt')}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -144,6 +147,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250914_143103460_MFNR.jpg"
                 alt="Boulder en roca natural"
                 fill
+                sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -152,6 +156,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg"
                 alt="Escalada en bloque"
                 fill
+                sizes="(min-width: 768px) 50vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -164,6 +169,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100954059_HDR.jpg"
                 alt="Detalle de agarre en boulder"
                 fill
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -172,6 +178,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img18.jpg"
                 alt="Problema de boulder"
                 fill
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -180,6 +187,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img20.jpg"
                 alt="Escalador trabajando problema"
                 fill
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -192,6 +200,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img21.jpg"
                 alt="Boulder zona 1"
                 fill
+                sizes="(min-width: 640px) 25vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -200,6 +209,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img22.jpg"
                 alt="Boulder zona 2"
                 fill
+                sizes="(min-width: 640px) 25vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -208,6 +218,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img23.jpg"
                 alt="Boulder zona 3"
                 fill
+                sizes="(min-width: 640px) 25vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -216,6 +227,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20260430_120707095_HDR.jpg"
                 alt="Vista de la zona de boulder"
                 fill
+                sizes="(min-width: 640px) 25vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -343,6 +355,7 @@ export default async function BoulderPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20260430_120745606_HDR.jpg"
                 alt={t('crashpads.imageAlt')}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>

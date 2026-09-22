@@ -66,6 +66,7 @@ export default async function CampingPage({ params }: Props) {
             src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20260116_175442021_MFNR.jpg"
             alt={t("hero.imageAlt")}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -109,6 +110,7 @@ export default async function CampingPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134710067_HDR.jpg"
                 alt={t("intro.imageAlt")}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -153,6 +155,7 @@ export default async function CampingPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250129_074449185_HDR.jpg"
                 alt={t("bring.imageAlt")}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -238,6 +241,7 @@ export default async function CampingPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/Fogata1.jpg"
                 alt={t("fire.imageAlt")}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -258,6 +262,7 @@ export default async function CampingPage({ params }: Props) {
                   src={img}
                   alt={t("fire.galleryAlt")}
                   fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
@@ -284,6 +289,7 @@ export default async function CampingPage({ params }: Props) {
               src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250920_125059918_HDR.jpg"
               alt="Vista panorámica del camping"
               fill
+              sizes="100vw"
               className="object-cover"
             />
           </div>
@@ -295,6 +301,7 @@ export default async function CampingPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20260116_175452246_MFNR.jpg"
                 alt="Zona de camping al atardecer"
                 fill
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -303,6 +310,7 @@ export default async function CampingPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20260116_175500969_MFNR.jpg"
                 alt="Ambiente de camping nocturno"
                 fill
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -311,6 +319,7 @@ export default async function CampingPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250129_074449185_HDR.jpg"
                 alt={t("bring.imageAlt")}
                 fill
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -323,6 +332,7 @@ export default async function CampingPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134602260_HDR.jpg"
                 alt="Camping en El Higuerón"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -331,6 +341,7 @@ export default async function CampingPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134723182_MFNR.jpg"
                 alt="Área de camping"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -339,6 +350,7 @@ export default async function CampingPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134741147_HDR.jpg"
                 alt="Naturaleza del camping"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
@@ -347,6 +359,7 @@ export default async function CampingPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134909280_HDR.jpg"
                 alt="Entorno natural del camping"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>

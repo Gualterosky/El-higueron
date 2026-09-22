@@ -33,6 +33,7 @@ export default async function HistoriaPage({ params }: Props) {
             src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
             alt={t("hero.imageAlt")}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />

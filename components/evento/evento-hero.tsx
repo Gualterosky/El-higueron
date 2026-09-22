@@ -11,6 +11,7 @@ export function EventoHero({ evento }: { evento: Evento }) {
           src={evento.imagenHero || "/placeholder.svg"}
           alt={evento.titulo}
           fill
+          sizes="100vw"
           className="object-cover"
           priority
         />

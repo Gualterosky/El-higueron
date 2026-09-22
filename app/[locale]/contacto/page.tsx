@@ -198,6 +198,7 @@ export default async function ContactoPage({ params }: Props) {
           src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_165116990_HDR.jpg"
           alt={t("banner.imageAlt")}
           fill
+          sizes="100vw"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-forest/60 to-transparent" />

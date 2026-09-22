@@ -259,6 +259,7 @@ export async function EventoGaleria({ evento }: { evento: Evento }) {
                 src={src || "/placeholder.svg"}
                 alt={`${evento.titulo} - imagen ${i + 1}`}
                 fill
+                sizes="(min-width: 768px) 33vw, 50vw"
                 className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>

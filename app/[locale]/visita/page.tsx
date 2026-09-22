@@ -71,6 +71,7 @@ export default async function VisitaPage({ params }: Props) {
             src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/IMG_20250322_174755948_HDR.jpg"
             alt={t("hero.imageAlt")}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -196,6 +197,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img03.jpg"
                 alt="Escalada deportiva"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -204,6 +206,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img22.jpg"
                 alt="Boulder en la naturaleza"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -212,6 +215,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134710067_HDR.jpg"
                 alt="Carpas en el camping"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -220,6 +224,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
                 alt="Paisaje de montaña"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -263,6 +268,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img06.jpg"
                 alt="Escaladores en el muro"
                 fill
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -271,6 +277,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20260117_080602542_HDR.jpg"
                 alt="Fogata en el camping"
                 fill
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -279,6 +286,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg"
                 alt="Boulder con crashpad"
                 fill
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -325,6 +333,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img05.jpg"
                 alt="Escalador en ruta"
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -337,6 +346,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_092321682_HDR.jpg"
                 alt="Zona de boulder"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -345,6 +355,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134602260_HDR.jpg"
                 alt="Camping entre árboles"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -353,6 +364,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img11.jpg"
                 alt="Vista del muro"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>
@@ -361,6 +373,7 @@ export default async function VisitaPage({ params }: Props) {
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250121_174841943_MFNR.jpg"
                 alt="Atardecer en la montaña"
                 fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>

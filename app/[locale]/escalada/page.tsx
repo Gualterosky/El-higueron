@@ -63,6 +63,7 @@ export default async function EscaladaPage({
             src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img01.jpg"
             alt={t('hero.imageAlt')}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -105,6 +106,7 @@ export default async function EscaladaPage({
                     src={modality.image}
                     alt={modality.title}
                     fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -276,6 +278,7 @@ export default async function EscaladaPage({
                 src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img08.jpg"
                 alt={t('safety.imageAlt')}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>

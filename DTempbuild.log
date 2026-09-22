@@ -1,0 +1,107 @@
+
+> my-project@0.1.0 build L:\GitHub Repository\El-higueron
+> next build
+
+▲ Next.js 16.2.0 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 55s
+  Skipping validation of types
+  Finished TypeScript config validation in 85ms ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/118) ...
+  Generating static pages using 3 workers (29/118) 
+  Generating static pages using 3 workers (58/118) 
+  Generating static pages using 3 workers (88/118) 
+✓ Generating static pages using 3 workers (118/118) in 8.0s
+  Finalizing page optimization ...
+
+Route (app)                         Revalidate  Expire
+┌ ○ /_not-found
+├ ● /[locale]
+│ ├ /es
+│ └ /en
+├ ƒ /[locale]/admin
+├ ƒ /[locale]/admin/chatbot
+├ ƒ /[locale]/admin/comunidad
+├ ƒ /[locale]/admin/configuracion
+├ ƒ /[locale]/admin/contactos
+├ ƒ /[locale]/admin/contenido
+├ ƒ /[locale]/admin/equipos
+├ ƒ /[locale]/admin/publicaciones
+├ ƒ /[locale]/admin/resenas
+├ ƒ /[locale]/admin/reservas
+├ ƒ /[locale]/admin/usuarios
+├ ƒ /[locale]/boulder
+├ ƒ /[locale]/boulder/BLDR01
+├ ƒ /[locale]/boulder/BLDR02
+├ ƒ /[locale]/boulder/BLDR03
+├ ƒ /[locale]/boulder/BLDR04
+├ ƒ /[locale]/cambiar-contrasena
+├ ƒ /[locale]/camping
+├ ƒ /[locale]/comunidad
+├ ● /[locale]/contacto
+│ ├ /es/contacto
+│ └ /en/contacto
+├ ƒ /[locale]/cuenta
+├ ƒ /[locale]/cuenta/publicaciones
+├ ƒ /[locale]/cuenta/reservas
+├ ● /[locale]/el-lugar
+│ ├ /es/el-lugar
+│ └ /en/el-lugar
+├ ƒ /[locale]/equipos
+├ ● /[locale]/escalada
+│ ├ /es/escalada
+│ └ /en/escalada
+├ ● /[locale]/evento
+│ ├ /es/evento
+│ └ /en/evento
+├ ● /[locale]/form
+│ ├ /es/form
+│ └ /en/form
+├ ● /[locale]/galeria                       1m      1y
+│ ├ /es/galeria                             1m      1y
+│ └ /en/galeria                             1m      1y
+├ ● /[locale]/historia
+│ ├ /es/historia
+│ └ /en/historia
+├ ƒ /[locale]/login
+├ ƒ /[locale]/muro
+├ ƒ /[locale]/muro/MBS01
+├ ƒ /[locale]/muro/MBS02
+├ ƒ /[locale]/muro/MBS03
+├ ƒ /[locale]/muro/MBS04
+├ ƒ /[locale]/muro/MBS05
+├ ƒ /[locale]/muro/MBS06
+├ ƒ /[locale]/muro/MBS07
+├ ƒ /[locale]/muro/MBS08
+├ ƒ /[locale]/muro/MBS09
+├ ƒ /[locale]/muro/MBS10
+├ ƒ /[locale]/muro/MBS11
+├ ƒ /[locale]/muro/MBS12
+├ ƒ /[locale]/muro/MBS13
+├ ƒ /[locale]/muro/MBS14
+├ ƒ /[locale]/muro/MBS15
+├ ƒ /[locale]/registro
+├ ƒ /[locale]/reservas
+├ ƒ /[locale]/staff
+├ ƒ /[locale]/staff/comunidad
+├ ƒ /[locale]/staff/contenido
+├ ƒ /[locale]/staff/equipos
+├ ƒ /[locale]/staff/publicaciones
+├ ƒ /[locale]/staff/reservas
+├ ● /[locale]/visita
+│ ├ /es/visita
+│ └ /en/visita
+├ ƒ /api/auth/[...all]
+├ ƒ /api/chat
+└ ○ /icon.svg
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

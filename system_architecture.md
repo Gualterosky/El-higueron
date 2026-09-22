@@ -61,6 +61,7 @@ components/
   admin/, staff/, cuenta/, panel/   Paneles por rol (client components)
   muro/, camping/, boulder/, posts/ UI de publicaciones y respuestas (comentarios)
   auth/                    Formularios de login/registro/cambio de contraseña
+  media/progressive-image.tsx  Imagen con anillo de % real de descarga + unload al salir del viewport (15.7)
   ui/                      Primitivas shadcn/Radix (no editar salvo necesidad real)
 lib/
   auth.ts, auth-client.ts   Instancia de Better Auth (servidor) y su cliente
@@ -76,6 +77,9 @@ lib/
   eventos/                  Sistema de eventos configurable para /evento
   storage/r2.ts             Cliente de Cloudflare R2 (imágenes estáticas del sitio, sección 15)
   media/gallery.ts          Lista dinámicamente las fotos de /galeria desde R2 (sección 15.6)
+  media/next-image-url.ts   URL del Image Optimizer de Next para fetch manual con progreso (15.7)
+hooks/
+  use-in-viewport.ts        IntersectionObserver con mount/unmount según viewport (15.7)
 i18n/                       Configuración de next-intl (routing, request, navigation)
 messages/                   es.json / en.json — todos los textos de la UI
 drizzle/                    Migraciones SQL generadas + snapshot de metadatos
@@ -1307,3 +1311,74 @@ las carpetas de la galería del bucket de R2, en tiempo real:
   quiere recuperar descripciones por foto habría que guardar esos metadatos
   en algún lado (ej. una tabla en Neon o un JSON de metadatos junto a las
   imágenes), no en R2 (que solo guarda el archivo).
+
+### 15.7 Carga progresiva de imágenes con porcentaje real (2026-09-23)
+
+Objetivo del usuario: que la página sea interactiva antes de que las imágenes
+terminen de cargar, y que cada imagen muestre un **anillo de progreso con el
+% real de descarga** (no un spinner indeterminado) mientras baja.
+
+Componentes nuevos:
+
+- **`hooks/use-in-viewport.ts`**: wrapper de `IntersectionObserver` que
+  reporta `inView` en ambas direcciones (entra Y sale). `rootMargin`
+  por defecto `"600px 0px"` = precarga ~600px antes de ser visible y libera
+  ~600px después de salir. NO es "lazy una sola vez": el contenido se
+  desmonta/libera al alejarse.
+- **`lib/media/next-image-url.ts::getNextImageProxyUrl(src, w, q)`**: construye
+  la URL `/_next/image?url=...&w=...&q=...` igual que `next/image`. Se usa
+  para `fetch()`ear la imagen **desde el mismo origen** (sin CORS con R2) y ya
+  redimensionada por el optimizer de Next/Vercel. Los `w` deben existir en
+  `deviceSizes`/`imageSizes` por defecto (usamos 640 y 1200).
+- **`components/media/progressive-image.tsx`** (`"use client"`): la pieza
+  central. Mientras `inView` es true hace `fetch()` + `response.body.getReader()`
+  y calcula `received/content-length * 100` para pintar un anillo SVG con el
+  % real. Al terminar crea un `Blob` → `URL.createObjectURL` → `<img>`.
+  - Al salir del viewport: `URL.revokeObjectURL` + reset (libera memoria; al
+    volver, el caché HTTP del navegador hace la re-descarga casi instantánea).
+  - Abort del fetch al desmontar (`AbortController` en el cleanup del effect).
+  - Si el fetch falla o no hay body streameable: fallback silencioso a un
+    `<img src={src original}>` normal.
+  - **Limitación:** si la respuesta no trae `Content-Length` (ej. chunked),
+    el anillo queda en 0% y salta a 100% al terminar — no se puede calcular
+    el % sin el total. Es un límite del protocolo, no un bug.
+  - Modos: `fill` (absolute inset-0, el padre define tamaño — igual que
+    `<Image fill>`) y `natural` (respeta el aspect ratio intrínseco, con
+    placeholder de altura fija mientras descarga — usado para fotos únicas
+    de posts y para el lightbox).
+
+Dónde se usa:
+
+- **Galería** (`components/galeria/gallery-grid.tsx`): los ~209 tiles usan
+  `ProgressiveImage` con `optimizeWidth={640}`; el **lightbox** también
+  (`mode="natural"`, `optimizeWidth={1200}`) — la foto grande es la que más
+  tarda y es donde el % real más se aprecia. Las cajas del grid existen todas
+  en el DOM (placeholders baratos con aspect-ratio fijo), pero **solo se
+  descargan las que están a ≤600px del viewport** y se liberan al alejarse —
+  no hay botón "ver más", es automático con el scroll.
+- **Muro / Camping / Boulder** (`components/muro/post-media-gallery.tsx`):
+  las imágenes de publicaciones (Cloudinary) usan `ProgressiveImage` con
+  fetch directo a `res.cloudinary.com` (Cloudinary sí expone CORS
+  cross-origin). Post de 1 foto → `mode="natural"` (aspect ratio real, cap
+  `max-h-[430px]`); carrusel de varias → `mode="fill"` en caja `h-80` con
+  `object-contain`. Los videos NO pasan por ProgressiveImage (siguen siendo
+  `<video controls>` nativo).
+
+Otras optimizaciones de la misma tanda:
+
+- **`sizes` en todos los `<Image fill>`** (~60 instancias en 17 archivos):
+  antes Next asumía `100vw` para todas y servía imágenes de hasta 3840px a
+  thumbnails de ~300px. Ahora cada una declara su tamaño real según el grid
+  (`(min-width: 1024px) 25vw, ...` etc.). Es el cambio que más bytes ahorra
+  en páginas con grillas.
+- **`preconnect`** a `R2_PUBLIC_URL` y `https://res.cloudinary.com` en
+  `app/[locale]/layout.tsx` — React 19 eleva los `<link>` al `<head>`.
+- **`priority`** quedó solo en las imágenes hero above-the-fold de cada
+  página (home, camping, boulder, muro, escalada, visita, el-lugar, historia,
+  equipos, evento-hero, route/boulder-page-layout) — el resto carga lazy
+  por defecto y no compite con el JS crítico.
+
+**Nota sobre medición real:** el % que ve el usuario refleja bytes del
+`/_next/image` proxy (para R2) o de Cloudinary directo (para posts), no el
+peso original del JPEG en R2 — es lo correcto porque es lo que realmente
+viaja por el cable al navegador.

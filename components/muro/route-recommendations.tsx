@@ -61,6 +61,7 @@ export async function RouteRecommendations({
                           src={route.image}
                           alt={t(`${route.id}.routeName`)}
                           fill
+                          sizes="(min-width: 640px) 50vw, 100vw"
                           className="object-cover"
                         />
                         <div className="absolute left-3 top-3 rounded-full bg-orange px-3 py-1">

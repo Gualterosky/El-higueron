@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
+import { ProgressiveImage } from "@/components/media/progressive-image"
 import type { GalleryImage } from "@/lib/media/gallery"
 
 const categoryKeys = ["all", "escalada", "boulder", "camping", "naturaleza"] as const
@@ -86,11 +86,11 @@ export function GalleryGrid({ images }: Props) {
                   className="group relative cursor-pointer overflow-hidden rounded-xl"
                   onClick={() => openLightbox(index)}
                 >
-                  <div className="aspect-[4/3]">
-                    <Image
+                  <div className="relative aspect-[4/3]">
+                    <ProgressiveImage
                       src={image.src}
                       alt={t(`filters.${image.category}`)}
-                      fill
+                      optimizeWidth={640}
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
@@ -142,12 +142,14 @@ export function GalleryGrid({ images }: Props) {
             className="relative max-h-[80vh] max-w-4xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <Image
+            <ProgressiveImage
+              key={filteredImages[lightboxIndex].src}
               src={filteredImages[lightboxIndex].src}
               alt={t(`filters.${filteredImages[lightboxIndex].category}`)}
-              width={1200}
-              height={800}
-              className="max-h-[80vh] w-auto rounded-lg object-contain"
+              mode="natural"
+              optimizeWidth={1200}
+              className="mx-auto max-h-[80vh] rounded-lg"
+              naturalPlaceholderClassName="h-[60vh] w-[80vw] max-w-4xl rounded-lg bg-stone-800"
             />
             <div className="mt-4 text-center">
               <span className="mt-1 inline-block text-sm text-white/70">

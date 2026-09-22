@@ -70,6 +70,7 @@ export async function RoutePageLayout({ routeId, locale }: Props) {
             src={route.image}
             alt={`${routeName} - Muro Bendito Sea`}
             fill
+            sizes="100vw"
             className="object-cover"
             priority
           />
@@ -109,6 +110,7 @@ export async function RoutePageLayout({ routeId, locale }: Props) {
                 src={route.image}
                 alt={routeName}
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>

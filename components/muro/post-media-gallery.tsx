@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 import useEmblaCarousel from "embla-carousel-react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ProgressiveImage } from "@/components/media/progressive-image"
 
 function isVideo(url: string): boolean {
   return /\.(mp4|mov|avi|webm)(\?|$)/i.test(url) || url.includes("/video/upload/")
@@ -18,6 +19,12 @@ function isVideo(url: string): boolean {
  * fixedHeight=true: item fills a fixed-height container (needed for the
  * carousel so all slides have the same height). Uses object-contain so
  * content is never cropped; letterbox bars take the container background color.
+ *
+ * Las imágenes (no los videos) usan `ProgressiveImage`: solo descargan
+ * cuando están cerca de la vista y muestran el porcentaje real de descarga
+ * mientras cargan (fetch directo a Cloudinary, que sí permite CORS
+ * cross-origin). Si falla, cae a un <img> normal — no hay next/image de por
+ * medio aquí porque este contenido lo suben visitantes vía Cloudinary, no R2.
  */
 function MediaItem({ url, fixedHeight = false }: { url: string; fixedHeight?: boolean }) {
   const video = isVideo(url)
@@ -26,15 +33,14 @@ function MediaItem({ url, fixedHeight = false }: { url: string; fixedHeight?: bo
     return (
       <div
         className={cn(
-          "flex h-80 items-center justify-center overflow-hidden rounded-lg",
+          "relative flex h-80 items-center justify-center overflow-hidden rounded-lg",
           video ? "bg-black" : "bg-stone-100"
         )}
       >
         {video ? (
           <video src={url} controls className="h-full w-full object-contain" />
         ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={url} alt="" className="h-full w-full object-contain" />
+          <ProgressiveImage src={url} alt="" className="object-contain" />
         )}
       </div>
     )
@@ -42,14 +48,12 @@ function MediaItem({ url, fixedHeight = false }: { url: string; fixedHeight?: bo
 
   // Natural-height mode: the CSS trick below lets the browser honour both
   // max-width:100% and max-height:430px simultaneously while preserving the
-  // intrinsic aspect ratio (no cropping, no distortion).
+  // intrinsic aspect ratio (no cropping, no distortion). ProgressiveImage en
+  // mode="natural" respeta lo mismo (solo muestra una caja de altura fija
+  // con el anillo de progreso mientras descarga; una vez lista, la imagen
+  // recupera su tamaño natural).
   return (
-    <div
-      className={cn(
-        "flex justify-center overflow-hidden rounded-lg",
-        video ? "bg-black" : "bg-stone-100"
-      )}
-    >
+    <div className={cn("flex justify-center overflow-hidden rounded-lg", video ? "bg-black" : "bg-stone-100")}>
       {video ? (
         <video
           src={url}
@@ -58,13 +62,7 @@ function MediaItem({ url, fixedHeight = false }: { url: string; fixedHeight?: bo
           style={{ width: "auto", height: "auto" }}
         />
       ) : (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={url}
-          alt=""
-          className="block max-h-[430px] max-w-full"
-          style={{ width: "auto", height: "auto" }}
-        />
+        <ProgressiveImage src={url} alt="" mode="natural" />
       )}
     </div>
   )

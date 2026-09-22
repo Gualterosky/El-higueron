@@ -350,7 +350,7 @@ export function AdminAnnouncementSection({
                     <SelectItem value={NO_IMAGE_VALUE}>{t("noImage")}</SelectItem>
                     {mediaImages.map((image) => (
                       <SelectItem key={image} value={image}>
-                        {image.replace("/media/", "")}
+                        {decodeURIComponent(image.split("/").pop() ?? image)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -359,7 +359,7 @@ export function AdminAnnouncementSection({
 
               <Input
                 value={config.imageUrl}
-                placeholder="/media/Novedades/mi-imagen.jpg"
+                placeholder="https://.../Novedades/mi-imagen.jpg"
                 onChange={(event) => update("imageUrl", event.target.value)}
               />
               <Input

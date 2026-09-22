@@ -1,8 +1,6 @@
 "use server"
 
 import { randomUUID } from "crypto"
-import { mkdir, writeFile } from "node:fs/promises"
-import path from "node:path"
 import { revalidatePath } from "next/cache"
 import { and, eq, sql } from "drizzle-orm"
 import { z } from "zod"
@@ -11,10 +9,10 @@ import { equipment, equipmentRental, equipmentVariant } from "@/lib/db/schema"
 import { getModeratorSession } from "@/lib/auth/guards"
 import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
 import { DEFAULT_VARIANT_LABEL, EQUIPMENT_CATEGORIES } from "@/lib/equipos/types"
+import { uploadToR2 } from "@/lib/storage/r2"
 
-/** Uploaded equipment photos live here, square (1:1) as per design decision. */
-const UPLOAD_DIR = ["public", "media", "Equipos"] as const
-const PUBLIC_PREFIX = "/media/Equipos"
+/** Uploaded equipment photos live in the "Equipos/" prefix of the R2 media bucket, square (1:1) as per design decision. */
+const R2_PREFIX = "Equipos"
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024
 const ALLOWED_IMAGE_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
@@ -40,7 +38,7 @@ export type UploadEquipmentImageResult =
   | { ok: true; url: string }
   | {
       ok: false
-      error: "unauthorized" | "missing_file" | "invalid_type" | "too_large" | "read_only" | "failed"
+      error: "unauthorized" | "missing_file" | "invalid_type" | "too_large" | "failed"
     }
 
 function slugify(value: string): string {
@@ -393,19 +391,12 @@ export async function uploadEquipmentImageAction(
 
   const baseName = slugify(file.name.replace(/\.[^.]+$/, "")) || "equipo"
   const fileName = `${baseName}-${Date.now()}.${extension}`
-  const directory = path.join(process.cwd(), ...UPLOAD_DIR)
 
   try {
-    await mkdir(directory, { recursive: true })
     const buffer = Buffer.from(await file.arrayBuffer())
-    await writeFile(path.join(directory, fileName), buffer)
-    return { ok: true, url: `${PUBLIC_PREFIX}/${fileName}` }
+    const url = await uploadToR2(`${R2_PREFIX}/${fileName}`, buffer, file.type)
+    return { ok: true, url }
   } catch (error) {
-    const code = (error as NodeJS.ErrnoException)?.code
-    if (code === "EROFS" || code === "EACCES" || code === "EPERM") {
-      console.error("[equipos] upload blocked by read-only filesystem:", error)
-      return { ok: false, error: "read_only" }
-    }
     console.error("[equipos] uploadEquipmentImageAction failed:", error)
     return { ok: false, error: "failed" }
   }

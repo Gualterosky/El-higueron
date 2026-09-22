@@ -37,7 +37,7 @@ export const eventos: Evento[] = [
     titulo: "Festival de Escalada El Higuerón",
     subtitulo:
       "Un día para escalar, competir y celebrar la comunidad escaladora en el corazón del bosque.",
-    imagenHero: "/media/Muro bendito sea/Img01.jpg",
+    imagenHero: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img01.jpg",
     fecha: "Por confirmar",
     lugar: "Camping El Higuerón",
     textoCta: "Quiero inscribirme",
@@ -100,12 +100,12 @@ export const eventos: Evento[] = [
       },
     ],
     galeria: [
-      "/media/Muro bendito sea/Img07.jpg",
-      "/media/Boulders/IMG_20250920_100731134_MFNR.jpg",
-      "/media/Muro bendito sea/Img08.jpg",
-      "/media/Boulders/IMG_20250920_100954059_HDR.jpg",
-      "/media/Naturaleza-paisajes/IMG_20240908_083909.jpg",
-      "/media/Camping/Fogata1.jpg",
+      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img07.jpg",
+      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg",
+      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img08.jpg",
+      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100954059_HDR.jpg",
+      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20240908_083909.jpg",
+      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/Fogata1.jpg",
     ],
     faqs: [
       { pregunta: "¿Necesito experiencia previa?", respuesta: "No. Hay una categoría de principiantes pensada para quienes recién comienzan. Lo importante es venir con ganas de disfrutar." },

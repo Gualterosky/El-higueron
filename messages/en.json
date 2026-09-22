@@ -1966,7 +1966,6 @@
         "missing_file": "Select a file.",
         "invalid_type": "Unsupported image format.",
         "too_large": "The image is too large (max 4MB).",
-        "read_only": "Images can't be uploaded in this environment. Upload the file directly to the repository under public/media/Equipos.",
         "failed": "Could not upload the image. Please try again."
       }
     },
@@ -2059,14 +2058,13 @@
           "daily": "Once a day"
         },
         "uploadButton": "Upload image",
-        "pickExisting": "Pick from public/media",
+        "pickExisting": "Pick existing image",
         "noImage": "No image",
         "uploadErrors": {
           "unauthorized": "You are not allowed to upload images.",
           "missing_file": "Select a file.",
           "invalid_type": "Unsupported format. Use JPG, PNG, WebP, GIF or AVIF.",
           "too_large": "The image is larger than 4 MB.",
-          "read_only": "The server cannot write files. Add the image to the repository under public/media and paste its path.",
           "failed": "Could not upload the image. Please try again."
         },
         "save": "Save announcement",

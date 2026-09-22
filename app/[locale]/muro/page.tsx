@@ -41,7 +41,7 @@ export default async function MuroPage({ params }: Props) {
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/media/Muro bendito sea/Img02.jpg"
+            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img02.jpg"
             alt={t("hero.imageAlt")}
             fill
             className="object-cover"
@@ -84,7 +84,7 @@ export default async function MuroPage({ params }: Props) {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Muro bendito sea/Img03.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img03.jpg"
                 alt={t("intro.imageAlt")}
                 fill
                 className="object-cover"
@@ -206,7 +206,7 @@ export default async function MuroPage({ params }: Props) {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Muro bendito sea/IMG_20250111_141453567_SR.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/IMG_20250111_141453567_SR.jpg"
                 alt={t("location.imageAlt")}
                 fill
                 className="object-cover"
@@ -264,7 +264,7 @@ export default async function MuroPage({ params }: Props) {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Muro bendito sea/Img04.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img04.jpg"
                 alt={t("safety.imageAlt")}
                 fill
                 className="object-cover"

@@ -77,10 +77,10 @@ export default async function HomePage({
 
   const galleryAlts = t.raw('gallery.alts') as string[]
   const galleryImages = [
-    { src: "/media/Muro bendito sea/Img06.jpg", alt: galleryAlts[0] },
-    { src: "/media/Camping/IMG_20250225_134602260_HDR.jpg", alt: galleryAlts[1] },
-    { src: "/media/Naturaleza-paisajes/IMG_20250225_135937239_HDR.jpg", alt: galleryAlts[2] },
-    { src: "/media/Boulders/IMG_20250920_100731134_MFNR.jpg", alt: galleryAlts[3] },
+    { src: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img06.jpg", alt: galleryAlts[0] },
+    { src: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134602260_HDR.jpg", alt: galleryAlts[1] },
+    { src: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250225_135937239_HDR.jpg", alt: galleryAlts[2] },
+    { src: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg", alt: galleryAlts[3] },
   ]
 
   const showEscalada = !hidden.escalada
@@ -96,7 +96,7 @@ export default async function HomePage({
       <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/media/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
+            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
             alt={t('hero.imageAlt')}
             fill
             className="object-cover"
@@ -181,7 +181,7 @@ export default async function HomePage({
                   <CardContent className="p-0">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <Image
-                        src="/media/Muro bendito sea/Img06.jpg"
+                        src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img06.jpg"
                         alt={t('adventures.escalada.imageAlt')}
                         fill
                         className="object-cover"
@@ -202,7 +202,7 @@ export default async function HomePage({
                   <CardContent className="p-0">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <Image
-                        src="/media/Camping/IMG_20250225_134602260_HDR.jpg"
+                        src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134602260_HDR.jpg"
                         alt={t('adventures.camping.imageAlt')}
                         fill
                         className="object-cover"
@@ -228,7 +228,7 @@ export default async function HomePage({
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Naturaleza-paisajes/IMG_20250225_140002347_MFNR.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250225_140002347_MFNR.jpg"
                 alt={t('about.imageAlt')}
                 fill
                 className="object-cover"

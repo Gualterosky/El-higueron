@@ -74,6 +74,7 @@ lib/
   site-settings*.ts         Modo mantenimiento + secciones ocultas del sitio
   chat/                     Server actions/queries del historial del chatbot
   eventos/                  Sistema de eventos configurable para /evento
+  storage/r2.ts             Cliente de Cloudflare R2 (imágenes estáticas del sitio, sección 15)
 i18n/                       Configuración de next-intl (routing, request, navigation)
 messages/                   es.json / en.json — todos los textos de la UI
 drizzle/                    Migraciones SQL generadas + snapshot de metadatos
@@ -762,6 +763,8 @@ estos paneles**, solo se documenta su estado:
 | Configurar el evento activo de `/evento` | `lib/eventos/config.ts` (estructura) + `messages/*.json` bajo `Evento.content` (textos) |
 | Cambiar datos legales del prestador (razón social, NIT, RNT) | `lib/legal-info.ts` — fuente única; los textos/etiquetas viven en `messages/*.json` (`Footer.legal`, `Contacto.legal`) |
 | Cambiar el agregador de reseñas (dashboard admin y sección pública en home) | `lib/reviews/types.ts` (vocabulario) + `lib/reviews/aggregate.ts` (une las 4 tablas de posts en memoria, nunca las muta) — ver sección 11.b |
+| Subir/listar imágenes estáticas del sitio (galería, equipos, novedades) en Cloudflare R2 | `lib/storage/r2.ts` (cliente) + `scripts/migrate-media-to-r2.ts` (migración masiva, `pnpm migrate:media-to-r2`) + `lib/equipos/actions.ts::uploadEquipmentImageAction` / `lib/announcement/actions.ts::uploadAnnouncementImageAction`/`listMediaImagesAction` — ver sección 15 |
+| Cambiar las fotos de la galería pública | `app/[locale]/galeria/page.tsx` (array `galleryImages`, URLs de R2) |
 
 ---
 
@@ -775,6 +778,7 @@ pnpm db:migrate       # Aplica migraciones en Neon
 pnpm db:push          # Sincroniza schema directamente (uso limitado en prototipos)
 pnpm db:backfill-contacts # Vincula contactos históricos (idempotente)
 pnpm db:seed-equipment # Seed idempotente del inventario inicial de equipos (sección 6.b)
+pnpm migrate:media-to-r2 # Sube public/media/** a Cloudflare R2 (idempotente, sección 15)
 ```
 
 `next.config.mjs` tiene `typescript.ignoreBuildErrors: true`: **el build NO
@@ -1058,14 +1062,13 @@ usuario de no completar borradores sin confirmación.
 
 ---
 
-## 15. Auditoría 2026-09-20 — Almacenamiento de imágenes/media (diagnóstico, migración a Cloudflare R2 en curso)
+## 15. Auditoría 2026-09-20/22 — Almacenamiento de imágenes/media → migrado a Cloudflare R2
 
 Auditoría solicitada por el usuario sobre rendimiento de carga de imágenes.
-**Solo diagnóstico en esta pasada** — la migración de código todavía no se
-ha implementado, queda como el próximo paso una vez se confirme el alcance
-exacto con el usuario.
+**Migración completada e implementada** (238 archivos subidos, código
+actualizado, `public/media` eliminado del working tree).
 
-### 15.1 Estado encontrado
+### 15.1 Estado encontrado (diagnóstico inicial, 2026-09-20)
 
 - **`next.config.mjs` tiene `images: { unoptimized: true }`**: la
   optimización de imágenes de Next.js (`next/image`) está completamente
@@ -1101,39 +1104,117 @@ exacto con el usuario.
   auditoría lo confirma como un problema activo (no solo teórico) que se
   resuelve de raíz con la misma migración de almacenamiento externo.
 
-### 15.2 Decisión del usuario — Cloudflare R2
+### 15.2 Decisión — dos almacenamientos de imágenes a propósito
 
-El usuario decidió **Cloudflare R2** como almacenamiento de objetos para las
-imágenes estáticas del sitio (galería y demás secciones), manteniendo **todo
-el código en Vercel** (no se migra el hosting de la app). Pendiente de
-confirmar con el usuario antes de implementar:
+El usuario decidió **Cloudflare R2** para las imágenes estáticas del sitio
+(galería, boulder, camping, naturaleza, equipos, novedades), manteniendo
+**todo el código en Vercel** (no se migra el hosting de la app). El Muro
+(contenido generado por visitantes) **se queda en Cloudinary** — es una
+decisión explícita de mantener dos almacenamientos distintos, no una
+inconsistencia:
 
-- Si ya existe un bucket de R2 aprovisionado (credenciales
-  `R2_ACCOUNT_ID`/`R2_ACCESS_KEY_ID`/`R2_SECRET_ACCESS_KEY`/nombre de bucket)
-  o si hay que guiar su creación, y si el bucket se expondrá con un dominio
-  público propio (`R2.dev` subdomain o dominio custom vía Cloudflare) para
-  poder referenciar las imágenes por URL.
-- Si `uploadEquipmentImageAction`/`uploadAnnouncementImageAction` migran
-  también a R2 (recomendado: resuelve el bug de `read_only` de raíz) o si
-  esas dos quedan para otra pasada.
-- Si el Muro se queda en Cloudinary (ya funcional) o también se estandariza a
-  R2 por consistencia — no es urgente, ya funciona hoy.
-- Qué hacer con las 143 MB ya commiteadas en `public/media/` y el historial
-  de `.git` (1.4 GB): subir las imágenes actuales a R2 y borrarlas de
-  `public/media` es no destructivo para el sitio, pero **reescribir el
-  historial de git para reducir el peso del repo (`git filter-repo`/BFG) es
-  una operación destructiva e irreversible** (fuerza a todos los
-  colaboradores a re-clonar) que requiere confirmación explícita aparte —
-  no se hará sin que el usuario la apruebe puntualmente.
-- Si la galería sigue como array hardcodeado en `galeria/page.tsx` (solo se
-  reemplazan las 232 rutas locales por URLs de R2) o si se mueve a una tabla
-  en Neon para que el admin pueda gestionar fotos sin redeploy — decisión
-  pendiente de confirmar con el usuario.
+| | Qué guarda | Quién sube | Dónde |
+|---|---|---|---|
+| **Cloudflare R2** | Fotos propias del sitio (galería, boulder, camping, naturaleza, logos, fotos de equipos, imágenes de novedades) | El equipo/admin, vía panel o el script de migración | `lib/storage/r2.ts` |
+| **Cloudinary** | Fotos/videos que suben los visitantes en sus publicaciones del Muro | Cualquier visitante, sin cuenta | `components/muro/media-uploader.tsx` |
 
-Una vez confirmado el alcance, esta sección se debe actualizar con: el
-mecanismo real de subida (script de migración de una sola vez para las 238
-imágenes existentes + flujo de subida nueva desde el panel admin), el cambio
-en `next.config.mjs` (`images.remotePatterns` apuntando al dominio de R2, y
-si se reactiva `unoptimized: false` para que Vercel optimice también las
-imágenes de R2), y el nuevo glosario de "dónde está la lógica de negocio" de
-media (sección 10).
+### 15.3 Implementación
+
+**Cliente R2 (`lib/storage/r2.ts`):** wrapper sobre `@aws-sdk/client-s3`
+(API S3-compatible de R2). `getEnv()` valida cada variable requerida
+(`R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`,
+`R2_BUCKET_NAME`, `R2_PUBLIC_URL`) al usarla, para fallar con un mensaje
+claro en vez de un error críptico del SDK. Expone `uploadToR2(key, buffer,
+contentType)`, `r2ObjectExists(key)`, `listR2Objects(prefix)` y
+`getR2PublicUrl(key)` (construye la URL pública a partir de `R2_PUBLIC_URL` +
+key, con cada segmento de ruta `encodeURIComponent`-eado para soportar
+nombres con espacios como `"Muro bendito sea"`).
+
+**Migración de las 238 imágenes existentes (`scripts/migrate-media-to-r2.ts`,
+`pnpm migrate:media-to-r2`):** script de una sola vez, ejecutado ya contra el
+bucket de producción. Recorre `public/media/` recursivamente, sube cada
+archivo a R2 usando la misma ruta relativa como key (ej.
+`"Boulders/Img17.jpg"`), es **idempotente** (usa `HeadObjectCommand` para
+saltar objetos que ya existen, salvo que se pase `--force`), y escribe
+`scripts/media-r2-mapping.json` (`"/media/<path>" → "<URL pública de R2>"`)
+para poder scriptear el reemplazo de referencias en el código. Resultado real
+de la corrida: **238/238 archivos subidos**, verificado además con un
+`curl` directo a la URL pública (200 OK, mismo tamaño en bytes que el
+archivo original).
+
+**Reemplazo de referencias hardcodeadas:** se reemplazaron las rutas
+`/media/...` por la URL pública de R2 correspondiente en los 17 archivos
+identificados en la sección 15.1 (`galeria/page.tsx`, `boulder/page.tsx`,
+`camping/page.tsx`, `el-lugar/page.tsx`, `visita/page.tsx`,
+`escalada/page.tsx`, `equipos/page.tsx`, `historia/page.tsx`,
+`contacto/page.tsx`, `[locale]/page.tsx`, `muro/page.tsx` +
+`RouteGuideSection.tsx`, `navbar.tsx`, `lib/boulder/boulders.ts`,
+`lib/eventos/{config,plantillas}.ts`), usando el mapeo generado por el
+script de migración (script temporal, no se dejó en el repo). El único caso
+que no era un literal estático (`app/[locale]/camping/page.tsx`, la galería
+de fogatas, que construía la ruta con un template literal
+`` `/media/Camping/${img}` ``) se reescribió como un array de URLs completas
+de R2, igual que el resto.
+
+**Hallazgo durante la migración — 23 imágenes de la galería ya estaban
+rotas:** al cruzar cada `src` de `galeria/page.tsx` contra los archivos
+reales de `public/media` antes de subirlos, aparecieron **23 entradas
+(de las 232) que apuntaban a archivos que ya no existían en disco** —
+imágenes borradas del repo en algún momento sin quitar su entrada del array,
+en las categorías escalada, boulder, camping y naturaleza. Ya estaban rotas
+en producción (ícono de imagen caída) antes de esta migración, no es algo
+que haya causado la migración. Se optó por **eliminar esas 23 entradas** del
+array (mostrar un espacio vacío/broken es peor que mostrar una foto menos) en
+vez de dejarlas o inventar una URL. La galería quedó con **209 fotos reales**
+en vez de 232. Si el propietario tiene esas fotos originales, puede volver a
+agregarlas subiéndolas con `pnpm migrate:media-to-r2` y añadiendo la entrada
+correspondiente al array.
+
+**`uploadEquipmentImageAction`/`uploadAnnouncementImageAction` migradas a
+R2:** ya no usan `fs.writeFile`/`mkdir` (que fallaban con `EROFS` en Vercel,
+ver secciones 6.b/7.b) — ahora llaman `uploadToR2(`Equipos/<archivo>`, ...)` /
+`uploadToR2(`Novedades/<archivo>`, ...)` y devuelven la URL pública de R2
+directamente. El tipo de error `"read_only"` se quitó de ambos result types
+y de `messages/{es,en}.json` (`Panel.equipos.uploadErrors`,
+`Panel.announcement.uploadErrors`) porque ya no puede ocurrir. **Este bug
+está resuelto de raíz**, no solo documentado: subir una foto de equipo o de
+una novedad desde el panel admin en producción ahora funciona.
+
+**`listMediaImagesAction` (`lib/announcement/actions.ts`):** en vez de
+recorrer `public/media` con `readdir`, llama `listR2Objects("")` y devuelve
+las URLs públicas completas (antes devolvía rutas `/media/...`. El selector
+"Elegir imagen existente" de `admin-announcement-section.tsx` se actualizó
+para mostrar solo el nombre de archivo (`image.split("/").pop()`) en vez de
+hacer `.replace("/media/", "")` sobre una URL absoluta.
+
+**`next.config.mjs`:** se quitó `images.unoptimized: true`. Ahora
+`images.remotePatterns` se calcula leyendo el hostname de `R2_PUBLIC_URL` en
+tiempo de build (`new URL(process.env.R2_PUBLIC_URL).hostname`), así que
+funciona igual con el subdominio `pub-xxxx.r2.dev` o con un dominio propio
+conectado más adelante sin tocar código. Con esto, Next.js/el Image
+Optimizer de Vercel **sí redimensiona y convierte a WebP/AVIF** cada
+`<Image>` que apunta a R2 (antes se servía el original tal cual). El Muro
+sigue usando `<img>` plano hacia Cloudinary (`post-media-gallery.tsx`), no
+necesita `remotePatterns`.
+
+**`public/media/` eliminado del working tree** (238 archivos, ~143 MB) tras
+verificar que todo el código ya apunta a R2. **El historial de git (~1.4 GB
+en `.git`) NO se reescribió** — sigue conteniendo esas imágenes en commits
+viejos. Reducir eso requeriría `git filter-repo`/BFG, una operación
+destructiva e irreversible (fuerza a re-clonar a cualquier colaborador) que
+el usuario decidió no ejecutar en esta pasada; si se quiere hacer más
+adelante, requiere su aprobación explícita puntual antes de correrla.
+
+**Verificación:** `pnpm lint` → 0 errores (mismos 23 warnings preexistentes
+de la sección 13, ninguno nuevo). `npx tsc --noEmit` → 0 errores. `pnpm
+build` → compila y genera las 118 páginas, incluida `/galeria`. Prueba
+manual contra el bucket real: `curl` a una URL de R2 migrada devuelve `200
+image/jpeg` con el mismo tamaño en bytes que el archivo original.
+
+**Variables de entorno nuevas (`.env.example`):** `R2_ACCOUNT_ID`,
+`R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`,
+`R2_PUBLIC_URL`, y se documentaron también las de Cloudinary
+(`NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`/`NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`,
+ya usadas por el Muro pero que no estaban en el archivo de ejemplo). Faltan
+configurar en Vercel (Production/Preview) para que el build/runtime de
+producción tenga acceso a R2.

@@ -25,7 +25,7 @@ export default async function EscaladaPage({
       description: t('modalities.muro.description'),
       icon: Mountain,
       href: "/muro" as const,
-      image: "/media/Muro bendito sea/Img07.jpg",
+      image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img07.jpg",
       routes: t('modalities.muro.routes'),
       height: t('modalities.muro.height'),
       section: "muro" as const,
@@ -35,7 +35,7 @@ export default async function EscaladaPage({
       description: t('modalities.boulder.description'),
       icon: CircleDot,
       href: "/boulder" as const,
-      image: "/media/Boulders/IMG_20250920_100731134_MFNR.jpg",
+      image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg",
       routes: t('modalities.boulder.routes'),
       height: t('modalities.boulder.height'),
       section: "boulder" as const,
@@ -60,7 +60,7 @@ export default async function EscaladaPage({
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/media/Muro bendito sea/Img01.jpg"
+            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img01.jpg"
             alt={t('hero.imageAlt')}
             fill
             className="object-cover"
@@ -273,7 +273,7 @@ export default async function EscaladaPage({
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Muro bendito sea/Img08.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img08.jpg"
                 alt={t('safety.imageAlt')}
                 fill
                 className="object-cover"

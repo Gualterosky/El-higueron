@@ -17,76 +17,76 @@ export const BOULDERS: BoulderMeta[] = [
   {
     id: "BLDR01",
     number: 1,
-    image: "/media/Boulders/Boulder1.jpg",
+    image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Boulder1.jpg",
     problems: [
       {
         id: "PP01",
         number: 1,
         level: "V0",
-        image: "/media/Boulders/Img21.jpg",
+        image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img21.jpg",
       },
       {
         id: "PP02",
         number: 2,
         level: "V0",
-        image: "/media/Boulders/Img22.jpg",
+        image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img22.jpg",
       },
     ],
   },
   {
     id: "BLDR02",
     number: 2,
-    image: "/media/Boulders/Img17.jpg",
+    image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img17.jpg",
     problems: [
       {
         id: "AUH01",
         number: 1,
         level: "V3",
-        image: "/media/Boulders/Img24.jpg",
+        image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img24.jpg",
       },
       {
         id: "AUH02",
         number: 2,
         level: "V5",
-        image: "/media/Boulders/Img25.jpg",
+        image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img25.jpg",
       },
     ],
   },
   {
     id: "BLDR03",
     number: 3,
-    image: "/media/Boulders/Img18.jpg",
+    image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img18.jpg",
     problems: [
       {
         id: "EP01",
         number: 1,
         level: "V6",
-        image: "/media/Boulders/Img26.jpg",
+        image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img26.jpg",
       },
     ],
   },
   {
     id: "BLDR04",
     number: 4,
-    image: "/media/Boulders/Boulder2.jpg",
+    image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Boulder2.jpg",
     problems: [
       {
         id: "ED01",
         number: 1,
         level: "V4",
-        image: "/media/Boulders/Img27.jpg",
+        image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img27.jpg",
       },
       {
         id: "ED02",
         number: 2,
         level: "V6",
-        image: "/media/Boulders/Img31.jpg",
+        image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img31.jpg",
       },
       {
         id: "ED03",
         number: 3,
         level: "V8",
-        image: "/media/Boulders/IMG_20250225_134043618_HDR.jpg",
+        image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250225_134043618_HDR.jpg",
       },
     ],
   },

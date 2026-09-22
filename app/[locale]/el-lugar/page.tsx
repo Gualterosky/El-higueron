@@ -56,7 +56,7 @@ export default async function ElLugarPage({ params }: Props) {
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/media/Naturaleza-paisajes/IMG_20250126_162756601_HDR.jpg"
+            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_162756601_HDR.jpg"
             alt={t("hero.imageAlt")}
             fill
             className="object-cover"
@@ -102,7 +102,7 @@ export default async function ElLugarPage({ params }: Props) {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Naturaleza-paisajes/IMG_20250225_140005398_MFNR.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250225_140005398_MFNR.jpg"
                 alt={t("intro.imageAlt")}
                 fill
                 className="object-cover"
@@ -173,7 +173,7 @@ export default async function ElLugarPage({ params }: Props) {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
                 alt={t("history.imageAlt")}
                 fill
                 className="object-cover"
@@ -222,7 +222,7 @@ export default async function ElLugarPage({ params }: Props) {
 
             <div className="relative order-1 aspect-[4/3] overflow-hidden rounded-2xl lg:order-2">
               <Image
-                src="/media/Naturaleza-paisajes/IMG_20250121_174841943_MFNR.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250121_174841943_MFNR.jpg"
                 alt={t("connection.imageAlt")}
                 fill
                 className="object-cover"

@@ -36,7 +36,7 @@ export default function RouteGuideSection() {
                 onClick={() => setLightboxOpen(true)}
               >
                 <Image
-                  src="/media/Rutas bendito sea.png"
+                  src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Rutas%20bendito%20sea.png"
                   alt={t("imageAlt")}
                   fill
                   className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
@@ -64,7 +64,7 @@ export default function RouteGuideSection() {
                 variant="outline"
                 className="border-forest text-forest hover:bg-forest hover:text-white"
               >
-                <a href="/media/Rutas bendito sea.png" download="Rutas-Bendito-Sea.png">
+                <a href="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Rutas%20bendito%20sea.png" download="Rutas-Bendito-Sea.png">
                   <Download className="mr-2 h-5 w-5" />
                   {t("download")}
                 </a>
@@ -93,7 +93,7 @@ export default function RouteGuideSection() {
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src="/media/Rutas bendito sea.png"
+              src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Rutas%20bendito%20sea.png"
               alt={t("imageAlt")}
               width={900}
               height={1200}
@@ -108,7 +108,7 @@ export default function RouteGuideSection() {
               className="bg-orange text-white hover:bg-orange/90 shadow-lg"
             >
               <a
-                href="/media/Rutas bendito sea.png"
+                href="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Rutas%20bendito%20sea.png"
                 download="Rutas-Bendito-Sea.png"
                 onClick={(e) => e.stopPropagation()}
               >

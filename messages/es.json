@@ -1966,7 +1966,6 @@
         "missing_file": "Selecciona un archivo.",
         "invalid_type": "Formato de imagen no soportado.",
         "too_large": "La imagen es demasiado grande (máx. 4MB).",
-        "read_only": "No se puede subir la imagen en este entorno. Sube el archivo directamente al repositorio en public/media/Equipos.",
         "failed": "No se pudo subir la imagen. Intenta de nuevo."
       }
     },
@@ -2059,14 +2058,13 @@
           "daily": "Una vez al día"
         },
         "uploadButton": "Subir imagen",
-        "pickExisting": "Elegir de public/media",
+        "pickExisting": "Elegir imagen existente",
         "noImage": "Sin imagen",
         "uploadErrors": {
           "unauthorized": "No tienes permisos para subir imágenes.",
           "missing_file": "Selecciona un archivo.",
           "invalid_type": "Formato no admitido. Usa JPG, PNG, WebP, GIF o AVIF.",
           "too_large": "La imagen supera los 4 MB.",
-          "read_only": "El servidor no permite escribir archivos. Sube la imagen al repositorio en public/media y pega su ruta.",
           "failed": "No se pudo subir la imagen. Intenta de nuevo."
         },
         "save": "Guardar novedad",

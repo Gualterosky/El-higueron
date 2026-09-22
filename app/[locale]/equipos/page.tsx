@@ -37,7 +37,7 @@ export default async function EquiposPage({ params }: Props) {
       <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/media/Muro bendito sea/Img09.jpg"
+            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img09.jpg"
             alt={t("hero.imageAlt")}
             fill
             className="object-cover"
@@ -214,7 +214,7 @@ export default async function EquiposPage({ params }: Props) {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted">
               <Image
-                src="/media/Equipos/crashpad 2c.png"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Equipos/crashpad%202c.png"
                 alt={t("notes.imageAlt")}
                 fill
                 className="object-cover"

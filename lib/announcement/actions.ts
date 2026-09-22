@@ -1,7 +1,5 @@
 "use server"
 
-import { mkdir, readdir, writeFile } from "node:fs/promises"
-import path from "node:path"
 import { getSession } from "@/lib/auth/session"
 import {
   getAnnouncement,
@@ -13,10 +11,10 @@ import {
   MAX_ANNOUNCEMENT_DELAY_SECONDS,
   type AnnouncementConfig,
 } from "@/lib/announcement/types"
+import { getR2PublicUrl, listR2Objects, uploadToR2 } from "@/lib/storage/r2"
 
-/** Uploaded announcement images live here so they sit next to the other site media. */
-const UPLOAD_DIR = ["public", "media", "Novedades"] as const
-const PUBLIC_PREFIX = "/media/Novedades"
+/** Uploaded announcement images live in the "Novedades/" prefix of the R2 media bucket. */
+const R2_PREFIX = "Novedades"
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024
 const ALLOWED_IMAGE_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
@@ -38,7 +36,7 @@ export type UploadAnnouncementImageResult =
   | { ok: true; url: string }
   | {
       ok: false
-      error: "unauthorized" | "missing_file" | "invalid_type" | "too_large" | "read_only" | "failed"
+      error: "unauthorized" | "missing_file" | "invalid_type" | "too_large" | "failed"
     }
 
 export type ListMediaImagesResult =
@@ -181,56 +179,26 @@ export async function uploadAnnouncementImageAction(
   const baseName =
     slugify(file.name.replace(/\.[^.]+$/, "")) || "novedad"
   const fileName = `${baseName}-${Date.now()}.${extension}`
-  const directory = path.join(process.cwd(), ...UPLOAD_DIR)
 
   try {
-    await mkdir(directory, { recursive: true })
     const buffer = Buffer.from(await file.arrayBuffer())
-    await writeFile(path.join(directory, fileName), buffer)
-    return { ok: true, url: `${PUBLIC_PREFIX}/${fileName}` }
+    const url = await uploadToR2(`${R2_PREFIX}/${fileName}`, buffer, file.type)
+    return { ok: true, url }
   } catch (error) {
-    const code = (error as NodeJS.ErrnoException)?.code
-    if (code === "EROFS" || code === "EACCES" || code === "EPERM") {
-      console.error("[announcement] upload blocked by read-only filesystem:", error)
-      return { ok: false, error: "read_only" }
-    }
     console.error("[announcement] uploadAnnouncementImageAction failed:", error)
     return { ok: false, error: "failed" }
   }
 }
 
-const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif", ".svg"])
-
-/** Lists every image already stored in public/media so the admin can reuse one. */
+/** Lists every image already stored in the R2 media bucket so the admin can reuse one. */
 export async function listMediaImagesAction(): Promise<ListMediaImagesResult> {
   if (!(await requireAdmin())) {
     return { ok: false, error: "unauthorized" }
   }
 
-  const mediaRoot = path.join(process.cwd(), "public", "media")
-
-  async function walk(directory: string, prefix: string): Promise<string[]> {
-    const entries = await readdir(directory, { withFileTypes: true })
-    const results: string[] = []
-
-    for (const entry of entries) {
-      if (entry.name.startsWith(".")) continue
-      const entryPath = path.join(directory, entry.name)
-      const publicPath = `${prefix}/${entry.name}`
-
-      if (entry.isDirectory()) {
-        results.push(...(await walk(entryPath, publicPath)))
-      } else if (IMAGE_EXTENSIONS.has(path.extname(entry.name).toLowerCase())) {
-        results.push(publicPath)
-      }
-    }
-
-    return results
-  }
-
   try {
-    const images = await walk(mediaRoot, "/media")
-    images.sort((a, b) => a.localeCompare(b))
+    const keys = await listR2Objects("")
+    const images = keys.map(getR2PublicUrl).sort((a, b) => a.localeCompare(b))
     return { ok: true, images }
   } catch (error) {
     console.error("[announcement] listMediaImagesAction failed:", error)

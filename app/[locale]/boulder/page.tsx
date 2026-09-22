@@ -53,7 +53,7 @@ export default async function BoulderPage({
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/media/Boulders/IMG_20250920_092321682_HDR.jpg"
+            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_092321682_HDR.jpg"
             alt={t('hero.imageAlt')}
             fill
             className="object-cover"
@@ -76,7 +76,7 @@ export default async function BoulderPage({
       <section className="relative overflow-hidden">
         <div className="relative aspect-[21/9] w-full">
           <Image
-            src="/media/Boulders/IMG_20250920_162115607_MFNR.jpg"
+            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_162115607_MFNR.jpg"
             alt={t('banner.imageAlt')}
             fill
             className="object-cover object-center"
@@ -115,7 +115,7 @@ export default async function BoulderPage({
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Boulders/Img17.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img17.jpg"
                 alt={t('intro.imageAlt')}
                 fill
                 className="object-cover"
@@ -141,7 +141,7 @@ export default async function BoulderPage({
           <div className="mb-4 grid gap-4 md:grid-cols-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Boulders/IMG_20250914_143103460_MFNR.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250914_143103460_MFNR.jpg"
                 alt="Boulder en roca natural"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -149,7 +149,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Boulders/IMG_20250920_100731134_MFNR.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg"
                 alt="Escalada en bloque"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -161,7 +161,7 @@ export default async function BoulderPage({
           <div className="mb-4 grid gap-4 md:grid-cols-3">
             <div className="relative aspect-square overflow-hidden rounded-2xl">
               <Image
-                src="/media/Boulders/IMG_20250920_100954059_HDR.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100954059_HDR.jpg"
                 alt="Detalle de agarre en boulder"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -169,7 +169,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-square overflow-hidden rounded-2xl">
               <Image
-                src="/media/Boulders/Img18.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img18.jpg"
                 alt="Problema de boulder"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -177,7 +177,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-square overflow-hidden rounded-2xl">
               <Image
-                src="/media/Boulders/Img20.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img20.jpg"
                 alt="Escalador trabajando problema"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -189,7 +189,7 @@ export default async function BoulderPage({
           <div className="grid gap-4 sm:grid-cols-4">
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="/media/Boulders/Img21.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img21.jpg"
                 alt="Boulder zona 1"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -197,7 +197,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="/media/Boulders/Img22.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img22.jpg"
                 alt="Boulder zona 2"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -205,7 +205,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="/media/Boulders/Img23.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img23.jpg"
                 alt="Boulder zona 3"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -213,7 +213,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="/media/Boulders/IMG_20260430_120707095_HDR.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20260430_120707095_HDR.jpg"
                 alt="Vista de la zona de boulder"
                 fill
                 className="object-cover transition-transform duration-300 hover:scale-105"
@@ -340,7 +340,7 @@ export default async function BoulderPage({
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/media/Boulders/IMG_20260430_120745606_HDR.jpg"
+                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20260430_120745606_HDR.jpg"
                 alt={t('crashpads.imageAlt')}
                 fill
                 className="object-cover"

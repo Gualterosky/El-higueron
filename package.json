@@ -14,7 +14,9 @@
     "db:backfill-contacts": "tsx --env-file=.env.local scripts/backfill-contacts.ts",
     "db:seed-admin": "tsx --env-file=.env.local scripts/seed-admin.ts",
     "db:seed-equipment": "tsx --env-file=.env.local scripts/seed-equipment.ts",
-    "migrate:media-to-r2": "tsx --env-file=.env.local scripts/migrate-media-to-r2.ts"
+    "migrate:media-to-r2": "tsx --env-file=.env.local scripts/migrate-media-to-r2.ts",
+    "media:download": "tsx --env-file=.env.local scripts/media-download.ts",
+    "media:sync": "tsx --env-file=.env.local scripts/media-sync.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1136.0",

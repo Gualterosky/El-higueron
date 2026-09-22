@@ -75,6 +75,7 @@ lib/
   chat/                     Server actions/queries del historial del chatbot
   eventos/                  Sistema de eventos configurable para /evento
   storage/r2.ts             Cliente de Cloudflare R2 (imágenes estáticas del sitio, sección 15)
+  media/gallery.ts          Lista dinámicamente las fotos de /galeria desde R2 (sección 15.6)
 i18n/                       Configuración de next-intl (routing, request, navigation)
 messages/                   es.json / en.json — todos los textos de la UI
 drizzle/                    Migraciones SQL generadas + snapshot de metadatos
@@ -763,8 +764,8 @@ estos paneles**, solo se documenta su estado:
 | Configurar el evento activo de `/evento` | `lib/eventos/config.ts` (estructura) + `messages/*.json` bajo `Evento.content` (textos) |
 | Cambiar datos legales del prestador (razón social, NIT, RNT) | `lib/legal-info.ts` — fuente única; los textos/etiquetas viven en `messages/*.json` (`Footer.legal`, `Contacto.legal`) |
 | Cambiar el agregador de reseñas (dashboard admin y sección pública en home) | `lib/reviews/types.ts` (vocabulario) + `lib/reviews/aggregate.ts` (une las 4 tablas de posts en memoria, nunca las muta) — ver sección 11.b |
-| Subir/listar imágenes estáticas del sitio (galería, equipos, novedades) en Cloudflare R2 | `lib/storage/r2.ts` (cliente) + `scripts/migrate-media-to-r2.ts` (migración masiva, `pnpm migrate:media-to-r2`) + `lib/equipos/actions.ts::uploadEquipmentImageAction` / `lib/announcement/actions.ts::uploadAnnouncementImageAction`/`listMediaImagesAction` — ver sección 15 |
-| Cambiar las fotos de la galería pública | `app/[locale]/galeria/page.tsx` (array `galleryImages`, URLs de R2) |
+| Subir/listar imágenes estáticas del sitio (galería, equipos, novedades) en Cloudflare R2 | `lib/storage/r2.ts` (cliente) + `pnpm media:download`/`pnpm media:sync` (`scripts/media-download.ts`/`scripts/media-sync.ts`, carpeta local `public/media/` gitignored) + `lib/equipos/actions.ts::uploadEquipmentImageAction` / `lib/announcement/actions.ts::uploadAnnouncementImageAction`/`listMediaImagesAction` — ver sección 15 |
+| Cambiar qué fotos aparecen en la Galería pública | Ya no es código: agrega/edita/borra archivos en `public/media/{Boulders,Camping,"Muro bendito sea",Naturaleza-paisajes}/` y corre `pnpm media:sync` — se refleja solo (ISR, hasta 1 min). Ver `lib/media/gallery.ts` y sección 15.6 |
 
 ---
 
@@ -778,7 +779,9 @@ pnpm db:migrate       # Aplica migraciones en Neon
 pnpm db:push          # Sincroniza schema directamente (uso limitado en prototipos)
 pnpm db:backfill-contacts # Vincula contactos históricos (idempotente)
 pnpm db:seed-equipment # Seed idempotente del inventario inicial de equipos (sección 6.b)
-pnpm migrate:media-to-r2 # Sube public/media/** a Cloudflare R2 (idempotente, sección 15)
+pnpm migrate:media-to-r2 # Migración histórica de una sola vez (ya ejecutada), sección 15
+pnpm media:download   # Descarga el bucket completo de R2 a public/media/ (carpeta local, gitignored)
+pnpm media:sync        # Sube a R2 lo nuevo/modificado en public/media/ (usa --prune para también borrar, --dry-run para previsualizar)
 ```
 
 `next.config.mjs` tiene `typescript.ignoreBuildErrors: true`: **el build NO
@@ -1198,12 +1201,7 @@ sigue usando `<img>` plano hacia Cloudinary (`post-media-gallery.tsx`), no
 necesita `remotePatterns`.
 
 **`public/media/` eliminado del working tree** (238 archivos, ~143 MB) tras
-verificar que todo el código ya apunta a R2. **El historial de git (~1.4 GB
-en `.git`) NO se reescribió** — sigue conteniendo esas imágenes en commits
-viejos. Reducir eso requeriría `git filter-repo`/BFG, una operación
-destructiva e irreversible (fuerza a re-clonar a cualquier colaborador) que
-el usuario decidió no ejecutar en esta pasada; si se quiere hacer más
-adelante, requiere su aprobación explícita puntual antes de correrla.
+verificar que todo el código ya apunta a R2.
 
 **Verificación:** `pnpm lint` → 0 errores (mismos 23 warnings preexistentes
 de la sección 13, ninguno nuevo). `npx tsc --noEmit` → 0 errores. `pnpm
@@ -1218,3 +1216,94 @@ image/jpeg` con el mismo tamaño en bytes que el archivo original.
 ya usadas por el Muro pero que no estaban en el archivo de ejemplo). Faltan
 configurar en Vercel (Production/Preview) para que el build/runtime de
 producción tenga acceso a R2.
+
+### 15.4 Historial de git reescrito (2026-09-22, autorizado explícitamente por el usuario)
+
+El usuario pidió explícitamente reducir el peso de `.git` (que había quedado
+en ~1.4 GB por las 143 MB de fotos commiteadas históricamente) y autorizó
+como excepción puntual que el agente ejecutara los comandos de git para
+esto (`AGENTS.md` normalmente prohíbe que el agente corra git — el
+desarrollador lo maneja manualmente; esta fue la única excepción concedida).
+
+- Backup previo: `git clone --mirror` completo a
+  `El-higueron-backup-mirror.git` (fuera del repo) antes de tocar nada.
+- `git filter-repo --invert-paths --path public/media --force` reescribió
+  **todos** los commits quitando `public/media` de la historia completa.
+  Esto cambia el hash de cada commit — cualquier otro clon local del repo
+  queda desincronizado y debe re-clonar.
+- `.git` local: **1.4 GB → ~4.9 MB**.
+- `git push origin main --force` aplicó la historia limpia en GitHub.
+- Se borraron 8 de las 11 ramas remotas `v0/kevinleonardogm01-*` (relacionadas
+  con la integración v0.dev) que todavía referenciaban el historial viejo,
+  dejando solo las 3 más recientes (commit `2026-08-15`:
+  `813acd28`/`c2e5c5c4`/`d89068d3`) — decisión explícita del usuario, no se
+  borraron sin confirmar.
+- **No se puede limpiar del todo:** los refs `refs/pull/*` de Pull Requests
+  cerrados/mergeados los administra GitHub internamente y no se pueden
+  borrar con `git push`; mientras existan, GitHub retiene los objetos viejos
+  aunque `main` y las ramas ya estén limpias.
+
+### 15.5 Flujo de trabajo local para imágenes estáticas (carpeta gitignored + sync)
+
+A petición del usuario, `public/media/` volvió a existir **solo como carpeta
+de trabajo local** (no se sube a git, ver `.gitignore`) que refleja el
+bucket de R2. El flujo para agregar/editar/borrar imágenes del sitio:
+
+```
+public/media/**  (local, gitignored)  ⇄  pnpm media:sync / media:download  ⇄  Cloudflare R2 (fuente de verdad)
+```
+
+- **`pnpm media:download`** (`scripts/media-download.ts`): descarga el
+  bucket completo a `public/media/`, preservando la estructura de carpetas.
+  Se usa para poblar la carpeta la primera vez o para traer cambios que
+  alguien hizo directo en el dashboard de Cloudflare.
+- **`pnpm media:sync`** (`scripts/media-sync.ts`): compara cada archivo
+  local contra R2 por hash (**MD5 local vs. `ETag` remoto** — válido porque
+  `uploadToR2` siempre hace `PutObject` de una sola parte, nunca multipart;
+  si en el futuro se sube algo por multipart el ETag ya no sería un MD5
+  simple y esta comparación habría que revisarla) y sube lo nuevo/modificado.
+  Por defecto **no borra nada en R2** que ya no exista localmente, solo lo
+  reporta; hay que pasar `--prune` para que sí actúe como mirror completo
+  (equivalente a `rsync --delete`). `--dry-run` para previsualizar sin tocar
+  nada. Ambos scripts reutilizan `lib/storage/r2.ts`
+  (`listR2ObjectsDetailed`, `uploadToR2`, `deleteFromR2`).
+- **Separación de responsabilidades:** el sync resuelve el *almacenamiento*.
+  Qué páginas *muestran* cada imagen sigue siendo cosa del código para las
+  páginas curadas (home, boulder, camping, equipos, etc. — ahí una foto
+  nueva sigue necesitando una línea de código nueva con su URL), **excepto
+  la Galería**, que ahora es 100% automática (ver 15.6).
+
+### 15.6 Galería 100% dinámica desde R2 (ya no es un array hardcodeado)
+
+A petición explícita del usuario, `app/[locale]/galeria/page.tsx` dejó de
+ser un array fijo de 209 entradas y pasó a listar **todo lo que haya** en
+las carpetas de la galería del bucket de R2, en tiempo real:
+
+- **`lib/media/gallery.ts::getGalleryImages()`**: llama
+  `listR2Objects("")` y filtra/clasifica por carpeta de nivel superior vía
+  `GALLERY_FOLDERS` (`"Muro bendito sea"` → `escalada`, `Boulders` →
+  `boulder`, `Camping` → `camping`, `Naturaleza-paisajes` → `naturaleza`).
+  Cualquier otra carpeta del bucket (`Equipos/`, `Novedades/`, logos sueltos)
+  se ignora a propósito — no es contenido de galería. Solo extensiones de
+  imagen conocidas (`IMAGE_EXTENSIONS`).
+- **`app/[locale]/galeria/page.tsx`** pasó de `"use client"` con el array
+  hardcodeado a **Server Component async** que llama `getGalleryImages()` y
+  se lo pasa a un componente cliente nuevo. Tiene
+  `export const revalidate = 60`: Next.js (ISR) vuelve a consultar R2 como
+  máximo cada 60 segundos, así que **agregar/editar/borrar una foto con
+  `pnpm media:sync` se refleja en la Galería sin necesidad de redeploy**,
+  con un pequeño delay de hasta 1 minuto.
+- **`components/galeria/gallery-grid.tsx`** (nuevo, `"use client"`):
+  contiene toda la interactividad que antes vivía en `page.tsx` (filtro por
+  categoría, lightbox con navegación anterior/siguiente) sin cambios de UX,
+  recibiendo `images: GalleryImage[]` por prop en vez de leer el array
+  global. Muestra `t("empty")` (nueva key en `messages/{es,en}.json` bajo
+  `Galeria`) si una categoría no tiene fotos.
+- **Trade-off aceptado:** las 209 fotos ya no tienen alt-text/descripción
+  curada individual (era texto escrito a mano por foto en el array viejo,
+  ej. "Escalador en ruta Bendito Sea 5.13a") — el alt ahora es genérico, la
+  etiqueta de la categoría traducida (`t("filters.<categoria>")`). Es el
+  costo explícito de que la lista sea 100% automática; si en el futuro se
+  quiere recuperar descripciones por foto habría que guardar esos metadatos
+  en algún lado (ej. una tabla en Neon o un JSON de metadatos junto a las
+  imágenes), no en R2 (que solo guarda el archivo).

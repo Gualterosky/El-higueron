@@ -1,4 +1,10 @@
-import { S3Client, PutObjectCommand, HeadObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3"
+import {
+  S3Client,
+  PutObjectCommand,
+  HeadObjectCommand,
+  ListObjectsV2Command,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3"
 
 /**
  * Cloudflare R2 (API compatible con S3) — almacenamiento de las imágenes
@@ -65,10 +71,12 @@ export async function r2ObjectExists(key: string): Promise<boolean> {
   }
 }
 
-/** Lista todas las keys bajo un prefijo (ej. "Equipos/", "Novedades/"), paginando si hace falta. */
-export async function listR2Objects(prefix: string): Promise<string[]> {
+export type R2ObjectMeta = { key: string; etag: string; size: number }
+
+/** Lista key + ETag + tamaño de todos los objetos bajo un prefijo, paginando si hace falta. */
+export async function listR2ObjectsDetailed(prefix: string): Promise<R2ObjectMeta[]> {
   const client = getClient()
-  const keys: string[] = []
+  const objects: R2ObjectMeta[] = []
   let continuationToken: string | undefined
 
   do {
@@ -80,12 +88,28 @@ export async function listR2Objects(prefix: string): Promise<string[]> {
       })
     )
     for (const object of response.Contents ?? []) {
-      if (object.Key) keys.push(object.Key)
+      if (object.Key) {
+        objects.push({
+          key: object.Key,
+          etag: (object.ETag ?? "").replace(/"/g, ""),
+          size: object.Size ?? 0,
+        })
+      }
     }
     continuationToken = response.IsTruncated ? response.NextContinuationToken : undefined
   } while (continuationToken)
 
-  return keys
+  return objects
+}
+
+/** Lista todas las keys bajo un prefijo (ej. "Equipos/", "Novedades/"), paginando si hace falta. */
+export async function listR2Objects(prefix: string): Promise<string[]> {
+  return (await listR2ObjectsDetailed(prefix)).map((object) => object.key)
+}
+
+export async function deleteFromR2(key: string): Promise<void> {
+  const client = getClient()
+  await client.send(new DeleteObjectCommand({ Bucket: getEnv("R2_BUCKET_NAME"), Key: key }))
 }
 
 export function getR2PublicUrl(key: string): string {

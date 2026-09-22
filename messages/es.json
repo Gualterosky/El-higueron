@@ -681,7 +681,8 @@
       "close": "Cerrar",
       "prev": "Anterior",
       "next": "Siguiente"
-    }
+    },
+    "empty": "No hay fotos en esta categoría todavía."
   },
   "Contacto": {
     "hero": {

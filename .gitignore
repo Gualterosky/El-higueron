@@ -27,3 +27,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 Run server.bat
+
+# Carpeta local de trabajo para las imágenes estáticas del sitio (galería,
+# boulder, camping, naturaleza, equipos, novedades). Vive solo en tu máquina:
+# el almacenamiento real es Cloudflare R2, no git. Usa `pnpm media:download`
+# para bajar el estado actual de R2 y `pnpm media:sync` para subir tus
+# cambios locales (agregar/editar/borrar). Ver system_architecture.md sección 15.
+/public/media/

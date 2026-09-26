@@ -1,4 +1,4 @@
-import { getR2PublicUrl, listR2Objects } from "@/lib/storage/r2"
+import { getR2PublicUrl, isR2Configured, listR2Objects } from "@/lib/storage/r2"
 
 export type GalleryCategory = "escalada" | "boulder" | "camping" | "naturaleza"
 
@@ -29,24 +29,36 @@ const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".av
  * sección 15.
  */
 export async function getGalleryImages(): Promise<GalleryImage[]> {
-  const keys = await listR2Objects("")
-  const images: GalleryImage[] = []
-
-  for (const key of keys) {
-    const slashIndex = key.indexOf("/")
-    if (slashIndex === -1) continue
-
-    const folder = key.slice(0, slashIndex)
-    const category = GALLERY_FOLDERS[folder]
-    if (!category) continue
-
-    const dotIndex = key.lastIndexOf(".")
-    const extension = dotIndex === -1 ? "" : key.slice(dotIndex).toLowerCase()
-    if (!IMAGE_EXTENSIONS.has(extension)) continue
-
-    images.push({ src: getR2PublicUrl(key), category })
+  if (!isR2Configured()) {
+    console.warn(
+      "[galeria] Faltan variables R2_* (R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME, R2_PUBLIC_URL). La galería se renderiza vacía. Configúralas en Vercel (Production/Preview) para el build, no solo el runtime."
+    )
+    return []
   }
 
-  images.sort((a, b) => a.src.localeCompare(b.src))
-  return images
+  try {
+    const keys = await listR2Objects("")
+    const images: GalleryImage[] = []
+
+    for (const key of keys) {
+      const slashIndex = key.indexOf("/")
+      if (slashIndex === -1) continue
+
+      const folder = key.slice(0, slashIndex)
+      const category = GALLERY_FOLDERS[folder]
+      if (!category) continue
+
+      const dotIndex = key.lastIndexOf(".")
+      const extension = dotIndex === -1 ? "" : key.slice(dotIndex).toLowerCase()
+      if (!IMAGE_EXTENSIONS.has(extension)) continue
+
+      images.push({ src: getR2PublicUrl(key), category })
+    }
+
+    images.sort((a, b) => a.src.localeCompare(b.src))
+    return images
+  } catch (error) {
+    console.warn("[galeria] No se pudo listar el bucket de R2 al generar la página:", error)
+    return []
+  }
 }

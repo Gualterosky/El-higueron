@@ -1217,9 +1217,12 @@ image/jpeg` con el mismo tamaño en bytes que el archivo original.
 `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`,
 `R2_PUBLIC_URL`, y se documentaron también las de Cloudinary
 (`NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`/`NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`,
-ya usadas por el Muro pero que no estaban en el archivo de ejemplo). Faltan
-configurar en Vercel (Production/Preview) para que el build/runtime de
-producción tenga acceso a R2.
+ya usadas por el Muro pero que no estaban en el archivo de ejemplo). Hay que
+configurarlas en Vercel (Production **y** Preview) **en el build**, no solo
+en runtime: `/[locale]/galeria` es ISR y `getGalleryImages()` lista el
+bucket durante `next build`. Si faltan, `getGalleryImages()` avisa y
+devuelve `[]` para no tumbar el deploy; las fotos y las subidas admin
+siguen requiriendo las variables.
 
 ### 15.4 Historial de git reescrito (2026-09-22, autorizado explícitamente por el usuario)
 

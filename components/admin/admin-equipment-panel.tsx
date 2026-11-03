@@ -126,12 +126,12 @@ function formatDate(date: string | null | undefined) {
 
 function ItemThumb({ item }: { item: EquipmentItemRow }) {
   return (
-    <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
+    <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
       {item.imageUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
       ) : (
-        <Package className="h-6 w-6 text-forest/50" />
+        <Package className="h-9 w-9 text-forest/50" />
       )}
     </div>
   )
@@ -278,7 +278,7 @@ function ItemFormDialog({
       formData.set("file", file)
       const result = await uploadEquipmentImageAction(formData)
       if (!result.ok) {
-        setError(t(`uploadErrors.${result.error}`))
+        setError(result.message || t(`uploadErrors.${result.error}`))
         return
       }
       setImageUrl(result.url)
@@ -563,21 +563,27 @@ function RentalsTab({
             {t("noItems")}
           </p>
         ) : (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="space-y-3">
             {items.map((item) => (
-              <div key={item.id} className="rounded-xl border border-border/60 p-4">
+              <div
+                key={item.id}
+                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border/60 p-4"
+              >
                 <div className="flex items-center gap-3">
                   <ItemThumb item={item} />
-                  <div className="min-w-0">
-                    <p className="truncate font-medium text-foreground">{item.name}</p>
-                    <p className="text-xs text-muted-foreground">
-                      #{item.code} · {t(`categories.${categoryLabelKey(item.category)}`)}
-                      {item.talla ? ` · ${item.talla}` : ""}
-                    </p>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-mono text-xs text-muted-foreground">#{item.code}</span>
+                      <p className="font-medium text-foreground">{item.name}</p>
+                    </div>
+                    <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                      <span>{t(`categories.${categoryLabelKey(item.category)}`)}</span>
+                      {item.talla && <span>· {t("tallaLabel")}: {item.talla}</span>}
+                      <StatusBadge status={item.status} />
+                    </div>
                   </div>
                 </div>
-                <div className="mt-3 flex items-center justify-between gap-2">
-                  <StatusBadge status={item.status} />
+                <div className="flex gap-1">
                   {item.status === "disponible" && (
                     <MaintenanceButton item={item} maintenance onChanged={router.refresh} />
                   )}
@@ -668,7 +674,7 @@ function ActiveRentalsTable({
             <TableRow key={rental.id}>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md bg-beige/40">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-md bg-beige/40">
                     {rental.itemImageUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -677,7 +683,7 @@ function ActiveRentalsTable({
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <Package className="h-5 w-5 text-forest/50" />
+                      <Package className="h-7 w-7 text-forest/50" />
                     )}
                   </div>
                   <div>
@@ -902,7 +908,7 @@ function HistoryTab({ rentals }: { rentals: EquipmentItemRentalRow[] }) {
                 className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border/60 p-4"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
+                  <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
                     {rental.itemImageUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -911,7 +917,7 @@ function HistoryTab({ rentals }: { rentals: EquipmentItemRentalRow[] }) {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <Package className="h-6 w-6 text-forest/50" />
+                      <Package className="h-9 w-9 text-forest/50" />
                     )}
                   </div>
                   <div>

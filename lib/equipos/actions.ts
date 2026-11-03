@@ -9,7 +9,7 @@ import { equipment, equipmentRental, equipmentVariant } from "@/lib/db/schema"
 import { getModeratorSession } from "@/lib/auth/guards"
 import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
 import { DEFAULT_VARIANT_LABEL, EQUIPMENT_CATEGORIES } from "@/lib/equipos/types"
-import { uploadToR2 } from "@/lib/storage/r2"
+import { isR2Configured, uploadToR2 } from "@/lib/storage/r2"
 
 /** Uploaded equipment photos live in the "Equipos/" prefix of the R2 media bucket, square (1:1) as per design decision. */
 const R2_PREFIX = "Equipos"
@@ -38,7 +38,14 @@ export type UploadEquipmentImageResult =
   | { ok: true; url: string }
   | {
       ok: false
-      error: "unauthorized" | "missing_file" | "invalid_type" | "too_large" | "failed"
+      error:
+        | "unauthorized"
+        | "missing_file"
+        | "invalid_type"
+        | "too_large"
+        | "not_configured"
+        | "failed"
+      message?: string
     }
 
 function slugify(value: string): string {
@@ -375,6 +382,11 @@ export async function uploadEquipmentImageAction(
     return { ok: false, error: "unauthorized" }
   }
 
+  if (!isR2Configured()) {
+    console.error("[equipos] uploadEquipmentImageAction: Cloudflare R2 no está configurado")
+    return { ok: false, error: "not_configured" }
+  }
+
   const file = formData.get("file")
   if (!(file instanceof File) || file.size === 0) {
     return { ok: false, error: "missing_file" }
@@ -398,6 +410,7 @@ export async function uploadEquipmentImageAction(
     return { ok: true, url }
   } catch (error) {
     console.error("[equipos] uploadEquipmentImageAction failed:", error)
-    return { ok: false, error: "failed" }
+    const message = error instanceof Error ? error.message : String(error)
+    return { ok: false, error: "failed", message }
   }
 }

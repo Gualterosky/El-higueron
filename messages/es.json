@@ -1965,6 +1965,7 @@
         "missing_file": "Selecciona un archivo.",
         "invalid_type": "Formato de imagen no soportado.",
         "too_large": "La imagen es demasiado grande (máx. 4MB).",
+        "not_configured": "El almacenamiento de imágenes (Cloudflare R2) no está configurado. Revisa las variables de entorno R2_*.",
         "failed": "No se pudo subir la imagen. Intenta de nuevo."
       }
     },

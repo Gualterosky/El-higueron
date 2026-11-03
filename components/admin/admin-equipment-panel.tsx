@@ -788,6 +788,7 @@ function RegisterRentalDialog({
   const effectiveItemId = available.some((item) => item.id === itemId)
     ? itemId
     : (available[0]?.id ?? "")
+  const selectedItem = available.find((item) => item.id === effectiveItemId)
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -811,7 +812,7 @@ function RegisterRentalDialog({
 
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!isPending) onOpenChange(o) }}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>{t("registerRental")}</DialogTitle>
           <DialogDescription>{t("registerRentalDescription")}</DialogDescription>
@@ -821,8 +822,30 @@ function RegisterRentalDialog({
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="r-item">{t("form.equipment")}</Label>
             <Select value={effectiveItemId} onValueChange={setItemId}>
-              <SelectTrigger id="r-item" className="h-10">
-                <SelectValue placeholder={t("selectItem")} />
+              <SelectTrigger
+                id="r-item"
+                className="py-1.5"
+                style={{ height: "auto", minHeight: "3rem" }}
+              >
+                {selectedItem && (
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-md bg-beige/40">
+                    {selectedItem.imageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={selectedItem.imageUrl}
+                        alt=""
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <Package className="h-5 w-5 text-forest/50" />
+                    )}
+                  </span>
+                )}
+                <SelectValue placeholder={t("selectItem")}>
+                  {selectedItem
+                    ? `#${selectedItem.code} — ${selectedItem.name}${selectedItem.talla ? ` (${selectedItem.talla})` : ""}`
+                    : null}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {available.length === 0 ? (
@@ -831,9 +854,28 @@ function RegisterRentalDialog({
                   </SelectItem>
                 ) : (
                   available.map((item) => (
-                    <SelectItem key={item.id} value={item.id}>
-                      #{item.code} — {item.name}
-                      {item.talla ? ` (${item.talla})` : ""}
+                    <SelectItem key={item.id} value={item.id} className="py-2">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
+                          {item.imageUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={item.imageUrl}
+                              alt=""
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <Package className="h-7 w-7 text-forest/50" />
+                          )}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="font-mono text-xs text-muted-foreground">#{item.code}</p>
+                          <p className="truncate font-medium">
+                            {item.name}
+                            {item.talla ? ` (${item.talla})` : ""}
+                          </p>
+                        </div>
+                      </div>
                     </SelectItem>
                   ))
                 )}

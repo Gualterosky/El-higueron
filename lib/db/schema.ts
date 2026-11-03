@@ -293,62 +293,6 @@ export const equipmentPost = pgTable("equipment_post", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
-/** Rentable equipment catalog item (e.g. "Casco", "Pies de gato", "Carpa"). */
-export const equipment = pgTable("equipment", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  slug: text("slug").notNull().unique(),
-  category: text("category").notNull().default("otro"), // "escalada" | "boulder" | "camping" | "otro"
-  description: text("description").notNull().default(""),
-  // COP per day, nullable = price not defined yet.
-  pricePerDay: integer("price_per_day"),
-  // Square (1:1) image. Nullable = show placeholder until real photos are uploaded.
-  imageUrl: text("image_url"),
-  active: boolean("active").notNull().default(true),
-  sortOrder: integer("sort_order").notNull().default(0),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-})
-
-/** Rentable variant/size of an equipment item (e.g. talla "M", or "Única" when
- *  the item has no real sizes). Availability is always computed as
- *  totalQuantity - sum(quantity) of "activa" rentals for this variant — never
- *  stored directly, to avoid it drifting out of sync. */
-export const equipmentVariant = pgTable("equipment_variant", {
-  id: text("id").primaryKey(),
-  equipmentId: text("equipment_id")
-    .notNull()
-    .references(() => equipment.id, { onDelete: "cascade" }),
-  label: text("label").notNull().default("Única"),
-  totalQuantity: integer("total_quantity").notNull().default(0),
-  active: boolean("active").notNull().default(true),
-  sortOrder: integer("sort_order").notNull().default(0),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
-
-/** A single rental movement registered by staff/admin from the equipment panel. */
-export const equipmentRental = pgTable("equipment_rental", {
-  id: text("id").primaryKey(),
-  equipmentId: text("equipment_id")
-    .notNull()
-    .references(() => equipment.id, { onDelete: "cascade" }),
-  variantId: text("variant_id")
-    .notNull()
-    .references(() => equipmentVariant.id, { onDelete: "cascade" }),
-  // Free-text customer info — walk-in visitors don't need a site account.
-  renterName: text("renter_name").notNull(),
-  renterContact: text("renter_contact"),
-  contactId: text("contact_id").references(() => contact.id, { onDelete: "set null" }),
-  quantity: integer("quantity").notNull().default(1),
-  rentedAt: text("rented_at").notNull(), // ISO date (YYYY-MM-DD)
-  expectedReturnAt: text("expected_return_at"), // ISO date (YYYY-MM-DD), nullable
-  returnedAt: timestamp("returned_at"),
-  status: text("status").notNull().default("activa"), // "activa" | "devuelta" | "cancelada"
-  registeredByUserId: text("registered_by_user_id").references(() => user.id),
-  notes: text("notes"),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
-
 /** A single physical piece of rentable equipment (new item-level inventory,
  *  added 2026-11 as the replacement for the legacy catalog model below).
  *  Each row is one real object — e.g. one helmet, one pair of shoes — with its
@@ -438,8 +382,5 @@ export type EquipmentPost = typeof equipmentPost.$inferSelect
 export type ChatSession = typeof chatSession.$inferSelect
 export type ChatMessage = typeof chatMessage.$inferSelect
 export type Reservation = typeof reservation.$inferSelect
-export type Equipment = typeof equipment.$inferSelect
-export type EquipmentVariant = typeof equipmentVariant.$inferSelect
-export type EquipmentRental = typeof equipmentRental.$inferSelect
 export type EquipmentItem = typeof equipmentItem.$inferSelect
 export type EquipmentItemRental = typeof equipmentItemRental.$inferSelect

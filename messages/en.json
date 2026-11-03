@@ -497,10 +497,7 @@
       "title": "Available Gear",
       "subtitle": "Quality equipment for your safety and comfort"
     },
-    "unavailable": "Unavailable",
-    "empty": "There is no gear registered in the inventory yet.",
-    "pricePerDay": "{price} / day",
-    "availableCount": "{count} available",
+    "pending": "Pending",
     "posts": {
       "eyebrow": "Community",
       "title": "What the community says",
@@ -508,42 +505,13 @@
       "formTitle": "Share your experience"
     },
     "categories": {
-      "escalada": "Climbing",
-      "boulder": "Boulder",
-      "camping": "Camping",
-      "otro": "Other"
-    },
-    "items": {
-      "casco": {
-        "name": "Helmet",
-        "description": "Safety helmets for protection while climbing. Recommended for all wall activities.",
-        "forActivity": "Climbing"
-      },
-      "gatos": {
-        "name": "Climbing Shoes",
-        "description": "Specialized climbing shoes in various sizes. Essential for better grip on the rock.",
-        "forActivity": "Climbing and Boulder"
-      },
-      "arnes": {
-        "name": "Harness",
-        "description": "Sport climbing harnesses in different sizes for comfort and safety while climbing.",
-        "forActivity": "Climbing"
-      },
-      "crashpads": {
-        "name": "Crashpads",
-        "description": "Protection mats for falls while bouldering. Essential for a safe session.",
-        "forActivity": "Boulder"
-      },
-      "botas": {
-        "name": "Boots",
-        "description": "Mountain boots for hiking and outdoor activities.",
-        "forActivity": "Hiking"
-      },
-      "carpas": {
-        "name": "Camping Tents",
-        "description": "Tents for camping on site, ideal for those without their own camping gear.",
-        "forActivity": "Camping"
-      }
+      "casco": "Helmet",
+      "arnes": "Harness",
+      "crashpad": "Crashpad",
+      "gatos": "Climbing shoes",
+      "botas": "Boots",
+      "carpa": "Camping tents",
+      "otros": "Other"
     },
     "notes": {
       "title": "Important information",

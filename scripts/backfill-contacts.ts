@@ -6,7 +6,6 @@ import {
   boulderPost,
   postReply,
   reservation,
-  equipmentRental,
   communityPost,
 } from "../lib/db/schema"
 import { upsertContactFromSubmission } from "../lib/contacts/upsert"
@@ -20,7 +19,6 @@ type SourceTable = {
     | typeof boulderPost
     | typeof postReply
     | typeof reservation
-    | typeof equipmentRental
     | typeof communityPost
   nameField: string
   contactField: string
@@ -33,7 +31,6 @@ const sources: SourceTable[] = [
   { name: "comunidad", tableName: "community_post", table: communityPost, nameField: "author_name", contactField: "contact_info" },
   { name: "reply", tableName: "post_reply", table: postReply, nameField: "author_name", contactField: "contact_info" },
   { name: "reserva", tableName: "reservation", table: reservation, nameField: "name", contactField: "contact_info" },
-  { name: "renta", tableName: "equipment_rental", table: equipmentRental, nameField: "renter_name", contactField: "renter_contact" },
 ]
 
 async function backfillTable(source: SourceTable) {

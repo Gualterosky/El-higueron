@@ -497,10 +497,7 @@
       "title": "Equipos Disponibles",
       "subtitle": "Material de calidad para tu seguridad y comodidad"
     },
-    "unavailable": "No disponible",
-    "empty": "Aún no hay equipos registrados en el inventario.",
-    "pricePerDay": "{price} / día",
-    "availableCount": "{count} disponibles",
+    "pending": "Pendiente",
     "posts": {
       "eyebrow": "Comunidad",
       "title": "Lo que dice la comunidad",
@@ -508,42 +505,13 @@
       "formTitle": "Comparte tu experiencia"
     },
     "categories": {
-      "escalada": "Escalada",
-      "boulder": "Boulder",
-      "camping": "Camping",
-      "otro": "Otro"
-    },
-    "items": {
-      "casco": {
-        "name": "Casco",
-        "description": "Cascos de seguridad para protección durante la escalada. Recomendado para todas las actividades en pared.",
-        "forActivity": "Escalada"
-      },
-      "gatos": {
-        "name": "Pies de Gato",
-        "description": "Zapatos especializados para escalada en varias tallas. Esenciales para un mejor agarre en la roca.",
-        "forActivity": "Escalada y Boulder"
-      },
-      "arnes": {
-        "name": "Arnés",
-        "description": "Arneses de escalada deportiva en diferentes tallas para asegurar comodidad y seguridad durante la escalada.",
-        "forActivity": "Escalada"
-      },
-      "crashpads": {
-        "name": "Crashpads",
-        "description": "Colchonetas de protección para caídas durante la práctica de boulder. Fundamentales para una sesión segura.",
-        "forActivity": "Boulder"
-      },
-      "botas": {
-        "name": "Botas",
-        "description": "Botas de montaña para senderismo y actividades al aire libre.",
-        "forActivity": "Senderismo"
-      },
-      "carpas": {
-        "name": "Carpas de Camping",
-        "description": "Carpas para acampar en el lugar, ideales para quienes no cuentan con su propio equipo de camping.",
-        "forActivity": "Camping"
-      }
+      "casco": "Casco",
+      "arnes": "Arnés",
+      "crashpad": "Crashpad",
+      "gatos": "Pies de gato",
+      "botas": "Botas",
+      "carpa": "Carpas de camping",
+      "otros": "Otros"
     },
     "notes": {
       "title": "Información importante",

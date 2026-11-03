@@ -572,9 +572,53 @@ sigan enlazando correctamente.
 
 Sistema de inventario para equipo rentable (cascos, arneses, crash pads, pies
 de gato, botas, carpas...), con página pública de catálogo y panel de
-administración/staff para gestionar stock y registrar movimientos de renta.
+administración/staff para gestionar el inventario y registrar rentas.
 
-**Esquema (`lib/db/schema.ts`):**
+### 6.b.1 Modelo de items individuales (añadido 2026-11 — nuevo modelo)
+
+El panel de administración/staff ahora gestiona **objetos físicos individuales**
+en vez del catálogo con cantidades. Cada fila es un objeto real con su propio
+ID secuencial `001, 002, …` (no editable) y su estado propio.
+
+**Esquema nuevo (`lib/db/schema.ts`):**
+- `equipmentItem` (tabla `equipment_item`): un objeto físico. `seq` entero
+  único (el ID visible es `String(seq).padStart(3, "0")` → `001`, `002`, …),
+  `name`, `category` (`arnes|gatos|crashpad|casco|botas|carpa|otros`), `talla`
+  (solo cuando `category = "gatos"`), `imageUrl`, `status`
+  (`disponible|rentado|mantenimiento`). El `status` se mantiene en sync desde
+  las acciones de renta/devolución/mantenimiento.
+- `equipmentItemRental` (tabla `equipment_item_rental`): historial de
+  movimientos. `itemId` (FK cascade), `rentedAt` (fecha ISO `YYYY-MM-DD`),
+  `returnedAt` (null = renta activa), `registeredByUserId`.
+
+**Estados (por item):** `disponible` (En inventario) → `rentado` (lo tiene el
+cliente) → de vuelta a `disponible` al devolverlo; `mantenimiento` (fuera de
+inventario, p. ej. limpieza) se marca manualmente.
+
+**Acciones** (`lib/equipos/item-actions.ts`, todas verifican
+`getModeratorSession()`): `createEquipmentItemAction` (calcula el siguiente
+`seq = max+1`), `updateEquipmentItemAction`, `deleteEquipmentItemAction`,
+`setEquipmentItemMaintenanceAction`, `createEquipmentItemRentalAction` (solo
+items `disponible`), `markEquipmentItemRentalReturnedAction`,
+`cancelEquipmentItemRentalAction`. La subida de imagen reutiliza
+`uploadEquipmentImageAction` (`lib/equipos/actions.ts`).
+
+**Queries** (`lib/equipos/item-queries.ts`): `getAllEquipmentItems()` (con
+`code` derivado) y `getAllEquipmentItemRentals()` (join al item para el
+historial).
+
+**Panel** (`components/admin/admin-equipment-panel.tsx`): 3 tabs — Inventario
+(crear/editar/eliminar con doble confirmación), Rentas (registrar renta por
+objeto+fecha, marcar devuelto, marcar mantenimiento) e Historial (agrupado por
+día con foto y detalles).
+
+### 6.b.2 Modelo de catálogo (legacy — se eliminará al rediseñar `/equipos`)
+
+El modelo anterior sigue existiendo **solo** para la página pública actual
+(`/equipos`) y queda marcado como **legacy**. Se eliminará cuando se rediseñe
+la página pública.
+
+**Esquema legacy (`lib/db/schema.ts`):**
 - `equipment`: catálogo de tipos de equipo (`name`, `slug` único, `category`
   — `escalada`\|`boulder`\|`camping`\|`otro`, `description`, `pricePerDay`
   nullable en COP, `imageUrl` nullable — imagen cuadrada 1:1, `active`).
@@ -760,7 +804,8 @@ estos paneles**, solo se documenta su estado:
 | Cambiar qué secciones del sitio se pueden ocultar / modo mantenimiento | `lib/site-settings/types.ts` (lista) + `lib/site-settings.ts` (lógica) + `lib/site-settings/actions.ts` (Server Actions, solo admin) |
 | Cambiar el pop-up de noticias/novedades | `lib/announcement/types.ts` (forma y reglas de visibilidad) + `lib/announcement/queries.ts` (lectura cacheada y guardado) + `lib/announcement/actions.ts` (Server Actions admin, incluida la subida de imagen) + `components/announcement-modal.tsx` (UI pública) + `components/admin/admin-announcement-section.tsx` (panel) |
 | Cambiar el esquema de la base de datos | `lib/db/schema.ts` → `pnpm db:generate` → `pnpm db:migrate` |
-| Cambiar catálogo/stock de equipos rentables o su disponibilidad | `lib/equipos/types.ts` (vocabulario) + `lib/equipos/actions.ts` (mutaciones, solo admin+staff) + `lib/equipos/queries.ts` (cálculo de disponibilidad) |
+| Cambiar el inventario de items de equipos (nuevo modelo) | `lib/equipos/types.ts` (categorías/estados) + `lib/equipos/item-actions.ts` (mutaciones, solo admin+staff) + `lib/equipos/item-queries.ts` (lecturas) + `components/admin/admin-equipment-panel.tsx` (panel) |
+| Cambiar el catálogo legacy de equipos de la página pública (aún en uso por `/equipos`) | `lib/equipos/actions.ts` (mutaciones) + `lib/equipos/queries.ts` (cálculo de disponibilidad) — legacy, se eliminará al rediseñar `/equipos` |
 | Ver/modificar contactos acumulados y su vínculo con cuentas | `lib/contacts/*` (normalización, upsert, link, queries) + `components/admin/admin-contacts-panel.tsx` + `scripts/backfill-contacts.ts` |
 | Cambiar el algoritmo de recomendaciones por dificultad (Muro/Boulder) | `lib/muro/route-recommendations.ts` / `lib/boulder/boulder-recommendations.ts` |
 | Cambiar reglas de acceso a rutas por rol | `lib/auth/roles.ts` (`canAccessPath`, `homePathForRole`) + `proxy.ts` (prefijos protegidos) |

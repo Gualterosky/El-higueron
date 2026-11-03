@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server"
 import { AdminEquipmentPanel } from "@/components/admin/admin-equipment-panel"
-import { getAllEquipmentForAdmin, getAllRentals } from "@/lib/equipos/queries"
+import { getAllEquipmentItems, getAllEquipmentItemRentals } from "@/lib/equipos/item-queries"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -9,10 +9,10 @@ type Props = {
 export default async function AdminEquipmentPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const [equipmentList, rentals] = await Promise.all([
-    getAllEquipmentForAdmin(),
-    getAllRentals(),
+  const [items, rentals] = await Promise.all([
+    getAllEquipmentItems(),
+    getAllEquipmentItemRentals(),
   ])
 
-  return <AdminEquipmentPanel initialEquipment={equipmentList} initialRentals={rentals} />
+  return <AdminEquipmentPanel initialItems={items} initialRentals={rentals} />
 }

@@ -3,14 +3,12 @@
 import { useState, useTransition } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
-import { Loader2, Package, Pencil, Plus, RotateCcw, Trash2, X } from "lucide-react"
+import { Loader2, Package, Pencil, Plus, RotateCcw, Trash2, Wrench, X } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Switch } from "@/components/ui/switch"
 import {
   Dialog,
   DialogContent,
@@ -21,7 +19,6 @@ import {
 } from "@/components/ui/dialog"
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -45,30 +42,30 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { uploadEquipmentImageAction } from "@/lib/equipos/actions"
 import {
-  createEquipmentAction,
-  createRentalAction,
-  createVariantAction,
-  deleteEquipmentAction,
-  deleteVariantAction,
-  markRentalReturnedAction,
-  cancelRentalAction,
-  updateEquipmentAction,
-  updateVariantAction,
-  uploadEquipmentImageAction,
-  type EquipmentInput,
-  type RentalInput,
-  type VariantInput,
-} from "@/lib/equipos/actions"
-import type { EquipmentCatalogItem, EquipmentRentalRow } from "@/lib/equipos/queries"
-import { EQUIPMENT_CATEGORIES, isEquipmentRentalStatus } from "@/lib/equipos/types"
+  createEquipmentItemAction,
+  updateEquipmentItemAction,
+  deleteEquipmentItemAction,
+  setEquipmentItemMaintenanceAction,
+  createEquipmentItemRentalAction,
+  markEquipmentItemRentalReturnedAction,
+  cancelEquipmentItemRentalAction,
+  type EquipmentItemInput,
+} from "@/lib/equipos/item-actions"
+import type { EquipmentItemRow, EquipmentItemRentalRow } from "@/lib/equipos/item-queries"
+import {
+  EQUIPMENT_ITEM_CATEGORIES,
+  isEquipmentItemCategory,
+  isEquipmentItemStatus,
+} from "@/lib/equipos/types"
 
 type Props = {
-  initialEquipment: EquipmentCatalogItem[]
-  initialRentals: EquipmentRentalRow[]
+  initialItems: EquipmentItemRow[]
+  initialRentals: EquipmentItemRentalRow[]
 }
 
-export function AdminEquipmentPanel({ initialEquipment, initialRentals }: Props) {
+export function AdminEquipmentPanel({ initialItems, initialRentals }: Props) {
   const t = useTranslations("Panel.equipment")
 
   return (
@@ -82,33 +79,72 @@ export function AdminEquipmentPanel({ initialEquipment, initialRentals }: Props)
         <TabsList>
           <TabsTrigger value="inventory">{t("tabs.inventory")}</TabsTrigger>
           <TabsTrigger value="rentals">{t("tabs.rentals")}</TabsTrigger>
+          <TabsTrigger value="history">{t("tabs.history")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="inventory" className="mt-6">
-          <InventoryTab initialEquipment={initialEquipment} />
+          <InventoryTab items={initialItems} />
         </TabsContent>
 
         <TabsContent value="rentals" className="mt-6">
-          <RentalsTab equipment={initialEquipment} initialRentals={initialRentals} />
+          <RentalsTab items={initialItems} rentals={initialRentals} />
+        </TabsContent>
+
+        <TabsContent value="history" className="mt-6">
+          <HistoryTab rentals={initialRentals} />
         </TabsContent>
       </Tabs>
     </div>
   )
 }
 
+// ── Shared helpers ────────────────────────────────────────────────────────────
+
+function categoryLabelKey(category: string): string {
+  return isEquipmentItemCategory(category) ? category : "otros"
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const t = useTranslations("Panel.equipment")
+  const key = isEquipmentItemStatus(status) ? status : "disponible"
+  const className =
+    key === "disponible"
+      ? "border-transparent bg-forest text-white"
+      : key === "rentado"
+        ? "border-transparent bg-orange text-white"
+        : "border-transparent bg-muted text-muted-foreground"
+
+  return <Badge className={className}>{t(`status.${key}`)}</Badge>
+}
+
+function formatDate(date: string | null | undefined) {
+  if (!date) return "—"
+  const [year, month, day] = date.split("-")
+  if (!year || !month || !day) return date
+  return `${day}/${month}/${year}`
+}
+
+function ItemThumb({ item }: { item: EquipmentItemRow }) {
+  return (
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
+      {item.imageUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
+      ) : (
+        <Package className="h-6 w-6 text-forest/50" />
+      )}
+    </div>
+  )
+}
+
 // ── Inventory tab ──────────────────────────────────────────────────────────────
 
-function InventoryTab({ initialEquipment }: { initialEquipment: EquipmentCatalogItem[] }) {
+function InventoryTab({ items }: { items: EquipmentItemRow[] }) {
   const t = useTranslations("Panel.equipment")
   const router = useRouter()
-  const [items, setItems] = useState(initialEquipment)
   const [createOpen, setCreateOpen] = useState(false)
-  const [editItem, setEditItem] = useState<EquipmentCatalogItem | null>(null)
-  const [deleteItem, setDeleteItem] = useState<EquipmentCatalogItem | null>(null)
-
-  function refreshAndClose() {
-    router.refresh()
-  }
+  const [editItem, setEditItem] = useState<EquipmentItemRow | null>(null)
+  const [deleteItem, setDeleteItem] = useState<EquipmentItemRow | null>(null)
 
   return (
     <div className="space-y-4">
@@ -119,29 +155,62 @@ function InventoryTab({ initialEquipment }: { initialEquipment: EquipmentCatalog
           className="gap-2 bg-forest text-white hover:bg-forest/90"
         >
           <Plus className="h-4 w-4" />
-          {t("createEquipment")}
+          {t("addItem")}
         </Button>
       </div>
 
       {items.length === 0 ? (
         <p className="rounded-xl border border-dashed border-border/60 px-4 py-8 text-center text-sm text-muted-foreground">
-          {t("noEquipment")}
+          {t("noItems")}
         </p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {items.map((item) => (
-            <EquipmentCard
+            <div
               key={item.id}
-              item={item}
-              onEdit={() => setEditItem(item)}
-              onDelete={() => setDeleteItem(item)}
-              onChanged={refreshAndClose}
-            />
+              className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border/60 p-4"
+            >
+              <div className="flex items-center gap-3">
+                <ItemThumb item={item} />
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-mono text-xs text-muted-foreground">#{item.code}</span>
+                    <p className="font-medium text-foreground">{item.name}</p>
+                  </div>
+                  <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                    <span>{t(`categories.${categoryLabelKey(item.category)}`)}</span>
+                    {item.talla && <span>· {t("tallaLabel")}: {item.talla}</span>}
+                    <StatusBadge status={item.status} />
+                  </div>
+                </div>
+              </div>
+              <div className="flex gap-1">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setEditItem(item)}
+                  aria-label={t("editItem")}
+                >
+                  <Pencil className="h-4 w-4" />
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setDeleteItem(item)}
+                  aria-label={t("deleteItem")}
+                  className="text-destructive"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
           ))}
         </div>
       )}
 
-      <EquipmentFormDialog
+      <ItemFormDialog
         open={createOpen}
         onOpenChange={setCreateOpen}
         onSaved={() => {
@@ -151,10 +220,12 @@ function InventoryTab({ initialEquipment }: { initialEquipment: EquipmentCatalog
       />
 
       {editItem && (
-        <EquipmentFormDialog
-          equipment={editItem}
+        <ItemFormDialog
+          item={editItem}
           open={!!editItem}
-          onOpenChange={(open) => { if (!open) setEditItem(null) }}
+          onOpenChange={(open) => {
+            if (!open) setEditItem(null)
+          }}
           onSaved={() => {
             setEditItem(null)
             router.refresh()
@@ -163,12 +234,13 @@ function InventoryTab({ initialEquipment }: { initialEquipment: EquipmentCatalog
       )}
 
       {deleteItem && (
-        <DeleteEquipmentDialog
+        <DeleteItemDialog
           item={deleteItem}
           open={!!deleteItem}
-          onOpenChange={(open) => { if (!open) setDeleteItem(null) }}
+          onOpenChange={(open) => {
+            if (!open) setDeleteItem(null)
+          }}
           onDeleted={() => {
-            setItems((prev) => prev.filter((i) => i.id !== deleteItem.id))
             setDeleteItem(null)
             router.refresh()
           }}
@@ -178,120 +250,13 @@ function InventoryTab({ initialEquipment }: { initialEquipment: EquipmentCatalog
   )
 }
 
-function EquipmentCard({
+function ItemFormDialog({
   item,
-  onEdit,
-  onDelete,
-  onChanged,
-}: {
-  item: EquipmentCatalogItem
-  onEdit: () => void
-  onDelete: () => void
-  onChanged: () => void
-}) {
-  const t = useTranslations("Panel.equipment")
-  const [variantDialogOpen, setVariantDialogOpen] = useState(false)
-  const [editVariant, setEditVariant] = useState<EquipmentCatalogItem["variants"][number] | null>(null)
-
-  return (
-    <div className="rounded-xl border border-border/60 p-4">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="flex items-start gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
-            {item.imageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
-            ) : (
-              <Package className="h-6 w-6 text-forest/50" />
-            )}
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <p className="font-medium text-foreground">{item.name}</p>
-              {!item.active && <Badge variant="outline">{t("inactive")}</Badge>}
-            </div>
-            <p className="text-xs text-muted-foreground">{t(`categories.${item.category}`)}</p>
-            {item.description && (
-              <p className="mt-1 max-w-md text-sm text-muted-foreground">{item.description}</p>
-            )}
-          </div>
-        </div>
-        <div className="flex gap-1">
-          <Button type="button" variant="ghost" size="icon" onClick={onEdit} aria-label={t("editEquipment")}>
-            <Pencil className="h-4 w-4" />
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={onDelete}
-            aria-label={t("deleteEquipment")}
-            className="text-destructive"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
-
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        {item.variants.map((variant) => (
-          <button
-            key={variant.id}
-            type="button"
-            onClick={() => setEditVariant(variant)}
-            className="flex items-center gap-2 rounded-full border border-border/60 px-3 py-1 text-xs hover:border-forest/40"
-          >
-            <span className="font-medium">{variant.label}</span>
-            <span className="text-muted-foreground">
-              {t("stockCount", { available: variant.availableQuantity, total: variant.totalQuantity })}
-            </span>
-          </button>
-        ))}
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          className="gap-1"
-          onClick={() => setVariantDialogOpen(true)}
-        >
-          <Plus className="h-3.5 w-3.5" />
-          {t("addVariant")}
-        </Button>
-      </div>
-
-      <VariantFormDialog
-        equipmentId={item.id}
-        open={variantDialogOpen}
-        onOpenChange={setVariantDialogOpen}
-        onSaved={() => {
-          setVariantDialogOpen(false)
-          onChanged()
-        }}
-      />
-
-      {editVariant && (
-        <VariantFormDialog
-          equipmentId={item.id}
-          variant={editVariant}
-          open={!!editVariant}
-          onOpenChange={(open) => { if (!open) setEditVariant(null) }}
-          onSaved={() => {
-            setEditVariant(null)
-            onChanged()
-          }}
-        />
-      )}
-    </div>
-  )
-}
-
-function EquipmentFormDialog({
-  equipment,
   open,
   onOpenChange,
   onSaved,
 }: {
-  equipment?: EquipmentCatalogItem
+  item?: EquipmentItemRow
   open: boolean
   onOpenChange: (open: boolean) => void
   onSaved: () => void
@@ -299,11 +264,10 @@ function EquipmentFormDialog({
   const t = useTranslations("Panel.equipment")
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
-  const [category, setCategory] = useState<EquipmentInput["category"]>(
-    (equipment?.category as EquipmentInput["category"]) ?? "otro",
+  const [category, setCategory] = useState<EquipmentItemInput["category"]>(
+    (item?.category as EquipmentItemInput["category"]) ?? "otros",
   )
-  const [active, setActive] = useState(equipment?.active ?? true)
-  const [imageUrl, setImageUrl] = useState(equipment?.imageUrl ?? "")
+  const [imageUrl, setImageUrl] = useState(item?.imageUrl ?? "")
   const [isUploading, setIsUploading] = useState(false)
 
   async function handleImageUpload(file: File) {
@@ -329,31 +293,27 @@ function EquipmentFormDialog({
 
     const form = new FormData(event.currentTarget)
     const name = String(form.get("name") ?? "").trim()
-    const description = String(form.get("description") ?? "").trim()
-    const priceRaw = String(form.get("pricePerDay") ?? "").trim()
-    const pricePerDay = priceRaw ? Number(priceRaw) : null
+    const talla = String(form.get("talla") ?? "").trim()
 
     if (!name) return
 
-    const input: EquipmentInput = {
+    const input: EquipmentItemInput = {
       name,
       category,
-      description,
-      pricePerDay,
+      talla: talla || null,
       imageUrl: imageUrl || null,
-      active,
     }
 
     startTransition(async () => {
-      const result = equipment
-        ? await updateEquipmentAction(equipment.id, input)
-        : await createEquipmentAction(input)
+      const result = item
+        ? await updateEquipmentItemAction(item.id, input)
+        : await createEquipmentItemAction(input)
 
       if (!result.ok) {
         setError(t(`errors.${result.error}`))
         return
       }
-      toast.success(equipment ? t("updateSuccess") : t("createSuccess"))
+      toast.success(item ? t("updateSuccess") : t("createSuccess"))
       onSaved()
     })
   }
@@ -362,24 +322,34 @@ function EquipmentFormDialog({
     <Dialog open={open} onOpenChange={(o) => { if (!isPending) onOpenChange(o) }}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>{equipment ? t("editEquipment") : t("createEquipment")}</DialogTitle>
+          <DialogTitle>{item ? t("editItem") : t("addItem")}</DialogTitle>
           <DialogDescription>{t("formDescription")}</DialogDescription>
         </DialogHeader>
 
-        <form id="equipment-form" onSubmit={onSubmit} className="flex flex-col gap-4 py-2">
+        <form id="item-form" onSubmit={onSubmit} className="flex flex-col gap-4 py-2">
+          {item && (
+            <div className="flex flex-col gap-1.5">
+              <Label>{t("form.code")}</Label>
+              <p className="font-mono text-sm text-muted-foreground">#{item.code}</p>
+            </div>
+          )}
+
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="eq-name">{t("form.name")}</Label>
-            <Input id="eq-name" name="name" defaultValue={equipment?.name} required className="h-10" />
+            <Label htmlFor="it-name">{t("form.name")}</Label>
+            <Input id="it-name" name="name" defaultValue={item?.name} required className="h-10" />
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="eq-category">{t("form.category")}</Label>
-            <Select value={category} onValueChange={(v) => setCategory(v as EquipmentInput["category"])}>
-              <SelectTrigger id="eq-category" className="h-10">
+            <Label htmlFor="it-category">{t("form.category")}</Label>
+            <Select
+              value={category}
+              onValueChange={(v) => setCategory(v as EquipmentItemInput["category"])}
+            >
+              <SelectTrigger id="it-category" className="h-10">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {EQUIPMENT_CATEGORIES.map((cat) => (
+                {EQUIPMENT_ITEM_CATEGORIES.map((cat) => (
                   <SelectItem key={cat} value={cat}>
                     {t(`categories.${cat}`)}
                   </SelectItem>
@@ -388,27 +358,15 @@ function EquipmentFormDialog({
             </Select>
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="eq-description">{t("form.description")}</Label>
-            <Textarea id="eq-description" name="description" defaultValue={equipment?.description} rows={3} />
-          </div>
+          {category === "gatos" && (
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="it-talla">{t("form.talla")}</Label>
+              <Input id="it-talla" name="talla" defaultValue={item?.talla ?? ""} className="h-10" />
+            </div>
+          )}
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="eq-price">{t("form.pricePerDay")}</Label>
-            <Input
-              id="eq-price"
-              name="pricePerDay"
-              type="number"
-              min={0}
-              step={1000}
-              defaultValue={equipment?.pricePerDay ?? undefined}
-              placeholder={t("form.pricePlaceholder")}
-              className="h-10"
-            />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="eq-image">{t("form.image")}</Label>
+            <Label htmlFor="it-image">{t("form.image")}</Label>
             <p className="text-xs text-muted-foreground">{t("form.imageHint")}</p>
             <div className="flex items-center gap-3">
               <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-beige/40">
@@ -420,7 +378,7 @@ function EquipmentFormDialog({
                 )}
               </div>
               <Input
-                id="eq-image"
+                id="it-image"
                 type="file"
                 accept="image/png,image/jpeg,image/webp,image/avif"
                 disabled={isUploading}
@@ -432,13 +390,6 @@ function EquipmentFormDialog({
               />
               {isUploading && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
             </div>
-          </div>
-
-          <div className="flex items-center justify-between gap-3 rounded-lg border border-border/60 px-3 py-2.5">
-            <Label htmlFor="eq-active" className="cursor-pointer text-sm font-normal">
-              {t("form.active")}
-            </Label>
-            <Switch id="eq-active" checked={active} onCheckedChange={setActive} />
           </div>
 
           {error && (
@@ -454,7 +405,7 @@ function EquipmentFormDialog({
           </Button>
           <Button
             type="submit"
-            form="equipment-form"
+            form="item-form"
             disabled={isPending || isUploading}
             className="bg-forest text-white hover:bg-forest/90"
           >
@@ -467,206 +418,116 @@ function EquipmentFormDialog({
   )
 }
 
-function DeleteEquipmentDialog({
+function DeleteItemDialog({
   item,
   open,
   onOpenChange,
   onDeleted,
 }: {
-  item: EquipmentCatalogItem
+  item: EquipmentItemRow
   open: boolean
   onOpenChange: (open: boolean) => void
   onDeleted: () => void
 }) {
   const t = useTranslations("Panel.equipment")
+  const [step, setStep] = useState(1)
+  const [confirmCode, setConfirmCode] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
 
+  function reset() {
+    setStep(1)
+    setConfirmCode("")
+  }
+
   function handleDelete() {
+    if (confirmCode !== item.code) return
     setError(null)
     startTransition(async () => {
-      const result = await deleteEquipmentAction(item.id)
+      const result = await deleteEquipmentItemAction(item.id)
       if (!result.ok) {
         setError(t(`errors.${result.error}`))
         return
       }
+      toast.success(t("deleteSuccess"))
       onDeleted()
     })
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={(o) => { if (!isPending) onOpenChange(o) }}>
+    <AlertDialog
+      open={open}
+      onOpenChange={(o) => {
+        if (!isPending) {
+          onOpenChange(o)
+          if (!o) reset()
+        }
+      }}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{t("deleteEquipment")}</AlertDialogTitle>
+          <AlertDialogTitle>{t("deleteItem")}</AlertDialogTitle>
           <AlertDialogDescription>
-            {t("deleteEquipmentConfirm", { name: item.name })}
+            {step === 1
+              ? t("deleteItemConfirmStep1", { name: item.name, code: item.code })
+              : t("deleteItemConfirmStep2", { code: item.code })}
           </AlertDialogDescription>
         </AlertDialogHeader>
+
+        {step === 2 && (
+          <Input
+            value={confirmCode}
+            onChange={(e) => setConfirmCode(e.target.value)}
+            placeholder={item.code}
+            className="h-10 font-mono"
+          />
+        )}
+
         {error && <p className="text-sm text-destructive">{error}</p>}
+
         <AlertDialogFooter>
           <AlertDialogCancel disabled={isPending}>{t("cancel")}</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={(e) => { e.preventDefault(); handleDelete() }}
-            disabled={isPending}
-            className="bg-destructive text-white hover:bg-destructive/90"
-          >
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {t("delete")}
-          </AlertDialogAction>
+          {step === 1 ? (
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => setStep(2)}
+              className="text-white"
+            >
+              {t("continue")}
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant="destructive"
+              disabled={isPending || confirmCode !== item.code}
+              onClick={handleDelete}
+              className="text-white"
+            >
+              {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {t("deleteDefinitively")}
+            </Button>
+          )}
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   )
 }
 
-function VariantFormDialog({
-  equipmentId,
-  variant,
-  open,
-  onOpenChange,
-  onSaved,
-}: {
-  equipmentId: string
-  variant?: EquipmentCatalogItem["variants"][number]
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onSaved: () => void
-}) {
-  const t = useTranslations("Panel.equipment")
-  const [error, setError] = useState<string | null>(null)
-  const [isPending, startTransition] = useTransition()
-  const [active, setActive] = useState(variant?.active ?? true)
-
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setError(null)
-
-    const form = new FormData(event.currentTarget)
-    const label = String(form.get("label") ?? "").trim()
-    const totalQuantity = Number(form.get("totalQuantity") ?? 0)
-
-    if (!label) return
-
-    const input: VariantInput = { label, totalQuantity, active }
-
-    startTransition(async () => {
-      const result = variant
-        ? await updateVariantAction(variant.id, input)
-        : await createVariantAction(equipmentId, input)
-
-      if (!result.ok) {
-        setError(t(`errors.${result.error}`))
-        return
-      }
-      onSaved()
-    })
-  }
-
-  function handleDeleteVariant() {
-    if (!variant) return
-    setError(null)
-    startTransition(async () => {
-      const result = await deleteVariantAction(variant.id)
-      if (!result.ok) {
-        setError(t(`errors.${result.error}`))
-        return
-      }
-      onSaved()
-    })
-  }
-
-  return (
-    <Dialog open={open} onOpenChange={(o) => { if (!isPending) onOpenChange(o) }}>
-      <DialogContent className="sm:max-w-sm">
-        <DialogHeader>
-          <DialogTitle>{variant ? t("editVariant") : t("addVariant")}</DialogTitle>
-        </DialogHeader>
-
-        <form id="variant-form" onSubmit={onSubmit} className="flex flex-col gap-4 py-2">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="v-label">{t("form.variantLabel")}</Label>
-            <Input id="v-label" name="label" defaultValue={variant?.label} required className="h-10" />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="v-qty">{t("form.totalQuantity")}</Label>
-            <Input
-              id="v-qty"
-              name="totalQuantity"
-              type="number"
-              min={0}
-              defaultValue={variant?.totalQuantity ?? 0}
-              required
-              className="h-10"
-            />
-            {variant && variant.activeQuantity > 0 && (
-              <p className="text-xs text-muted-foreground">
-                {t("form.currentlyInUse", { count: variant.activeQuantity })}
-              </p>
-            )}
-          </div>
-
-          <div className="flex items-center justify-between gap-3 rounded-lg border border-border/60 px-3 py-2.5">
-            <Label htmlFor="v-active" className="cursor-pointer text-sm font-normal">
-              {t("form.active")}
-            </Label>
-            <Switch id="v-active" checked={active} onCheckedChange={setActive} />
-          </div>
-
-          {error && <p className="text-sm text-destructive">{error}</p>}
-        </form>
-
-        <DialogFooter className="flex-row justify-between sm:justify-between">
-          {variant ? (
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={handleDeleteVariant}
-              disabled={isPending}
-              className="text-destructive"
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              {t("delete")}
-            </Button>
-          ) : (
-            <span />
-          )}
-          <div className="flex gap-2">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isPending}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" form="variant-form" disabled={isPending} className="bg-forest text-white hover:bg-forest/90">
-              {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {t("save")}
-            </Button>
-          </div>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
-
 // ── Rentals tab ────────────────────────────────────────────────────────────────
 
 function RentalsTab({
-  equipment,
-  initialRentals,
+  items,
+  rentals,
 }: {
-  equipment: EquipmentCatalogItem[]
-  initialRentals: EquipmentRentalRow[]
+  items: EquipmentItemRow[]
+  rentals: EquipmentItemRentalRow[]
 }) {
   const t = useTranslations("Panel.equipment")
   const router = useRouter()
-  const [rentals, setRentals] = useState(initialRentals)
   const [createOpen, setCreateOpen] = useState(false)
 
-  const activeRentals = rentals.filter((r) => r.status === "activa")
-  const historyRentals = rentals.filter((r) => r.status !== "activa")
-
-  function updateRentalLocal(id: string, patch: Partial<EquipmentRentalRow>) {
-    setRentals((prev) => prev.map((r) => (r.id === id ? { ...r, ...patch } : r)))
-  }
+  const activeRentals = rentals.filter((r) => r.returnedAt === null)
 
   return (
     <div className="space-y-8">
@@ -688,34 +549,50 @@ function RentalsTab({
             {t("noActiveRentals")}
           </p>
         ) : (
-          <RentalsTable
+          <ActiveRentalsTable
             rentals={activeRentals}
-            showActions
-            onReturned={(id) => {
-              updateRentalLocal(id, { status: "devuelta", returnedAt: new Date() })
-              router.refresh()
-            }}
-            onCancelled={(id) => {
-              updateRentalLocal(id, { status: "cancelada" })
-              router.refresh()
-            }}
+            onChanged={router.refresh}
           />
         )}
       </div>
 
       <div className="space-y-3">
-        <h3 className="text-lg font-medium text-forest">{t("history")}</h3>
-        {historyRentals.length === 0 ? (
+        <h3 className="text-lg font-medium text-forest">{t("inventoryStatus")}</h3>
+        {items.length === 0 ? (
           <p className="rounded-xl border border-dashed border-border/60 px-4 py-6 text-center text-sm text-muted-foreground">
-            {t("noHistory")}
+            {t("noItems")}
           </p>
         ) : (
-          <RentalsTable rentals={historyRentals} showActions={false} />
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((item) => (
+              <div key={item.id} className="rounded-xl border border-border/60 p-4">
+                <div className="flex items-center gap-3">
+                  <ItemThumb item={item} />
+                  <div className="min-w-0">
+                    <p className="truncate font-medium text-foreground">{item.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      #{item.code} · {t(`categories.${categoryLabelKey(item.category)}`)}
+                      {item.talla ? ` · ${item.talla}` : ""}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <StatusBadge status={item.status} />
+                  {item.status === "disponible" && (
+                    <MaintenanceButton item={item} maintenance onChanged={router.refresh} />
+                  )}
+                  {item.status === "mantenimiento" && (
+                    <MaintenanceButton item={item} maintenance={false} onChanged={router.refresh} />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
 
       <RegisterRentalDialog
-        equipment={equipment}
+        items={items}
         open={createOpen}
         onOpenChange={setCreateOpen}
         onCreated={() => {
@@ -727,23 +604,51 @@ function RentalsTab({
   )
 }
 
-function formatDate(date: string | null | undefined) {
-  if (!date) return "—"
-  const [year, month, day] = date.split("-")
-  if (!year || !month || !day) return date
-  return `${day}/${month}/${year}`
+function MaintenanceButton({
+  item,
+  maintenance,
+  onChanged,
+}: {
+  item: EquipmentItemRow
+  maintenance: boolean
+  onChanged: () => void
+}) {
+  const t = useTranslations("Panel.equipment")
+  const [isPending, startTransition] = useTransition()
+
+  function handleClick() {
+    startTransition(async () => {
+      const result = await setEquipmentItemMaintenanceAction(item.id, maintenance)
+      if (result.ok) {
+        toast.success(maintenance ? t("maintenanceSuccess") : t("availableSuccess"))
+        onChanged()
+      } else {
+        toast.error(t(`errors.${result.error}`))
+      }
+    })
+  }
+
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      disabled={isPending}
+      onClick={handleClick}
+      className="gap-1"
+    >
+      <Wrench className="h-3.5 w-3.5" />
+      {maintenance ? t("markMaintenance") : t("markAvailable")}
+    </Button>
+  )
 }
 
-function RentalsTable({
+function ActiveRentalsTable({
   rentals,
-  showActions,
-  onReturned,
-  onCancelled,
+  onChanged,
 }: {
-  rentals: EquipmentRentalRow[]
-  showActions: boolean
-  onReturned?: (id: string) => void
-  onCancelled?: (id: string) => void
+  rentals: EquipmentItemRentalRow[]
+  onChanged: () => void
 }) {
   const t = useTranslations("Panel.equipment")
 
@@ -752,52 +657,44 @@ function RentalsTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>{t("columns.date")}</TableHead>
-            <TableHead>{t("columns.renter")}</TableHead>
             <TableHead>{t("columns.equipment")}</TableHead>
-            <TableHead>{t("columns.variant")}</TableHead>
-            <TableHead>{t("columns.quantity")}</TableHead>
-            <TableHead>{t("columns.expectedReturn")}</TableHead>
+            <TableHead>{t("columns.date")}</TableHead>
             <TableHead>{t("columns.status")}</TableHead>
-            {showActions && <TableHead className="text-right">{t("columns.actions")}</TableHead>}
+            <TableHead className="text-right">{t("columns.actions")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {rentals.map((rental) => {
-            const status = isEquipmentRentalStatus(rental.status) ? rental.status : "activa"
-            return (
-              <TableRow key={rental.id}>
-                <TableCell className="text-muted-foreground">{formatDate(rental.rentedAt)}</TableCell>
-                <TableCell className="font-medium">
-                  {rental.renterName}
-                  {rental.renterContact && (
-                    <span className="block text-xs text-muted-foreground">{rental.renterContact}</span>
-                  )}
-                </TableCell>
-                <TableCell>{rental.equipmentName}</TableCell>
-                <TableCell>{rental.variantLabel}</TableCell>
-                <TableCell>{rental.quantity}</TableCell>
-                <TableCell className="text-muted-foreground">{formatDate(rental.expectedReturnAt)}</TableCell>
-                <TableCell>
-                  <Badge
-                    variant={status === "cancelada" ? "destructive" : "secondary"}
-                    className={status === "devuelta" ? "border-transparent bg-forest text-white" : undefined}
-                  >
-                    {t(`status.${status}`)}
-                  </Badge>
-                </TableCell>
-                {showActions && (
-                  <TableCell className="text-right">
-                    <RentalRowActions
-                      rentalId={rental.id}
-                      onReturned={() => onReturned?.(rental.id)}
-                      onCancelled={() => onCancelled?.(rental.id)}
-                    />
-                  </TableCell>
-                )}
-              </TableRow>
-            )
-          })}
+          {rentals.map((rental) => (
+            <TableRow key={rental.id}>
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md bg-beige/40">
+                    {rental.itemImageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={rental.itemImageUrl}
+                        alt={rental.itemName}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <Package className="h-5 w-5 text-forest/50" />
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground">{rental.itemName}</p>
+                    <p className="text-xs text-muted-foreground">#{rental.itemCode}</p>
+                  </div>
+                </div>
+              </TableCell>
+              <TableCell className="text-muted-foreground">{formatDate(rental.rentedAt)}</TableCell>
+              <TableCell>
+                <Badge className="border-transparent bg-orange text-white">{t("status.rentado")}</Badge>
+              </TableCell>
+              <TableCell className="text-right">
+                <RentalRowActions rentalId={rental.id} onChanged={onChanged} />
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </div>
@@ -806,22 +703,20 @@ function RentalsTable({
 
 function RentalRowActions({
   rentalId,
-  onReturned,
-  onCancelled,
+  onChanged,
 }: {
   rentalId: string
-  onReturned: () => void
-  onCancelled: () => void
+  onChanged: () => void
 }) {
   const t = useTranslations("Panel.equipment")
   const [isPending, startTransition] = useTransition()
 
   function handleReturn() {
     startTransition(async () => {
-      const result = await markRentalReturnedAction(rentalId)
+      const result = await markEquipmentItemRentalReturnedAction(rentalId)
       if (result.ok) {
         toast.success(t("returnSuccess"))
-        onReturned()
+        onChanged()
       } else {
         toast.error(t(`errors.${result.error}`))
       }
@@ -830,9 +725,10 @@ function RentalRowActions({
 
   function handleCancel() {
     startTransition(async () => {
-      const result = await cancelRentalAction(rentalId)
+      const result = await cancelEquipmentItemRentalAction(rentalId)
       if (result.ok) {
-        onCancelled()
+        toast.success(t("cancelRentalSuccess"))
+        onChanged()
       } else {
         toast.error(t(`errors.${result.error}`))
       }
@@ -867,12 +763,12 @@ function RentalRowActions({
 }
 
 function RegisterRentalDialog({
-  equipment,
+  items,
   open,
   onOpenChange,
   onCreated,
 }: {
-  equipment: EquipmentCatalogItem[]
+  items: EquipmentItemRow[]
   open: boolean
   onOpenChange: (open: boolean) => void
   onCreated: () => void
@@ -880,44 +776,24 @@ function RegisterRentalDialog({
   const t = useTranslations("Panel.equipment")
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
-  const [equipmentId, setEquipmentId] = useState<string>(equipment[0]?.id ?? "")
-
-  const selectedEquipment = equipment.find((e) => e.id === equipmentId)
-  const [variantId, setVariantId] = useState<string>(selectedEquipment?.variants[0]?.id ?? "")
-
-  function handleEquipmentChange(id: string) {
-    setEquipmentId(id)
-    const next = equipment.find((e) => e.id === id)
-    setVariantId(next?.variants[0]?.id ?? "")
-  }
+  const available = items.filter((item) => item.status === "disponible")
+  const [itemId, setItemId] = useState<string>(available[0]?.id ?? "")
+  // Fall back to the first available item if the stored selection becomes stale.
+  const effectiveItemId = available.some((item) => item.id === itemId)
+    ? itemId
+    : (available[0]?.id ?? "")
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError(null)
 
     const form = new FormData(event.currentTarget)
-    const renterName = String(form.get("renterName") ?? "").trim()
-    const renterContact = String(form.get("renterContact") ?? "").trim()
-    const quantity = Number(form.get("quantity") ?? 1)
-    const rentedAt = String(form.get("rentedAt") ?? "")
-    const expectedReturnAt = String(form.get("expectedReturnAt") ?? "").trim()
-    const notes = String(form.get("notes") ?? "").trim()
+    const rentedAt = String(form.get("rentedAt") ?? "").trim()
 
-    if (!renterName || !equipmentId || !variantId || !rentedAt) return
-
-    const input: RentalInput = {
-      equipmentId,
-      variantId,
-      renterName,
-      renterContact: renterContact || null,
-      quantity,
-      rentedAt,
-      expectedReturnAt: expectedReturnAt || null,
-      notes: notes || null,
-    }
+    if (!effectiveItemId || !rentedAt) return
 
     startTransition(async () => {
-      const result = await createRentalAction(input)
+      const result = await createEquipmentItemRentalAction({ itemId: effectiveItemId, rentedAt })
       if (!result.ok) {
         setError(t(`errors.${result.error}`))
         return
@@ -936,75 +812,39 @@ function RegisterRentalDialog({
         </DialogHeader>
 
         <form id="rental-form" onSubmit={onSubmit} className="flex flex-col gap-4 py-2">
-          <div className="grid grid-cols-2 gap-3">
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="r-equipment">{t("form.equipment")}</Label>
-              <Select value={equipmentId} onValueChange={handleEquipmentChange}>
-                <SelectTrigger id="r-equipment" className="h-10">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {equipment.map((item) => (
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="r-item">{t("form.equipment")}</Label>
+            <Select value={effectiveItemId} onValueChange={setItemId}>
+              <SelectTrigger id="r-item" className="h-10">
+                <SelectValue placeholder={t("selectItem")} />
+              </SelectTrigger>
+              <SelectContent>
+                {available.length === 0 ? (
+                  <SelectItem value="none" disabled>
+                    {t("noAvailableItems")}
+                  </SelectItem>
+                ) : (
+                  available.map((item) => (
                     <SelectItem key={item.id} value={item.id}>
-                      {item.name}
+                      #{item.code} — {item.name}
+                      {item.talla ? ` (${item.talla})` : ""}
                     </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="r-variant">{t("form.variant")}</Label>
-              <Select value={variantId} onValueChange={setVariantId}>
-                <SelectTrigger id="r-variant" className="h-10">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {selectedEquipment?.variants.map((variant) => (
-                    <SelectItem key={variant.id} value={variant.id}>
-                      {variant.label} ({t("stockCount", { available: variant.availableQuantity, total: variant.totalQuantity })})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="r-renterName">{t("form.renterName")}</Label>
-            <Input id="r-renterName" name="renterName" required className="h-10" />
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="r-renterContact">{t("form.renterContact")}</Label>
-            <Input id="r-renterContact" name="renterContact" className="h-10" />
-          </div>
-
-          <div className="grid grid-cols-3 gap-3">
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="r-quantity">{t("form.quantity")}</Label>
-              <Input id="r-quantity" name="quantity" type="number" min={1} defaultValue={1} required className="h-10" />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="r-rentedAt">{t("form.rentedAt")}</Label>
-              <Input
-                id="r-rentedAt"
-                name="rentedAt"
-                type="date"
-                required
-                defaultValue={new Date().toISOString().slice(0, 10)}
-                className="h-10"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="r-expectedReturnAt">{t("form.expectedReturnAt")}</Label>
-              <Input id="r-expectedReturnAt" name="expectedReturnAt" type="date" className="h-10" />
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="r-notes">{t("form.notes")}</Label>
-            <Textarea id="r-notes" name="notes" rows={2} />
+            <Label htmlFor="r-rentedAt">{t("form.rentedAt")}</Label>
+            <Input
+              id="r-rentedAt"
+              name="rentedAt"
+              type="date"
+              required
+              defaultValue={new Date().toISOString().slice(0, 10)}
+              className="h-10"
+            />
           </div>
 
           {error && <p className="text-sm text-destructive">{error}</p>}
@@ -1014,12 +854,92 @@ function RegisterRentalDialog({
           <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isPending}>
             {t("cancel")}
           </Button>
-          <Button type="submit" form="rental-form" disabled={isPending} className="bg-forest text-white hover:bg-forest/90">
+          <Button
+            type="submit"
+            form="rental-form"
+            disabled={isPending || available.length === 0 || !effectiveItemId}
+            className="bg-forest text-white hover:bg-forest/90"
+          >
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {t("save")}
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  )
+}
+
+// ── History tab ────────────────────────────────────────────────────────────────
+
+function HistoryTab({ rentals }: { rentals: EquipmentItemRentalRow[] }) {
+  const t = useTranslations("Panel.equipment")
+
+  const grouped = new Map<string, EquipmentItemRentalRow[]>()
+  for (const rental of rentals) {
+    const list = grouped.get(rental.rentedAt) ?? []
+    list.push(rental)
+    grouped.set(rental.rentedAt, list)
+  }
+  const days = Array.from(grouped.entries()).sort((a, b) => b[0].localeCompare(a[0]))
+
+  if (days.length === 0) {
+    return (
+      <p className="rounded-xl border border-dashed border-border/60 px-4 py-8 text-center text-sm text-muted-foreground">
+        {t("noHistory")}
+      </p>
+    )
+  }
+
+  return (
+    <div className="space-y-8">
+      {days.map(([day, dayRentals]) => (
+        <div key={day} className="space-y-3">
+          <h3 className="text-lg font-medium text-forest">{formatDate(day)}</h3>
+          <div className="space-y-3">
+            {dayRentals.map((rental) => (
+              <div
+                key={rental.id}
+                className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border/60 p-4"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
+                    {rental.itemImageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={rental.itemImageUrl}
+                        alt={rental.itemName}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <Package className="h-6 w-6 text-forest/50" />
+                    )}
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-mono text-xs text-muted-foreground">#{rental.itemCode}</span>
+                      <p className="font-medium text-foreground">{rental.itemName}</p>
+                    </div>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      {t(`categories.${categoryLabelKey(rental.itemCategory)}`)}
+                      {rental.itemTalla ? ` · ${t("tallaLabel")}: ${rental.itemTalla}` : ""}
+                    </p>
+                  </div>
+                </div>
+                <Badge
+                  variant={rental.returnedAt ? "secondary" : "default"}
+                  className={
+                    rental.returnedAt
+                      ? "border-transparent bg-forest text-white"
+                      : "border-transparent bg-orange text-white"
+                  }
+                >
+                  {rental.returnedAt ? t("status.devuelta") : t("status.rentado")}
+                </Badge>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
   )
 }

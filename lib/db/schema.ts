@@ -349,6 +349,44 @@ export const equipmentRental = pgTable("equipment_rental", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
+/** A single physical piece of rentable equipment (new item-level inventory,
+ *  added 2026-11 as the replacement for the legacy catalog model below).
+ *  Each row is one real object — e.g. one helmet, one pair of shoes — with its
+ *  own sequential code ("001", "002", …), category and current status. */
+export const equipmentItem = pgTable("equipment_item", {
+  id: text("id").primaryKey(),
+  // Raw integer sequence. The user-facing code is derived as
+  // String(seq).padStart(3, "0") → "001", "002", … (never edited manually).
+  seq: integer("seq").notNull().unique(),
+  name: text("name").notNull(),
+  category: text("category").notNull().default("otros"), // "arnes" | "gatos" | "crashpad" | "casco" | "botas" | "carpa" | "otros"
+  // Only used when category = "gatos" (climbing shoe size); null otherwise.
+  talla: text("talla"),
+  imageUrl: text("image_url"),
+  // "disponible" | "rentado" | "mantenimiento" — kept in sync by the rental actions.
+  status: text("status").notNull().default("disponible"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, (table) => [
+  index("equipment_item_status_idx").on(table.status),
+])
+
+/** A rental movement of a single physical equipment item. */
+export const equipmentItemRental = pgTable("equipment_item_rental", {
+  id: text("id").primaryKey(),
+  itemId: text("item_id")
+    .notNull()
+    .references(() => equipmentItem.id, { onDelete: "cascade" }),
+  // ISO date (YYYY-MM-DD), same format as reservation.rentedAt.
+  rentedAt: text("rented_at").notNull(),
+  // null = still active; set when the item is returned.
+  returnedAt: timestamp("returned_at"),
+  registeredByUserId: text("registered_by_user_id").references(() => user.id),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (table) => [
+  index("equipment_item_rental_item_id_idx").on(table.itemId),
+])
+
 /** Community matchmaking post: a visitor announces a future plan (climbing,
  *  bouldering, hiking, camping...) so others can find them and coordinate.
  *  Unlike climbPost/campingPost/boulderPost (reviews of a past visit), this is
@@ -403,3 +441,5 @@ export type Reservation = typeof reservation.$inferSelect
 export type Equipment = typeof equipment.$inferSelect
 export type EquipmentVariant = typeof equipmentVariant.$inferSelect
 export type EquipmentRental = typeof equipmentRental.$inferSelect
+export type EquipmentItem = typeof equipmentItem.$inferSelect
+export type EquipmentItemRental = typeof equipmentItemRental.$inferSelect

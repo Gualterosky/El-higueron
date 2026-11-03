@@ -24,3 +24,34 @@ export function isEquipmentRentalStatus(value: string): value is EquipmentRental
 
 /** Label used for the single implicit variant of equipment that has no real sizes. */
 export const DEFAULT_VARIANT_LABEL = "Única"
+
+// ── Item-level inventory (new model, added 2026-11) ──────────────────────────
+
+export const EQUIPMENT_ITEM_CATEGORIES = [
+  "arnes",
+  "gatos",
+  "crashpad",
+  "casco",
+  "botas",
+  "carpa",
+  "otros",
+] as const
+
+export type EquipmentItemCategory = (typeof EQUIPMENT_ITEM_CATEGORIES)[number]
+
+export function isEquipmentItemCategory(value: string): value is EquipmentItemCategory {
+  return (EQUIPMENT_ITEM_CATEGORIES as readonly string[]).includes(value)
+}
+
+export const EQUIPMENT_ITEM_STATUSES = ["disponible", "rentado", "mantenimiento"] as const
+
+export type EquipmentItemStatus = (typeof EQUIPMENT_ITEM_STATUSES)[number]
+
+export function isEquipmentItemStatus(value: string): value is EquipmentItemStatus {
+  return (EQUIPMENT_ITEM_STATUSES as readonly string[]).includes(value)
+}
+
+/** User-facing sequential code: 1 → "001", 12 → "012", 1000 → "1000". */
+export function formatEquipmentItemCode(seq: number): string {
+  return String(seq).padStart(3, "0")
+}

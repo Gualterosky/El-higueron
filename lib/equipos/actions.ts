@@ -9,7 +9,7 @@ import { equipment, equipmentRental, equipmentVariant } from "@/lib/db/schema"
 import { getModeratorSession } from "@/lib/auth/guards"
 import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
 import { DEFAULT_VARIANT_LABEL, EQUIPMENT_CATEGORIES } from "@/lib/equipos/types"
-import { isR2Configured, uploadToR2 } from "@/lib/storage/r2"
+import { isR2Configured, missingR2EnvVars, uploadToR2 } from "@/lib/storage/r2"
 
 /** Uploaded equipment photos live in the "Equipos/" prefix of the R2 media bucket, square (1:1) as per design decision. */
 const R2_PREFIX = "Equipos"
@@ -383,8 +383,13 @@ export async function uploadEquipmentImageAction(
   }
 
   if (!isR2Configured()) {
-    console.error("[equipos] uploadEquipmentImageAction: Cloudflare R2 no está configurado")
-    return { ok: false, error: "not_configured" }
+    const missing = missingR2EnvVars()
+    console.error("[equipos] uploadEquipmentImageAction: faltan variables R2:", missing.join(", "))
+    return {
+      ok: false,
+      error: "not_configured",
+      message: `Faltan variables de entorno: ${missing.join(", ")}`,
+    }
   }
 
   const file = formData.get("file")

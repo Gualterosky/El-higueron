@@ -26,6 +26,11 @@ export function isR2Configured(): boolean {
   return REQUIRED_ENV.every((key) => !!process.env[key])
 }
 
+/** Devuelve los nombres de las variables R2_* que faltan o están vacías. */
+export function missingR2EnvVars(): (typeof REQUIRED_ENV)[number][] {
+  return REQUIRED_ENV.filter((key) => !process.env[key])
+}
+
 function getEnv(key: (typeof REQUIRED_ENV)[number]): string {
   const value = process.env[key]
   if (!value) throw new Error(`Falta la variable de entorno ${key} (configuración de Cloudflare R2)`)

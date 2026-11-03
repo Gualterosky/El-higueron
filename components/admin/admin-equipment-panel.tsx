@@ -126,12 +126,12 @@ function formatDate(date: string | null | undefined) {
 
 function ItemThumb({ item }: { item: EquipmentItemRow }) {
   return (
-    <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
+    <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
       {item.imageUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={item.imageUrl} alt={item.name} className="h-full w-full object-cover" />
       ) : (
-        <Package className="h-9 w-9 text-forest/50" />
+        <Package className="h-10 w-10 text-forest/50" />
       )}
     </div>
   )
@@ -184,7 +184,7 @@ function InventoryTab({ items }: { items: EquipmentItemRow[] }) {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-1">
+              <div className="ml-auto flex gap-1">
                 <Button
                   type="button"
                   variant="ghost"
@@ -583,7 +583,7 @@ function RentalsTab({
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-1">
+                <div className="ml-auto flex gap-1">
                   {item.status === "disponible" && (
                     <MaintenanceButton item={item} maintenance onChanged={router.refresh} />
                   )}
@@ -908,7 +908,7 @@ function HistoryTab({ rentals }: { rentals: EquipmentItemRentalRow[] }) {
                 className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border/60 p-4"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
+                  <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
                     {rental.itemImageUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -917,7 +917,7 @@ function HistoryTab({ rentals }: { rentals: EquipmentItemRentalRow[] }) {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <Package className="h-9 w-9 text-forest/50" />
+                      <Package className="h-10 w-10 text-forest/50" />
                     )}
                   </div>
                   <div>

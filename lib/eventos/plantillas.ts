@@ -1,4 +1,5 @@
 import type { Evento, TipoEvento } from "./types"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 // Plantillas base reutilizables. Sirven como punto de partida para crear
 // un evento nuevo: se copia la plantilla y se editan los campos.
@@ -13,7 +14,7 @@ export const plantillas: Record<Exclude<TipoEvento, "personalizado">, Plantilla>
     etiqueta: "Festival",
     titulo: "Nombre del Festival",
     subtitulo: "Una celebración llena de actividades, premios y comunidad.",
-    imagenHero: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img01.jpg",
+    imagenHero: `${R2_BASE_URL}/Muro%20bendito%20sea/Img01.jpg`,
     fecha: "Por confirmar",
     lugar: "Camping El Higuerón",
     textoCta: "Quiero inscribirme",
@@ -59,9 +60,9 @@ export const plantillas: Record<Exclude<TipoEvento, "personalizado">, Plantilla>
       },
     ],
     galeria: [
-      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img07.jpg",
-      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg",
-      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20240908_083909.jpg",
+      `${R2_BASE_URL}/Muro%20bendito%20sea/Img07.jpg`,
+      `${R2_BASE_URL}/Boulders/IMG_20250920_100731134_MFNR.jpg`,
+      `${R2_BASE_URL}/Naturaleza-paisajes/IMG_20240908_083909.jpg`,
     ],
     faqs: [
       { pregunta: "¿Necesito experiencia previa?", respuesta: "Hay categorías para todos los niveles." },
@@ -77,7 +78,7 @@ export const plantillas: Record<Exclude<TipoEvento, "personalizado">, Plantilla>
     etiqueta: "Taller",
     titulo: "Nombre del Taller",
     subtitulo: "Aprende técnicas prácticas con instructores expertos.",
-    imagenHero: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img08.jpg",
+    imagenHero: `${R2_BASE_URL}/Muro%20bendito%20sea/Img08.jpg`,
     fecha: "Por confirmar",
     lugar: "Camping El Higuerón",
     textoCta: "Reservar mi cupo",
@@ -118,7 +119,7 @@ export const plantillas: Record<Exclude<TipoEvento, "personalizado">, Plantilla>
     etiqueta: "Clase",
     titulo: "Nombre de la Clase",
     subtitulo: "Una sesión para iniciarte de forma segura y guiada.",
-    imagenHero: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100954059_HDR.jpg",
+    imagenHero: `${R2_BASE_URL}/Boulders/IMG_20250920_100954059_HDR.jpg`,
     fecha: "Por confirmar",
     lugar: "Camping El Higuerón",
     textoCta: "Apartar mi lugar",
@@ -149,7 +150,7 @@ export const plantillas: Record<Exclude<TipoEvento, "personalizado">, Plantilla>
     etiqueta: "Campamento",
     titulo: "Nombre del Campamento",
     subtitulo: "Varios días de aventura, naturaleza y comunidad.",
-    imagenHero: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/Fogata1.jpg",
+    imagenHero: `${R2_BASE_URL}/Camping/Fogata1.jpg`,
     fecha: "Por confirmar",
     lugar: "Camping El Higuerón",
     textoCta: "Reservar mi lugar",
@@ -178,8 +179,8 @@ export const plantillas: Record<Exclude<TipoEvento, "personalizado">, Plantilla>
       },
     ],
     galeria: [
-      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/Fogata2.jpg",
-      "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20240804_180618.jpg",
+      `${R2_BASE_URL}/Camping/Fogata2.jpg`,
+      `${R2_BASE_URL}/Naturaleza-paisajes/IMG_20240804_180618.jpg`,
     ],
     cierreTitulo: "Vive la experiencia completa",
     cierreDescripcion: "Reserva tu lugar en el próximo campamento.",

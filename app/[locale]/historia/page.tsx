@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -30,7 +31,7 @@ export default async function HistoriaPage({ params }: Props) {
       <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
+            src={`${R2_BASE_URL}/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg`}
             alt={t("hero.imageAlt")}
             fill
             sizes="100vw"

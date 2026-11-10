@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { LEGAL_INFO } from "@/lib/legal-info"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 const whatsappNumber = "573172973537"
 
@@ -195,7 +196,7 @@ export default async function ContactoPage({ params }: Props) {
       {/* Image Section */}
       <section className="relative h-[40vh] overflow-hidden">
         <Image
-          src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_165116990_HDR.jpg"
+          src={`${R2_BASE_URL}/Naturaleza-paisajes/IMG_20250126_165116990_HDR.jpg`}
           alt={t("banner.imageAlt")}
           fill
           sizes="100vw"

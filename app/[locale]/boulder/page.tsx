@@ -9,6 +9,7 @@ import { assertSectionVisible } from "@/lib/site-settings"
 import { BoulderPublications } from "@/components/boulder/boulder-publications"
 import { BoulderPostForm } from "@/components/boulder/boulder-post-form"
 import { BOULDERS } from "@/lib/boulder/boulders"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 export default async function BoulderPage({
   params,
@@ -53,7 +54,7 @@ export default async function BoulderPage({
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_092321682_HDR.jpg"
+            src={`${R2_BASE_URL}/Boulders/IMG_20250920_092321682_HDR.jpg`}
             alt={t('hero.imageAlt')}
             fill
             sizes="100vw"
@@ -77,7 +78,7 @@ export default async function BoulderPage({
       <section className="relative overflow-hidden">
         <div className="relative aspect-[21/9] w-full">
           <Image
-            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_162115607_MFNR.jpg"
+            src={`${R2_BASE_URL}/Boulders/IMG_20250920_162115607_MFNR.jpg`}
             alt={t('banner.imageAlt')}
             fill
             sizes="100vw"
@@ -117,7 +118,7 @@ export default async function BoulderPage({
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img17.jpg"
+                src={`${R2_BASE_URL}/Boulders/Img17.jpg`}
                 alt={t('intro.imageAlt')}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
@@ -144,7 +145,7 @@ export default async function BoulderPage({
           <div className="mb-4 grid gap-4 md:grid-cols-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250914_143103460_MFNR.jpg"
+                src={`${R2_BASE_URL}/Boulders/IMG_20250914_143103460_MFNR.jpg`}
                 alt="Boulder en roca natural"
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
@@ -153,7 +154,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg"
+                src={`${R2_BASE_URL}/Boulders/IMG_20250920_100731134_MFNR.jpg`}
                 alt="Escalada en bloque"
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
@@ -166,7 +167,7 @@ export default async function BoulderPage({
           <div className="mb-4 grid gap-4 md:grid-cols-3">
             <div className="relative aspect-square overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100954059_HDR.jpg"
+                src={`${R2_BASE_URL}/Boulders/IMG_20250920_100954059_HDR.jpg`}
                 alt="Detalle de agarre en boulder"
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
@@ -175,7 +176,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-square overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img18.jpg"
+                src={`${R2_BASE_URL}/Boulders/Img18.jpg`}
                 alt="Problema de boulder"
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
@@ -184,7 +185,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-square overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img20.jpg"
+                src={`${R2_BASE_URL}/Boulders/Img20.jpg`}
                 alt="Escalador trabajando problema"
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
@@ -197,7 +198,7 @@ export default async function BoulderPage({
           <div className="grid gap-4 sm:grid-cols-4">
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img21.jpg"
+                src={`${R2_BASE_URL}/Boulders/Img21.jpg`}
                 alt="Boulder zona 1"
                 fill
                 sizes="(min-width: 640px) 25vw, 100vw"
@@ -206,7 +207,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img22.jpg"
+                src={`${R2_BASE_URL}/Boulders/Img22.jpg`}
                 alt="Boulder zona 2"
                 fill
                 sizes="(min-width: 640px) 25vw, 100vw"
@@ -215,7 +216,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img23.jpg"
+                src={`${R2_BASE_URL}/Boulders/Img23.jpg`}
                 alt="Boulder zona 3"
                 fill
                 sizes="(min-width: 640px) 25vw, 100vw"
@@ -224,7 +225,7 @@ export default async function BoulderPage({
             </div>
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20260430_120707095_HDR.jpg"
+                src={`${R2_BASE_URL}/Boulders/IMG_20260430_120707095_HDR.jpg`}
                 alt="Vista de la zona de boulder"
                 fill
                 sizes="(min-width: 640px) 25vw, 100vw"
@@ -352,7 +353,7 @@ export default async function BoulderPage({
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20260430_120745606_HDR.jpg"
+                src={`${R2_BASE_URL}/Boulders/IMG_20260430_120745606_HDR.jpg`}
                 alt={t('crashpads.imageAlt')}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"

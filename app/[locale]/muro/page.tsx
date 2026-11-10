@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation"
 import { AscentForm } from "@/components/muro/ascent-form"
 import { AllRoutesPublications } from "@/components/muro/all-routes-publications"
 import RouteGuideSection from "./RouteGuideSection"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 type RouteItem = {
   name: string
@@ -41,7 +42,7 @@ export default async function MuroPage({ params }: Props) {
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img02.jpg"
+            src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img02.jpg`}
             alt={t("hero.imageAlt")}
             fill
             sizes="100vw"
@@ -85,7 +86,7 @@ export default async function MuroPage({ params }: Props) {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img03.jpg"
+                src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img03.jpg`}
                 alt={t("intro.imageAlt")}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
@@ -208,7 +209,7 @@ export default async function MuroPage({ params }: Props) {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/IMG_20250111_141453567_SR.jpg"
+                src={`${R2_BASE_URL}/Muro%20bendito%20sea/IMG_20250111_141453567_SR.jpg`}
                 alt={t("location.imageAlt")}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
@@ -267,7 +268,7 @@ export default async function MuroPage({ params }: Props) {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img04.jpg"
+                src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img04.jpg`}
                 alt={t("safety.imageAlt")}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"

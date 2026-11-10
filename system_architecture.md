@@ -1236,6 +1236,15 @@ Optimizer de Vercel **sí redimensiona y convierte a WebP/AVIF** cada
 sigue usando `<img>` plano hacia Cloudinary (`post-media-gallery.tsx`), no
 necesita `remotePatterns`.
 
+**URLs R2 unificadas (2026-11):** las URLs hardcodeadas
+`https://pub-xxxx.r2.dev/...` que había en páginas y datos (`app/**`,
+`lib/eventos/*`, `lib/boulder/boulders.ts`, `components/navbar.tsx`) se
+reemplazaron por `R2_BASE_URL` (`lib/media/r2-url.ts`), que deriva de
+`NEXT_PUBLIC_R2_PUBLIC_URL ?? R2_PUBLIC_URL` (con fallback al `.r2.dev`).
+`NEXT_PUBLIC_R2_PUBLIC_URL` es la variante pública para el único componente
+cliente con imagen R2 (`navbar.tsx`); en `.env.example` está documentado que
+debe apuntar al mismo host que `R2_PUBLIC_URL`.
+
 **`public/media/` eliminado del working tree** (238 archivos, ~143 MB) tras
 verificar que todo el código ya apunta a R2.
 

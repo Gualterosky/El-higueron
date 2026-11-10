@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useTranslations } from "next-intl"
 import { Download, ZoomIn, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 export default function RouteGuideSection() {
   const [lightboxOpen, setLightboxOpen] = useState(false)
@@ -36,7 +37,7 @@ export default function RouteGuideSection() {
                 onClick={() => setLightboxOpen(true)}
               >
                 <Image
-                  src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Rutas%20bendito%20sea.png"
+                  src={`${R2_BASE_URL}/Rutas%20bendito%20sea.png`}
                   alt={t("imageAlt")}
                   fill
                   sizes="(min-width: 768px) 768px, 100vw"
@@ -65,7 +66,7 @@ export default function RouteGuideSection() {
                 variant="outline"
                 className="border-forest text-forest hover:bg-forest hover:text-white"
               >
-                <a href="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Rutas%20bendito%20sea.png" download="Rutas-Bendito-Sea.png">
+                <a href={`${R2_BASE_URL}/Rutas%20bendito%20sea.png`} download="Rutas-Bendito-Sea.png">
                   <Download className="mr-2 h-5 w-5" />
                   {t("download")}
                 </a>
@@ -94,7 +95,7 @@ export default function RouteGuideSection() {
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Rutas%20bendito%20sea.png"
+              src={`${R2_BASE_URL}/Rutas%20bendito%20sea.png`}
               alt={t("imageAlt")}
               width={900}
               height={1200}
@@ -109,7 +110,7 @@ export default function RouteGuideSection() {
               className="bg-orange text-white hover:bg-orange/90 shadow-lg"
             >
               <a
-                href="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Rutas%20bendito%20sea.png"
+                href={`${R2_BASE_URL}/Rutas%20bendito%20sea.png`}
                 download="Rutas-Bendito-Sea.png"
                 onClick={(e) => e.stopPropagation()}
               >

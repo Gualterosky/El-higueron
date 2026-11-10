@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { GuidesModal } from "@/components/guides-modal"
 import { assertSectionVisible, getHiddenSections } from "@/lib/site-settings"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 export default async function EscaladaPage({
   params,
@@ -25,7 +26,7 @@ export default async function EscaladaPage({
       description: t('modalities.muro.description'),
       icon: Mountain,
       href: "/muro" as const,
-      image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img07.jpg",
+      image: `${R2_BASE_URL}/Muro%20bendito%20sea/Img07.jpg`,
       routes: t('modalities.muro.routes'),
       height: t('modalities.muro.height'),
       section: "muro" as const,
@@ -35,7 +36,7 @@ export default async function EscaladaPage({
       description: t('modalities.boulder.description'),
       icon: CircleDot,
       href: "/boulder" as const,
-      image: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg",
+      image: `${R2_BASE_URL}/Boulders/IMG_20250920_100731134_MFNR.jpg`,
       routes: t('modalities.boulder.routes'),
       height: t('modalities.boulder.height'),
       section: "boulder" as const,
@@ -60,7 +61,7 @@ export default async function EscaladaPage({
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img01.jpg"
+            src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img01.jpg`}
             alt={t('hero.imageAlt')}
             fill
             sizes="100vw"
@@ -275,7 +276,7 @@ export default async function EscaladaPage({
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img08.jpg"
+                src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img08.jpg`}
                 alt={t('safety.imageAlt')}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"

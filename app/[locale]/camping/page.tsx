@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { assertSectionVisible, getHiddenSections } from "@/lib/site-settings"
 import { CampingPublications } from "@/components/camping/camping-publications"
 import { CampingPostForm } from "@/components/camping/camping-post-form"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -63,7 +64,7 @@ export default async function CampingPage({ params }: Props) {
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20260116_175442021_MFNR.jpg"
+            src={`${R2_BASE_URL}/Camping/IMG_20260116_175442021_MFNR.jpg`}
             alt={t("hero.imageAlt")}
             fill
             sizes="100vw"
@@ -107,7 +108,7 @@ export default async function CampingPage({ params }: Props) {
             
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134710067_HDR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20250225_134710067_HDR.jpg`}
                 alt={t("intro.imageAlt")}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
@@ -152,7 +153,7 @@ export default async function CampingPage({ params }: Props) {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250129_074449185_HDR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20250129_074449185_HDR.jpg`}
                 alt={t("bring.imageAlt")}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
@@ -238,7 +239,7 @@ export default async function CampingPage({ params }: Props) {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/Fogata1.jpg"
+                src={`${R2_BASE_URL}/Camping/Fogata1.jpg`}
                 alt={t("fire.imageAlt")}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
@@ -250,12 +251,12 @@ export default async function CampingPage({ params }: Props) {
           {/* Galería de fogatas */}
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/Fogata2.jpg",
-              "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/Fogata3.jpg",
-              "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/Fogata4.jpg",
-              "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/Fogata5.jpg",
-              "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/Fogata6.jpg",
-              "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20260117_080602542_HDR.jpg",
+              `${R2_BASE_URL}/Camping/Fogata2.jpg`,
+              `${R2_BASE_URL}/Camping/Fogata3.jpg`,
+              `${R2_BASE_URL}/Camping/Fogata4.jpg`,
+              `${R2_BASE_URL}/Camping/Fogata5.jpg`,
+              `${R2_BASE_URL}/Camping/Fogata6.jpg`,
+              `${R2_BASE_URL}/Camping/IMG_20260117_080602542_HDR.jpg`,
             ].map((img) => (
               <div key={img} className="relative aspect-[4/3] overflow-hidden rounded-2xl">
                 <Image
@@ -286,7 +287,7 @@ export default async function CampingPage({ params }: Props) {
           {/* Fila 1: imagen panorámica */}
           <div className="mb-4 relative aspect-[21/9] overflow-hidden rounded-2xl">
             <Image
-              src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250920_125059918_HDR.jpg"
+              src={`${R2_BASE_URL}/Camping/IMG_20250920_125059918_HDR.jpg`}
               alt="Vista panorámica del camping"
               fill
               sizes="100vw"
@@ -298,7 +299,7 @@ export default async function CampingPage({ params }: Props) {
           <div className="mb-4 grid gap-4 md:grid-cols-3">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20260116_175452246_MFNR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20260116_175452246_MFNR.jpg`}
                 alt="Zona de camping al atardecer"
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
@@ -307,7 +308,7 @@ export default async function CampingPage({ params }: Props) {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20260116_175500969_MFNR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20260116_175500969_MFNR.jpg`}
                 alt="Ambiente de camping nocturno"
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
@@ -316,7 +317,7 @@ export default async function CampingPage({ params }: Props) {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250129_074449185_HDR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20250129_074449185_HDR.jpg`}
                 alt={t("bring.imageAlt")}
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
@@ -329,7 +330,7 @@ export default async function CampingPage({ params }: Props) {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134602260_HDR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20250225_134602260_HDR.jpg`}
                 alt="Camping en El Higuerón"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
@@ -338,7 +339,7 @@ export default async function CampingPage({ params }: Props) {
             </div>
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134723182_MFNR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20250225_134723182_MFNR.jpg`}
                 alt="Área de camping"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
@@ -347,7 +348,7 @@ export default async function CampingPage({ params }: Props) {
             </div>
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134741147_HDR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20250225_134741147_HDR.jpg`}
                 alt="Naturaleza del camping"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
@@ -356,7 +357,7 @@ export default async function CampingPage({ params }: Props) {
             </div>
             <div className="relative aspect-square overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134909280_HDR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20250225_134909280_HDR.jpg`}
                 alt="Entorno natural del camping"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"

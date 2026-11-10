@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { getHiddenSections } from "@/lib/site-settings"
 import { PublicReviewsSection } from "@/components/reviews/public-reviews-section"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 export default async function HomePage({
   params,
@@ -77,10 +78,10 @@ export default async function HomePage({
 
   const galleryAlts = t.raw('gallery.alts') as string[]
   const galleryImages = [
-    { src: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img06.jpg", alt: galleryAlts[0] },
-    { src: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134602260_HDR.jpg", alt: galleryAlts[1] },
-    { src: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250225_135937239_HDR.jpg", alt: galleryAlts[2] },
-    { src: "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg", alt: galleryAlts[3] },
+    { src: `${R2_BASE_URL}/Muro%20bendito%20sea/Img06.jpg`, alt: galleryAlts[0] },
+    { src: `${R2_BASE_URL}/Camping/IMG_20250225_134602260_HDR.jpg`, alt: galleryAlts[1] },
+    { src: `${R2_BASE_URL}/Naturaleza-paisajes/IMG_20250225_135937239_HDR.jpg`, alt: galleryAlts[2] },
+    { src: `${R2_BASE_URL}/Boulders/IMG_20250920_100731134_MFNR.jpg`, alt: galleryAlts[3] },
   ]
 
   const showEscalada = !hidden.escalada
@@ -96,7 +97,7 @@ export default async function HomePage({
       <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
+            src={`${R2_BASE_URL}/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg`}
             alt={t('hero.imageAlt')}
             fill
             sizes="100vw"
@@ -182,7 +183,7 @@ export default async function HomePage({
                   <CardContent className="p-0">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <Image
-                        src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img06.jpg"
+                        src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img06.jpg`}
                         alt={t('adventures.escalada.imageAlt')}
                         fill
                         sizes="(min-width: 768px) 50vw, 100vw"
@@ -204,7 +205,7 @@ export default async function HomePage({
                   <CardContent className="p-0">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <Image
-                        src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134602260_HDR.jpg"
+                        src={`${R2_BASE_URL}/Camping/IMG_20250225_134602260_HDR.jpg`}
                         alt={t('adventures.camping.imageAlt')}
                         fill
                         sizes="(min-width: 768px) 50vw, 100vw"
@@ -231,7 +232,7 @@ export default async function HomePage({
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250225_140002347_MFNR.jpg"
+                src={`${R2_BASE_URL}/Naturaleza-paisajes/IMG_20250225_140002347_MFNR.jpg`}
                 alt={t('about.imageAlt')}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"

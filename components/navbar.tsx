@@ -15,6 +15,7 @@ import {
   type ContentSection,
   type HiddenSections,
 } from "@/lib/site-settings/types"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 const navHrefs = [
   { href: "/escalada" as const, key: "escalada" as const },
@@ -61,7 +62,7 @@ export function Navbar({
       <nav className="container mx-auto flex h-16 items-center justify-between px-4 lg:px-8">
         <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
           <Image
-            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Logo-verde.png"
+            src={`${R2_BASE_URL}/Logo-verde.png`}
             alt={tMeta("logoAlt")}
             width={40}
             height={40}

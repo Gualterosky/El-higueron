@@ -12,6 +12,7 @@ import {
 } from "@/lib/equipos/item-queries"
 import { EquipmentComments } from "@/components/equipos/equipment-comments"
 import { EquipmentPostForm } from "@/components/equipos/equipment-post-form"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -23,9 +24,6 @@ const CURRENCY_FORMATTER = new Intl.NumberFormat("es-CO", {
   maximumFractionDigits: 0,
 })
 
-/** URL pública base del bucket R2 de medios (la misma que usa el resto del sitio). */
-const R2_PUBLIC_URL = "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev"
-
 /** Categorías mostradas en el catálogo público, en orden. "otros" se omite. */
 const PUBLIC_EQUIPMENT_CATEGORIES = ["casco", "arnes", "crashpad", "gatos", "botas", "carpa"] as const
 
@@ -33,12 +31,12 @@ type PublicEquipmentCategory = (typeof PUBLIC_EQUIPMENT_CATEGORIES)[number]
 
 /** Imagen representativa por categoría. "botas" se muestra sin imagen. */
 const CATEGORY_IMAGES: Record<PublicEquipmentCategory, string | null> = {
-  casco: `${R2_PUBLIC_URL}/Equipos/Casco%201.png`,
-  arnes: `${R2_PUBLIC_URL}/Equipos/arnes-black-diamond-azul-1793726151946.jpg`,
-  crashpad: `${R2_PUBLIC_URL}/Equipos/crashpad-grande-doble-1793726205684.jpg`,
-  gatos: `${R2_PUBLIC_URL}/Equipos/Gatos%20Full.png`,
+  casco: `${R2_BASE_URL}/Equipos/Casco%201.png`,
+  arnes: `${R2_BASE_URL}/Equipos/arnes-black-diamond-azul-1793726151946.jpg`,
+  crashpad: `${R2_BASE_URL}/Equipos/crashpad-grande-doble-1793726205684.jpg`,
+  gatos: `${R2_BASE_URL}/Equipos/Gatos%20Full.png`,
   botas: null,
-  carpa: `${R2_PUBLIC_URL}/Equipos/carpa-simond-mt500-1793733232477.jpg`,
+  carpa: `${R2_BASE_URL}/Equipos/carpa-simond-mt500-1793733232477.jpg`,
 }
 
 function parseSizeValue(size: string): number {
@@ -77,7 +75,7 @@ export default async function EquiposPage({ params }: Props) {
       <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img09.jpg"
+            src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img09.jpg`}
             alt={t("hero.imageAlt")}
             fill
             sizes="100vw"
@@ -271,7 +269,7 @@ export default async function EquiposPage({ params }: Props) {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Equipos/crashpad%202c.png"
+                src={`${R2_BASE_URL}/Equipos/crashpad%202c.png`}
                 alt={t("notes.imageAlt")}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"

@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { assertSectionVisible } from "@/lib/site-settings"
+import { R2_BASE_URL } from "@/lib/media/r2-url"
 
 type Props = {
   params: Promise<{ locale: string }>
@@ -68,7 +69,7 @@ export default async function VisitaPage({ params }: Props) {
       <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/IMG_20250322_174755948_HDR.jpg"
+            src={`${R2_BASE_URL}/Muro%20bendito%20sea/IMG_20250322_174755948_HDR.jpg`}
             alt={t("hero.imageAlt")}
             fill
             sizes="100vw"
@@ -194,7 +195,7 @@ export default async function VisitaPage({ params }: Props) {
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img03.jpg"
+                src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img03.jpg`}
                 alt="Escalada deportiva"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
@@ -203,7 +204,7 @@ export default async function VisitaPage({ params }: Props) {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/Img22.jpg"
+                src={`${R2_BASE_URL}/Boulders/Img22.jpg`}
                 alt="Boulder en la naturaleza"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
@@ -212,7 +213,7 @@ export default async function VisitaPage({ params }: Props) {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134710067_HDR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20250225_134710067_HDR.jpg`}
                 alt="Carpas en el camping"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
@@ -221,7 +222,7 @@ export default async function VisitaPage({ params }: Props) {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg"
+                src={`${R2_BASE_URL}/Naturaleza-paisajes/IMG_20250126_162909418_HDR.jpg`}
                 alt="Paisaje de montaña"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
@@ -265,7 +266,7 @@ export default async function VisitaPage({ params }: Props) {
           <div className="mt-12 grid gap-4 md:grid-cols-3">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img06.jpg"
+                src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img06.jpg`}
                 alt="Escaladores en el muro"
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
@@ -274,7 +275,7 @@ export default async function VisitaPage({ params }: Props) {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20260117_080602542_HDR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20260117_080602542_HDR.jpg`}
                 alt="Fogata en el camping"
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
@@ -283,7 +284,7 @@ export default async function VisitaPage({ params }: Props) {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_100731134_MFNR.jpg"
+                src={`${R2_BASE_URL}/Boulders/IMG_20250920_100731134_MFNR.jpg`}
                 alt="Boulder con crashpad"
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"
@@ -330,7 +331,7 @@ export default async function VisitaPage({ params }: Props) {
 
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img05.jpg"
+                src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img05.jpg`}
                 alt="Escalador en ruta"
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
@@ -343,7 +344,7 @@ export default async function VisitaPage({ params }: Props) {
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Boulders/IMG_20250920_092321682_HDR.jpg"
+                src={`${R2_BASE_URL}/Boulders/IMG_20250920_092321682_HDR.jpg`}
                 alt="Zona de boulder"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
@@ -352,7 +353,7 @@ export default async function VisitaPage({ params }: Props) {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Camping/IMG_20250225_134602260_HDR.jpg"
+                src={`${R2_BASE_URL}/Camping/IMG_20250225_134602260_HDR.jpg`}
                 alt="Camping entre árboles"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
@@ -361,7 +362,7 @@ export default async function VisitaPage({ params }: Props) {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Muro%20bendito%20sea/Img11.jpg"
+                src={`${R2_BASE_URL}/Muro%20bendito%20sea/Img11.jpg`}
                 alt="Vista del muro"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
@@ -370,7 +371,7 @@ export default async function VisitaPage({ params }: Props) {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
               <Image
-                src="https://pub-b8789ea28b254e56a01798832eb96334.r2.dev/Naturaleza-paisajes/IMG_20250121_174841943_MFNR.jpg"
+                src={`${R2_BASE_URL}/Naturaleza-paisajes/IMG_20250121_174841943_MFNR.jpg`}
                 alt="Atardecer en la montaña"
                 fill
                 sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"

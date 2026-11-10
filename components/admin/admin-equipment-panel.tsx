@@ -104,6 +104,13 @@ function categoryLabelKey(category: string): string {
   return isEquipmentItemCategory(category) ? category : "otros"
 }
 
+/** Combina "Categoría + Nombre" para mostrar el nombre visible de un objeto
+ *  (ej. "Gatos Sportiva Nago"). Si el nombre está vacío, deja solo la categoría. */
+function combinedName(categoryLabel: string, name: string): string {
+  const trimmed = name.trim()
+  return trimmed ? `${categoryLabel} ${trimmed}` : categoryLabel
+}
+
 function StatusBadge({ status }: { status: string }) {
   const t = useTranslations("Panel.equipment")
   const key = isEquipmentItemStatus(status) ? status : "disponible"
@@ -175,11 +182,10 @@ function InventoryTab({ items }: { items: EquipmentItemRow[] }) {
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="font-mono text-xs text-muted-foreground">#{item.code}</span>
-                    <p className="font-medium text-foreground">{item.name}</p>
+                    <p className="font-medium text-foreground">{combinedName(t(`categories.${categoryLabelKey(item.category)}`), item.name)}</p>
                   </div>
                   <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                    <span>{t(`categories.${categoryLabelKey(item.category)}`)}</span>
-                    {item.talla && <span>· {t("tallaLabel")}: {item.talla}</span>}
+                    {item.talla && <span>{t("tallaLabel")}: {item.talla}</span>}
                     <StatusBadge status={item.status} />
                   </div>
                 </div>
@@ -469,7 +475,10 @@ function DeleteItemDialog({
           <AlertDialogTitle>{t("deleteItem")}</AlertDialogTitle>
           <AlertDialogDescription>
             {step === 1
-              ? t("deleteItemConfirmStep1", { name: item.name, code: item.code })
+              ? t("deleteItemConfirmStep1", {
+                  name: combinedName(t(`categories.${categoryLabelKey(item.category)}`), item.name),
+                  code: item.code,
+                })
               : t("deleteItemConfirmStep2", { code: item.code })}
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -574,11 +583,10 @@ function RentalsTab({
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="font-mono text-xs text-muted-foreground">#{item.code}</span>
-                      <p className="font-medium text-foreground">{item.name}</p>
+                      <p className="font-medium text-foreground">{combinedName(t(`categories.${categoryLabelKey(item.category)}`), item.name)}</p>
                     </div>
                     <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                      <span>{t(`categories.${categoryLabelKey(item.category)}`)}</span>
-                      {item.talla && <span>· {t("tallaLabel")}: {item.talla}</span>}
+                      {item.talla && <span>{t("tallaLabel")}: {item.talla}</span>}
                       <StatusBadge status={item.status} />
                     </div>
                   </div>
@@ -687,7 +695,7 @@ function ActiveRentalsTable({
                     )}
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">{rental.itemName}</p>
+                    <p className="font-medium text-foreground">{combinedName(t(`categories.${categoryLabelKey(rental.itemCategory)}`), rental.itemName)}</p>
                     <p className="text-xs text-muted-foreground">#{rental.itemCode}</p>
                   </div>
                 </div>
@@ -844,7 +852,7 @@ function RegisterRentalDialog({
                 )}
                 <SelectValue placeholder={t("selectItem")}>
                   {selectedItem
-                    ? `${selectedItem.name}${selectedItem.talla ? ` · ${t("tallaLabel")}: ${selectedItem.talla}` : ""}`
+                    ? `${combinedName(t(`categories.${categoryLabelKey(selectedItem.category)}`), selectedItem.name)}${selectedItem.talla ? ` · ${t("tallaLabel")}: ${selectedItem.talla}` : ""}`
                     : null}
                 </SelectValue>
               </SelectTrigger>
@@ -870,7 +878,7 @@ function RegisterRentalDialog({
                           )}
                         </div>
                         <div className="min-w-0">
-                          <p className="truncate font-medium">{item.name}</p>
+                          <p className="truncate font-medium">{combinedName(t(`categories.${categoryLabelKey(item.category)}`), item.name)}</p>
                           {item.talla ? (
                             <p className="text-xs text-muted-foreground">
                               {t("tallaLabel")}: {item.talla}
@@ -967,12 +975,13 @@ function HistoryTab({ rentals }: { rentals: EquipmentItemRentalRow[] }) {
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="font-mono text-xs text-muted-foreground">#{rental.itemCode}</span>
-                      <p className="font-medium text-foreground">{rental.itemName}</p>
+                      <p className="font-medium text-foreground">{combinedName(t(`categories.${categoryLabelKey(rental.itemCategory)}`), rental.itemName)}</p>
                     </div>
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {t(`categories.${categoryLabelKey(rental.itemCategory)}`)}
-                      {rental.itemTalla ? ` · ${t("tallaLabel")}: ${rental.itemTalla}` : ""}
-                    </p>
+                    {rental.itemTalla ? (
+                      <p className="mt-0.5 text-xs text-muted-foreground">
+                        {t("tallaLabel")}: {rental.itemTalla}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
               </div>

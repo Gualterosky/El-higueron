@@ -619,6 +619,14 @@ objeto+fecha, marcar devuelto, marcar mantenimiento) e Historial (agrupado por
 día con foto y detalles). El selector de objeto del diálogo "Agregar renta"
 muestra la foto del objeto junto al nombre.
 
+**Convención de nombre (2026-11):** `equipmentItem.name` guarda **solo el
+modelo** (ej. `"Sportiva Nago"`, `"Black Diamond Azul"`), sin la categoría. La
+UI del panel muestra el nombre visible como **"Categoría + Nombre"** (ej.
+`"Gatos Sportiva Nago"`, `"Arnés Black Diamond Azul"`) mediante el helper
+`combinedName()` y ya **no muestra la categoría como campo separado**. Los
+nombres existentes se normalizaron el 2026-11 para quitar el prefijo de
+categoría duplicado que tenían antes.
+
 ### 6.b.2 Página pública `/equipos` (reescrita 2026-11)
 
 La página pública ya no lee el catálogo legacy. Renderiza **una tarjeta por

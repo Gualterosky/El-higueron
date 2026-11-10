@@ -3,6 +3,7 @@
 import {
   BotMessageSquare,
   CalendarDays,
+  Compass,
   Contact,
   LayoutDashboard,
   LogOut,
@@ -55,6 +56,12 @@ const STAFF_ITEMS: NavItem[] = [
     href: "/staff/comunidad",
     labelKey: "comunidad",
     icon: Users2,
+    roles: ["staff", "administrador"],
+  },
+  {
+    href: "/staff/guias",
+    labelKey: "guides",
+    icon: Compass,
     roles: ["staff", "administrador"],
   },
   {
@@ -112,6 +119,12 @@ const ADMIN_ITEMS: NavItem[] = [
     href: "/admin/comunidad",
     labelKey: "comunidad",
     icon: Users2,
+    roles: ["administrador"],
+  },
+  {
+    href: "/admin/guias",
+    labelKey: "guides",
+    icon: Compass,
     roles: ["administrador"],
   },
   {

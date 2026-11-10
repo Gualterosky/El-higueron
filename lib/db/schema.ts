@@ -333,6 +333,37 @@ export const equipmentItemRental = pgTable("equipment_item_rental", {
   index("equipment_item_rental_item_id_idx").on(table.itemId),
 ])
 
+/** A professional guide or agency shown in the "Guías Profesionales" section
+ *  of /escalada. Managed from the admin/staff panel; ordered by `position`. */
+export const guide = pgTable("guide", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  logoUrl: text("logo_url"),
+  // WhatsApp number (digits, optional leading "+"). Shown as a WhatsApp button.
+  phone: text("phone").notNull().default(""),
+  position: integer("position").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, (table) => [
+  index("guide_position_idx").on(table.position),
+])
+
+/** One extra/contact link per guide (Instagram, website, Facebook, …).
+ *  A guide can have several links, ordered by `position`. */
+export const guideLink = pgTable("guide_link", {
+  id: text("id").primaryKey(),
+  guideId: text("guide_id")
+    .notNull()
+    .references(() => guide.id, { onDelete: "cascade" }),
+  label: text("label").notNull(),
+  url: text("url").notNull(),
+  icon: text("icon").notNull().default("web"),
+  position: integer("position").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (table) => [
+  index("guide_link_guide_id_idx").on(table.guideId),
+])
+
 /** Community matchmaking post: a visitor announces a future plan (climbing,
  *  bouldering, hiking, camping...) so others can find them and coordinate.
  *  Unlike climbPost/campingPost/boulderPost (reviews of a past visit), this is
@@ -386,3 +417,5 @@ export type ChatMessage = typeof chatMessage.$inferSelect
 export type Reservation = typeof reservation.$inferSelect
 export type EquipmentItem = typeof equipmentItem.$inferSelect
 export type EquipmentItemRental = typeof equipmentItemRental.$inferSelect
+export type Guide = typeof guide.$inferSelect
+export type GuideLink = typeof guideLink.$inferSelect

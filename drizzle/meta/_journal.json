@@ -113,6 +113,13 @@
       "when": 1794332556870,
       "tag": "0015_sturdy_micromax",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1794339015615,
+      "tag": "0016_light_frog_thor",
+      "breakpoints": true
     }
   ]
 }

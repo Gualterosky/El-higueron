@@ -265,15 +265,11 @@
       "secondary": "Planifica tu visita"
     },
     "guides": {
-      "cta": "Contactar guía",
-      "modalTitle": "Guías Profesionales",
-      "modalSubtitle": "Contacta directamente con guías de escalada para agendar una capacitación",
-      "close": "Cerrar",
-      "instagram": "Instagram",
-      "whatsapp": "WhatsApp",
-      "skalePeregrino": {
-        "name": "Skale Peregrino"
-      }
+      "cta": "Ver guías profesionales",
+      "eyebrow": "Guías Profesionales",
+      "title": "Escala con guías y agencias locales",
+      "subtitle": "Contacta directamente para agendar tu capacitación o una salida guiada.",
+      "whatsapp": "WhatsApp"
     }
   },
   "Boulder": {
@@ -1615,6 +1611,7 @@
       "reviews": "Reseñas",
       "equipment": "Equipos",
       "comunidad": "Comunidad",
+      "guides": "Guías",
       "chatbot": "Chatbot"
     },
     "home": {
@@ -1642,6 +1639,10 @@
         "equipment": {
           "title": "Inventario de equipos",
           "description": "Gestiona el catálogo de equipos y registra rentas."
+        },
+        "guides": {
+          "title": "Guías profesionales",
+          "description": "Gestiona las guías y agencias que se muestran en la página de escalada."
         },
         "comunidad": {
           "title": "Comunidad / Matchmaking",
@@ -2069,6 +2070,61 @@
       "postsTitle": "Publicaciones",
       "postsBody": "Moderación de publicaciones. Próximamente."
     },
+    "guides": {
+      "title": "Guías profesionales",
+      "description": "Gestiona las guías y agencias que se muestran en la sección \"Guías Profesionales\" de la página de escalada.",
+      "addGuide": "Agregar guía o agencia",
+      "editGuide": "Editar guía/agencia",
+      "deleteGuide": "Eliminar guía/agencia",
+      "noGuides": "No hay guías ni agencias registradas.",
+      "moveUp": "Subir",
+      "moveDown": "Bajar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "createSuccess": "Guía creada correctamente.",
+      "updateSuccess": "Guía actualizada correctamente.",
+      "deleteSuccess": "Guía eliminada correctamente.",
+      "deleteConfirm": "¿Seguro que quieres eliminar a {name}? Esta acción no se puede deshacer.",
+      "deleteConfirmAction": "Eliminar",
+      "formDescription": "Configura el nombre, el contacto de WhatsApp, el logo y los botones extra de la guía o agencia.",
+      "form": {
+        "name": "Nombre de la agencia o guía",
+        "phone": "WhatsApp / teléfono",
+        "phoneHint": "Se usará para crear el botón de WhatsApp (ej. +57 300 123 4567).",
+        "logo": "Logo",
+        "logoHint": "Opcional. Sube una imagen PNG, JPG, WebP o AVIF (máx. 4 MB).",
+        "linksTitle": "Botones extra",
+        "addLink": "Agregar botón",
+        "removeLink": "Quitar botón",
+        "noLinks": "Sin botones extra.",
+        "linkLabel": "Etiqueta",
+        "linkUrl": "URL",
+        "linkIcon": "Ícono"
+      },
+      "icons": {
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "youtube": "YouTube",
+        "linkedin": "LinkedIn",
+        "web": "Sitio web",
+        "mail": "Correo",
+        "other": "Otro"
+      },
+      "uploadErrors": {
+        "unauthorized": "No tienes permiso para subir imágenes.",
+        "missing_file": "No se seleccionó ningún archivo.",
+        "invalid_type": "Formato de imagen no permitido.",
+        "too_large": "La imagen supera los 4 MB.",
+        "not_configured": "El almacenamiento de imágenes no está configurado.",
+        "failed": "No se pudo subir la imagen."
+      },
+      "errors": {
+        "unauthorized": "No tienes permiso para realizar esta acción.",
+        "validation": "Revisa los datos ingresados.",
+        "not_found": "La guía no existe.",
+        "failed": "Ocurrió un error. Intenta de nuevo."
+      }
+    },
     "staff": {
       "home": {
         "categories": {
@@ -2087,6 +2143,10 @@
           "equipment": {
             "title": "Inventario de equipos",
             "description": "Gestiona el catálogo de equipos y registra rentas."
+          },
+          "guides": {
+            "title": "Guías profesionales",
+            "description": "Gestiona las guías y agencias que se muestran en la página de escalada."
           }
         }
       },
@@ -2555,5 +2615,9 @@
     "merge": "Fusionar",
     "anonymize": "Anonimizar",
     "actions": "Acciones"
+  },
+  "Legal": {
+    "badge": "RNT {rnt}",
+    "hero": "RNT {rnt} · Registro Nacional de Turismo"
   }
 }

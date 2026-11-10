@@ -5,7 +5,8 @@ import { Link } from "@/i18n/navigation"
 import { Mountain, Shield, AlertTriangle, CircleDot, Package, DollarSign, Users, CheckCircle, XCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { GuidesModal } from "@/components/guides-modal"
+import { ProfessionalGuides } from "@/components/guias/professional-guides"
+import { getAllGuides } from "@/lib/guias/queries"
 import { assertSectionVisible, getHiddenSections } from "@/lib/site-settings"
 import { R2_BASE_URL } from "@/lib/media/r2-url"
 
@@ -19,6 +20,7 @@ export default async function EscaladaPage({
   await assertSectionVisible("escalada", locale)
   const t = await getTranslations('Escalada')
   const hidden = await getHiddenSections()
+  const guides = await getAllGuides()
 
   const climbingModalities = [
     {
@@ -215,7 +217,9 @@ export default async function EscaladaPage({
                       </li>
                     ))}
                   </ul>
-                  <GuidesModal />
+                  <Button asChild size="lg" className="w-full bg-orange text-white hover:bg-orange/90">
+                    <a href="#guias-profesionales">{t('guides.cta')}</a>
+                  </Button>
                 </CardContent>
               </Card>
 
@@ -245,6 +249,9 @@ export default async function EscaladaPage({
           </div>
         </div>
       </section>
+
+      {/* Professional Guides Section */}
+      <ProfessionalGuides guides={guides} />
 
       {/* Safety Section */}
       <section className="bg-forest py-20 lg:py-28">

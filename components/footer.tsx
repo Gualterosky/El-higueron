@@ -135,7 +135,7 @@ export function Footer({
           <p className="text-sm text-primary-foreground/60">
             {t("copyright", { year: new Date().getFullYear() })}
           </p>
-          <p className="mt-2 text-xs text-primary-foreground/50">
+          <p className="mt-3 text-sm font-medium text-primary-foreground/90">
             {t("legal.line", {
               razonSocial: LEGAL_INFO.razonSocial,
               nit: LEGAL_INFO.nit,

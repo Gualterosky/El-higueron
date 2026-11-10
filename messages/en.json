@@ -265,15 +265,11 @@
       "secondary": "Plan your visit"
     },
     "guides": {
-      "cta": "Contact a guide",
-      "modalTitle": "Professional Guides",
-      "modalSubtitle": "Contact climbing guides directly to schedule a training session",
-      "close": "Close",
-      "instagram": "Instagram",
-      "whatsapp": "WhatsApp",
-      "skalePeregrino": {
-        "name": "Skale Peregrino"
-      }
+      "cta": "View professional guides",
+      "eyebrow": "Professional Guides",
+      "title": "Climb with local guides and agencies",
+      "subtitle": "Contact them directly to book a training session or a guided outing.",
+      "whatsapp": "WhatsApp"
     }
   },
   "Boulder": {
@@ -1615,6 +1611,7 @@
       "reviews": "Reviews",
       "equipment": "Equipment",
       "comunidad": "Community",
+      "guides": "Guides",
       "chatbot": "Chatbot"
     },
     "home": {
@@ -1642,6 +1639,10 @@
         "equipment": {
           "title": "Equipment inventory",
           "description": "Manage the equipment catalog and register rentals."
+        },
+        "guides": {
+          "title": "Professional guides",
+          "description": "Manage the guides and agencies shown on the climbing page."
         },
         "comunidad": {
           "title": "Community / Matchmaking",
@@ -2069,6 +2070,61 @@
       "postsTitle": "Posts",
       "postsBody": "Post moderation. Coming soon."
     },
+    "guides": {
+      "title": "Professional guides",
+      "description": "Manage the guides and agencies shown in the \"Professional Guides\" section of the climbing page.",
+      "addGuide": "Add guide or agency",
+      "editGuide": "Edit guide/agency",
+      "deleteGuide": "Delete guide/agency",
+      "noGuides": "No guides or agencies registered yet.",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "cancel": "Cancel",
+      "save": "Save",
+      "createSuccess": "Guide created successfully.",
+      "updateSuccess": "Guide updated successfully.",
+      "deleteSuccess": "Guide deleted successfully.",
+      "deleteConfirm": "Are you sure you want to delete {name}? This action cannot be undone.",
+      "deleteConfirmAction": "Delete",
+      "formDescription": "Set the name, WhatsApp contact, logo and extra buttons for the guide or agency.",
+      "form": {
+        "name": "Agency or guide name",
+        "phone": "WhatsApp / phone",
+        "phoneHint": "Used to build the WhatsApp button (e.g. +57 300 123 4567).",
+        "logo": "Logo",
+        "logoHint": "Optional. Upload a PNG, JPG, WebP or AVIF image (max 4 MB).",
+        "linksTitle": "Extra buttons",
+        "addLink": "Add button",
+        "removeLink": "Remove button",
+        "noLinks": "No extra buttons.",
+        "linkLabel": "Label",
+        "linkUrl": "URL",
+        "linkIcon": "Icon"
+      },
+      "icons": {
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "youtube": "YouTube",
+        "linkedin": "LinkedIn",
+        "web": "Website",
+        "mail": "Email",
+        "other": "Other"
+      },
+      "uploadErrors": {
+        "unauthorized": "You don't have permission to upload images.",
+        "missing_file": "No file selected.",
+        "invalid_type": "Image format not allowed.",
+        "too_large": "The image exceeds 4 MB.",
+        "not_configured": "Image storage is not configured.",
+        "failed": "Could not upload the image."
+      },
+      "errors": {
+        "unauthorized": "You don't have permission to perform this action.",
+        "validation": "Review the entered data.",
+        "not_found": "The guide does not exist.",
+        "failed": "Something went wrong. Try again."
+      }
+    },
     "staff": {
       "home": {
         "categories": {
@@ -2087,6 +2143,10 @@
           "equipment": {
             "title": "Equipment inventory",
             "description": "Manage the equipment catalog and register rentals."
+          },
+          "guides": {
+            "title": "Professional guides",
+            "description": "Manage the guides and agencies shown on the climbing page."
           }
         }
       },
@@ -2555,5 +2615,9 @@
     "merge": "Merge",
     "anonymize": "Anonymize",
     "actions": "Actions"
+  },
+  "Legal": {
+    "badge": "RNT {rnt}",
+    "hero": "RNT {rnt} · National Tourism Registry"
   }
 }

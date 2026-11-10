@@ -143,6 +143,8 @@ generado con `crypto.randomUUID()`), no hay `serial`.
 | `postReply` | Comentario/respuesta a **cualquier** publicación | `postType` (`muro`\|`camping`\|`boulder`) + `postId` — clave lógica compuesta, sin FK real (las publicaciones viven en 3 tablas distintas) |
 | `reservation` | Solicitud de reserva (camping/muro/boulder) | `type`, `status` (`pending`\|`confirmed`\|`cancelled`) |
 | `chatSession` / `chatMessage` | Historial del chatbot público | FK `chatMessage.sessionId → chatSession.id` (cascade) |
+| `guide` | Guía/agencia profesional de la sección "Guías Profesionales" de `/escalada` | `position` ordena; `logoUrl` vive en R2 (opcional); `phone` = WhatsApp |
+| `guideLink` | Botón extra por guía (Instagram, web, Facebook…) | FK `guideId → guide.id` (cascade); `icon` (`instagram`\|`facebook`\|`youtube`\|`linkedin`\|`web`\|`mail`\|`other`), `position` ordena los botones |
 
 **Nota de diseño importante:** `climbPost`/`campingPost`/`boulderPost`/`postReply`
 usan columnas `text` para `status`/`postType`/`type` en vez de `pgEnum`. Esto es
@@ -795,6 +797,7 @@ estos paneles**, solo se documenta su estado:
 | Cambiar el esquema de la base de datos | `lib/db/schema.ts` → `pnpm db:generate` → `pnpm db:migrate` |
 | Cambiar el inventario de items de equipos (nuevo modelo) | `lib/equipos/types.ts` (categorías/estados) + `lib/equipos/item-actions.ts` (mutaciones, solo admin+staff) + `lib/equipos/item-queries.ts` (lecturas) + `components/admin/admin-equipment-panel.tsx` (panel) |
 | Cambiar el catálogo público de `/equipos` (categorías, imágenes, "pendiente") | `app/[locale]/equipos/page.tsx` (constantes `PUBLIC_EQUIPMENT_CATEGORIES` y `CATEGORY_IMAGES`) + `messages/{es,en}.json` (`Equipos.*`) |
+| Cambiar las guías/agencias de la sección "Guías Profesionales" de `/escalada` | `lib/guias/types.ts` (íconos de botón extra + `formatWhatsappUrl`) + `lib/guias/actions.ts` (mutaciones admin+staff, subida de logo a R2) + `lib/guias/queries.ts` (lecturas) + `components/admin/admin-guides-panel.tsx` (panel) + `components/guias/professional-guides.tsx` (sección pública) |
 | Ver/modificar contactos acumulados y su vínculo con cuentas | `lib/contacts/*` (normalización, upsert, link, queries) + `components/admin/admin-contacts-panel.tsx` + `scripts/backfill-contacts.ts` |
 | Cambiar el algoritmo de recomendaciones por dificultad (Muro/Boulder) | `lib/muro/route-recommendations.ts` / `lib/boulder/boulder-recommendations.ts` |
 | Cambiar reglas de acceso a rutas por rol | `lib/auth/roles.ts` (`canAccessPath`, `homePathForRole`) + `proxy.ts` (prefijos protegidos) |
@@ -1426,3 +1429,60 @@ Otras optimizaciones de la misma tanda:
 `/_next/image` proxy (para R2) o de Cloudinary directo (para posts), no el
 peso original del JPEG en R2 — es lo correcto porque es lo que realmente
 viaja por el cable al navegador.
+
+---
+
+## 16. Flujo de datos — Guías Profesionales (añadido 2026-11)
+
+Sección pública de `/escalada` que muestra guías/agencias gestionadas desde el
+panel (admin + staff). Reemplaza al antiguo modal hardcodeado
+(`components/guides-modal.tsx`, eliminado) que solo listaba una guía fija
+("Skale Peregrino").
+
+```
+components/admin/admin-guides-panel.tsx (client, admin + staff)
+   │ createGuideAction / updateGuideAction / deleteGuideAction /
+   │ reorderGuidesAction / uploadGuideLogoAction
+   ▼
+lib/guias/actions.ts ("use server")
+   │ getModeratorSession() (admin + staff)
+   │ zod guideSchema (name, phone, logoUrl, links[])
+   │   - link.url: http(s):// | mailto: | tel:
+   │   - link.icon ∈ GUIDE_LINK_ICONS (text, validado en app, no en BD)
+   │ create/update usan db.transaction (guía + reemplazo de links)
+   │ reorderGuidesAction(orderedIds) → position = índice, en transacción
+   │ uploadGuideLogoAction → R2 bajo prefijo "Guias/" (4 MB, jpeg/png/webp/avif)
+   ▼
+Neon Postgres: guide + guide_link (cascade)
+   ▲
+   │ lib/guias/queries.ts::getAllGuides()
+   │   orderBy(position asc, createdAt asc) + links agrupados
+   ▼
+app/[locale]/escalada/page.tsx (server) → components/guias/professional-guides.tsx
+   (sección "Guías Profesionales"; si no hay guías, no se renderiza)
+```
+
+Notas:
+
+- `guide.position` ordena las guías; `guide_link.position` ordena los botones
+  dentro de cada guía (orden de inserción). El panel usa botones "subir/bajar"
+  que llaman `reorderGuidesAction` con el orden completo; sin biblioteca de
+  drag & drop (decisión de no agregar dependencia).
+- El logo es opcional; si no se sube, la tarjeta muestra un placeholder
+  (`Compass`). El número de WhatsApp se guarda en `guide.phone` y se enlaza con
+  `formatWhatsappUrl` (`https://wa.me/<dígitos>`).
+- Íconos de botón extra: `lib/guias/types.ts` (`GUIDE_LINK_ICONS`) +
+  `lib/guias/icons.ts` (mapeo a lucide). Columna `text` sin CHECK, misma
+  decisión de diseño que el resto (ver sección 3); la lectura defensiva
+  (`isGuideLinkIcon`) falla de vuelta a `"web"` si aparece un valor inesperado.
+- Acceso admin + staff: la página duplicada `app/[locale]/admin/guias` y
+  `app/[locale]/staff/guias` reutiliza `AdminGuidesPanel` (mismo patrón que
+  equipos). Ítem de navegación "Guías" (`Compass`) en `ADMIN_ITEMS`/`STAFF_ITEMS`
+  y en ambos home panels.
+- **Bug latente corregido de paso:** `app/[locale]/admin/layout.tsx` y
+  `app/[locale]/staff/layout.tsx` no pasaban `nav.comunidad` al `PanelShell`,
+  por lo que el ítem "Comunidad" se renderizaba con etiqueta vacía en ambos
+  paneles (bug no detectable por `tsc`/`lint`/`build` — se resuelve en runtime).
+  Se añadió `comunidad: t("nav.comunidad")` junto con `guides: t("nav.guides")`.
+- Borrar una guía **no** elimina su logo de R2 (misma limitación ya aceptada en
+  el inventario de equipos); queda como mejora futura.

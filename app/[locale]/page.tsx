@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { getHiddenSections } from "@/lib/site-settings"
 import { PublicReviewsSection } from "@/components/reviews/public-reviews-section"
 import { R2_BASE_URL } from "@/lib/media/r2-url"
+import { LEGAL_INFO } from "@/lib/legal-info"
 
 export default async function HomePage({
   params,
@@ -17,6 +18,7 @@ export default async function HomePage({
   const { locale } = await params
   setRequestLocale(locale)
   const t = await getTranslations('Home')
+  const tLegal = await getTranslations('Legal')
   const hidden = await getHiddenSections()
 
   const experiences = [
@@ -121,6 +123,9 @@ export default async function HomePage({
               </Button>
             </div>
           ) : null}
+          <p className="animate-fade-in-up animation-delay-300 mt-6 text-xs font-medium tracking-wide text-white/80">
+            {tLegal('hero', { rnt: LEGAL_INFO.rnt })}
+          </p>
         </div>
 
         {/* Scroll indicator */}

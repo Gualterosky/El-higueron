@@ -27,6 +27,8 @@ export default async function StaffLayout({ children, params }: Props) {
       reservations: t("nav.reservations"),
       posts: t("nav.posts"),
       equipment: t("nav.equipment"),
+      comunidad: t("nav.comunidad"),
+      guides: t("nav.guides"),
       content: t("nav.content"),
     },
   }

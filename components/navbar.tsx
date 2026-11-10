@@ -16,6 +16,7 @@ import {
   type HiddenSections,
 } from "@/lib/site-settings/types"
 import { R2_BASE_URL } from "@/lib/media/r2-url"
+import { LEGAL_INFO } from "@/lib/legal-info"
 
 const navHrefs = [
   { href: "/escalada" as const, key: "escalada" as const },
@@ -41,6 +42,7 @@ export function Navbar({
   const router = useRouter()
   const t = useTranslations("Nav")
   const tMeta = useTranslations("Meta")
+  const tLegal = useTranslations("Legal")
   const { data: session } = useSession()
 
   const role = isRole(session?.user?.role) ? session.user.role : null
@@ -70,6 +72,9 @@ export function Navbar({
             priority
           />
           <span className="text-lg font-semibold text-forest">{t("brand")}</span>
+          <span className="rounded-full border border-forest/30 bg-beige/50 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-forest">
+            {tLegal("badge", { rnt: LEGAL_INFO.rnt })}
+          </span>
         </Link>
 
         <div className="hidden items-center gap-1 lg:flex">

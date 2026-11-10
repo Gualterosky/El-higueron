@@ -1908,8 +1908,7 @@
       "status": {
         "disponible": "En inventario",
         "rentado": "Rentado",
-        "mantenimiento": "En mantenimiento",
-        "devuelta": "Devuelto"
+        "mantenimiento": "En mantenimiento"
       },
       "form": {
         "code": "ID",

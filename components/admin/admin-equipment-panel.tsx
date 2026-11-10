@@ -75,7 +75,7 @@ export function AdminEquipmentPanel({ initialItems, initialRentals }: Props) {
         <p className="max-w-2xl text-muted-foreground">{t("description")}</p>
       </div>
 
-      <Tabs defaultValue="inventory">
+      <Tabs defaultValue="rentals">
         <TabsList>
           <TabsTrigger value="inventory">{t("tabs.inventory")}</TabsTrigger>
           <TabsTrigger value="rentals">{t("tabs.rentals")}</TabsTrigger>
@@ -742,27 +742,28 @@ function RentalRowActions({
   }
 
   return (
-    <div className="flex justify-end gap-1">
+    <div className="flex justify-end gap-2">
       <Button
         type="button"
-        variant="ghost"
-        size="icon"
+        variant="outline"
+        size="sm"
         onClick={handleReturn}
         disabled={isPending}
-        aria-label={t("markReturned")}
+        className="gap-1 border-forest/30 text-forest hover:bg-forest/10"
       >
-        <RotateCcw className="h-4 w-4" />
+        <RotateCcw className="h-3.5 w-3.5" />
+        {t("markReturned")}
       </Button>
       <Button
         type="button"
         variant="ghost"
-        size="icon"
+        size="sm"
         onClick={handleCancel}
         disabled={isPending}
-        aria-label={t("cancelRental")}
-        className="text-destructive"
+        className="gap-1 text-destructive hover:bg-destructive/10"
       >
-        <X className="h-4 w-4" />
+        <X className="h-3.5 w-3.5" />
+        {t("cancelRental")}
       </Button>
     </div>
   )
@@ -843,7 +844,7 @@ function RegisterRentalDialog({
                 )}
                 <SelectValue placeholder={t("selectItem")}>
                   {selectedItem
-                    ? `#${selectedItem.code} — ${selectedItem.name}${selectedItem.talla ? ` (${selectedItem.talla})` : ""}`
+                    ? `${selectedItem.name}${selectedItem.talla ? ` · ${t("tallaLabel")}: ${selectedItem.talla}` : ""}`
                     : null}
                 </SelectValue>
               </SelectTrigger>
@@ -869,11 +870,12 @@ function RegisterRentalDialog({
                           )}
                         </div>
                         <div className="min-w-0">
-                          <p className="font-mono text-xs text-muted-foreground">#{item.code}</p>
-                          <p className="truncate font-medium">
-                            {item.name}
-                            {item.talla ? ` (${item.talla})` : ""}
-                          </p>
+                          <p className="truncate font-medium">{item.name}</p>
+                          {item.talla ? (
+                            <p className="text-xs text-muted-foreground">
+                              {t("tallaLabel")}: {item.talla}
+                            </p>
+                          ) : null}
                         </div>
                       </div>
                     </SelectItem>
@@ -973,16 +975,6 @@ function HistoryTab({ rentals }: { rentals: EquipmentItemRentalRow[] }) {
                     </p>
                   </div>
                 </div>
-                <Badge
-                  variant={rental.returnedAt ? "secondary" : "default"}
-                  className={
-                    rental.returnedAt
-                      ? "border-transparent bg-forest text-white"
-                      : "border-transparent bg-orange text-white"
-                  }
-                >
-                  {rental.returnedAt ? t("status.devuelta") : t("status.rentado")}
-                </Badge>
               </div>
             ))}
           </div>

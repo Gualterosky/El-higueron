@@ -1908,8 +1908,7 @@
       "status": {
         "disponible": "In stock",
         "rentado": "Rented out",
-        "mantenimiento": "In maintenance",
-        "devuelta": "Returned"
+        "mantenimiento": "In maintenance"
       },
       "form": {
         "code": "ID",

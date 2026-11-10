@@ -582,13 +582,15 @@ reescribió sobre el nuevo modelo de objetos individuales.
 
 El panel de administración/staff ahora gestiona **objetos físicos individuales**
 en vez del catálogo con cantidades. Cada fila es un objeto real con su propio
-ID secuencial `001, 002, …` (no editable) y su estado propio.
+ID secuencial `001, 002, …` (editable desde el formulario; si se deja vacío al
+crear se autoasigna `max+1`) y su estado propio.
 
 **Esquema nuevo (`lib/db/schema.ts`):**
 - `equipmentItem` (tabla `equipment_item`): un objeto físico. `seq` entero
   único (el ID visible es `String(seq).padStart(3, "0")` → `001`, `002`, …),
   `name`, `category` (`arnes|gatos|crashpad|casco|botas|carpa|otros`), `talla`
-  (solo cuando `category = "gatos"`), `imageUrl`, `status`
+  (solo cuando `category = "gatos"` o `"botas"`), `price` (entero, COP por día, nullable —
+  precio no definido aún), `imageUrl`, `status`
   (`disponible|rentado|mantenimiento`). El `status` se mantiene en sync desde
   las acciones de renta/devolución/mantenimiento.
 - `equipmentItemRental` (tabla `equipment_item_rental`): historial de
@@ -600,8 +602,10 @@ cliente) → de vuelta a `disponible` al devolverlo; `mantenimiento` (fuera de
 inventario, p. ej. limpieza) se marca manualmente.
 
 **Acciones** (`lib/equipos/item-actions.ts`, todas verifican
-`getModeratorSession()`): `createEquipmentItemAction` (calcula el siguiente
-`seq = max+1`), `updateEquipmentItemAction`, `deleteEquipmentItemAction`,
+`getModeratorSession()`): `createEquipmentItemAction` (acepta `seq` opcional;
+si no viene calcula `seq = max+1` y valida que no esté en uso),
+`updateEquipmentItemAction` (puede cambiar el `seq`, validando unicidad),
+`deleteEquipmentItemAction`,
 `setEquipmentItemMaintenanceAction`, `createEquipmentItemRentalAction` (solo
 items `disponible`), `markEquipmentItemRentalReturnedAction`,
 `cancelEquipmentItemRentalAction`. La subida de imagen reutiliza
@@ -610,8 +614,9 @@ contiene esta Server Action de subida de imagen; el resto de acciones legacy se
 eliminó).
 
 **Queries** (`lib/equipos/item-queries.ts`): `getAllEquipmentItems()` (con
-`code` derivado) y `getAllEquipmentItemRentals()` (join al item para el
-historial).
+`code` y `price`), `getAllEquipmentItemRentals()` (join al item para el
+historial) y `getEquipmentCategoryPriceRanges()` (min/max de precio por
+categoría, solo items con precio definido — usado por la página pública).
 
 **Panel** (`components/admin/admin-equipment-panel.tsx`): 3 tabs — Inventario
 (crear/editar/eliminar con doble confirmación), Rentas (registrar renta por
@@ -641,9 +646,21 @@ se omite del sitio público), definido en `app/[locale]/equipos/page.tsx`
   - `gatos` → `Equipos/Gatos Full.png`
   - `carpa` → `Equipos/carpa-simond-mt500-1793733232477.jpg`
   - `botas` → sin imagen (`null`, se muestra placeholder)
-- La disponibilidad por categoría se muestra como **"Pendiente"** (key
-  `Equipos.pending` en `messages/{es,en}.json`) — el conteo real de
-  disponibles se implementará después; por ahora es un placeholder.
+- Disponibilidad por categoría (2026-11): se listan **solo los objetos con
+  `status = "disponible"`** (los rentados/en mantenimiento no se muestran):
+  - Categorías normales (`casco`, `arnes`, `crashpad`, `carpa`): se muestran
+    los **nombres** de los objetos disponibles.
+  - `gatos` y `botas`: en vez de nombres se muestran las **tallas disponibles
+    con su cantidad**; las tallas `"ID-…"` (tallas únicas) se agrupan como
+    `"Talla única ×N"` (`Equipos.uniqueSizeCount`).
+  - Si una categoría no tiene objetos disponibles se muestra
+    `Equipos.noAvailability` ("Sin disponibilidad").
+  - Se alimenta de `getAvailableEquipmentItems()` (`lib/equipos/item-queries.ts`).
+- Precio por categoría (2026-11): se muestra el **rango "mín - máx"** de los
+  items con precio definido, o **un solo precio** si todos coinciden
+  (`Equipos.priceRange` / `Equipos.pricePerDay`). Se calcula con
+  `getEquipmentCategoryPriceRanges()`; si ningún item de la categoría tiene
+  precio, no se muestra precio.
 - "Gatos Full.png" se movió de la raíz de `public/` a `public/media/Equipos/`
   y se subió a R2 con `pnpm media:sync` (la carpeta `public/media/` es una
   copia local gitignored; R2 es la fuente de verdad, ver sección 15).

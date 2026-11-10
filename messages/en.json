@@ -497,7 +497,10 @@
       "title": "Available Gear",
       "subtitle": "Quality equipment for your safety and comfort"
     },
-    "pending": "Pending",
+    "uniqueSizeCount": "Unique size ×{count}",
+    "noAvailability": "No availability",
+    "pricePerDay": "{price} / day",
+    "priceRange": "{min} - {max} / day",
     "posts": {
       "eyebrow": "Community",
       "title": "What the community says",
@@ -519,7 +522,6 @@
       "imageAlt": "Available climbing gear",
       "items": [
         "Gear availability may vary depending on demand.",
-        "We recommend booking in advance, especially in peak season.",
         "As a deposit for rented gear, a valid ID must be left at check-in. It will be returned when the gear is brought back in good condition.",
         "The user is responsible for taking care of the gear during use."
       ]
@@ -1890,6 +1892,7 @@
       "history": "History",
       "noHistory": "No rentals registered yet.",
       "tallaLabel": "Size",
+      "pricePerDay": "{price} / day",
       "categories": {
         "arnes": "Harness",
         "gatos": "Climbing shoes",
@@ -1912,9 +1915,11 @@
       },
       "form": {
         "code": "ID",
+        "codePlaceholder": "Auto",
         "name": "Name",
         "category": "Category",
         "talla": "Size",
+        "price": "Price (COP per day)",
         "image": "Photo",
         "imageHint": "Upload a photo of the item. If you don't upload one, a placeholder icon is shown.",
         "equipment": "Item",
@@ -1923,6 +1928,7 @@
       "errors": {
         "unauthorized": "You do not have permission to perform this action.",
         "validation": "Please review the entered data.",
+        "seq_taken": "The ID is already in use. Choose another number.",
         "not_found": "Record not found.",
         "not_available": "The item is not available for this action.",
         "failed": "Something went wrong. Please try again."

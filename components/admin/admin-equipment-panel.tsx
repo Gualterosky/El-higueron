@@ -131,6 +131,12 @@ function formatDate(date: string | null | undefined) {
   return `${day}/${month}/${year}`
 }
 
+const PRICE_FORMATTER = new Intl.NumberFormat("es-CO", {
+  style: "currency",
+  currency: "COP",
+  maximumFractionDigits: 0,
+})
+
 function ItemThumb({ item }: { item: EquipmentItemRow }) {
   return (
     <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-beige/40">
@@ -186,6 +192,11 @@ function InventoryTab({ items }: { items: EquipmentItemRow[] }) {
                   </div>
                   <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                     {item.talla && <span>{t("tallaLabel")}: {item.talla}</span>}
+                    {item.price != null && (
+                      <span className="font-medium text-forest">
+                        {t("pricePerDay", { price: PRICE_FORMATTER.format(item.price) })}
+                      </span>
+                    )}
                     <StatusBadge status={item.status} />
                   </div>
                 </div>
@@ -299,14 +310,20 @@ function ItemFormDialog({
 
     const form = new FormData(event.currentTarget)
     const name = String(form.get("name") ?? "").trim()
+    const seqRaw = String(form.get("seq") ?? "").trim()
+    const seq = seqRaw === "" ? null : Number(seqRaw)
     const talla = String(form.get("talla") ?? "").trim()
+    const priceRaw = String(form.get("price") ?? "").trim()
+    const price = priceRaw === "" ? null : Number(priceRaw)
 
     if (!name) return
 
     const input: EquipmentItemInput = {
       name,
       category,
+      seq: seq != null && Number.isFinite(seq) && seq > 0 ? seq : null,
       talla: talla || null,
+      price: price != null && Number.isFinite(price) ? price : null,
       imageUrl: imageUrl || null,
     }
 
@@ -333,12 +350,19 @@ function ItemFormDialog({
         </DialogHeader>
 
         <form id="item-form" onSubmit={onSubmit} className="flex flex-col gap-4 py-2">
-          {item && (
-            <div className="flex flex-col gap-1.5">
-              <Label>{t("form.code")}</Label>
-              <p className="font-mono text-sm text-muted-foreground">#{item.code}</p>
-            </div>
-          )}
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="it-seq">{t("form.code")}</Label>
+            <Input
+              id="it-seq"
+              name="seq"
+              type="number"
+              min={1}
+              step={1}
+              defaultValue={item?.seq ?? ""}
+              placeholder={item ? undefined : t("form.codePlaceholder")}
+              className="h-10 font-mono"
+            />
+          </div>
 
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="it-name">{t("form.name")}</Label>
@@ -364,12 +388,25 @@ function ItemFormDialog({
             </Select>
           </div>
 
-          {category === "gatos" && (
+          {(category === "gatos" || category === "botas") && (
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="it-talla">{t("form.talla")}</Label>
               <Input id="it-talla" name="talla" defaultValue={item?.talla ?? ""} className="h-10" />
             </div>
           )}
+
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="it-price">{t("form.price")}</Label>
+            <Input
+              id="it-price"
+              name="price"
+              type="number"
+              min={0}
+              step={1}
+              defaultValue={item?.price ?? ""}
+              className="h-10"
+            />
+          </div>
 
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="it-image">{t("form.image")}</Label>
@@ -587,6 +624,11 @@ function RentalsTab({
                     </div>
                     <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                       {item.talla && <span>{t("tallaLabel")}: {item.talla}</span>}
+                      {item.price != null && (
+                        <span className="font-medium text-forest">
+                          {t("pricePerDay", { price: PRICE_FORMATTER.format(item.price) })}
+                        </span>
+                      )}
                       <StatusBadge status={item.status} />
                     </div>
                   </div>

@@ -497,7 +497,10 @@
       "title": "Equipos Disponibles",
       "subtitle": "Material de calidad para tu seguridad y comodidad"
     },
-    "pending": "Pendiente",
+    "uniqueSizeCount": "Talla única ×{count}",
+    "noAvailability": "Sin disponibilidad",
+    "pricePerDay": "{price} / día",
+    "priceRange": "{min} - {max} / día",
     "posts": {
       "eyebrow": "Comunidad",
       "title": "Lo que dice la comunidad",
@@ -519,7 +522,6 @@
       "imageAlt": "Equipos de escalada disponibles",
       "items": [
         "La disponibilidad de equipos puede variar según la demanda.",
-        "Se recomienda reservar con anticipación, especialmente en temporada alta.",
         "Como garantía del equipo rentado, se debe dejar un documento de identidad válido en el ingreso. Este será devuelto en el momento en que se retorne el equipo en buen estado.",
         "El usuario es responsable del cuidado del equipo durante su uso."
       ]
@@ -1890,6 +1892,7 @@
       "history": "Historial",
       "noHistory": "Aún no hay rentas registradas.",
       "tallaLabel": "Talla",
+      "pricePerDay": "{price} / día",
       "categories": {
         "arnes": "Arnés",
         "gatos": "Gatos",
@@ -1912,9 +1915,11 @@
       },
       "form": {
         "code": "ID",
+        "codePlaceholder": "Auto",
         "name": "Nombre",
         "category": "Categoría",
         "talla": "Talla",
+        "price": "Precio (COP por día)",
         "image": "Foto",
         "imageHint": "Sube una foto del objeto. Si no subes una, se muestra un ícono de referencia.",
         "equipment": "Objeto",
@@ -1923,6 +1928,7 @@
       "errors": {
         "unauthorized": "No tienes permisos para realizar esta acción.",
         "validation": "Revisa los datos ingresados.",
+        "seq_taken": "El ID ya está en uso. Elige otro número.",
         "not_found": "No se encontró el registro.",
         "not_available": "El objeto no está disponible para esta acción.",
         "failed": "Ocurrió un error. Intenta de nuevo."

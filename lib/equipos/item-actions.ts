@@ -19,6 +19,7 @@ import { EQUIPMENT_ITEM_CATEGORIES } from "@/lib/equipos/types"
 type ItemActionError =
   | "unauthorized"
   | "validation"
+  | "seq_taken"
   | "not_found"
   | "not_available"
   | "failed"
@@ -36,15 +37,26 @@ function revalidateEquipmentPaths() {
 const itemSchema = z.object({
   name: z.string().trim().min(2).max(80),
   category: z.enum(EQUIPMENT_ITEM_CATEGORIES),
+  seq: z.number().int().min(1).max(1_000_000).optional().nullable(),
   talla: z.string().trim().max(40).optional().nullable(),
+  price: z.number().int().min(0).max(100_000_000).optional().nullable(),
   imageUrl: z.string().trim().max(500).optional().nullable(),
 })
 
 export type EquipmentItemInput = z.infer<typeof itemSchema>
 
-/** Talla only makes sense for climbing shoes ("gatos"); drop it otherwise. */
+/** Talla only makes sense for climbing shoes ("gatos") and boots ("botas"); drop it otherwise. */
 function normalizeTalla(category: EquipmentItemInput["category"], talla: string | null | undefined) {
-  return category === "gatos" ? (talla?.trim() || null) : null
+  return category === "gatos" || category === "botas" ? (talla?.trim() || null) : null
+}
+
+async function seqIsTaken(seq: number, excludeId?: string): Promise<boolean> {
+  const rows = await db
+    .select({ id: equipmentItem.id })
+    .from(equipmentItem)
+    .where(eq(equipmentItem.seq, seq))
+  if (excludeId) return rows.some((row) => row.id !== excludeId)
+  return rows.length > 0
 }
 
 export async function createEquipmentItemAction(
@@ -57,16 +69,22 @@ export async function createEquipmentItemAction(
   const data = parsed.data
 
   try {
-    const [row] = await db.select({ value: max(equipmentItem.seq) }).from(equipmentItem)
-    const nextSeq = (row?.value ?? 0) + 1
+    let seq = data.seq
+    if (seq == null) {
+      const [row] = await db.select({ value: max(equipmentItem.seq) }).from(equipmentItem)
+      seq = (row?.value ?? 0) + 1
+    }
+
+    if (await seqIsTaken(seq)) return { ok: false, error: "seq_taken" }
 
     const id = randomUUID()
     await db.insert(equipmentItem).values({
       id,
-      seq: nextSeq,
+      seq,
       name: data.name,
       category: data.category,
       talla: normalizeTalla(data.category, data.talla),
+      price: data.price ?? null,
       imageUrl: data.imageUrl || null,
       status: "disponible",
     })
@@ -90,19 +108,30 @@ export async function updateEquipmentItemAction(
   const data = parsed.data
 
   try {
-    const result = await db
+    const [current] = await db
+      .select({ seq: equipmentItem.seq })
+      .from(equipmentItem)
+      .where(eq(equipmentItem.id, id))
+
+    if (!current) return { ok: false, error: "not_found" }
+
+    const seq = data.seq ?? current.seq
+    if (seq !== current.seq && (await seqIsTaken(seq, id))) {
+      return { ok: false, error: "seq_taken" }
+    }
+
+    await db
       .update(equipmentItem)
       .set({
+        seq,
         name: data.name,
         category: data.category,
         talla: normalizeTalla(data.category, data.talla),
+        price: data.price ?? null,
         imageUrl: data.imageUrl || null,
         updatedAt: new Date(),
       })
       .where(eq(equipmentItem.id, id))
-      .returning({ id: equipmentItem.id })
-
-    if (result.length === 0) return { ok: false, error: "not_found" }
 
     revalidateEquipmentPaths()
     return { ok: true }

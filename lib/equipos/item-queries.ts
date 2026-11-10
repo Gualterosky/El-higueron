@@ -10,6 +10,7 @@ export type EquipmentItemRow = {
   name: string
   category: string
   talla: string | null
+  price: number | null
   imageUrl: string | null
   status: string
 }
@@ -41,8 +42,63 @@ export async function getAllEquipmentItems(): Promise<EquipmentItemRow[]> {
     name: item.name,
     category: item.category,
     talla: item.talla,
+    price: item.price,
     imageUrl: item.imageUrl,
     status: item.status,
+  }))
+}
+
+export type EquipmentCategoryPriceRange = {
+  category: string
+  minPrice: number
+  maxPrice: number
+}
+
+/** Precio mínimo/máximo por categoría (solo items con precio definido).
+ *  Se usa en la página pública para mostrar el rango "min - max". */
+export async function getEquipmentCategoryPriceRanges(): Promise<Map<string, EquipmentCategoryPriceRange>> {
+  const rows = await db
+    .select({ category: equipmentItem.category, price: equipmentItem.price })
+    .from(equipmentItem)
+
+  const ranges = new Map<string, EquipmentCategoryPriceRange>()
+  for (const row of rows) {
+    if (row.price == null) continue
+    const existing = ranges.get(row.category)
+    if (!existing) {
+      ranges.set(row.category, { category: row.category, minPrice: row.price, maxPrice: row.price })
+    } else {
+      if (row.price < existing.minPrice) existing.minPrice = row.price
+      if (row.price > existing.maxPrice) existing.maxPrice = row.price
+    }
+  }
+
+  return ranges
+}
+
+export type AvailableEquipmentItem = {
+  category: string
+  name: string
+  talla: string | null
+}
+
+/** Items currently available to rent (status = "disponible"), for the public
+ *  catalog page. Rented / maintenance items are excluded. */
+export async function getAvailableEquipmentItems(): Promise<AvailableEquipmentItem[]> {
+  const rows = await db
+    .select({
+      category: equipmentItem.category,
+      name: equipmentItem.name,
+      talla: equipmentItem.talla,
+    })
+    .from(equipmentItem)
+    .where(eq(equipmentItem.status, "disponible"))
+    .orderBy(asc(equipmentItem.seq))
+
+  return rows.map((row) => ({
+    category: row.category,
+    name: row.name,
+    talla: row.talla,
   }))
 }
 

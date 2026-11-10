@@ -304,8 +304,10 @@ export const equipmentItem = pgTable("equipment_item", {
   seq: integer("seq").notNull().unique(),
   name: text("name").notNull(),
   category: text("category").notNull().default("otros"), // "arnes" | "gatos" | "crashpad" | "casco" | "botas" | "carpa" | "otros"
-  // Only used when category = "gatos" (climbing shoe size); null otherwise.
+  // Only used when category = "gatos" (climbing shoe size) or "botas" (boot size); null otherwise.
   talla: text("talla"),
+  // Rental price per day in COP; nullable = price not defined yet.
+  price: integer("price"),
   imageUrl: text("image_url"),
   // "disponible" | "rentado" | "mantenimiento" — kept in sync by the rental actions.
   status: text("status").notNull().default("disponible"),

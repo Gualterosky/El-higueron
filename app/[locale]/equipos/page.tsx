@@ -5,12 +5,23 @@ import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { assertSectionVisible } from "@/lib/site-settings"
+import {
+  getAvailableEquipmentItems,
+  getEquipmentCategoryPriceRanges,
+  type AvailableEquipmentItem,
+} from "@/lib/equipos/item-queries"
 import { EquipmentComments } from "@/components/equipos/equipment-comments"
 import { EquipmentPostForm } from "@/components/equipos/equipment-post-form"
 
 type Props = {
   params: Promise<{ locale: string }>
 }
+
+const CURRENCY_FORMATTER = new Intl.NumberFormat("es-CO", {
+  style: "currency",
+  currency: "COP",
+  maximumFractionDigits: 0,
+})
 
 /** URL pública base del bucket R2 de medios (la misma que usa el resto del sitio). */
 const R2_PUBLIC_URL = "https://pub-b8789ea28b254e56a01798832eb96334.r2.dev"
@@ -30,13 +41,35 @@ const CATEGORY_IMAGES: Record<PublicEquipmentCategory, string | null> = {
   carpa: `${R2_PUBLIC_URL}/Equipos/carpa-simond-mt500-1793733232477.jpg`,
 }
 
+function parseSizeValue(size: string): number {
+  return Number.parseFloat(size.replace(",", "."))
+}
+
+function compareSizesDesc(a: string, b: string): number {
+  const na = parseSizeValue(a)
+  const nb = parseSizeValue(b)
+  if (!Number.isNaN(na) && !Number.isNaN(nb)) return nb - na
+  return b.localeCompare(a)
+}
+
 export default async function EquiposPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
   await assertSectionVisible("equipos", locale)
-  const t = await getTranslations("Equipos")
+  const [t, priceRanges, availableItems] = await Promise.all([
+    getTranslations("Equipos"),
+    getEquipmentCategoryPriceRanges(),
+    getAvailableEquipmentItems(),
+  ])
 
   const importantNotes = t.raw("notes.items") as string[]
+
+  const availableByCategory = new Map<string, AvailableEquipmentItem[]>()
+  for (const item of availableItems) {
+    const list = availableByCategory.get(item.category) ?? []
+    list.push(item)
+    availableByCategory.set(item.category, list)
+  }
 
   return (
     <div className="flex flex-col">
@@ -100,6 +133,30 @@ export default async function EquiposPage({ params }: Props) {
             {PUBLIC_EQUIPMENT_CATEGORIES.map((category) => {
               const name = t(`categories.${category}`)
               const imageUrl = CATEGORY_IMAGES[category]
+              const priceRange = priceRanges.get(category)
+              const items = availableByCategory.get(category) ?? []
+
+              const isSized = category === "gatos" || category === "botas"
+              const sizeEntries: { size: string; count: number }[] = []
+              let uniqueCount = 0
+              if (isSized) {
+                const counts = new Map<string, number>()
+                for (const item of items) {
+                  const talla = item.talla?.trim()
+                  if (!talla) continue
+                  if (talla.startsWith("ID-")) {
+                    uniqueCount++
+                  } else {
+                    counts.set(talla, (counts.get(talla) ?? 0) + 1)
+                  }
+                }
+                for (const [size, count] of counts) sizeEntries.push({ size, count })
+                sizeEntries.sort((a, b) => compareSizesDesc(a.size, b.size))
+              }
+
+              const hasAvailability = isSized
+                ? sizeEntries.length > 0 || uniqueCount > 0
+                : items.length > 0
 
               return (
                 <Card
@@ -124,10 +181,49 @@ export default async function EquiposPage({ params }: Props) {
                   <CardHeader className="pb-2">
                     <CardTitle className="text-xl">{name}</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <span className="inline-block rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
-                      {t("pending")}
-                    </span>
+                  <CardContent className="space-y-2">
+                    {hasAvailability ? (
+                      <div className="flex flex-wrap gap-1.5">
+                        {isSized ? (
+                          <>
+                            {sizeEntries.map(({ size, count }) => (
+                              <span
+                                key={size}
+                                className="inline-block rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-forest"
+                              >
+                                {count > 1 ? `${size} ×${count}` : size}
+                              </span>
+                            ))}
+                            {uniqueCount > 0 && (
+                              <span className="inline-block rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-forest">
+                                {t("uniqueSizeCount", { count: uniqueCount })}
+                              </span>
+                            )}
+                          </>
+                        ) : (
+                          items.map((item, index) => (
+                            <span
+                              key={index}
+                              className="inline-block rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-forest"
+                            >
+                              {item.name}
+                            </span>
+                          ))
+                        )}
+                      </div>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">{t("noAvailability")}</span>
+                    )}
+                    {priceRange && (
+                      <p className="text-sm font-medium text-forest">
+                        {priceRange.minPrice === priceRange.maxPrice
+                          ? t("pricePerDay", { price: CURRENCY_FORMATTER.format(priceRange.minPrice) })
+                          : t("priceRange", {
+                              min: CURRENCY_FORMATTER.format(priceRange.minPrice),
+                              max: CURRENCY_FORMATTER.format(priceRange.maxPrice),
+                            })}
+                      </p>
+                    )}
                   </CardContent>
                 </Card>
               )

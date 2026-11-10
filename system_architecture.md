@@ -568,11 +568,15 @@ sigan enlazando correctamente.
 
 ---
 
-## 6.b Flujo de datos — Inventario y rentas de equipos (añadido 2026-09)
+## 6.b Flujo de datos — Inventario y rentas de equipos (actualizado 2026-11)
 
 Sistema de inventario para equipo rentable (cascos, arneses, crash pads, pies
-de gato, botas, carpas...), con página pública de catálogo y panel de
-administración/staff para gestionar el inventario y registrar rentas.
+de gato, botas, carpas...). El **modelo legacy de catálogo** (`equipment`,
+`equipment_variant`, `equipment_rental`) se **eliminó** en 2026-11: se quitaron
+las tablas (migración `0014_military_venom.sql`), el código legacy
+(`lib/equipos/queries.ts`, las acciones de catálogo/renta de
+`lib/equipos/actions.ts`, `scripts/seed-equipment.ts`) y la página pública se
+reescribió sobre el nuevo modelo de objetos individuales.
 
 ### 6.b.1 Modelo de items individuales (añadido 2026-11 — nuevo modelo)
 
@@ -601,7 +605,9 @@ inventario, p. ej. limpieza) se marca manualmente.
 `setEquipmentItemMaintenanceAction`, `createEquipmentItemRentalAction` (solo
 items `disponible`), `markEquipmentItemRentalReturnedAction`,
 `cancelEquipmentItemRentalAction`. La subida de imagen reutiliza
-`uploadEquipmentImageAction` (`lib/equipos/actions.ts`).
+`uploadEquipmentImageAction` (`lib/equipos/actions.ts` — ese archivo ahora solo
+contiene esta Server Action de subida de imagen; el resto de acciones legacy se
+eliminó).
 
 **Queries** (`lib/equipos/item-queries.ts`): `getAllEquipmentItems()` (con
 `code` derivado) y `getAllEquipmentItemRentals()` (join al item para el
@@ -610,86 +616,44 @@ historial).
 **Panel** (`components/admin/admin-equipment-panel.tsx`): 3 tabs — Inventario
 (crear/editar/eliminar con doble confirmación), Rentas (registrar renta por
 objeto+fecha, marcar devuelto, marcar mantenimiento) e Historial (agrupado por
-día con foto y detalles).
+día con foto y detalles). El selector de objeto del diálogo "Agregar renta"
+muestra la foto del objeto junto al nombre.
 
-### 6.b.2 Modelo de catálogo (legacy — se eliminará al rediseñar `/equipos`)
+### 6.b.2 Página pública `/equipos` (reescrita 2026-11)
 
-El modelo anterior sigue existiendo **solo** para la página pública actual
-(`/equipos`) y queda marcado como **legacy**. Se eliminará cuando se rediseñe
-la página pública.
+La página pública ya no lee el catálogo legacy. Renderiza **una tarjeta por
+categoría** (orden fijo `casco, arnes, crashpad, gatos, botas, carpa`; `otros`
+se omite del sitio público), definido en `app/[locale]/equipos/page.tsx`
+(constantes `PUBLIC_EQUIPMENT_CATEGORIES` y `CATEGORY_IMAGES`).
 
-**Esquema legacy (`lib/db/schema.ts`):**
-- `equipment`: catálogo de tipos de equipo (`name`, `slug` único, `category`
-  — `escalada`\|`boulder`\|`camping`\|`otro`, `description`, `pricePerDay`
-  nullable en COP, `imageUrl` nullable — imagen cuadrada 1:1, `active`).
-- `equipmentVariant`: variante/talla rentable de un equipo (`label`,
-  `totalQuantity`). **Todo equipo tiene al menos una variante**, incluso si no
-  maneja tallas reales (se crea con `label = "Única"` al crear el equipo) —
-  esto mantiene uniforme la lógica de disponibilidad y de registro de rentas,
-  sin casos especiales.
-- `equipmentRental`: movimiento de renta (`equipmentId`, `variantId`,
-  `renterName`/`renterContact` — **texto libre, no requiere cuenta de
-  usuario**, decisión de diseño explícita: los clientes de renta de equipo son
-  mayormente visitantes sin cuenta), `quantity`, `rentedAt`/`expectedReturnAt`
-  (fechas ISO `YYYY-MM-DD`, mismo formato que `reservation`), `status`
-  (`activa`\|`devuelta`\|`cancelada`, columna `text` sin `CHECK` — mismo
-  patrón de diseño que `reservation.status`, ver nota de la sección 3),
-  `registeredByUserId` (FK `user`, quién de staff/admin la registró).
-
-**Disponibilidad — regla central:** nunca se guarda un contador de stock
-disponible. Siempre se calcula como
-`totalQuantity - SUM(quantity) de equipmentRental con status = "activa"` para
-esa variante (`lib/equipos/queries.ts::getActiveQuantitiesByVariant`). Esto
-evita que el número se desincronice si una renta se cancela, se marca como
-devuelta, o se edita el stock total manualmente.
-
-```
-components/admin/admin-equipment-panel.tsx (client, usado en /admin/equipos y /staff/equipos)
-   │ Tab "Inventario": crear/editar/eliminar equipment + equipmentVariant,
-   │   subir imagen cuadrada (uploadEquipmentImageAction)
-   │ Tab "Movimientos": createRentalAction (valida stock disponible antes de
-   │   insertar), markRentalReturnedAction, cancelRentalAction
-   ▼
-lib/equipos/actions.ts ("use server")
-   │ TODAS las acciones verifican getModeratorSession() (admin + staff, igual
-   │ que moderación de contenido — ver sección 4). uploadEquipmentImageAction
-   │ sigue el mismo patrón que uploadAnnouncementImageAction (sección 7.b):
-   │ escribe en public/media/Equipos/, devuelve error "read_only" en hosting
-   │ de solo lectura.
-   ▼
-Neon Postgres: equipment / equipment_variant / equipment_rental
-   ▲
-   │ lib/equipos/queries.ts::getEquipmentCatalog() — solo equipo/variantes
-   │   activos, para /equipos (público)
-   │ lib/equipos/queries.ts::getAllEquipmentForAdmin() / getAllRentals() —
-   │   incluye inactivos + historial completo, para el panel
-   ▼
-app/[locale]/equipos/page.tsx (público)
-   muestra imagen cuadrada (o ícono placeholder si `imageUrl` es null — las
-   fotos reales se suben después desde el panel), precio si está definido, y
-   un chip de disponibilidad EXACTA por variante ("M: 3 disponibles") — es
-   decisión explícita mostrar el número exacto, no solo disponible/no
-   disponible.
-```
+- Imagen representativa por categoría (URLs públicas de R2):
+  - `casco` → `Equipos/Casco 1.png`
+  - `arnes` → `Equipos/arnes-black-diamond-azul-1793726151946.jpg` (arnés azul)
+  - `crashpad` → `Equipos/crashpad-grande-doble-1793726205684.jpg` (Crashpad Grande Doble)
+  - `gatos` → `Equipos/Gatos Full.png`
+  - `carpa` → `Equipos/carpa-simond-mt500-1793733232477.jpg`
+  - `botas` → sin imagen (`null`, se muestra placeholder)
+- La disponibilidad por categoría se muestra como **"Pendiente"** (key
+  `Equipos.pending` en `messages/{es,en}.json`) — el conteo real de
+  disponibles se implementará después; por ahora es un placeholder.
+- "Gatos Full.png" se movió de la raíz de `public/` a `public/media/Equipos/`
+  y se subió a R2 con `pnpm media:sync` (la carpeta `public/media/` es una
+  copia local gitignored; R2 es la fuente de verdad, ver sección 15).
 
 - Rutas duplicadas admin/staff (`app/[locale]/admin/equipos/page.tsx` y
   `app/[locale]/staff/equipos/page.tsx`) reutilizan el mismo
-  `AdminEquipmentPanel`, mismo patrón que reservas/publicaciones/contenido
-  (sección 2). Ítem de navegación "Equipos" agregado en
+  `AdminEquipmentPanel`. Ítem de navegación "Equipos" en
   `components/panel/panel-shell.tsx` (`ADMIN_ITEMS`/`STAFF_ITEMS`) y en los
-  home panels (`admin-home-panel.tsx`/`staff-home-panel.tsx`).
-- El flag existente `siteSettings.hideEquipos` sigue controlando la
-  visibilidad de la sección pública (`assertSectionVisible("equipos", locale)`
-  en `app/[locale]/equipos/page.tsx`), sin cambios.
-- Después de cualquier mutación se llama `revalidatePath("/", "layout")` para
-  que la página pública refleje el nuevo stock de inmediato.
-- Seed inicial de inventario: `scripts/seed-equipment.ts` (`pnpm
-  db:seed-equipment`), idempotente (omite equipos cuyo `slug` ya existe).
-  Carga los datos reales que dio el propietario: Casco (2), Arnés (2),
-  Crashpad (3 totales, 2 marcados "en uso" con una renta activa de arranque),
-  Pies de gato (15, variante "Única" — el propietario decidió empezar sin
-  desglose por talla y ajustarlo después desde el panel), Botas (0), Carpas
-  de camping (0).
+  home panels.
+- El flag `siteSettings.hideEquipos` sigue controlando la visibilidad de la
+  sección pública (`assertSectionVisible("equipos", locale)` en
+  `app/[locale]/equipos/page.tsx`).
+- Después de cualquier mutación del inventario se llama
+  `revalidatePath("/", "layout")` para que la página pública refleje el nuevo
+  estado de inmediato.
+- Los comentarios de la página (`equipmentPost` + `postReply` con
+  `postType = "equipos"`) no cambian: siguen en `lib/equipos/post-actions.ts`
+  / `post-queries.ts` y son independientes del inventario.
 
 ---
 
@@ -805,7 +769,7 @@ estos paneles**, solo se documenta su estado:
 | Cambiar el pop-up de noticias/novedades | `lib/announcement/types.ts` (forma y reglas de visibilidad) + `lib/announcement/queries.ts` (lectura cacheada y guardado) + `lib/announcement/actions.ts` (Server Actions admin, incluida la subida de imagen) + `components/announcement-modal.tsx` (UI pública) + `components/admin/admin-announcement-section.tsx` (panel) |
 | Cambiar el esquema de la base de datos | `lib/db/schema.ts` → `pnpm db:generate` → `pnpm db:migrate` |
 | Cambiar el inventario de items de equipos (nuevo modelo) | `lib/equipos/types.ts` (categorías/estados) + `lib/equipos/item-actions.ts` (mutaciones, solo admin+staff) + `lib/equipos/item-queries.ts` (lecturas) + `components/admin/admin-equipment-panel.tsx` (panel) |
-| Cambiar el catálogo legacy de equipos de la página pública (aún en uso por `/equipos`) | `lib/equipos/actions.ts` (mutaciones) + `lib/equipos/queries.ts` (cálculo de disponibilidad) — legacy, se eliminará al rediseñar `/equipos` |
+| Cambiar el catálogo público de `/equipos` (categorías, imágenes, "pendiente") | `app/[locale]/equipos/page.tsx` (constantes `PUBLIC_EQUIPMENT_CATEGORIES` y `CATEGORY_IMAGES`) + `messages/{es,en}.json` (`Equipos.*`) |
 | Ver/modificar contactos acumulados y su vínculo con cuentas | `lib/contacts/*` (normalización, upsert, link, queries) + `components/admin/admin-contacts-panel.tsx` + `scripts/backfill-contacts.ts` |
 | Cambiar el algoritmo de recomendaciones por dificultad (Muro/Boulder) | `lib/muro/route-recommendations.ts` / `lib/boulder/boulder-recommendations.ts` |
 | Cambiar reglas de acceso a rutas por rol | `lib/auth/roles.ts` (`canAccessPath`, `homePathForRole`) + `proxy.ts` (prefijos protegidos) |
@@ -827,7 +791,6 @@ pnpm db:generate      # Genera migración SQL desde lib/db/schema.ts
 pnpm db:migrate       # Aplica migraciones en Neon
 pnpm db:push          # Sincroniza schema directamente (uso limitado en prototipos)
 pnpm db:backfill-contacts # Vincula contactos históricos (idempotente)
-pnpm db:seed-equipment # Seed idempotente del inventario inicial de equipos (sección 6.b)
 pnpm migrate:media-to-r2 # Migración histórica de una sola vez (ya ejecutada), sección 15
 pnpm media:download   # Descarga el bucket completo de R2 a public/media/ (carpeta local, gitignored)
 pnpm media:sync        # Sube a R2 lo nuevo/modificado en public/media/ (usa --prune para también borrar, --dry-run para previsualizar)
@@ -892,10 +855,9 @@ Notas:
 
 - `contact` es una tabla independiente de `user`. Representa a una persona
   identificable (por correo o teléfono) con o sin cuenta de autenticación.
-- Las tablas `climbPost`, `campingPost`, `boulderPost`, `postReply`,
-  `reservation` y `equipmentRental` conservan su campo de contacto original
-  (`contactInfo` / `renterContact`) y ahora tienen una FK nullable `contactId`
-  que apunta a `contact`.
+- Las tablas `climbPost`, `campingPost`, `boulderPost`, `postReply` y
+  `reservation` conservan su campo de contacto original (`contactInfo`) y ahora
+  tienen una FK nullable `contactId` que apunta a `contact`.
 - `contact.userId` se llena al crear una cuenta, vinculando datos anónimos
   previos con el usuario de Better Auth.
 

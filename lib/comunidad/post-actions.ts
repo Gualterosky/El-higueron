@@ -75,8 +75,15 @@ export async function submitCommunityPostAction(
       type: "comunidad",
       authorName: parsed.data.authorName,
       contactInfo: parsed.data.contactInfo,
-      comment: parsed.data.notes?.trim() || parsed.data.locationText || "—",
+      comment: parsed.data.notes?.trim() ?? "",
       locale: parsed.data.locale,
+      plan: {
+        activity: parsed.data.activity,
+        eventDate: parsed.data.eventDate,
+        locationText: parsed.data.locationText,
+        level: parsed.data.level ?? null,
+        maxParticipants: parsed.data.maxParticipants ?? null,
+      },
     })
     return { ok: true }
   } catch (error) {

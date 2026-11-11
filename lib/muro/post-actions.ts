@@ -86,6 +86,12 @@ export async function submitClimbPostAction(
       contactInfo: parsed.data.contactInfo,
       comment: parsed.data.comment,
       locale: parsed.data.locale,
+      category: parsed.data.category,
+      urgencyLevel: isIncident ? parsed.data.urgencyLevel ?? null : null,
+      rating: isReview ? parsed.data.rating : null,
+      routeIds: parsed.data.routeIds,
+      mediaUrls: parsed.data.mediaUrls,
+      socialMediaUrl: parsed.data.socialMediaUrl?.trim() || null,
     })
     return { ok: true }
   } catch {

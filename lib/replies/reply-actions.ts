@@ -7,6 +7,7 @@ import { getModeratorSession } from "@/lib/auth/guards"
 import { db } from "@/lib/db"
 import { postReply } from "@/lib/db/schema"
 import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
+import { sendReplyCreatedNotifications } from "@/lib/email/reply-notifications"
 import { postStatusSchema, postTypeSchema, type PostStatus } from "@/lib/posts/shared"
 
 const submitSchema = z.object({
@@ -15,6 +16,7 @@ const submitSchema = z.object({
   authorName: z.string().trim().min(2).max(100),
   comment: z.string().trim().min(5).max(2000),
   contactInfo: z.string().trim().min(3).max(200),
+  locale: z.enum(["es", "en"]).optional(),
 })
 
 export type ReplyInput = z.infer<typeof submitSchema>
@@ -41,6 +43,14 @@ export async function submitReplyAction(
       contactInfo: parsed.data.contactInfo,
       contactId,
       status: "pending",
+    })
+    await sendReplyCreatedNotifications({
+      postType: parsed.data.postType,
+      postId: parsed.data.postId,
+      authorName: parsed.data.authorName,
+      contactInfo: parsed.data.contactInfo,
+      comment: parsed.data.comment,
+      locale: parsed.data.locale,
     })
     return { ok: true }
   } catch (error) {

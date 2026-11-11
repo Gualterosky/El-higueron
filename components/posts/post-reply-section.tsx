@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { MessageSquare, ChevronDown, ChevronUp, CheckCircle2 } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -124,6 +124,7 @@ type ReplyFormProps = {
 
 function ReplyForm({ postId, postType, onCancel, onSuccess }: ReplyFormProps) {
   const t = useTranslations("PostReply")
+  const locale = useLocale() === "en" ? "en" : "es"
   const [serverError, setServerError] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
 
@@ -142,7 +143,7 @@ function ReplyForm({ postId, postType, onCancel, onSuccess }: ReplyFormProps) {
   async function onSubmit(data: FormValues) {
     setServerError(null)
     try {
-      const result = await submitReplyAction({ ...data, postId, postType })
+      const result = await submitReplyAction({ ...data, postId, postType, locale })
       if (result.ok) {
         setSubmitted(true)
         // Add optimistic reply to parent list

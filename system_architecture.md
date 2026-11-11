@@ -75,7 +75,7 @@ lib/
   site-settings*.ts         Modo mantenimiento + secciones ocultas del sitio
   chat/                     Server actions/queries del historial del chatbot
   eventos/                  Sistema de eventos configurable para /evento
-  email/                    Resend: resend.ts (cliente + sendEmail) y post-notifications.ts (avisos de nuevas publicaciones)
+  email/                    Resend: resend.ts, templates.ts (HTML puro es/en), labels.ts, post-notifications.ts y reply-notifications.ts
   storage/r2.ts             Cliente de Cloudflare R2 (imágenes estáticas del sitio, sección 15)
   media/gallery.ts          Lista dinámicamente las fotos de /galeria desde R2 (sección 15.6)
   media/next-image-url.ts   URL del Image Optimizer de Next para fetch manual con progreso (15.7)
@@ -299,19 +299,46 @@ lib/replies/reply-actions.ts ("use server") → postReply
 ```
 
 **Notificaciones por email (Resend, añadido 2026-11):** tras el `db.insert` exitoso
-de cada `submit*PostAction` (muro, camping, boulder, equipos, comunidad) se
-llama `lib/email/post-notifications.ts::sendPostCreatedNotifications`, que:
-- Envía siempre un aviso al admin (`ADMIN_NOTIFICATION_EMAIL`, default
-  `kevinleonardogm01@gmail.com`) con autor, contacto y mensaje.
-- Si `contactInfo` es un email válido (`normalizeEmail`), envía además una copia al
-  visitante (y el admin recibe `replyTo` = ese email). Si es teléfono, solo el admin.
-- Remitente: `El Higuerón <notificaciones@elhigueron.xyz>` (dominio verificado en Resend).
-- Idioma es/en según el campo opcional `locale` que los formularios envían
-  (`useLocale()`); por defecto `es`.
-- Nunca lanza ni bloquea el post: si falta `RESEND_API_KEY` o Resend falla, se
-  loguea y el post queda guardado igual.
-- **No cubre aún** las respuestas (`submitReplyAction`) ni las reservas; `lib/email/resend.ts::sendEmail`
-  queda listo para reutilizarse en reservas.
+de cada `submit*PostAction` (muro, camping, boulder, equipos, comunidad) y de
+`submitReplyAction` se envían emails. Nunca lanzan ni bloquean la acción: sin
+`RESEND_API_KEY` o si Resend falla, se loguea y el post/respuesta queda guardado.
+Remitente `El Higuerón <notificaciones@elhigueron.xyz>`; idioma es/en según el campo
+opcional `locale` que envían los formularios (`useLocale()`, default `es`).
+
+Capas (`lib/email/`):
+- `resend.ts`: cliente perezoso, `sendEmail` (no lanza), `getAdminNotificationEmail`
+  (`ADMIN_NOTIFICATION_EMAIL`, default `kevinleonardogm01@gmail.com`), `getSiteUrl`.
+- `templates.ts`: plantillas **puras** (sin BD ni next-intl) `buildPostEmails` y
+  `buildReplyEmails`. Todo texto del visitante se escapa; solo se enlazan URLs http(s).
+- `labels.ts`: resuelve etiquetas con `getTranslations` reutilizando los JSON
+  (`PostCategories.*`, `MuroRoute.*.routeName`, `BoulderRoute.*.name`, `Comunidad.*`).
+- `post-notifications.ts` / `reply-notifications.ts`: orquestan datos + envío.
+
+**Posts:** siempre aviso al admin (con `replyTo` = email del visitante si lo dejó) y
+copia al visitante solo si `contactInfo` es un email válido (`normalizeEmail`). El
+mensaje cambia según el tipo:
+
+| Tipo | Admin | Visitante |
+|---|---|---|
+| `incident` | Asunto `[URGENTE/ALERTA · urgencia]` (URGENTE solo high/critical), banda de color por urgencia | Gracias por avisar, el equipo lo revisará |
+| `review` (y equipos) | Nueva reseña + estrellas | Gracias por tu experiencia |
+| `tip` | Nuevo tip técnico | Gracias por tu consejo |
+| `question` | Nueva pregunta (responder escribiéndole) | Te avisaremos cuando alguien responda |
+| plan (comunidad) | Actividad, fecha, lugar, nivel, personas | Tu plan fue publicado |
+
+Extras en todos: ruta(s)/problema(s) etiquetados, calificación (solo reseñas), links a
+fotos/video/URL social y botón al panel (`/admin/publicaciones`, o `/admin/comunidad`).
+
+**Respuestas (`postReply`):** `reply-notifications.ts` busca el post original según
+`postType` (`findOriginalPost`) y envía: aviso al admin (con contacto de quien responde),
+aviso al **autor del post** si su contacto es email y distinto del de quien responde (nunca
+se le revela el contacto de quien responde) y copia a quien responde si dejó email. Si el
+post original ya no existe, solo se omite el contexto.
+
+**Límites conocidos:** no hay rate limit en formularios públicos, por lo que alguien
+podría usar el formulario/respuestas para disparar emails a un tercero o gastar cuota de
+Resend (mejora pendiente: límite por IP/correo o captcha). Las reservas aún no envían
+emails; `sendEmail` queda listo para reutilizarse allí.
 
 Moderación (solo administrador/staff, ver sección 4):
 

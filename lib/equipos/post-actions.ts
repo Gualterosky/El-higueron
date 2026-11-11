@@ -53,6 +53,7 @@ export async function submitEquipmentPostAction(
       contactInfo: parsed.data.contactInfo,
       comment: parsed.data.comment,
       locale: parsed.data.locale,
+      rating: parsed.data.rating,
     })
     return { ok: true }
   } catch {

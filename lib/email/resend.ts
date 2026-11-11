@@ -15,6 +15,12 @@ export function getResend(): Resend | null {
   return client
 }
 
+/** Public origin used to build links inside emails (no trailing slash). */
+export function getSiteUrl(): string {
+  const url = process.env.NEXT_PUBLIC_APP_URL || process.env.BETTER_AUTH_URL || "https://elhigueron.xyz"
+  return url.replace(/\/+$/, "")
+}
+
 export function getAdminNotificationEmail(): string {
   return process.env.ADMIN_NOTIFICATION_EMAIL?.trim() || DEFAULT_ADMIN_NOTIFICATION_EMAIL
 }

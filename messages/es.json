@@ -34,7 +34,9 @@
     "login": "Iniciar sesión",
     "account": "Mi cuenta",
     "signOut": "Cerrar sesión",
+    "language": "Idioma",
     "aria": {
+      "userMenu": "Menú de usuario",
       "openMenu": "Abrir menú",
       "closeMenu": "Cerrar menú"
     }

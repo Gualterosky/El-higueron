@@ -14,7 +14,7 @@ function rememberUserLocale(next: Locale) {
   document.cookie = `${USER_LOCALE_COOKIE}=${next}; path=/; max-age=${USER_LOCALE_MAX_AGE}; SameSite=Lax`
 }
 
-export function LanguageSwitcher({ className }: { className?: string }) {
+export function useLocaleSwitch() {
   const locale = useLocale() as Locale
   const pathname = usePathname()
   const router = useRouter()
@@ -24,6 +24,12 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     rememberUserLocale(next)
     router.replace(pathname, { locale: next })
   }
+
+  return { locale, switchLocale }
+}
+
+export function LanguageSwitcher({ className }: { className?: string }) {
+  const { locale, switchLocale } = useLocaleSwitch()
 
   return (
     <div

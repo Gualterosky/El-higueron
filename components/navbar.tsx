@@ -3,10 +3,21 @@
 import { useState } from "react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
-import { LogIn, LogOut, Menu, UserRound, X } from "lucide-react"
+import { ChevronDown, Languages, LogIn, LogOut, Menu, UserRound, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { LanguageSwitcher } from "@/components/language-switcher"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { LanguageSwitcher, useLocaleSwitch } from "@/components/language-switcher"
 import { Link, usePathname, useRouter } from "@/i18n/navigation"
+import { routing, type Locale } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { signOut, useSession } from "@/lib/auth-client"
 import { homePathForRole, isRole } from "@/lib/auth/roles"
@@ -30,6 +41,75 @@ const navHrefs = [
 
 function isHideableSection(key: string): key is ContentSection {
   return (CONTENT_SECTIONS as readonly string[]).includes(key)
+}
+
+const LOCALE_LABELS: Record<Locale, string> = { es: "Español", en: "English" }
+
+function DesktopUserMenu({
+  signedIn,
+  accountHref,
+  onSignOut,
+}: {
+  signedIn: boolean
+  accountHref: ReturnType<typeof homePathForRole> | null
+  onSignOut: () => void
+}) {
+  const t = useTranslations("Nav")
+  const { locale, switchLocale } = useLocaleSwitch()
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          type="button"
+          variant="outline"
+          className="gap-1.5 px-3"
+          aria-label={t("aria.userMenu")}
+        >
+          <UserRound className="h-4 w-4" />
+          <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-52">
+        <DropdownMenuLabel className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          <Languages className="h-3.5 w-3.5" />
+          {t("language")}
+        </DropdownMenuLabel>
+        <DropdownMenuRadioGroup
+          value={locale}
+          onValueChange={(value) => switchLocale(value as Locale)}
+        >
+          {routing.locales.map((code) => (
+            <DropdownMenuRadioItem key={code} value={code}>
+              {LOCALE_LABELS[code]}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+        <DropdownMenuSeparator />
+        {signedIn && accountHref ? (
+          <>
+            <DropdownMenuItem asChild>
+              <Link href={accountHref}>
+                <UserRound />
+                {t("account")}
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={onSignOut}>
+              <LogOut />
+              {t("signOut")}
+            </DropdownMenuItem>
+          </>
+        ) : (
+          <DropdownMenuItem asChild>
+            <Link href="/login">
+              <LogIn />
+              {t("login")}
+            </Link>
+          </DropdownMenuItem>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }
 
 export function Navbar({
@@ -72,19 +152,22 @@ export function Navbar({
             priority
           />
           <span className="text-lg font-semibold text-forest">{t("brand")}</span>
-          <span className="rounded-full border border-forest/30 bg-beige/50 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-forest">
+          <span className="inline-flex rounded-full border border-forest/30 bg-beige/50 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-forest lg:hidden xl:inline-flex">
             {tLegal("badge", { rnt: LEGAL_INFO.rnt })}
           </span>
         </Link>
 
-        <div className="hidden items-center gap-1 lg:flex">
+        <div className="hidden min-w-0 items-center gap-0.5 lg:flex xl:gap-1">
           {visibleLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
+              aria-current={pathname === link.href ? "page" : undefined}
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-beige hover:text-forest",
-                pathname === link.href ? "text-forest" : "text-muted-foreground",
+                "whitespace-nowrap rounded-md px-2.5 py-2 text-sm font-medium transition-colors hover:bg-beige hover:text-forest xl:px-3",
+                pathname === link.href
+                  ? "bg-beige text-forest"
+                  : "text-muted-foreground",
               )}
             >
               {t(`links.${link.key}`)}
@@ -92,39 +175,20 @@ export function Navbar({
           ))}
         </div>
 
-        <div className="hidden items-center gap-3 lg:flex">
-          <LanguageSwitcher />
-          {session?.user && accountHref ? (
-            <>
-              <Button asChild variant="outline" className="gap-2">
-                <Link href={accountHref}>
-                  <UserRound className="h-4 w-4" />
-                  {t("account")}
-                </Link>
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                className="gap-2 text-muted-foreground"
-                onClick={handleSignOut}
-              >
-                <LogOut className="h-4 w-4" />
-                {t("signOut")}
-              </Button>
-            </>
-          ) : (
-            <Button asChild variant="outline" className="gap-2">
-              <Link href="/login">
-                <LogIn className="h-4 w-4" />
-                {t("login")}
-              </Link>
-            </Button>
-          )}
+        <div className="hidden shrink-0 items-center gap-2 lg:flex xl:gap-3">
           {showVisitaCta ? (
-            <Button asChild className="bg-orange text-white hover:bg-orange/90">
+            <Button
+              asChild
+              className="hidden bg-orange text-white hover:bg-orange/90 xl:inline-flex"
+            >
               <Link href="/visita">{t("cta")}</Link>
             </Button>
           ) : null}
+          <DesktopUserMenu
+            signedIn={Boolean(session?.user && accountHref)}
+            accountHref={accountHref}
+            onSignOut={handleSignOut}
+          />
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">

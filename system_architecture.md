@@ -100,8 +100,9 @@ al middleware de `next-intl`):
 1. Prefijo explícito ya presente en la URL (`/es/...`, `/en/...`).
 2. Cookie propia `USER_LOCALE` (constante `USER_LOCALE_COOKIE` en
    `i18n/routing.ts`) — **solo se escribe cuando el usuario elige manualmente**
-   un idioma con el botón ES/EN (`components/language-switcher.tsx`, función
-   `rememberUserLocale`). Si existe, `proxy.ts` redirige a esa versión antes de
+   un idioma (hook `useLocaleSwitch` + `rememberUserLocale` en
+   `components/language-switcher.tsx`, usado por el botón ES/EN móvil y por el
+   desplegable de usuario del navbar de escritorio). Si existe, `proxy.ts` redirige a esa versión antes de
    invocar el middleware de `next-intl`.
 3. Si no hay prefijo ni cookie propia, el middleware de `next-intl` detecta por
    el header `Accept-Language` del navegador/SO (`localeDetection: true`,
@@ -1512,3 +1513,18 @@ Notas:
   hay otros usos de `db.transaction` en el repo.
 - Borrar una guía **no** elimina su logo de R2 (misma limitación ya aceptada en
   el inventario de equipos); queda como mejora futura.
+
+
+## Rediseño del navbar de escritorio
+
+- `components/navbar.tsx` (breakpoint de escritorio = `lg`, 1024px): la fila solo
+  muestra logo + marca (badge RNT desde `xl`; en móvil sigue visible), los 7
+  enlaces esenciales (`navHrefs`, filtrados por `hiddenSections`; el activo se
+  marca con `bg-beige` y `aria-current="page"`), el CTA "Planifica tu visita"
+  (solo desde `xl`; en `lg` queda el enlace "Visita") y un único desplegable de
+  usuario (`DesktopUserMenu`, Radix `DropdownMenu`) con selector de idioma
+  (radio ES/EN), "Mi cuenta" + "Cerrar sesión" (con sesión) o "Iniciar sesión".
+- La lógica de cambio de idioma se extrajo a `useLocaleSwitch()` en
+  `components/language-switcher.tsx` (misma cookie `USER_LOCALE`); el menú móvil
+  (`<lg`) conserva el `LanguageSwitcher` segmentado y los botones apilados.
+- Claves i18n nuevas en `Nav`: `language` y `aria.userMenu` (es/en).

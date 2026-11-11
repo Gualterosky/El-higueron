@@ -34,7 +34,9 @@
     "login": "Sign in",
     "account": "My account",
     "signOut": "Sign out",
+    "language": "Language",
     "aria": {
+      "userMenu": "User menu",
       "openMenu": "Open menu",
       "closeMenu": "Close menu"
     }

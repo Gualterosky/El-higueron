@@ -26,6 +26,20 @@ function TikTokIcon({ className }: { className?: string }) {
   )
 }
 
+/** Estilo sólido de marca del botón público por tipo de enlace (clases completas
+ *  para que Tailwind las detecte). */
+export const GUIDE_LINK_BUTTON_CLASSES: Record<GuideLinkIcon, string> = {
+  instagram:
+    "bg-gradient-to-r from-[#F58529] via-[#DD2A7B] to-[#8134AF] text-white hover:brightness-110",
+  facebook: "bg-[#1877F2] text-white hover:bg-[#1465d0]",
+  youtube: "bg-[#FF0000] text-white hover:bg-[#d90000]",
+  tiktok: "bg-[#111111] text-white hover:bg-[#2b2b2b]",
+  linkedin: "bg-[#0A66C2] text-white hover:bg-[#08539f]",
+  web: "bg-forest text-white hover:bg-forest/90",
+  mail: "bg-orange text-white hover:bg-orange/90",
+  other: "bg-stone-700 text-white hover:bg-stone-800",
+}
+
 /** Mapa ícono por valor de `guide_link.icon`. */
 export const GUIDE_LINK_ICON_COMPONENTS: Record<GuideLinkIcon, GuideIconComponent> = {
   instagram: Instagram,

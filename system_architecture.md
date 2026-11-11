@@ -1447,7 +1447,9 @@ components/admin/admin-guides-panel.tsx (client, admin + staff)
 lib/guias/actions.ts ("use server")
    │ getModeratorSession() (admin + staff)
    │ zod guideSchema (name, phone, logoUrl, links[])
-   │   - link.url: http(s):// | mailto: | tel:
+   │   - link.url: se normaliza con normalizeGuideLinkUrl (correo suelto →
+   │     mailto:, teléfono → tel:, dominio sin esquema → https://) y luego debe
+   │     ser http(s):// con host válido | mailto: | tel: (sin espacios)
    │   - link.icon ∈ GUIDE_LINK_ICONS (text, validado en app, no en BD)
    │ create/update usan db.batch() (guía + reemplazo de links, atómico)
    │ reorderGuidesAction(orderedIds) → position = índice, en un db.batch()

@@ -8,7 +8,7 @@ import { db } from "@/lib/db"
 import { guide, guideLink } from "@/lib/db/schema"
 import { getModeratorSession } from "@/lib/auth/guards"
 import { isR2Configured, missingR2EnvVars, uploadToR2 } from "@/lib/storage/r2"
-import { GUIDE_LINK_ICONS, MAX_GUIDE_LINKS } from "@/lib/guias/types"
+import { GUIDE_LINK_ICONS, MAX_GUIDE_LINKS, normalizeGuideLinkUrl } from "@/lib/guias/types"
 
 /**
  * Server actions for the "Guías Profesionales" section (added 2026-11).
@@ -113,7 +113,18 @@ const linkSchema = z.object({
     .trim()
     .min(1)
     .max(500)
-    .refine((value) => /^(https?:\/\/|mailto:|tel:)/i.test(value), "invalid_url"),
+    .transform(normalizeGuideLinkUrl)
+    .refine((value) => {
+      if (/\s/.test(value)) return false
+      if (/^mailto:[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(value)) return true
+      if (/^tel:\+?\d{6,}$/i.test(value)) return true
+      if (!/^https?:\/\//i.test(value)) return false
+      try {
+        return Boolean(new URL(value).hostname.includes("."))
+      } catch {
+        return false
+      }
+    }, "invalid_url"),
   icon: z.enum(GUIDE_LINK_ICONS).default("web"),
 })
 

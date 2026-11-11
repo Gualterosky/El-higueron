@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 import { Compass, MessageCircle } from "lucide-react"
 import { formatWhatsappUrl, isGuideLinkIcon } from "@/lib/guias/types"
-import { GUIDE_LINK_ICON_COMPONENTS } from "@/lib/guias/icons"
+import { GUIDE_LINK_BUTTON_CLASSES, GUIDE_LINK_ICON_COMPONENTS } from "@/lib/guias/icons"
 import type { GuideRow } from "@/lib/guias/queries"
 
 function toIcon(value: string) {
@@ -37,23 +37,27 @@ export async function ProfessionalGuides({ guides }: { guides: GuideRow[] }) {
             return (
               <div
                 key={guide.id}
-                className="flex flex-col items-center rounded-2xl border border-border bg-white p-6 text-center shadow-sm"
+                className="group flex flex-col overflow-hidden rounded-3xl border border-forest/10 bg-white text-center shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-orange/50 hover:shadow-2xl"
               >
-                <div className="relative mb-4 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border border-border/60 bg-beige/40">
-                  {guide.logoUrl ? (
-                    <Image
-                      src={guide.logoUrl}
-                      alt={guide.name}
-                      fill
-                      sizes="80px"
-                      className="object-contain p-3"
-                    />
-                  ) : (
-                    <Compass className="h-9 w-9 text-forest/50" />
-                  )}
+                <div className="bg-gradient-to-b from-forest/15 via-forest/5 to-white px-5 pb-2 pt-5">
+                  <div className="relative flex h-40 w-full items-center justify-center overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-black/5">
+                    {guide.logoUrl ? (
+                      <Image
+                        src={guide.logoUrl}
+                        alt={guide.name}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-contain p-3"
+                      />
+                    ) : (
+                      <Compass className="h-16 w-16 text-forest/50" />
+                    )}
+                  </div>
                 </div>
 
-                <h3 className="mb-6 text-xl font-semibold text-foreground">{guide.name}</h3>
+                <div className="flex flex-1 flex-col items-center px-6 pb-6 pt-4">
+                <h3 className="text-xl font-bold text-forest">{guide.name}</h3>
+                <span className="mb-6 mt-3 h-1 w-12 rounded-full bg-orange" />
 
                 <div className="flex w-full flex-col gap-3">
                   {hasWhatsapp ? (
@@ -61,7 +65,7 @@ export async function ProfessionalGuides({ guides }: { guides: GuideRow[] }) {
                       href={formatWhatsappUrl(guide.phone)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-[#25D366] text-sm font-medium text-[#25D366] transition-colors hover:bg-[#25D366] hover:text-white"
+                      className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#25D366] text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#1ebe5a] hover:shadow-md"
                     >
                       <MessageCircle className="h-4 w-4" />
                       {t("whatsapp")}
@@ -76,13 +80,14 @@ export async function ProfessionalGuides({ guides }: { guides: GuideRow[] }) {
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-border text-sm font-medium text-foreground transition-colors hover:border-forest hover:bg-forest hover:text-white"
+                        className={`inline-flex h-11 items-center justify-center gap-2 rounded-lg text-sm font-semibold shadow-sm transition-all hover:shadow-md ${GUIDE_LINK_BUTTON_CLASSES[toIcon(link.icon)]}`}
                       >
                         <Icon className="h-4 w-4" />
                         {link.label}
                       </a>
                     )
                   })}
+                </div>
                 </div>
               </div>
             )

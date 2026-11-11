@@ -482,9 +482,9 @@ function GuideFormDialog({
                           value={link.url}
                           onChange={(e) => updateLink(index, { url: e.target.value })}
                           placeholder="https://…"
-                          inputMode="url"
                           className="h-9"
                         />
+                        <p className="text-xs text-muted-foreground">{t("form.linkUrlHint")}</p>
                       </div>
                     </div>
                   </div>

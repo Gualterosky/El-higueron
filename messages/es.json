@@ -2099,6 +2099,7 @@
         "noLinks": "Sin botones extra.",
         "linkLabel": "Etiqueta",
         "linkUrl": "URL",
+        "linkUrlHint": "Puedes pegar un enlace, un correo (info@agencia.com) o un teléfono.",
         "linkIcon": "Ícono"
       },
       "icons": {

@@ -2099,6 +2099,7 @@
         "noLinks": "No extra buttons.",
         "linkLabel": "Label",
         "linkUrl": "URL",
+        "linkUrlHint": "You can paste a link, an email (info@agency.com) or a phone number.",
         "linkIcon": "Icon"
       },
       "icons": {

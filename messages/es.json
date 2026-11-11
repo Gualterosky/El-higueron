@@ -496,6 +496,10 @@
       "subtitle": "Material de calidad para tu seguridad y comodidad"
     },
     "uniqueSizeCount": "Talla única ×{count}",
+    "availableCount": "{count, plural, one {# disponible} other {# disponibles}}",
+    "sizesLabel": "Tallas disponibles",
+    "itemsLabel": "Disponibles ahora",
+    "moreItems": "+{count} más",
     "noAvailability": "Sin disponibilidad",
     "pricePerDay": "{price} / día",
     "priceRange": "{min} - {max} / día",

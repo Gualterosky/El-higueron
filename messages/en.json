@@ -496,6 +496,10 @@
       "subtitle": "Quality equipment for your safety and comfort"
     },
     "uniqueSizeCount": "Unique size ×{count}",
+    "availableCount": "{count, plural, one {# available} other {# available}}",
+    "sizesLabel": "Available sizes",
+    "itemsLabel": "Available now",
+    "moreItems": "+{count} more",
     "noAvailability": "No availability",
     "pricePerDay": "{price} / day",
     "priceRange": "{min} - {max} / day",

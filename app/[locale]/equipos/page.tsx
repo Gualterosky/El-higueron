@@ -1,15 +1,19 @@
 import Image from "next/image"
-import { Package, Wrench, MessageCircle } from "lucide-react"
+import { Wrench, MessageCircle } from "lucide-react"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { assertSectionVisible } from "@/lib/site-settings"
 import {
   getAvailableEquipmentItems,
   getEquipmentCategoryPriceRanges,
   type AvailableEquipmentItem,
 } from "@/lib/equipos/item-queries"
+import {
+  EquipmentCategoryCard,
+  type EquipmentCardItem,
+  type EquipmentCardSize,
+} from "@/components/equipos/equipment-category-card"
 import { EquipmentComments } from "@/components/equipos/equipment-comments"
 import { EquipmentPostForm } from "@/components/equipos/equipment-post-form"
 import { R2_BASE_URL } from "@/lib/media/r2-url"
@@ -29,13 +33,13 @@ const PUBLIC_EQUIPMENT_CATEGORIES = ["casco", "arnes", "crashpad", "gatos", "bot
 
 type PublicEquipmentCategory = (typeof PUBLIC_EQUIPMENT_CATEGORIES)[number]
 
-/** Imagen representativa por categoría. "botas" se muestra sin imagen. */
+/** Imagen representativa por categoría. */
 const CATEGORY_IMAGES: Record<PublicEquipmentCategory, string | null> = {
   casco: `${R2_BASE_URL}/Equipos/Casco%201.png`,
   arnes: `${R2_BASE_URL}/Equipos/arnes-black-diamond-azul-1793726151946.jpg`,
   crashpad: `${R2_BASE_URL}/Equipos/crashpad-grande-doble-1793726205684.jpg`,
   gatos: `${R2_BASE_URL}/Equipos/Gatos%20Full.png`,
-  botas: null,
+  botas: `${R2_BASE_URL}/Equipos/1000279163-1794342223883.jpg`,
   carpa: `${R2_BASE_URL}/Equipos/carpa-simond-mt500-1793733232477.jpg`,
 }
 
@@ -127,103 +131,62 @@ export default async function EquiposPage({ params }: Props) {
             </p>
           </div>
           
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {PUBLIC_EQUIPMENT_CATEGORIES.map((category) => {
-              const name = t(`categories.${category}`)
-              const imageUrl = CATEGORY_IMAGES[category]
-              const priceRange = priceRanges.get(category)
               const items = availableByCategory.get(category) ?? []
-
+              const priceRange = priceRanges.get(category)
               const isSized = category === "gatos" || category === "botas"
-              const sizeEntries: { size: string; count: number }[] = []
+
+              let sizes: EquipmentCardSize[] | undefined
               let uniqueCount = 0
+              let groupedItems: EquipmentCardItem[] = []
+              let totalAvailable = items.length
+
               if (isSized) {
                 const counts = new Map<string, number>()
                 for (const item of items) {
                   const talla = item.talla?.trim()
                   if (!talla) continue
-                  if (talla.startsWith("ID-")) {
-                    uniqueCount++
-                  } else {
-                    counts.set(talla, (counts.get(talla) ?? 0) + 1)
-                  }
+                  if (talla.startsWith("ID-")) uniqueCount++
+                  else counts.set(talla, (counts.get(talla) ?? 0) + 1)
                 }
-                for (const [size, count] of counts) sizeEntries.push({ size, count })
-                sizeEntries.sort((a, b) => compareSizesDesc(a.size, b.size))
+                sizes = [...counts].map(([size, count]) => ({ size, count }))
+                sizes.sort((a, b) => compareSizesDesc(a.size, b.size))
+                totalAvailable = uniqueCount + sizes.reduce((sum, s) => sum + s.count, 0)
+              } else {
+                const counts = new Map<string, number>()
+                for (const item of items) counts.set(item.name, (counts.get(item.name) ?? 0) + 1)
+                groupedItems = [...counts].map(([name, count]) => ({ name, count }))
               }
 
-              const hasAvailability = isSized
-                ? sizeEntries.length > 0 || uniqueCount > 0
-                : items.length > 0
+              const priceText = priceRange
+                ? priceRange.minPrice === priceRange.maxPrice
+                  ? t("pricePerDay", { price: CURRENCY_FORMATTER.format(priceRange.minPrice) })
+                  : t("priceRange", {
+                      min: CURRENCY_FORMATTER.format(priceRange.minPrice),
+                      max: CURRENCY_FORMATTER.format(priceRange.maxPrice),
+                    })
+                : null
 
               return (
-                <Card
+                <EquipmentCategoryCard
                   key={category}
-                  className="overflow-hidden border-none shadow-sm transition-all hover:shadow-md bg-white"
-                >
-                  <div className="relative aspect-square overflow-hidden bg-muted">
-                    {imageUrl ? (
-                      <Image
-                        src={imageUrl}
-                        alt={name}
-                        fill
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-beige/40">
-                        <Package className="h-16 w-16 text-forest/40" aria-hidden />
-                      </div>
-                    )}
-                  </div>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-xl">{name}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    {hasAvailability ? (
-                      <div className="flex flex-wrap gap-1.5">
-                        {isSized ? (
-                          <>
-                            {sizeEntries.map(({ size, count }) => (
-                              <span
-                                key={size}
-                                className="inline-block rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-forest"
-                              >
-                                {count > 1 ? `${size} ×${count}` : size}
-                              </span>
-                            ))}
-                            {uniqueCount > 0 && (
-                              <span className="inline-block rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-forest">
-                                {t("uniqueSizeCount", { count: uniqueCount })}
-                              </span>
-                            )}
-                          </>
-                        ) : (
-                          items.map((item, index) => (
-                            <span
-                              key={index}
-                              className="inline-block rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-forest"
-                            >
-                              {item.name}
-                            </span>
-                          ))
-                        )}
-                      </div>
-                    ) : (
-                      <span className="text-xs text-muted-foreground">{t("noAvailability")}</span>
-                    )}
-                    {priceRange && (
-                      <p className="text-sm font-medium text-forest">
-                        {priceRange.minPrice === priceRange.maxPrice
-                          ? t("pricePerDay", { price: CURRENCY_FORMATTER.format(priceRange.minPrice) })
-                          : t("priceRange", {
-                              min: CURRENCY_FORMATTER.format(priceRange.minPrice),
-                              max: CURRENCY_FORMATTER.format(priceRange.maxPrice),
-                            })}
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
+                  name={t(`categories.${category}`)}
+                  imageUrl={CATEGORY_IMAGES[category]}
+                  totalAvailable={totalAvailable}
+                  sizes={sizes}
+                  uniqueCount={uniqueCount}
+                  items={groupedItems}
+                  priceText={priceText}
+                  labels={{
+                    available: t("availableCount", { count: totalAvailable }),
+                    noAvailability: t("noAvailability"),
+                    sizes: t("sizesLabel"),
+                    items: t("itemsLabel"),
+                    uniqueSize: t("uniqueSizeCount", { count: uniqueCount }),
+                    more: (count) => t("moreItems", { count }),
+                  }}
+                />
               )
             })}
           </div>

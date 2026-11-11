@@ -664,7 +664,7 @@ se omite del sitio público), definido en `app/[locale]/equipos/page.tsx`
   - `crashpad` → `Equipos/crashpad-grande-doble-1793726205684.jpg` (Crashpad Grande Doble)
   - `gatos` → `Equipos/Gatos Full.png`
   - `carpa` → `Equipos/carpa-simond-mt500-1793733232477.jpg`
-  - `botas` → sin imagen (`null`, se muestra placeholder)
+  - `botas` → `Equipos/1000279163-1794342223883.jpg` (botas de caucho Titan)
 - Disponibilidad por categoría (2026-11): se listan **solo los objetos con
   `status = "disponible"`** (los rentados/en mantenimiento no se muestran):
   - Categorías normales (`casco`, `arnes`, `crashpad`, `carpa`): se muestran
@@ -675,6 +675,16 @@ se omite del sitio público), definido en `app/[locale]/equipos/page.tsx`
   - Si una categoría no tiene objetos disponibles se muestra
     `Equipos.noAvailability` ("Sin disponibilidad").
   - Se alimenta de `getAvailableEquipmentItems()` (`lib/equipos/item-queries.ts`).
+- Rediseño de tarjetas (2026-11): la UI de cada categoría vive en
+  `components/equipos/equipment-category-card.tsx` (server component sin
+  estado). Imagen 4:3 con zoom en hover, badge superpuesto de disponibilidad
+  (`Equipos.availableCount` / `noAvailability`), precio destacado, y altura
+  uniforme (`h-full`). `gatos`/`botas`: tallas en cuadrícula de chips
+  cuadrados con insignia `×N` si hay repetidas y chip aparte "Talla única ×N".
+  Categorías normales: items **agrupados por nombre** con conteo (`×N`) y tope
+  de 6 chips + `Equipos.moreItems` ("+N más"). La agrupación y el cálculo de
+  `totalAvailable` se hacen en `app/[locale]/equipos/page.tsx`. Keys nuevas:
+  `Equipos.availableCount`, `sizesLabel`, `itemsLabel`, `moreItems` (es/en).
 - Precio por categoría (2026-11): se muestra el **rango "mín - máx"** de los
   items con precio definido, o **un solo precio** si todos coinciden
   (`Equipos.priceRange` / `Equipos.pricePerDay`). Se calcula con
@@ -813,7 +823,7 @@ estos paneles**, solo se documenta su estado:
 | Cambiar el pop-up de noticias/novedades | `lib/announcement/types.ts` (forma y reglas de visibilidad) + `lib/announcement/queries.ts` (lectura cacheada y guardado) + `lib/announcement/actions.ts` (Server Actions admin, incluida la subida de imagen) + `components/announcement-modal.tsx` (UI pública) + `components/admin/admin-announcement-section.tsx` (panel) |
 | Cambiar el esquema de la base de datos | `lib/db/schema.ts` → `pnpm db:generate` → `pnpm db:migrate` |
 | Cambiar el inventario de items de equipos (nuevo modelo) | `lib/equipos/types.ts` (categorías/estados) + `lib/equipos/item-actions.ts` (mutaciones, solo admin+staff) + `lib/equipos/item-queries.ts` (lecturas) + `components/admin/admin-equipment-panel.tsx` (panel) |
-| Cambiar el catálogo público de `/equipos` (categorías, imágenes, "pendiente") | `app/[locale]/equipos/page.tsx` (constantes `PUBLIC_EQUIPMENT_CATEGORIES` y `CATEGORY_IMAGES`) + `messages/{es,en}.json` (`Equipos.*`) |
+| Cambiar el catálogo público de `/equipos` (categorías, imágenes, "pendiente") | `app/[locale]/equipos/page.tsx` (constantes `PUBLIC_EQUIPMENT_CATEGORIES` y `CATEGORY_IMAGES`) + `components/equipos/equipment-category-card.tsx` (UI de la tarjeta) + `messages/{es,en}.json` (`Equipos.*`) |
 | Cambiar las guías/agencias de la sección "Guías Profesionales" de `/escalada` | `lib/guias/types.ts` (íconos de botón extra + `formatWhatsappUrl`) + `lib/guias/actions.ts` (mutaciones admin+staff, subida de logo a R2) + `lib/guias/queries.ts` (lecturas) + `components/admin/admin-guides-panel.tsx` (panel) + `components/guias/professional-guides.tsx` (sección pública) |
 | Ver/modificar contactos acumulados y su vínculo con cuentas | `lib/contacts/*` (normalización, upsert, link, queries) + `components/admin/admin-contacts-panel.tsx` + `scripts/backfill-contacts.ts` |
 | Cambiar el algoritmo de recomendaciones por dificultad (Muro/Boulder) | `lib/muro/route-recommendations.ts` / `lib/boulder/boulder-recommendations.ts` |

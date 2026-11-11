@@ -7,6 +7,7 @@ import { getModeratorSession } from "@/lib/auth/guards"
 import { db } from "@/lib/db"
 import { campingPost } from "@/lib/db/schema"
 import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
+import { sendPostCreatedNotifications } from "@/lib/email/post-notifications"
 import {
   httpsUrlSchema,
   mediaUrlsSchema,
@@ -29,6 +30,7 @@ const submitSchema = z
     urgencyLevel: urgencyLevelSchema.optional().nullable(),
     socialMediaUrl: httpsUrlSchema,
     mediaUrls: mediaUrlsSchema,
+    locale: z.enum(["es", "en"]).optional(),
   })
   .superRefine((data, ctx) => {
     if (data.category === CATEGORY_REQUIRES_RATING && (data.rating < 1 || data.rating > 5)) {
@@ -70,6 +72,13 @@ export async function submitCampingPostAction(
       socialMediaUrl: parsed.data.socialMediaUrl?.trim() || null,
       mediaUrls: parsed.data.mediaUrls?.length ? parsed.data.mediaUrls : null,
       status: "pending",
+    })
+    await sendPostCreatedNotifications({
+      type: "camping",
+      authorName: parsed.data.authorName,
+      contactInfo: parsed.data.contactInfo,
+      comment: parsed.data.comment,
+      locale: parsed.data.locale,
     })
     return { ok: true }
   } catch {

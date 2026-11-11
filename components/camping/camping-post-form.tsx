@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Star, CheckCircle2, Link2, CheckCircle, Upload } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,6 +20,7 @@ import { CATEGORY_REQUIRES_RATING, CATEGORY_REQUIRES_URGENCY } from "@/lib/posts
 
 export function CampingPostForm() {
   const t = useTranslations("CampingPost")
+  const locale = useLocale() === "en" ? "en" : "es"
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
   const [hovered, setHovered] = useState(0)
@@ -71,6 +72,7 @@ export function CampingPostForm() {
       const result = await submitCampingPostAction({
         ...data,
         mediaUrls: uploadedUrls.length > 0 ? uploadedUrls : null,
+        locale,
       })
       if (result.ok) {
         setSubmitted(true)

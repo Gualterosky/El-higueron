@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Star, CheckCircle2, Link2, CheckCircle, Upload } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -29,6 +29,7 @@ type Props = {
 
 export function BoulderPostForm({ defaultProblemIds = [] }: Props) {
   const t = useTranslations("BoulderPost")
+  const locale = useLocale() === "en" ? "en" : "es"
   const tRoute = useTranslations("BoulderRoute")
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
@@ -91,6 +92,7 @@ export function BoulderPostForm({ defaultProblemIds = [] }: Props) {
       const result = await submitBoulderPostAction({
         ...data,
         mediaUrls: uploadedUrls.length > 0 ? uploadedUrls : null,
+        locale,
       })
       if (result.ok) {
         setSubmitted(true)

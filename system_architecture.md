@@ -75,6 +75,7 @@ lib/
   site-settings*.ts         Modo mantenimiento + secciones ocultas del sitio
   chat/                     Server actions/queries del historial del chatbot
   eventos/                  Sistema de eventos configurable para /evento
+  email/                    Resend: resend.ts (cliente + sendEmail) y post-notifications.ts (avisos de nuevas publicaciones)
   storage/r2.ts             Cliente de Cloudflare R2 (imágenes estáticas del sitio, sección 15)
   media/gallery.ts          Lista dinámicamente las fotos de /galeria desde R2 (sección 15.6)
   media/next-image-url.ts   URL del Image Optimizer de Next para fetch manual con progreso (15.7)
@@ -295,6 +296,21 @@ components/posts/post-reply-section.tsx (client)
    ▼
 lib/replies/reply-actions.ts ("use server") → postReply
 ```
+
+**Notificaciones por email (Resend, añadido 2026-11):** tras el `db.insert` exitoso
+de cada `submit*PostAction` (muro, camping, boulder, equipos, comunidad) se
+llama `lib/email/post-notifications.ts::sendPostCreatedNotifications`, que:
+- Envía siempre un aviso al admin (`ADMIN_NOTIFICATION_EMAIL`, default
+  `kevinleonardogm01@gmail.com`) con autor, contacto y mensaje.
+- Si `contactInfo` es un email válido (`normalizeEmail`), envía además una copia al
+  visitante (y el admin recibe `replyTo` = ese email). Si es teléfono, solo el admin.
+- Remitente: `El Higuerón <notificaciones@elhigueron.xyz>` (dominio verificado en Resend).
+- Idioma es/en según el campo opcional `locale` que los formularios envían
+  (`useLocale()`); por defecto `es`.
+- Nunca lanza ni bloquea el post: si falta `RESEND_API_KEY` o Resend falla, se
+  loguea y el post queda guardado igual.
+- **No cubre aún** las respuestas (`submitReplyAction`) ni las reservas; `lib/email/resend.ts::sendEmail`
+  queda listo para reutilizarse en reservas.
 
 Moderación (solo administrador/staff, ver sección 4):
 

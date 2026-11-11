@@ -5,7 +5,7 @@ import { useForm, type UseFormReturn } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Star, CheckCircle2, Link2, CheckCircle, Upload } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -48,6 +48,7 @@ type AscentFormValues = {
 
 export function AscentForm({ defaultRouteIds = [] }: Props) {
   const t = useTranslations("MuroRoute")
+  const locale = useLocale() === "en" ? "en" : "es"
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
   const [hovered, setHovered] = useState(0)
@@ -115,6 +116,7 @@ export function AscentForm({ defaultRouteIds = [] }: Props) {
       const result = await submitClimbPostAction({
         ...data,
         mediaUrls: uploadedUrls.length > 0 ? uploadedUrls : null,
+        locale,
       })
       if (result.ok) {
         setSubmitted(true)

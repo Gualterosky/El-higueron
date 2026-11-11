@@ -7,6 +7,7 @@ import { getModeratorSession } from "@/lib/auth/guards"
 import { db } from "@/lib/db"
 import { communityPost } from "@/lib/db/schema"
 import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
+import { sendPostCreatedNotifications } from "@/lib/email/post-notifications"
 import { postStatusSchema, type PostStatus } from "@/lib/posts/shared"
 import {
   communityActivitySchema,
@@ -29,6 +30,7 @@ const submitSchema = z
     logisticsTags: z.array(z.string().trim().max(60)).max(20).default([]),
     maxParticipants: z.number().int().min(1).max(50).optional().nullable(),
     notes: z.string().trim().max(2000).optional().nullable(),
+    locale: z.enum(["es", "en"]).optional(),
   })
   .superRefine((data, ctx) => {
     if (data.eventDate < todayIsoDate()) {
@@ -68,6 +70,13 @@ export async function submitCommunityPostAction(
       notes: parsed.data.notes?.trim() || null,
       status: "pending",
       eventStatus: "open",
+    })
+    await sendPostCreatedNotifications({
+      type: "comunidad",
+      authorName: parsed.data.authorName,
+      contactInfo: parsed.data.contactInfo,
+      comment: parsed.data.notes?.trim() || parsed.data.locationText || "—",
+      locale: parsed.data.locale,
     })
     return { ok: true }
   } catch (error) {

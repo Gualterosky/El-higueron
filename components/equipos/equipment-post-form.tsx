@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Star, CheckCircle2 } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -16,6 +16,7 @@ import { submitEquipmentPostAction } from "@/lib/equipos/post-actions"
 
 export function EquipmentPostForm() {
   const t = useTranslations("EquipmentPost")
+  const locale = useLocale() === "en" ? "en" : "es"
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
   const [hovered, setHovered] = useState(0)
@@ -41,7 +42,7 @@ export function EquipmentPostForm() {
   async function onSubmit(data: FormValues) {
     setServerError(null)
     try {
-      const result = await submitEquipmentPostAction(data)
+      const result = await submitEquipmentPostAction({ ...data, locale })
       if (result.ok) {
         setSubmitted(true)
       } else {

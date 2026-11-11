@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { CheckCircle2 } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -50,6 +50,7 @@ type Props = {
 
 export function CommunityPostForm({ defaultActivity }: Props) {
   const t = useTranslations("Comunidad.form")
+  const locale = useLocale() === "en" ? "en" : "es"
   const tActivities = useTranslations("Comunidad.activities")
   const tLevels = useTranslations("Comunidad.levels")
   const tTags = useTranslations("Comunidad.logisticsTags")
@@ -101,6 +102,7 @@ export function CommunityPostForm({ defaultActivity }: Props) {
         ...data,
         locationText: data.locationText ?? "",
         logisticsTags: data.logisticsTags ?? [],
+        locale,
       })
       if (result.ok) {
         setSubmitted(true)

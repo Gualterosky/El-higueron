@@ -7,6 +7,7 @@ import { getModeratorSession } from "@/lib/auth/guards"
 import { db } from "@/lib/db"
 import { equipmentPost } from "@/lib/db/schema"
 import { upsertContactFromSubmission } from "@/lib/contacts/upsert"
+import { sendPostCreatedNotifications } from "@/lib/email/post-notifications"
 import { postStatusSchema, type PostStatus } from "@/lib/posts/shared"
 
 /**
@@ -19,6 +20,7 @@ const submitSchema = z.object({
   comment: z.string().trim().min(5).max(2000),
   contactInfo: z.string().trim().min(3).max(200),
   rating: z.number().int().min(1).max(5),
+  locale: z.enum(["es", "en"]).optional(),
 })
 
 export type EquipmentPostInput = z.infer<typeof submitSchema>
@@ -44,6 +46,13 @@ export async function submitEquipmentPostAction(
       contactId,
       rating: parsed.data.rating,
       status: "pending",
+    })
+    await sendPostCreatedNotifications({
+      type: "equipos",
+      authorName: parsed.data.authorName,
+      contactInfo: parsed.data.contactInfo,
+      comment: parsed.data.comment,
+      locale: parsed.data.locale,
     })
     return { ok: true }
   } catch {

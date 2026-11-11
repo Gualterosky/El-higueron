@@ -144,7 +144,7 @@ generado con `crypto.randomUUID()`), no hay `serial`.
 | `reservation` | Solicitud de reserva (camping/muro/boulder) | `type`, `status` (`pending`\|`confirmed`\|`cancelled`) |
 | `chatSession` / `chatMessage` | Historial del chatbot público | FK `chatMessage.sessionId → chatSession.id` (cascade) |
 | `guide` | Guía/agencia profesional de la sección "Guías Profesionales" de `/escalada` | `position` ordena; `logoUrl` vive en R2 (opcional); `phone` = WhatsApp |
-| `guideLink` | Botón extra por guía (Instagram, web, Facebook…) | FK `guideId → guide.id` (cascade); `icon` (`instagram`\|`facebook`\|`youtube`\|`linkedin`\|`web`\|`mail`\|`other`), `position` ordena los botones |
+| `guideLink` | Botón extra por guía (Instagram, web, Facebook…) | FK `guideId → guide.id` (cascade); `icon` (`instagram`\|`facebook`\|`youtube`\|`tiktok`\|`linkedin`\|`web`\|`mail`\|`other`), `position` ordena los botones |
 
 **Nota de diseño importante:** `climbPost`/`campingPost`/`boulderPost`/`postReply`
 usan columnas `text` para `status`/`postType`/`type` en vez de `pgEnum`. Esto es
@@ -1472,7 +1472,8 @@ Notas:
   (`Compass`). El número de WhatsApp se guarda en `guide.phone` y se enlaza con
   `formatWhatsappUrl` (`https://wa.me/<dígitos>`).
 - Íconos de botón extra: `lib/guias/types.ts` (`GUIDE_LINK_ICONS`) +
-  `lib/guias/icons.ts` (mapeo a lucide). Columna `text` sin CHECK, misma
+  `lib/guias/icons.tsx` (mapeo a lucide; TikTok no existe en lucide, es un SVG
+  propio con `currentColor`). Columna `text` sin CHECK, misma
   decisión de diseño que el resto (ver sección 3); la lectura defensiva
   (`isGuideLinkIcon`) falla de vuelta a `"web"` si aparece un valor inesperado.
 - Acceso admin + staff: la página duplicada `app/[locale]/admin/guias` y

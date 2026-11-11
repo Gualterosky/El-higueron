@@ -352,13 +352,17 @@ function GuideFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!isPending) onOpenChange(o) }}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="max-h-[90vh] grid-rows-[auto_minmax(0,1fr)_auto] sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>{guide ? t("editGuide") : t("addGuide")}</DialogTitle>
           <DialogDescription>{t("formDescription")}</DialogDescription>
         </DialogHeader>
 
-        <form id="guide-form" onSubmit={onSubmit} className="flex flex-col gap-4 py-2">
+        <form
+          id="guide-form"
+          onSubmit={onSubmit}
+          className="-mr-2 flex flex-col gap-4 overflow-y-auto py-2 pr-2"
+        >
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="gd-name">{t("form.name")}</Label>
             <Input id="gd-name" name="name" defaultValue={guide?.name} required className="h-10" />

@@ -133,6 +133,24 @@ function revalidateGuidesPaths() {
   revalidatePath("/", "layout")
 }
 
+/** INSERT multi-fila de los botones extra (vacío si no hay). El driver neon-http
+ *  no soporta `db.transaction()`; la atomicidad se logra con `db.batch()`. */
+function linkInserts(guideId: string, links: GuideInput["links"]) {
+  if (links.length === 0) return []
+  return [
+    db.insert(guideLink).values(
+      links.map((link, index) => ({
+        id: randomUUID(),
+        guideId,
+        label: link.label,
+        url: link.url,
+        icon: link.icon,
+        position: index,
+      })),
+    ),
+  ]
+}
+
 export async function createGuideAction(input: GuideInput): Promise<GuideActionResult> {
   if (!(await getModeratorSession())) return { ok: false, error: "unauthorized" }
 
@@ -142,28 +160,19 @@ export async function createGuideAction(input: GuideInput): Promise<GuideActionR
 
   try {
     const id = randomUUID()
-    await db.transaction(async (tx) => {
-      const [row] = await tx.select({ value: max(guide.position) }).from(guide)
-      const position = (row?.value ?? 0) + 1
-      await tx.insert(guide).values({
+    const [row] = await db.select({ value: max(guide.position) }).from(guide)
+    const position = (row?.value ?? 0) + 1
+
+    await db.batch([
+      db.insert(guide).values({
         id,
         name: data.name,
         logoUrl: data.logoUrl || null,
         phone: data.phone,
         position,
-      })
-      for (let i = 0; i < data.links.length; i++) {
-        const link = data.links[i]
-        await tx.insert(guideLink).values({
-          id: randomUUID(),
-          guideId: id,
-          label: link.label,
-          url: link.url,
-          icon: link.icon,
-          position: i,
-        })
-      }
-    })
+      }),
+      ...linkInserts(id, data.links),
+    ])
 
     revalidateGuidesPaths()
     return { ok: true, id }
@@ -187,8 +196,8 @@ export async function updateGuideAction(
     const [existing] = await db.select({ id: guide.id }).from(guide).where(eq(guide.id, id))
     if (!existing) return { ok: false, error: "not_found" }
 
-    await db.transaction(async (tx) => {
-      await tx
+    await db.batch([
+      db
         .update(guide)
         .set({
           name: data.name,
@@ -196,21 +205,10 @@ export async function updateGuideAction(
           phone: data.phone,
           updatedAt: new Date(),
         })
-        .where(eq(guide.id, id))
-
-      await tx.delete(guideLink).where(eq(guideLink.guideId, id))
-      for (let i = 0; i < data.links.length; i++) {
-        const link = data.links[i]
-        await tx.insert(guideLink).values({
-          id: randomUUID(),
-          guideId: id,
-          label: link.label,
-          url: link.url,
-          icon: link.icon,
-          position: i,
-        })
-      }
-    })
+        .where(eq(guide.id, id)),
+      db.delete(guideLink).where(eq(guideLink.guideId, id)),
+      ...linkInserts(id, data.links),
+    ])
 
     revalidateGuidesPaths()
     return { ok: true }
@@ -249,14 +247,13 @@ export async function reorderGuidesAction(orderedIds: string[]): Promise<GuideSi
     const existingIds = new Set(existing.map((row) => row.id))
     if (ids.some((id) => !existingIds.has(id))) return { ok: false, error: "not_found" }
 
-    await db.transaction(async (tx) => {
-      for (let i = 0; i < ids.length; i++) {
-        await tx
-          .update(guide)
-          .set({ position: i, updatedAt: new Date() })
-          .where(eq(guide.id, ids[i]))
-      }
-    })
+    const [first, ...rest] = ids.map((guideId, index) =>
+      db
+        .update(guide)
+        .set({ position: index, updatedAt: new Date() })
+        .where(eq(guide.id, guideId)),
+    )
+    await db.batch([first, ...rest])
 
     revalidateGuidesPaths()
     return { ok: true }

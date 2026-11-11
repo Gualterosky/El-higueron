@@ -1449,8 +1449,8 @@ lib/guias/actions.ts ("use server")
    │ zod guideSchema (name, phone, logoUrl, links[])
    │   - link.url: http(s):// | mailto: | tel:
    │   - link.icon ∈ GUIDE_LINK_ICONS (text, validado en app, no en BD)
-   │ create/update usan db.transaction (guía + reemplazo de links)
-   │ reorderGuidesAction(orderedIds) → position = índice, en transacción
+   │ create/update usan db.batch() (guía + reemplazo de links, atómico)
+   │ reorderGuidesAction(orderedIds) → position = índice, en un db.batch()
    │ uploadGuideLogoAction → R2 bajo prefijo "Guias/" (4 MB, jpeg/png/webp/avif)
    ▼
 Neon Postgres: guide + guide_link (cascade)
@@ -1484,5 +1484,12 @@ Notas:
   por lo que el ítem "Comunidad" se renderizaba con etiqueta vacía en ambos
   paneles (bug no detectable por `tsc`/`lint`/`build` — se resuelve en runtime).
   Se añadió `comunidad: t("nav.comunidad")` junto con `guides: t("nav.guides")`.
+- ⚠️ **El driver `neon-http` (`lib/db/index.ts`) NO soporta `db.transaction()`**:
+  lanza `"No transactions support in neon-http driver"` en runtime. `tsc` y
+  `pnpm build` no lo detectan (los tipos sí lo permiten). Para operaciones
+  atómicas multi-sentencia usar `db.batch([...])` (una sola transacción HTTP).
+  La primera versión de `lib/guias/actions.ts` usaba `db.transaction` y por eso
+  crear/editar/reordenar fallaban siempre con el error genérico; corregido. No
+  hay otros usos de `db.transaction` en el repo.
 - Borrar una guía **no** elimina su logo de R2 (misma limitación ya aceptada en
   el inventario de equipos); queda como mejora futura.
